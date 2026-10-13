@@ -27,6 +27,8 @@ import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services.fronts.FrontJsonFapiDraft
 import services.newsletters.NewsletterSignupLifecycle
+import services.eventgraphic.EventGraphicService
+import services.zug.{ZugClient, ZugClientImpl}
 import services.{
   ConfigAgentLifecycle,
   OphanApi,
@@ -129,6 +131,8 @@ trait AppComponents
 
   lazy val healthCheck: HealthCheck = wire[HealthCheck]
   lazy val responsiveViewerController = wire[ResponsiveViewerController]
+  lazy val zugClient: ZugClient = wire[ZugClientImpl]
+  lazy val eventGraphicService = wire[EventGraphicService]
 
   lazy val router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("preview")

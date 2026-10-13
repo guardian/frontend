@@ -10,7 +10,7 @@ import model.dotcomrendering.{
   DotcomPuzzlesPageRenderingDataModel,
   PuzzlePageInstance,
 }
-import model.{ApplicationContext, CacheTime, Cached, NoCache}
+import model.{ApplicationContext, CacheTime, Cached, Cors, NoCache, TinyResponse}
 import play.api.libs.ws.WSClient
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -86,9 +86,16 @@ class PuzzlesPageController(
           PuzzlesPageController.ProgressPuzzleTypes,
           request.headers.get("Authorization"),
         )
-        .map(items => NoCache(Ok(Json.toJson(PuzzlesApiResponse(items)))))
-        .recover { case _ => NoCache(BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress"))) }
+        .map(items => Ok(Json.toJson(PuzzlesApiResponse(items))))
+        .recover { case _ => BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress")) }
+        .map(result => Cors(NoCache(result)))
     }
+
+  def puzzlesDataOptions(): Action[AnyContent] = Action { implicit request =>
+    TinyResponse.noContent(Some("GET, OPTIONS"))
+  }
+
+  def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
@@ -120,7 +127,7 @@ class PuzzlesPageController(
   // their selection in the path so that CODE/PROD receive the requested month.
   def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      Try(YearMonth.of(year, month)).toOption match {
+      val result = Try(YearMonth.of(year, month)).toOption match {
         case None                 => Future.successful(BadRequest)
         case Some(requestedMonth) =>
           buildArchive(
@@ -130,10 +137,11 @@ class PuzzlesPageController(
             request.headers.get("Authorization"),
           )
             .map { case (_, archive) =>
-              NoCache(Ok(Json.toJson(archive)))
+              Ok(Json.toJson(archive))
             }
             .recoverWith { case _: NoSuchElementException => notFound }
       }
+      result.map(response => Cors(NoCache(response)))
     }
 
   private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {

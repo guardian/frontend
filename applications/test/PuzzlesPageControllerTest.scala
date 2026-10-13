@@ -17,6 +17,7 @@ import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{AnyContent, Headers, Request, RequestHeader, Results}
 import play.api.test.Helpers._
+import play.api.test.FakeRequest
 import renderers.DotcomRenderingService
 
 import java.time.{LocalDate, ZoneId}
@@ -109,6 +110,53 @@ import scala.concurrent.{ExecutionContext, Future}
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
   }
 
+  private val allowedOrigin = "http://www.random.com" // Included in the test CORS configuration.
+
+  "puzzlesDataOptions" should "allow GET preflights with Authorization from an approved origin" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .puzzlesDataOptions()(
+        FakeRequest(OPTIONS, "/puzzles-and-games/progress").withHeaders(
+          "Origin" -> allowedOrigin,
+          "Access-Control-Request-Method" -> "GET",
+          "Access-Control-Request-Headers" -> "authorization, cache-control",
+        ),
+      )
+
+    status(result) should be(NO_CONTENT)
+    header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
+    header("Access-Control-Allow-Methods", result) should contain("GET, OPTIONS")
+    header("Access-Control-Allow-Headers", result).get should include("authorization")
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
+  }
+
+  it should "not allow unapproved origins" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .archiveDataOptions("archive-quick", 2020, 9)(
+        FakeRequest(OPTIONS, "/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9")
+          .withHeaders("Origin" -> "https://untrusted.example", "Access-Control-Request-Headers" -> "authorization"),
+      )
+
+    header("Access-Control-Allow-Origin", result) should be(None)
+  }
+
+  "archiveDataOptions" should "allow authenticated calendar preflights without calling the API" in {
+    val archiveApi = mock[PuzzlesArchiveApi]
+    val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
+      .archiveDataOptions("archive-quick", 2020, 9)(
+        FakeRequest(OPTIONS, "/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9").withHeaders(
+          "Origin" -> allowedOrigin,
+          "Access-Control-Request-Method" -> "GET",
+          "Access-Control-Request-Headers" -> "authorization",
+        ),
+      )
+
+    status(result) should be(NO_CONTENT)
+    header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
+    header("Access-Control-Allow-Methods", result) should contain("GET, OPTIONS")
+    header("Access-Control-Allow-Headers", result).get should include("authorization")
+    verifyNoInteractions(archiveApi)
+  }
+
   "archiveDataForMonth" should "serve calendar requests without requiring AB participation" in {
     val archiveApi = mock[PuzzlesArchiveApi]
     when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], eqTo(Option.empty[String]))(any[ExecutionContext]))
@@ -149,10 +197,12 @@ import scala.concurrent.{ExecutionContext, Future}
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
       .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
         request("/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9")
-          .withHeaders(Headers("Authorization" -> "Bearer access-token")),
+          .withHeaders(Headers("Authorization" -> "Bearer access-token", "Origin" -> allowedOrigin)),
       )
 
     status(result) should be(OK)
+    header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
     verify(archiveApi, times(2)).get(
       any[LocalDate],
       any[LocalDate],
@@ -212,8 +262,12 @@ import scala.concurrent.{ExecutionContext, Future}
   it should "reject invalid months before calling the API" in {
     val archiveApi = mock[PuzzlesArchiveApi]
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
-      .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(request("/", participations = ""))
+      .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(
+        request("/", participations = "").withHeaders(Headers("Origin" -> allowedOrigin)),
+      )
     status(result) should be(BAD_REQUEST)
+    header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
     verifyNoInteractions(archiveApi)
   }
 
@@ -347,11 +401,13 @@ import scala.concurrent.{ExecutionContext, Future}
       puzzlesProgressApi = progressApi,
     )
       .puzzlesProgress()(
-        request("/puzzles-and-games/progress").withHeaders(Headers("Authorization" -> "Bearer access-token")),
+        request("/puzzles-and-games/progress")
+          .withHeaders(Headers("Authorization" -> "Bearer access-token", "Origin" -> allowedOrigin)),
       )
 
     status(result) should be(OK)
     contentType(result) should contain("application/json")
+    header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
     header("Cache-Control", result) should contain("private, no-store, no-cache")
     (contentAsJson(result) \ "results").as[Seq[PuzzlesApiItem]] shouldBe Seq(item)
     verify(progressApi).query(
@@ -378,6 +434,18 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(progressApi).query(any[LocalDate], any[Seq[String]], eqTo(Option.empty[String]))(
       any[ExecutionContext],
     )
+  }
+
+  it should "preserve CORS and prevent caching when the progress API fails" in {
+    val progressApi = mock[PuzzlesProgressApi]
+    when(progressApi.query(any[LocalDate], any[Seq[String]], any[Option[String]])(any[ExecutionContext]))
+      .thenReturn(Future.failed(new RuntimeException("API unavailable")))
+    val result = controller(successfulProvider, mock[DotcomRenderingService], puzzlesProgressApi = progressApi)
+      .puzzlesProgress()(request("/puzzles-and-games/progress").withHeaders(Headers("Origin" -> allowedOrigin)))
+
+    status(result) should be(BAD_GATEWAY)
+    header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
+    header("Cache-Control", result) should contain("private, no-store, no-cache")
   }
 
   "renderPuzzlesJson" should "return not found when the JSON action receives an HTML request" in {
