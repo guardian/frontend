@@ -22,7 +22,6 @@ import model.{
   ContentType,
   CrosswordData,
   DotcomContentType,
-  GUDateTimeFormatNew,
   GalleryPage,
   ImageContentPage,
   ImageMedia,
@@ -694,8 +693,7 @@ object DotcomRenderingDataModel {
       twitterData = page.getTwitterProperties,
       version = 3,
       webPublicationDate = content.trail.webPublicationDate.toString,
-      webPublicationDateDisplay =
-        GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
+      webPublicationDateDisplay = primaryDateString(content, request),
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
       firstPublicationDate = content.fields.firstPublicationDate.getOrElse(content.trail.webPublicationDate).toString,
       webTitle = content.metadata.webTitle,

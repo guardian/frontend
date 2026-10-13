@@ -93,7 +93,9 @@ object LinkedData {
         image = getImagesForArticle(article, fallbackLogo),
         author = authors,
         datePublished = article.trail.webPublicationDate.toString(),
-        dateModified = article.fields.lastModified.toString(),
+        dateModified =
+          (if (DotcomRenderingUtils.isFilterContent(article)) article.trail.webPublicationDate
+           else article.fields.lastModified).toString(),
         headline = article.trail.headline,
         mainEntityOfPage = article.metadata.webUrl,
       ),
@@ -136,7 +138,9 @@ object LinkedData {
         image = getImagesForInteractive(interactive, fallbackLogo),
         author = authors,
         datePublished = interactive.trail.webPublicationDate.toString(),
-        dateModified = interactive.fields.lastModified.toString(),
+        dateModified =
+          (if (DotcomRenderingUtils.isFilterContent(interactive)) interactive.trail.webPublicationDate
+           else interactive.fields.lastModified).toString(),
         headline = interactive.trail.headline,
         mainEntityOfPage = interactive.metadata.webUrl,
       ),

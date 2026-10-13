@@ -9,7 +9,9 @@ import com.gu.contentapi.client.model.v1.{
   ContentFields,
   ElementType,
   ImageElementFields,
+  TagType,
   Content => ApiContent,
+  Tag => ApiTag,
 }
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.contentapi.client.utils.format.LiveBlogDesign
@@ -36,6 +38,7 @@ import org.mockito.Mockito.when
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
+import play.api.test.FakeRequest
 
 import java.time.ZoneOffset
 
@@ -192,6 +195,61 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
 
   private val sampleArticleBody =
     """<p>Opening paragraph.</p><p>Second paragraph with some content.</p>"""
+
+  private def datedArticle(tagIds: Seq[String], republished: Boolean): Article = {
+    val firstPublished = new DateTime(2026, 10, 2, 16, 13)
+    val published = if (republished) firstPublished.plusDays(5) else firstPublished
+    def capi(dt: DateTime) = jodaToJavaInstant(dt).atOffset(ZoneOffset.UTC).toCapiDateTime
+    val item = ApiContent(
+      id = "thefilter/2026/oct/02/test-article",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDate = Some(capi(published)),
+      webTitle = "Test article",
+      webUrl = "http://www.theguardian.com/thefilter/2026/oct/02/test-article",
+      apiUrl = "http://content.guardianapis.com/thefilter/2026/oct/02/test-article",
+      tags = tagIds.map(id =>
+        ApiTag(
+          id = id,
+          `type` = TagType.Keyword,
+          webTitle = "",
+          sectionId = None,
+          sectionName = None,
+          webUrl = "",
+          apiUrl = "",
+          references = Nil,
+        ),
+      ).toList,
+      elements = None,
+      fields = Some(
+        ContentFields(
+          firstPublicationDate = Some(capi(firstPublished)),
+          lastModified = Some(capi(published.plusMinutes(10))),
+        ),
+      ),
+    )
+    Article.make(Content.make(item))
+  }
+
+  "primaryDateString" should "prefix a republished Filter article with Updated" in {
+    val article = datedArticle(Seq("thefilter/series/the-filter"), republished = true)
+    DotcomRenderingUtils.primaryDateString(article, FakeRequest()) should startWith("Updated ")
+  }
+
+  it should "prefix a republished article from the Filter commissioning desk" in {
+    val article = datedArticle(Seq("tracking/commissioningdesk/filter-us"), republished = true)
+    DotcomRenderingUtils.primaryDateString(article, FakeRequest()) should startWith("Updated ")
+  }
+
+  it should "not prefix a Filter article that has not been republished" in {
+    val article = datedArticle(Seq("thefilter/series/the-filter"), republished = false)
+    DotcomRenderingUtils.primaryDateString(article, FakeRequest()) should not startWith "Updated"
+  }
+
+  it should "not prefix a republished article that is not Filter content" in {
+    val article = datedArticle(Seq("lifeandstyle/lifeandstyle"), republished = true)
+    DotcomRenderingUtils.primaryDateString(article, FakeRequest()) should not startWith "Updated"
+  }
 
   "shouldAddAffiliateLinks" should "return false when the affiliate links switch is off" in {
     Switches.AffiliateLinks.switchOff()
