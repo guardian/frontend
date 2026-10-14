@@ -9,6 +9,8 @@ case class PuzzlesApiItem(
     progress: Int,
     setterName: Option[String],
     gameUrl: Option[String],
+    /** The Puzzles API's own state for the reader: `not-started`, `in-progress` or `completed`. */
+    gameStatus: Option[String] = None,
 )
 
 object PuzzlesApiItem {

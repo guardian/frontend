@@ -6,6 +6,7 @@ import model.dotcomrendering.PuzzleItem
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+import java.time.LocalDate
 import scala.concurrent.duration._
 import scala.concurrent.{Await, ExecutionContext, Future}
 
@@ -13,15 +14,21 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
   private implicit val executionContext: ExecutionContext = ExecutionContext.global
 
   private val date = "2026-09-24"
+  private val today = LocalDate.parse(date)
 
-  /** Every crossword set "has" crossword number 100, except when `exclude` matches the id we would return. */
+  /** Every crossword set "has" crossword number 100 (published today), except when `exclude` matches the id we would
+    * return: then the previous one, number 99 (published the day before).
+    */
   private val lookup: CrosswordLookup = (set, excludeId) => {
     val id = s"crosswords/$set/100"
-    Future.successful(if (excludeId.contains(id)) Some(LatestCrossword(set, 99)) else Some(LatestCrossword(set, 100)))
+    Future.successful(
+      if (excludeId.contains(id)) Some(LatestCrossword(set, 99, Some(today.minusDays(1))))
+      else Some(LatestCrossword(set, 100, Some(today))),
+    )
   }
 
   private def resolve(key: String, id: Option[String] = None, l: CrosswordLookup = lookup): Seq[PuzzleItem] =
-    Await.result(PuzzleRecommendations.resolve(key, id, date, l), 5.seconds)
+    Await.result(PuzzleRecommendations.resolve(key, id, date, l, today), 5.seconds)
 
   private def ids(items: Seq[PuzzleItem]): Seq[String] = items.map(_.id)
 
@@ -67,7 +74,7 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     ids(resolve("sudoku-killer")) shouldBe Seq("sudoku-killer", "sudoku-hard", "sudoku-medium")
   }
 
-  "resolve" should "use the day before for the same iframe game and the same date for other iframe games" in {
+  "resolve" should "use the day before for the iframe game being played today and today for every other iframe game" in {
     val items = resolve("sudoku-medium")
     items.flatMap(_.url) should contain allOf (
       "/puzzles-and-games/logic-puzzles/sudoku-medium/2026-09-23",
@@ -77,19 +84,54 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
       Some("/puzzles-and-games/word-games/word-wheel/2026-09-24")
   }
 
-  it should "label iframe cards with their day and crossword cards with their number" in {
+  it should "point every iframe game at today when the page being played is not today's, including the one being played" in {
+    val pastPage = "2026-09-10"
+    val items = Await.result(
+      PuzzleRecommendations.resolve("sudoku-easy", None, pastPage, lookup, today),
+      5.seconds,
+    )
+    items.find(_.id == "sudoku-easy").flatMap(_.url) shouldBe
+      Some("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-24")
+    items.find(_.id == "sudoku-easy").flatMap(_.cadence) shouldBe Some("Today")
+    items.find(_.id == "sudoku-medium").flatMap(_.url) shouldBe
+      Some("/puzzles-and-games/logic-puzzles/sudoku-medium/2026-09-24")
+    items.find(_.id == "sudoku-medium").flatMap(_.cadence) shouldBe Some("Today")
+  }
+
+  it should "label every card with Today or its short date, never Yesterday or a crossword number" in {
     val iframes = resolve("sudoku-medium")
-    iframes.find(_.id == "sudoku-medium").flatMap(_.cadence) shouldBe Some("Yesterday")
+    iframes.find(_.id == "sudoku-medium").flatMap(_.cadence) shouldBe Some("Wed 23 Sep")
     iframes.find(_.id == "sudoku-hard").flatMap(_.cadence) shouldBe Some("Today")
 
     val crosswords = resolve("weekend", Some("crosswords/weekend/100"))
-    crosswords.find(_.id == "crossword-weekend").flatMap(_.cadence) shouldBe Some("No 99")
-    crosswords.find(_.id == "crossword-quick").flatMap(_.cadence) shouldBe Some("No 100")
+    crosswords.find(_.id == "crossword-weekend").flatMap(_.cadence) shouldBe Some("Wed 23 Sep")
+    crosswords.find(_.id == "crossword-quick").flatMap(_.cadence) shouldBe Some("Today")
   }
 
-  it should "format crossword numbers with a thousands separator" in {
-    val big: CrosswordLookup = (set, _) => Future.successful(Some(LatestCrossword(set, 17599)))
-    resolve("quick", l = big).head.cadence shouldBe Some("No 17,599")
+  it should "label a card relative to the current day in London, not the page's date" in {
+    val items = Await.result(
+      PuzzleRecommendations.resolve("sudoku-easy", None, date, lookup, today.plusDays(10)),
+      5.seconds,
+    )
+    // Both games are today's (the page is not), the crossword is the one published on the page's day.
+    items.flatMap(_.cadence) shouldBe Seq("Today", "Today", "Thu 24 Sep")
+  }
+
+  it should "format a crossword's date as the short date, with no trailing number" in {
+    val saturday: CrosswordLookup =
+      (set, _) => Future.successful(Some(LatestCrossword(set, 17599, Some(LocalDate.parse("2026-10-10")))))
+    resolve("quick", l = saturday).head.cadence shouldBe Some("Sat 10 Oct")
+    resolve("quick", l = saturday).head.date shouldBe Some("2026-10-10")
+  }
+
+  it should "have no label for a crossword whose date is unknown, rather than a wrong one" in {
+    val undated: CrosswordLookup = (set, _) => Future.successful(Some(LatestCrossword(set, 17599)))
+    resolve("quick", l = undated).head.cadence shouldBe None
+  }
+
+  it should "give every iframe card its date" in {
+    resolve("sudoku-medium").filter(_.`type` == "sudoku").map(_.date) shouldBe
+      Seq(Some("2026-09-23"), Some("2026-09-24"))
   }
 
   it should "link crosswords to their most recent puzzle" in {
@@ -130,7 +172,7 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
   }
 
   private def resolveArchive(key: String, l: CrosswordLookup = lookup): Seq[PuzzleItem] =
-    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l), 5.seconds)
+    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l, today), 5.seconds)
 
   "ArchiveTable" should "have the same 18 rows as the puzzle table, each with 3 slots and never its own puzzle" in {
     PuzzleRecommendations.ArchiveTable.keySet shouldBe PuzzleRecommendations.Table.keySet
@@ -149,7 +191,7 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     ids(resolveArchive("on-the-ball")) shouldBe Seq("crossword-quick", "sudoku-medium")
   }
 
-  it should "label every iframe card as today and fall back to the default for an unlisted puzzle" in {
+  it should "label every iframe card as today (the archive's own day) and fall back to the default for an unlisted puzzle" in {
     resolveArchive("sudoku-easy").filter(_.`type` == "sudoku").flatMap(_.cadence).distinct shouldBe Seq("Today")
     ids(resolveArchive("everyman")) shouldBe Seq("crossword-quick", "sudoku-easy", "word-wheel")
   }
