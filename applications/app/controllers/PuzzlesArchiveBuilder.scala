@@ -85,6 +85,19 @@ object PuzzlesArchiveBuilder {
     if (selection.category == "crosswords") selection.puzzle.set
     else selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
 
+  /** Every archive item, wherever it is listed (the month's calendar or the recent cards), is built here so that none
+    * of them can drop a field such as the game status.
+    */
+  private def archiveItem(selection: Selection, item: PuzzlesApiItem): PuzzlesArchiveItem =
+    PuzzlesArchiveItem(
+      item.puzzleType,
+      item.publishDate.take(10),
+      item.progress,
+      item.setterName,
+      destination(selection, item),
+      item.gameStatus,
+    )
+
   def build(
       selection: Selection,
       year: Int,
@@ -102,16 +115,7 @@ object PuzzlesArchiveBuilder {
       puzzles = selection.puzzles,
       year = year,
       month = month,
-      items = items.map(item =>
-        PuzzlesArchiveItem(
-          item.puzzleType,
-          item.publishDate.take(10),
-          item.progress,
-          item.setterName,
-          destination(selection, item),
-          item.gameStatus,
-        ),
-      ),
+      items = items.map(archiveItem(selection, _)),
       hasError = hasError,
       moreFrom = moreFrom,
       recentItems = recentItems
@@ -119,14 +123,6 @@ object PuzzlesArchiveBuilder {
         .sortBy(_.publishDate)
         .reverse
         .take(3)
-        .map(item =>
-          PuzzlesArchiveItem(
-            item.puzzleType,
-            item.publishDate.take(10),
-            item.progress,
-            item.setterName,
-            destination(selection, item),
-          ),
-        ),
+        .map(archiveItem(selection, _)),
     )
 }

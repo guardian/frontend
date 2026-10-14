@@ -134,6 +134,7 @@ import play.api.libs.json.Json
     )
 
     archive.items.map(_.gameStatus) should be(Seq(Some("completed"), None))
+    archive.recentItems.map(_.gameStatus) should be(Seq(None, Some("completed")))
     (Json.toJson(archive) \ "items" \ 1 \ "gameStatus").toOption should be(None)
   }
 
