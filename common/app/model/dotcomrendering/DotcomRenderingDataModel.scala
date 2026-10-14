@@ -291,7 +291,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       hasStoryPackage = mediaPage.related.hasStoryPackage,
       storyPackage = getStoryPackage(mediaPage.related.faciaItems, request),
-      customSubnav = None,
+      customSubnav = customSubnav,
     )
   }
 
