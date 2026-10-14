@@ -20,8 +20,8 @@ import scala.util.control.NonFatal
   * that equals the row's own key means "most recent of the same puzzle, excluding the current one". Resolution depends
   * on the kind of puzzle referenced:
   *   - crossword: the most recent crossword of that series, found via CAPI (never the current article)
-  *   - iframe game (sudoku, word wheel, wordiply): date arithmetic, no CAPI. Any puzzle => today (London), except the one
-  *     being played when it is itself today's, which would just repeat the page: that one => the day before.
+  *   - iframe game (sudoku, word wheel, wordiply): date arithmetic, no CAPI. Any puzzle => today (London), except the
+  *     one being played when it is itself today's, which would just repeat the page: that one => the day before.
   *
   * A key without a catalogue entry (e.g. `on-the-ball` and `film-reveal`, which are not built yet) is simply left out
   * of the result, so the rail shows fewer cards rather than failing.
@@ -55,8 +55,9 @@ object PuzzleRecommendations extends GuLogging {
 
   def londonToday(): LocalDate = LocalDate.now(London)
 
-  /** The label of a card: "Today" for the current day (in London), otherwise the short date, e.g. "Sat 10 Oct". The same
-    * wording as the Puzzles & games archive pages, for every card in the rail: no "Yesterday" and no crossword numbers.
+  /** The label of a card: "Today" for the current day (in London), otherwise the short date, e.g. "Sat 10 Oct". The
+    * same wording as the Puzzles & games archive pages, for every card in the rail: no "Yesterday" and no crossword
+    * numbers.
     */
   private[controllers] def cadenceFor(date: LocalDate, today: LocalDate): String =
     if (date == today) "Today"

@@ -118,8 +118,8 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
   }
 
   it should "format a crossword's date as the short date, with no trailing number" in {
-    val saturday: CrosswordLookup = (set, _) =>
-      Future.successful(Some(LatestCrossword(set, 17599, Some(LocalDate.parse("2026-10-10")))))
+    val saturday: CrosswordLookup =
+      (set, _) => Future.successful(Some(LatestCrossword(set, 17599, Some(LocalDate.parse("2026-10-10")))))
     resolve("quick", l = saturday).head.cadence shouldBe Some("Sat 10 Oct")
     resolve("quick", l = saturday).head.date shouldBe Some("2026-10-10")
   }
