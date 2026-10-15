@@ -6,47 +6,51 @@ import conf.Configuration
 import io.circe.generic.semiauto.{deriveDecoder, deriveEncoder}
 import io.circe.{Decoder, DecodingFailure, Encoder}
 import play.api.libs.json.{Json, Writes}
-import services.S3
+import services.{S3, S3Storylines}
 
 import java.time.Instant
 import play.api.mvc.RequestHeader
+import software.amazon.awssdk.services.s3.model.NoSuchKeyException
+
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
 
 // this mirrors the structure in the tool generating the content
 // https://github.com/guardian/tag-page-supercharger/blob/main/app/models/FrontendContent.scala#L18
 case class StorylinesContent(
-    created: Instant,
-    tag: String,
-    storylines: List[Storyline],
-    earliestArticleTime: Option[Instant],
-    latestArticleTime: Option[Instant],
-)
+                              created: Instant,
+                              tag: String,
+                              storylines: List[Storyline],
+                              earliestArticleTime: Option[Instant],
+                              latestArticleTime: Option[Instant],
+                            )
 
 case class Storyline(
-    title: String,
-    content: List[CategoryContent],
-)
+                      title: String,
+                      content: List[CategoryContent],
+                    )
 
 case class CategoryContent(
-    category: String,
-    articles: Option[List[ArticleData]],
-)
+                            category: String,
+                            articles: Option[List[ArticleData]],
+                          )
 
 case class ImageData(
-    src: Option[String],
-    altText: Option[String],
-    isAvatar: Boolean = false,
-    mediaData: Option[StorylinesMediaData] = None,
-)
+                      src: Option[String],
+                      altText: Option[String],
+                      isAvatar: Boolean = false,
+                      mediaData: Option[StorylinesMediaData] = None,
+                    )
 
 case class ArticleData(
-    url: String,
-    headline: String,
-    byline: Option[String],
-    publicationTime: Instant,
-    image: Option[
-      ImageData,
-    ],
-)
+                        url: String,
+                        headline: String,
+                        byline: Option[String],
+                        publicationTime: Instant,
+                        image: Option[
+                          ImageData,
+                        ],
+                      )
 
 // These mirror the definitions from DCR: https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/types/mainMedia.ts
 // In DCR, we effectively bypass the usual transformations done to Frontend/CAPI data,
@@ -57,27 +61,27 @@ sealed trait StorylinesMediaData {
 }
 
 case class StorylinesVideo(
-    `type`: String = "YoutubeVideo",
-    id: String,
-    videoId: String,
-    height: Int,
-    width: Int,
-    origin: String,
-    title: String,
-    duration: Int,
-    expired: Boolean,
-    image: Option[String] = None,
-) extends StorylinesMediaData
+                            `type`: String = "YoutubeVideo",
+                            id: String,
+                            videoId: String,
+                            height: Int,
+                            width: Int,
+                            origin: String,
+                            title: String,
+                            duration: Int,
+                            expired: Boolean,
+                            image: Option[String] = None,
+                          ) extends StorylinesMediaData
 
 case class StorylinesAudio(
-    `type`: String = "Audio",
-    duration: String,
-) extends StorylinesMediaData
+                            `type`: String = "Audio",
+                            duration: String,
+                          ) extends StorylinesMediaData
 
 case class StorylinesGallery(
-    `type`: String = "Gallery",
-    count: String,
-) extends StorylinesMediaData
+                              `type`: String = "Gallery",
+                              count: String,
+                            ) extends StorylinesMediaData
 
 object StorylinesMediaData {
   implicit val videoDecoder: Decoder[StorylinesVideo] = deriveDecoder
@@ -87,9 +91,9 @@ object StorylinesMediaData {
     Decoder.instance { cursor =>
       cursor.get[String]("type").flatMap {
         case "YoutubeVideo" => cursor.as[StorylinesVideo]
-        case "Audio"        => cursor.as[StorylinesAudio]
-        case "Gallery"      => cursor.as[StorylinesGallery]
-        case other          =>
+        case "Audio" => cursor.as[StorylinesAudio]
+        case "Gallery" => cursor.as[StorylinesGallery]
+        case other =>
           Left(DecodingFailure(s"Unknown mediaType: $other", cursor.history))
       }
     }
@@ -98,8 +102,8 @@ object StorylinesMediaData {
   implicit val audioEncoder: Encoder[StorylinesAudio] = deriveEncoder
   implicit val galleryEncoder: Encoder[StorylinesGallery] = deriveEncoder
   implicit val mediaDataEncoder: Encoder[StorylinesMediaData] = Encoder.instance {
-    case v: StorylinesVideo   => videoEncoder(v)
-    case a: StorylinesAudio   => audioEncoder(a)
+    case v: StorylinesVideo => videoEncoder(v)
+    case a: StorylinesAudio => audioEncoder(a)
     case g: StorylinesGallery => galleryEncoder(g)
   }
 
@@ -134,7 +138,6 @@ object ArticleData {
   implicit val decoder: Decoder[ArticleData] = deriveDecoder
   implicit val encoder: Encoder[ArticleData] = deriveEncoder
   implicit val articleDataWrites: Writes[ArticleData] = Json.writes[ArticleData]
-
 }
 
 object StorylinesContent extends GuLogging {
@@ -155,25 +158,33 @@ object StorylinesContent extends GuLogging {
     "football/liverpool",
   )
 
-  def getContent(tag: String)(implicit rh: RequestHeader): Option[StorylinesContent] = {
-    if (allowedTags.contains(tag) && ABTests.isUserInTestGroup("newsroom-ai-tag-page-storylines", "variant")) {
-      lazy val stage: String = Configuration.facia.stage.toUpperCase
-      val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
-      val location = s"$stage/tag-page-ai-data/$encodedTag.json"
-      val maybeStorylinesContent = S3.get(location).map { jsonString =>
-        io.circe.parser.decode[StorylinesContent](jsonString) match {
-          case Right(content) => Some(content)
-          case Left(error)    =>
-            log.error(s"Error decoding Storylines Content for tag $tag: $error")
-            None
-        }
+  private def fetchStorylinesForTag(tag: String)(implicit ec: ExecutionContext): Future[Option[StorylinesContent]] = {
+    val stage = Configuration.facia.stage.toUpperCase
+    val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
+    val key = s"$stage/tag-page-ai-data/$encodedTag.json"
+
+    S3Storylines.getAsync(key).map { obj =>
+      io.circe.parser.decode[StorylinesContent](obj.asUtf8String()) match {
+        case Right(content) => Some(content)
+        case Left(error) =>
+          log.error(s"Error decoding Storylines Content for tag $tag: $error")
+          None
       }
-      maybeStorylinesContent match {
-        case Some(content) => content
-        case None          => log.error("Storylines Content not found for tag: " + tag); None
-      }
+    }.recover {
+      case _: NoSuchKeyException =>
+        log.error(s"Storylines Content not found for tag: $tag")
+        None
+      case NonFatal(e) =>
+        log.error(s"Error fetching Storylines Content for tag $tag", e)
+        None
+    }
+  }
+
+  def getContent(tag: String)(implicit ec: ExecutionContext): Future[Option[StorylinesContent]] = {
+    if (allowedTags.contains(tag)) {
+      fetchStorylinesForTag(tag)
     } else {
-      None
+      Future.successful(None)
     }
   }
 }

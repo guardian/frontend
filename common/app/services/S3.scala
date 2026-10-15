@@ -6,7 +6,7 @@ import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
 import services.S3.logS3ExceptionWithDevHint
-import software.amazon.awssdk.core.async.AsyncRequestBody
+import software.amazon.awssdk.core.async.{AsyncRequestBody, AsyncResponseTransformer}
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL.{PRIVATE, PUBLIC_READ}
 import software.amazon.awssdk.services.s3.model._
@@ -145,6 +145,7 @@ object S3FrontsApi extends S3 {
 
   def putLiveFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit =
     putFapiPressedJson("live", path, json, pressedType.suffix)
+
   def putDraftFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit =
     putFapiPressedJson("draft", path, json, pressedType.suffix)
 }
@@ -183,5 +184,16 @@ object S3SportsAssets extends S3 {
     // putObject (async) returns a java.util.concurrent.CompletableFuture which needs
     // to be converted to a Scala Future
     asyncClient.putObject(request, AsyncRequestBody.fromFile(file)).asScala
+  }
+}
+
+object S3Storylines extends S3 {
+
+  def getAsync(key: String) = {
+    val asyncClient = AWSv2.S3Async
+
+    val request = GetObjectRequest.builder().bucket(bucket)
+      .key(key).build()
+    asyncClient.getObject(request, AsyncResponseTransformer.toBytes[GetObjectResponse]()).asScala
   }
 }

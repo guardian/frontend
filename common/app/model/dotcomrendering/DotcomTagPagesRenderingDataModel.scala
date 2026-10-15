@@ -1,10 +1,11 @@
 package model.dotcomrendering
 
+import ab.ABTests
 import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
-import model.{Tags, StorylinesContent}
+import model.{StorylinesContent, Tags}
 import model.pressed.PressedContent
 import navigation.{FooterLinks, Nav}
 import org.joda.time.{DateTime, DateTimeZone}
@@ -73,6 +74,7 @@ object DotcomTagPagesRenderingDataModel {
       page: IndexPage,
       request: RequestHeader,
       pageType: PageType,
+      storylinesContent: Option[StorylinesContent]
   ): DotcomTagPagesRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition, request, customSubnav = None)
@@ -115,7 +117,7 @@ object DotcomTagPagesRenderingDataModel {
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       contributionsServiceUrl = Configuration.contributionsService.url,
-      storylinesContent = StorylinesContent.getContent(page.metadata.id)(request),
+      storylinesContent = storylinesContent,
     )
   }
 

@@ -14,20 +14,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.meta.BlocksOn
-import model.{
-  CacheTime,
-  Cached,
-  GalleryPage,
-  ImageContentPage,
-  InteractivePage,
-  LiveBlogPage,
-  MediaPage,
-  NoCache,
-  PageWithStoryPackage,
-  PressedPage,
-  RelatedContentItem,
-  SimplePage,
-}
+import model.{CacheTime, Cached, GalleryPage, ImageContentPage, InteractivePage, LiveBlogPage, MediaPage, NoCache, PageWithStoryPackage, PressedPage, RelatedContentItem, SimplePage, StorylinesContent}
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
@@ -346,15 +333,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getTagPage(
       ws: WSClient,
-      page: IndexPage,
-      pageType: PageType,
+      dataModel: DotcomTagPagesRenderingDataModel
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomTagPagesRenderingDataModel(
-      page,
-      request,
-      pageType,
-    )
-
     val json = DotcomTagPagesRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.tagPageBaseURL + "/TagPage", CacheTime.Facia)
   }
