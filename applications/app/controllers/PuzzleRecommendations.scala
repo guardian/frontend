@@ -74,12 +74,12 @@ object PuzzleRecommendations extends GuLogging {
     CrosswordCard("quick", "Quick crossword"),
     CrosswordCard("mini", "Mini crossword"),
     CrosswordCard("cryptic", "Cryptic crossword"),
-    CrosswordCard("quick-cryptic", "Quick cryptic crossword"),
     CrosswordCard("weekend", "Weekend crossword"),
-    CrosswordCard("prize", "Prize crossword"),
+    CrosswordCard("quick-cryptic", "Quick cryptic crossword"),
     CrosswordCard("quiptic", "Quiptic crossword"),
-    CrosswordCard("genius", "Genius crossword"),
+    CrosswordCard("prize", "Prize crossword"),
     CrosswordCard("sunday-quick", "Sunday quick crossword"),
+    CrosswordCard("genius", "Genius crossword"),
     CrosswordCard("special", "Special crossword"),
   )
 
