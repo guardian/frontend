@@ -43,13 +43,14 @@ class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
         subnav.pages.exists(p => p.`type` == HasTag && p.path == tagId)
 
       val draft = if (status == Draft) config.draft else Nil
-      val all = draft ++ config.live
+      val all = config.live ++ draft
 
+      // Subnav config is stored oldest to newest, so we use .findLast to make sure we return the freshest match possible
       all
-        .find(subnavMatchesSpecificArticle)
+        .findLast(subnavMatchesSpecificArticle)
         .orElse {
-          // Match against the content's tags in priority order (first to last), rather than any tag.
-          content.tags.tags.view.flatMap(tag => all.find(subnavMatchesTag(_, tag.id))).headOption
+          // Match against the content's tags in priority order (first to last)
+          content.tags.tags.view.flatMap(tag => all.findLast(subnavMatchesTag(_, tag.id))).headOption
         }
     }
   }
