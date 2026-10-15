@@ -244,20 +244,32 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
-  "Puzzles navigation" should "use Puzzles & games as the variant subnav without adding it to the burger menu" in {
+  "Puzzles navigation" should "add Puzzles & games after Ukraine for variant requests" in {
     val request = requestWithParticipations("puzzles-new-hub-v1:variant")
     puzzles.children should not be empty
 
     Edition.allEditions.foreach { edition =>
       val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"), edition, request)
+      val newsLinks = menu.pillars.head.children
+      val ukraineIndex = newsLinks.indexOf(ukraine)
 
+      menu.pillars.map(_.title) shouldBe Seq("News", "Opinion", "Sport", "Culture", "Lifestyle")
+      menu.pillars.count(_.title == "News") shouldBe 1
       menu.otherLinks should not contain puzzles
       menu.otherLinks should contain(legacyCrosswords)
       menu.otherLinks should contain(legacyWordiply)
       menu.currentNavLink should contain(puzzles)
-      menu.currentParent should contain(puzzles)
-      menu.currentPillar shouldBe None
       menu.subNavSections should contain(ParentSubnav(puzzles, puzzles.children))
+
+      if (ukraineIndex >= 0) {
+        newsLinks.lift(ukraineIndex + 1) should contain(puzzles)
+        menu.currentParent.map(_.title) should contain(edition.navigationLinks.newsPillar.title)
+        menu.currentPillar.map(_.title) should contain(edition.navigationLinks.newsPillar.title)
+      } else {
+        newsLinks should not contain puzzles
+        menu.currentParent should contain(puzzles)
+        menu.currentPillar shouldBe None
+      }
     }
   }
 
@@ -274,6 +286,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
       Edition.allEditions.foreach { edition =>
         val menu = NavMenu(NavigationPage("crosswords"), edition, request)
 
+        menu.pillars.head.children should not contain puzzles
         menu.otherLinks should contain(legacyCrosswords)
         menu.otherLinks should not contain puzzles
         menu.otherLinks should contain(legacyWordiply)
@@ -289,13 +302,17 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val variantRequest = requestWithParticipations("puzzles-new-hub-v1:variant")
     val controlRequest = requestWithParticipations("puzzles-new-hub-v1:control")
     val page = StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games")
+    val variantNav = Nav(page, Uk, variantRequest, None)
+    val controlNav = Nav(page, Uk, controlRequest, None)
 
-    Nav(page, Uk, variantRequest, None).otherLinks should not contain puzzles
-    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyWordiply)
+    variantNav.pillars.head.children.sliding(2).toSeq should contain(Seq(ukraine, puzzles))
+    variantNav.otherLinks should not contain puzzles
+    variantNav.otherLinks should contain(legacyCrosswords)
+    variantNav.otherLinks should contain(legacyWordiply)
 
-    Nav(page, Uk, controlRequest, None).otherLinks should not contain puzzles
-    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyWordiply)
+    controlNav.pillars.head.children should not contain puzzles
+    controlNav.otherLinks should not contain puzzles
+    controlNav.otherLinks should contain(legacyCrosswords)
+    controlNav.otherLinks should contain(legacyWordiply)
   }
 }
