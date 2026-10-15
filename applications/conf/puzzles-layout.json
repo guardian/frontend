@@ -113,15 +113,6 @@
 				"nestedContainers": [],
 				"archiveChoices": [
 					{
-						"id": "archive-mini",
-						"title": "Mini",
-						"type": "crossword",
-						"set": "mini",
-						"cardVariant": "archive",
-						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-mini",
-						"variant": "archive-page"
-					},
-					{
 						"id": "archive-quick",
 						"title": "Quick",
 						"type": "crossword",
@@ -131,12 +122,30 @@
 						"variant": "archive-page"
 					},
 					{
+						"id": "archive-mini",
+						"title": "Mini",
+						"type": "crossword",
+						"set": "mini",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-mini",
+						"variant": "archive-page"
+					},
+					{
 						"id": "archive-cryptic",
 						"title": "Cryptic",
 						"type": "crossword",
 						"set": "cryptic",
 						"cardVariant": "archive",
 						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-cryptic",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-weekend",
+						"title": "Weekend",
+						"type": "crossword",
+						"set": "weekend",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-weekend",
 						"variant": "archive-page"
 					},
 					{
@@ -155,15 +164,6 @@
 						"set": "quiptic",
 						"cardVariant": "archive",
 						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-quiptic",
-						"variant": "archive-page"
-					},
-					{
-						"id": "archive-weekend",
-						"title": "Weekend",
-						"type": "crossword",
-						"set": "weekend",
-						"cardVariant": "archive",
-						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-weekend",
 						"variant": "archive-page"
 					},
 					{
