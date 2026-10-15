@@ -158,13 +158,16 @@ object StorylinesContent extends GuLogging {
     "football/liverpool",
   )
 
+  def decode(jsonString: String): Either[io.circe.Error, StorylinesContent] =
+    io.circe.parser.decode[StorylinesContent](jsonString)
+
   private def fetchStorylinesForTag(tag: String)(implicit ec: ExecutionContext): Future[Option[StorylinesContent]] = {
     val stage = Configuration.facia.stage.toUpperCase
     val encodedTag = java.net.URLEncoder.encode(tag, "UTF-8")
     val key = s"$stage/tag-page-ai-data/$encodedTag.json"
 
     S3Storylines.getAsync(key).map { obj =>
-      io.circe.parser.decode[StorylinesContent](obj.asUtf8String()) match {
+      decode(obj.asUtf8String()) match {
         case Right(content) => Some(content)
         case Left(error) =>
           log.error(s"Error decoding Storylines Content for tag $tag: $error")
