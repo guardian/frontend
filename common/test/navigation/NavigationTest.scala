@@ -239,7 +239,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-    private def requestWithParticipations(participations: String): RequestHeader = {
+  private def requestWithParticipations(participations: String): RequestHeader = {
     val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations)
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
@@ -253,6 +253,8 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
       val newsLinks = menu.pillars.head.children
       val ukraineIndex = newsLinks.indexOf(ukraine)
 
+      menu.pillars.map(_.title) shouldBe Seq("News", "Opinion", "Sport", "Culture", "Lifestyle")
+      menu.pillars.count(_.title == "News") shouldBe 1
       menu.otherLinks should not contain puzzles
       menu.otherLinks should contain(legacyCrosswords)
       menu.otherLinks should contain(legacyWordiply)
@@ -313,3 +315,4 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     controlNav.otherLinks should contain(legacyCrosswords)
     controlNav.otherLinks should contain(legacyWordiply)
   }
+}

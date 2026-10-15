@@ -252,7 +252,6 @@ object NavMenu {
     NavRoot(
       Seq(
         newsPillar,
-        editionLinks.newsPillar,
         editionLinks.opinionPillar,
         editionLinks.sportPillar,
         editionLinks.culturePillar,
