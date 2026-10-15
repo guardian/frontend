@@ -294,8 +294,6 @@ object NavLinks {
       ukBusiness,
       ukEnvironment,
       politics,
-      science,
-      tech,
       globalDevelopment,
       obituaries,
     ),
