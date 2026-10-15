@@ -21,6 +21,8 @@ object NavLinks {
   val usPolitics = NavLink("US politics", "/us-news/us-politics")
   val usMidterms = NavLink("Midterms 2026", "/us-news/us-midterm-elections-2026")
   val usImmigration = NavLink("US immigration", "/us-news/usimmigration")
+  val puzzlesAndGames = NavLink("Puzzles", "/puzzles-and-games")
+
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -296,7 +298,8 @@ object NavLinks {
       politics,
       globalDevelopment,
       obituaries,
-      theFilterUk
+      theFilterUk,
+      puzzlesAndGames
     ),
   )
   val auNewsPillar = ukNewsPillar.copy(
@@ -315,6 +318,7 @@ object NavLinks {
       tech,
       podcastsAU,
       newsletters,
+      puzzlesAndGames
     ),
   )
   val usNewsPillar = ukNewsPillar.copy(children =
@@ -333,6 +337,7 @@ object NavLinks {
       newsletters,
       theFilterUs,
       usWellness,
+      puzzlesAndGames
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -350,6 +355,7 @@ object NavLinks {
       tech,
       ukBusiness,
       obituaries,
+      puzzlesAndGames
     ),
   )
   val eurNewsPillar = ukNewsPillar.copy(
@@ -365,6 +371,7 @@ object NavLinks {
       tech,
       ukBusiness,
       obituaries,
+      puzzlesAndGames
     ),
   )
 
