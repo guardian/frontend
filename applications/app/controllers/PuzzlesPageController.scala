@@ -10,7 +10,7 @@ import model.dotcomrendering.{
   DotcomPuzzlesPageRenderingDataModel,
   PuzzlePageInstance,
 }
-import model.{ApplicationContext, CacheTime, Cached, NoCache}
+import model.{ApplicationContext, CacheTime, Cached, Cors, NoCache, TinyResponse}
 import play.api.libs.ws.WSClient
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -28,6 +28,7 @@ class PuzzlesPageController(
     puzzlesProgressApi: PuzzlesProgressApi,
     remoteRenderer: DotcomRenderingService,
     contentApiClient: ContentApiClient,
+    puzzlesNewsletters: PuzzlesNewsletters,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -86,9 +87,16 @@ class PuzzlesPageController(
           PuzzlesPageController.ProgressPuzzleTypes,
           request.headers.get("Authorization"),
         )
-        .map(items => NoCache(Ok(Json.toJson(PuzzlesApiResponse(items)))))
-        .recover { case _ => NoCache(BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress"))) }
+        .map(items => Ok(Json.toJson(PuzzlesApiResponse(items))))
+        .recover { case _ => BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress")) }
+        .map(result => Cors(NoCache(result)))
     }
+
+  def puzzlesDataOptions(): Action[AnyContent] = Action { implicit request =>
+    TinyResponse.noContent(Some("GET, OPTIONS"))
+  }
+
+  def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
@@ -120,7 +128,7 @@ class PuzzlesPageController(
   // their selection in the path so that CODE/PROD receive the requested month.
   def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      Try(YearMonth.of(year, month)).toOption match {
+      val result = Try(YearMonth.of(year, month)).toOption match {
         case None                 => Future.successful(BadRequest)
         case Some(requestedMonth) =>
           buildArchive(
@@ -130,10 +138,11 @@ class PuzzlesPageController(
             request.headers.get("Authorization"),
           )
             .map { case (_, archive) =>
-              NoCache(Ok(Json.toJson(archive)))
+              Ok(Json.toJson(archive))
             }
             .recoverWith { case _: NoSuchElementException => notFound }
       }
+      result.map(response => Cors(NoCache(response)))
     }
 
   private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
@@ -184,14 +193,16 @@ class PuzzlesPageController(
               PuzzleRecommendations.capiLookup(contentApiClient),
             )
             .flatMap { moreFrom =>
-              puzzlesArchiveApi
-                .get(
-                  startDate,
-                  endDate,
-                  selection.apiType,
-                  authorization,
-                )
-                .map { items =>
+              val calendarItems = puzzlesArchiveApi.get(startDate, endDate, selection.apiType, authorization)
+              // Recent cards are relative to today, not the calendar's selected month.
+              // Reuse the current month's request, which already includes a 31-day lookback.
+              val recentItems =
+                if (isCurrentMonth) calendarItems
+                else puzzlesArchiveApi.get(today.minusDays(31), today, selection.apiType, authorization)
+
+              calendarItems
+                .zip(recentItems.recover { case _ => Nil })
+                .map { case (items, recent) =>
                   layout -> PuzzlesArchiveBuilder.build(
                     selection,
                     yearMonth.getYear,
@@ -199,6 +210,7 @@ class PuzzlesPageController(
                     items,
                     hasError = false,
                     moreFrom = moreFrom,
+                    recentItems = Some(recent),
                   )
                 }
                 .recover { case _ =>
@@ -352,6 +364,7 @@ class PuzzlesPageController(
           title = webTitle,
           puzzleDate = Some(date),
           moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+          puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = Seq.empty),
         )
         DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
       }

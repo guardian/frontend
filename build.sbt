@@ -104,6 +104,8 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       supportInternationalisation,
+      // Transitive dependency of Pekko, this evicts an older version temporarily
+      lz4Java,
     ) ++ jackson,
   )
 

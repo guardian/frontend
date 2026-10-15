@@ -43,6 +43,7 @@ case class PuzzlesArchiveItem(
     progress: Int,
     setterName: Option[String],
     url: String,
+    gameStatus: Option[String] = None,
 )
 
 object PuzzlesArchiveItem {
@@ -60,6 +61,7 @@ case class PuzzlesArchive(
     items: Seq[PuzzlesArchiveItem],
     hasError: Boolean,
     moreFrom: Seq[PuzzleItem],
+    recentItems: Seq[PuzzlesArchiveItem] = Nil,
 )
 object PuzzlesArchive {
   implicit val writes: OWrites[PuzzlesArchive] = Json.writes[PuzzlesArchive]
