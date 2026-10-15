@@ -7,6 +7,7 @@ import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, Json}
+import services.newsletters.NewsletterSignupAgent
 
 import java.time.{Clock, DayOfWeek, LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future, blocking}
@@ -21,14 +22,17 @@ trait PuzzlesLayoutProvider {
 class LocalJsonPuzzlesLayoutProvider(
     environment: Environment,
     contentApiClient: ContentApiClient,
+    newsletterSignupAgent: NewsletterSignupAgent,
     resourceName: String = LocalJsonPuzzlesLayoutProvider.DefaultResourceName,
     clock: Clock = Clock.systemUTC(),
 ) extends PuzzlesLayoutProvider
     with GuLogging {
 
+  private val newsletters = new PuzzlesNewsletters(newsletterSignupAgent)
+
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
-      val scheduledLayout = applyFeaturedSchedule(baseLayout)
+      val scheduledLayout = resolveNewsletters(applyFeaturedSchedule(baseLayout))
       val datedLayout = applyWordiplyDateFallback(scheduledLayout)
       enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
         log.warn("Failed to enrich crossword cards from CAPI using the scheduled layout", error)
@@ -69,6 +73,15 @@ class LocalJsonPuzzlesLayoutProvider(
         nestedContainers = container.content.nestedContainers.map(addWordiplyDate(_, date)),
       ),
     )
+
+  private def resolveNewsletters(layout: PuzzlesLayout): PuzzlesLayout =
+    layout.copy(containers = layout.containers.map { container =>
+      container.copy(supporting = container.supporting.map { supporting =>
+        supporting.newsletterIdentityName.fold(supporting) { identityName =>
+          supporting.copy(newsletter = newsletters.live(identityName), newsletterIdentityName = None)
+        }
+      })
+    })
 
   private def loadLayout(): PuzzlesLayout = {
     val inputStream = environment
