@@ -329,8 +329,6 @@ object NavLinks {
       usSoccer,
       usBusiness,
       usEnvironment,
-      usTech,
-      science,
       newsletters,
       theFilterUs,
       usWellness,
