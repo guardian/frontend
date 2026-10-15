@@ -172,7 +172,7 @@ final case class Content(
   def shareImageCategory: ShareImageCategory = {
 
     val isOldNews = !tags.tags.exists(tag => tagsWithoutAgeWarning.contains(tag.id)) &&
-      trail.webPublicationDate.isBefore(DateTime.now())
+      trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
 
     val isOldOpinion = tags.tags.exists(_.id == "tone/comment") &&
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
