@@ -235,6 +235,14 @@ object NavMenu {
 
     val editionLinks: EditionNavLinks = edition.navigationLinks
 
+    val newsPillar =
+      if (usePuzzlesNavigation) {
+        editionLinks.newsPillar.copy(children = editionLinks.newsPillar.children.flatMap {
+          case link if link == NavLinks.ukraine => Seq(link, NavLinks.puzzles)
+          case link                             => Seq(link)
+        })
+      } else editionLinks.newsPillar
+
     val otherLinks = editionLinks.otherLinks.flatMap {
       case NavLinks.legacyCrosswords if usePuzzlesNavigation =>
         List(NavLinks.puzzles, NavLinks.legacyCrosswords)
@@ -243,6 +251,7 @@ object NavMenu {
 
     NavRoot(
       Seq(
+        newsPillar,
         editionLinks.newsPillar,
         editionLinks.opinionPillar,
         editionLinks.sportPillar,
