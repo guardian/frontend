@@ -90,23 +90,26 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     crosswords.content.items.flatten.find(_.title == "Genius").flatMap(_.cadence) shouldBe Some("Monthly")
     crosswords.content.archiveChoices.map(_.map(_.title)) shouldBe Some(
       Seq(
-        "Mini",
         "Quick",
+        "Mini",
         "Cryptic",
+        "Weekend",
         "Quick cryptic",
         "Quiptic",
-        "Weekend",
         "Prize",
         "Sunday quick",
       ),
     )
+    // The archive dropdown follows the order of the cards on the hub (Genius has no archive).
+    crosswords.content.archiveChoices.toSeq.flatten.map(_.title) shouldBe
+      crosswords.content.items.flatten.map(_.title).filterNot(_ == "Genius")
     crosswords.content.archiveChoices.toSeq.flatten.map(_.url) shouldBe Seq(
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-mini"),
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quick"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-mini"),
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-cryptic"),
+      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-weekend"),
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quick-cryptic"),
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quiptic"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-weekend"),
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-prize"),
       Some("/puzzles-and-games/crosswords/archive?puzzle=archive-sunday-quick"),
     )
