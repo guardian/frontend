@@ -7,8 +7,8 @@ object AffiliateProductLivePricing {
   private val allowList: Map[String, Set[String]] = Map(
     "CODE" -> Set(
       "/thefilter/2025/nov/15/best-christmas-gifts-ideas-filter-uk-2025",
-      "/thefilter/2026/oct/15/i-love-bass-bass-bass-and-bass-dj-paulette-carl-craig-and-more-on-the-best-dj-headphones"
-      ),
+      "/thefilter/2026/oct/15/i-love-bass-bass-bass-and-bass-dj-paulette-carl-craig-and-more-on-the-best-dj-headphones",
+    ),
     "PROD" -> Set.empty,
   )
 
