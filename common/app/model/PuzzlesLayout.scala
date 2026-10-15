@@ -32,9 +32,6 @@ object PuzzleItem {
     .filter(JsonValidationError(s"cardVariant must be one of ${SupportedCardVariants.toSeq.sorted.mkString(", ")}"))(
       item => SupportedCardVariants.contains(item.cardVariant),
     )
-    .filter(JsonValidationError("cadence is required for non-archive puzzle cards"))(item =>
-      item.cardVariant == "archive" || item.cadence.exists(_.trim.nonEmpty),
-    )
   private val writes: OWrites[PuzzleItem] = Json.writes[PuzzleItem].transform(removeNullFields)
   implicit val format: OFormat[PuzzleItem] = OFormat(reads, writes)
 
@@ -118,6 +115,7 @@ case class PuzzlesNewsletter(
     frequency: String,
     description: String,
     illustrationSquare: Option[String] = None,
+    exampleUrl: Option[String] = None,
 )
 
 object PuzzlesNewsletter {
@@ -143,10 +141,22 @@ case class PuzzlesSupportingContent(
     newsletter: Option[PuzzlesNewsletter],
     popularTitle: String,
     popularGroups: Seq[PuzzlePopularityGroup],
+    // Set in puzzles-layout.json; resolved into `newsletter` from the newsletters API at request time.
+    newsletterIdentityName: Option[String] = None,
 )
 
 object PuzzlesSupportingContent {
   implicit val format: OFormat[PuzzlesSupportingContent] = Json.format[PuzzlesSupportingContent]
+}
+
+/** Useful links and newsletter shown above the footer on individual game pages. */
+case class PuzzleGameSupporting(
+    usefulLinks: Seq[PuzzleLink],
+    newsletter: Option[PuzzlesNewsletter],
+)
+
+object PuzzleGameSupporting {
+  implicit val writes: OWrites[PuzzleGameSupporting] = Json.writes[PuzzleGameSupporting]
 }
 
 case class PuzzlesLayout(containers: Seq[PuzzleContainer])
@@ -219,7 +229,7 @@ object PuzzlesLayout {
         val invalidNewsletter = supporting.newsletter.exists(newsletter =>
           newsletter.identityName.trim.isEmpty || newsletter.name.trim.isEmpty || newsletter.frequency.trim.isEmpty ||
             newsletter.description.trim.isEmpty,
-        )
+        ) || supporting.newsletterIdentityName.exists(_.trim.isEmpty)
 
         invalidLinks.map(link => s"supporting link '${link.title}' has an invalid title or URL") ++
           invalidGroups.map(group => s"popular group '${group.title}' must have a title and puzzle IDs") ++
@@ -230,8 +240,8 @@ object PuzzlesLayout {
       containers.collect {
         case container if container.content.archive.nonEmpty && container.content.archiveChoices.exists(_.nonEmpty) =>
           s"container '${container.id}' cannot define both archive and archiveChoices"
-        case container if container.content.archiveChoices.exists(_.size < 2) =>
-          s"container '${container.id}' archiveChoices must contain at least two destinations"
+        case container if container.content.archiveChoices.exists(_.isEmpty) =>
+          s"container '${container.id}' archiveChoices must contain at least one destination"
       } ++
       items.collect {
         case item

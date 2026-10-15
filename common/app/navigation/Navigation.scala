@@ -1,7 +1,7 @@
 package navigation
 
 import _root_.model.{NavItem, Page, Tags}
-import ab.PuzzlesHubExperiment
+import ab.PuzzlesHubV1Experiment
 import common.{Edition, editions}
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
@@ -79,9 +79,8 @@ object NavMenu {
   )
 
   def apply(page: Page, edition: Edition, request: RequestHeader): NavMenu = {
-    val useExperimentalPuzzlesNavigation = PuzzlesHubExperiment.isEnabled(request)
-    val usePuzzlesV1Navigation = PuzzlesHubExperiment.isV1Enabled(request)
-    val root = navRoot(edition, useExperimentalPuzzlesNavigation, usePuzzlesV1Navigation)
+    val usePuzzlesNavigation = PuzzlesHubV1Experiment.isEnabled(request)
+    val root = navRoot(edition, usePuzzlesNavigation)
     val currentUrl = getSectionOrPageUrl(page, edition)
     val currentNavLink =
       findDescendantByUrl(
@@ -89,8 +88,7 @@ object NavMenu {
         edition,
         root.children,
         root.otherLinks,
-        useExperimentalPuzzlesNavigation,
-        usePuzzlesV1Navigation,
+        usePuzzlesNavigation,
       )
     val currentParent = currentNavLink.flatMap(link =>
       findParent(
@@ -98,8 +96,7 @@ object NavMenu {
         edition,
         root.children,
         root.otherLinks,
-        useExperimentalPuzzlesNavigation,
-        usePuzzlesV1Navigation,
+        usePuzzlesNavigation,
       ),
     )
     val currentPillar =
@@ -108,8 +105,7 @@ object NavMenu {
         edition,
         root.children,
         root.otherLinks,
-        useExperimentalPuzzlesNavigation,
-        usePuzzlesV1Navigation,
+        usePuzzlesNavigation,
       )
     val isWorldCupOverview = page.metadata.id == "football/world-cup-2026/overview"
 
@@ -126,7 +122,7 @@ object NavMenu {
       pillars = root.children,
       // Keep the puzzles link available while resolving the current page and
       // its subnav, but do not expose it in the expanded burger menu.
-      otherLinks = root.otherLinks.filterNot(link => link == NavLinks.puzzles || link == NavLinks.puzzlesV1),
+      otherLinks = root.otherLinks.filterNot(link => link == NavLinks.puzzles),
       brandExtensions = root.brandExtensions,
       currentNavLink = currentNavLink,
       currentParent = currentParent,
@@ -145,14 +141,13 @@ object NavMenu {
    */
   private[navigation] def getChildrenFromOtherEditions(
       edition: Edition,
-      useExperimentalPuzzlesNavigation: Boolean = false,
-      usePuzzlesV1Navigation: Boolean = false,
+      usePuzzlesNavigation: Boolean = false,
   ): Seq[NavLink] = {
     // This shouldn't be a problem as Europe won't have special NavLinks
     Edition
       .othersWithBetaEditions(edition)
       .flatMap { edition =>
-        val root = NavMenu.navRoot(edition, useExperimentalPuzzlesNavigation, usePuzzlesV1Navigation)
+        val root = NavMenu.navRoot(edition, usePuzzlesNavigation)
         root.children ++ root.otherLinks
       }
   }
@@ -171,14 +166,13 @@ object NavMenu {
       edition: Edition,
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
-      useExperimentalPuzzlesNavigation: Boolean = false,
-      usePuzzlesV1Navigation: Boolean = false,
+      usePuzzlesNavigation: Boolean = false,
   ): Option[NavLink] = {
     def hasUrl(link: NavLink): Boolean = link.url == url
 
     find(pillars ++ otherLinks, hasUrl)
       .orElse(
-        find(getChildrenFromOtherEditions(edition, useExperimentalPuzzlesNavigation, usePuzzlesV1Navigation), hasUrl),
+        find(getChildrenFromOtherEditions(edition, usePuzzlesNavigation), hasUrl),
       )
   }
 
@@ -187,8 +181,7 @@ object NavMenu {
       edition: Edition,
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
-      useExperimentalPuzzlesNavigation: Boolean = false,
-      usePuzzlesV1Navigation: Boolean = false,
+      usePuzzlesNavigation: Boolean = false,
   ): Option[NavLink] = {
 
     // When nav items can appear in two pillars, we want to ignore the least relevant one
@@ -206,7 +199,7 @@ object NavMenu {
 
     find(pillars ++ otherLinks, isParent)
       .orElse(
-        find(getChildrenFromOtherEditions(edition, useExperimentalPuzzlesNavigation, usePuzzlesV1Navigation), isParent),
+        find(getChildrenFromOtherEditions(edition, usePuzzlesNavigation), isParent),
       )
   }
 
@@ -215,8 +208,7 @@ object NavMenu {
       edition: Edition,
       pillars: Seq[NavLink],
       otherLinks: Seq[NavLink],
-      useExperimentalPuzzlesNavigation: Boolean = false,
-      usePuzzlesV1Navigation: Boolean = false,
+      usePuzzlesNavigation: Boolean = false,
   ): Option[NavLink] = {
     currentParent.flatMap(parent =>
       if (otherLinks.contains(parent)) {
@@ -229,8 +221,7 @@ object NavMenu {
           edition,
           pillars,
           otherLinks,
-          useExperimentalPuzzlesNavigation,
-          usePuzzlesV1Navigation,
+          usePuzzlesNavigation,
         ).orElse(
           Some(editions.Uk.navigationLinks.newsPillar),
         ),
@@ -239,15 +230,14 @@ object NavMenu {
 
   def navRoot(
       edition: Edition,
-      useExperimentalPuzzlesNavigation: Boolean = false,
-      usePuzzlesV1Navigation: Boolean = false,
+      usePuzzlesNavigation: Boolean = false,
   ): NavRoot = {
 
     val editionLinks: EditionNavLinks = edition.navigationLinks
 
     val otherLinks = editionLinks.otherLinks.flatMap {
-      case NavLinks.legacyCrosswords if useExperimentalPuzzlesNavigation =>
-        List(if (usePuzzlesV1Navigation) NavLinks.puzzlesV1 else NavLinks.puzzles, NavLinks.legacyCrosswords)
+      case NavLinks.legacyCrosswords if usePuzzlesNavigation =>
+        List(NavLinks.puzzles, NavLinks.legacyCrosswords)
       case link => List(link)
     }
 

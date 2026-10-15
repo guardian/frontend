@@ -233,8 +233,7 @@ object NavLinks {
       NavLink("Special", "/crosswords/series/special"),
     ),
   )
-  val puzzles = NavLink("Puzzles & games", "/puzzles-and-games")
-  val puzzlesV1 = NavLink(
+  val puzzles = NavLink(
     "Puzzles & games",
     "/puzzles-and-games",
     children = List(

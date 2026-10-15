@@ -1,13 +1,13 @@
 package controllers
 
 import com.gu.contentapi.client.model.SearchQuery
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent}
 import common.GuLogging
 import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, Json}
-import views.support.CamelCase
+import services.newsletters.NewsletterSignupAgent
 
 import java.time.{Clock, DayOfWeek, LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future, blocking}
@@ -22,38 +22,23 @@ trait PuzzlesLayoutProvider {
 class LocalJsonPuzzlesLayoutProvider(
     environment: Environment,
     contentApiClient: ContentApiClient,
+    newsletterSignupAgent: NewsletterSignupAgent,
     resourceName: String = LocalJsonPuzzlesLayoutProvider.DefaultResourceName,
     clock: Clock = Clock.systemUTC(),
 ) extends PuzzlesLayoutProvider
     with GuLogging {
 
+  private val newsletters = new PuzzlesNewsletters(newsletterSignupAgent)
+
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
-      val scheduledLayout = applyFeaturedSchedule(baseLayout)
-      val datedLayout = applyIframeDate(scheduledLayout)
+      val scheduledLayout = resolveNewsletters(applyFeaturedSchedule(baseLayout))
+      val datedLayout = applyWordiplyDateFallback(scheduledLayout)
       enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
-        log.warn("Failed to enrich puzzles layout with latest crosswords from CAPI using the scheduled layout", error)
+        log.warn("Failed to enrich crossword cards from CAPI using the scheduled layout", error)
         datedLayout
       }
     }
-
-  private def applyIframeDate(layout: PuzzlesLayout): PuzzlesLayout = {
-    val date = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).toString
-    layout.copy(containers = layout.containers.map(addIframeDate(_, date)))
-  }
-
-  private def addIframeDate(container: PuzzleContainer, date: String): PuzzleContainer =
-    container.copy(content =
-      container.content.copy(
-        items = container.content.items.map(_.map(addIframeDate(_, date))),
-        nestedContainers = container.content.nestedContainers.map(addIframeDate(_, date)),
-        archive = container.content.archive.map(addIframeDate(_, date)),
-        archiveChoices = container.content.archiveChoices.map(_.map(addIframeDate(_, date))),
-      ),
-    )
-
-  private def addIframeDate(item: PuzzleItem, date: String): PuzzleItem =
-    if (item.variant.contains("iframe-page")) item.copy(date = Some(date)) else item
 
   private def applyFeaturedSchedule(layout: PuzzlesLayout): PuzzlesLayout = {
     val day = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).getDayOfWeek
@@ -71,6 +56,32 @@ class LocalJsonPuzzlesLayoutProvider(
       }
     })
   }
+
+  private def applyWordiplyDateFallback(layout: PuzzlesLayout): PuzzlesLayout = {
+    val today = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).toString
+    layout.copy(containers = layout.containers.map(addWordiplyDate(_, today)))
+  }
+
+  private def addWordiplyDate(container: PuzzleContainer, date: String): PuzzleContainer =
+    container.copy(content =
+      container.content.copy(
+        items = container.content.items.map(_.map { item =>
+          if (item.`type` == "wordiply" && item.variant.contains("iframe-page") && item.date.isEmpty)
+            item.copy(date = Some(date))
+          else item
+        }),
+        nestedContainers = container.content.nestedContainers.map(addWordiplyDate(_, date)),
+      ),
+    )
+
+  private def resolveNewsletters(layout: PuzzlesLayout): PuzzlesLayout =
+    layout.copy(containers = layout.containers.map { container =>
+      container.copy(supporting = container.supporting.map { supporting =>
+        supporting.newsletterIdentityName.fold(supporting) { identityName =>
+          supporting.copy(newsletter = newsletters.live(identityName), newsletterIdentityName = None)
+        }
+      })
+    })
 
   private def loadLayout(): PuzzlesLayout = {
     val inputStream = environment
@@ -104,7 +115,7 @@ class LocalJsonPuzzlesLayoutProvider(
   ): Future[PuzzlesLayout] = {
     val crosswordSets = layout.containers
       .flatMap(crosswordItems)
-      .filter(isLatestCrosswordCard)
+      .filter(isPlayableCrosswordCard)
       .map(_.set)
       .distinct
 
@@ -134,13 +145,13 @@ class LocalJsonPuzzlesLayoutProvider(
       item: PuzzleItem,
       latestCrosswords: Map[String, CrosswordDynamicFields],
   ): PuzzleItem =
-    if (isLatestCrosswordCard(item)) {
+    if (isPlayableCrosswordCard(item)) {
       latestCrosswords
         .get(item.set)
         .map(dynamicFields =>
           item.copy(
             url = Some(dynamicFields.url),
-            image = item.image.orElse(Some(dynamicFields.image)),
+            image = item.image.orElse(dynamicFields.image),
             imageAlt = item.imageAlt.orElse(Some(s"${item.title} illustration")),
             setter = dynamicFields.setter.orElse(item.setter),
           ),
@@ -150,7 +161,7 @@ class LocalJsonPuzzlesLayoutProvider(
       item
     }
 
-  private def isLatestCrosswordCard(item: PuzzleItem): Boolean =
+  private def isPlayableCrosswordCard(item: PuzzleItem): Boolean =
     item.`type` == "crossword" && !item.variant.exists(_.startsWith("archive"))
 
   private def latestCrosswordForSet(set: String)(implicit
@@ -159,34 +170,52 @@ class LocalJsonPuzzlesLayoutProvider(
     LocalJsonPuzzlesLayoutProvider.CrosswordSeriesTags
       .get(set)
       .fold(Future.successful(Option.empty[CrosswordDynamicFields])) { tag =>
-        val query = SearchQuery()
-          .contentType("crossword")
+        val latestInSeries = SearchQuery()
           .tag(tag)
-          .useDate("newspaper-edition")
           .orderBy("newest")
           .pageSize(1)
           .showFields("all")
+          .showTags("contributor")
+        // Series such as Genius are published as articles linking to a PDF, not as `crossword` content, and their
+        // newspaper-edition date does not order them by recency, so they use the default publication date.
+        val query =
+          if (LocalJsonPuzzlesLayoutProvider.ArticleCrosswordSets.contains(set)) latestInSeries
+          else latestInSeries.contentType("crossword").useDate("newspaper-edition")
 
         contentApiClient
           .getResponse(query)
-          .map(_.results.headOption.flatMap(toDynamicFields))
+          .map(_.results.headOption.flatMap(toDynamicFields(set, _)))
           .recover { case NonFatal(error) =>
             log.warn(s"Failed to fetch latest '$set' crossword from CAPI keeping its base layout values", error)
             None
           }
       }
 
-  private def toDynamicFields(content: ApiContent): Option[CrosswordDynamicFields] =
-    content.crossword.map { crossword =>
-      val crosswordType = CamelCase.toHyphenated(crossword.`type`.name)
-      val crosswordNumber = crossword.number
+  private def toDynamicFields(set: String, content: ApiContent): Option[CrosswordDynamicFields] =
+    content.crossword
+      .map { crossword =>
+        val crosswordNumber = crossword.number
 
-      CrosswordDynamicFields(
-        url = s"/crosswords/$crosswordType/$crosswordNumber",
-        image = s"https://api.nextgen.guardianapps.co.uk/crosswords/$crosswordType/$crosswordNumber.svg",
-        setter = crossword.creator.map(_.name.trim).filter(_.nonEmpty),
-      )
-    }
+        CrosswordDynamicFields(
+          url = s"/crosswords/$set/$crosswordNumber",
+          image = Some(s"https://api.nextgen.guardianapps.co.uk/crosswords/$set/$crosswordNumber.svg"),
+          setter = crossword.creator.flatMap(creator => nonBlank(creator.name)).orElse(contentSetter(content)),
+        )
+      }
+      .orElse {
+        if (LocalJsonPuzzlesLayoutProvider.ArticleCrosswordSets.contains(set))
+          Some(CrosswordDynamicFields(url = s"/${content.id}", image = None, setter = contentSetter(content)))
+        else None
+      }
+
+  /** The setter as credited on the content itself: the first contributor tag, then the byline. */
+  private def contentSetter(content: ApiContent): Option[String] =
+    content.tags
+      .find(_.`type` == TagType.Contributor)
+      .flatMap(tag => nonBlank(tag.webTitle))
+      .orElse(content.fields.flatMap(_.byline).flatMap(nonBlank))
+
+  private def nonBlank(value: String): Option[String] = Option(value).map(_.trim).filter(_.nonEmpty)
 }
 
 object LocalJsonPuzzlesLayoutProvider {
@@ -204,7 +233,6 @@ object LocalJsonPuzzlesLayoutProvider {
       `type` = "crossword",
       set = set,
       cardVariant = "large",
-      cadence = Some("Today"),
       image = Some(puzzleArtwork(s"crossword-$artworkSet")),
       imageAlt = Some(s"$title illustration"),
       backgroundColour = Some("#FCE1CE"),
@@ -218,7 +246,6 @@ object LocalJsonPuzzlesLayoutProvider {
       `type` = "sudoku",
       set = set,
       cardVariant = "large",
-      cadence = Some("Today"),
       url = Some(s"https://tg.amuselabs.com/guardian/date-picker?set=$amuseLabsSet&embed=1&idx=1"),
       image = Some(puzzleArtwork(s"logic-puzzles-SUDOKU-${set.toUpperCase(java.util.Locale.ROOT)}")),
       imageAlt = Some(s"$title illustration"),
@@ -234,7 +261,6 @@ object LocalJsonPuzzlesLayoutProvider {
     `type` = "word-wheel",
     set = "all",
     cardVariant = "large",
-    cadence = Some("Today"),
     url = Some("https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1"),
     image = Some(puzzleArtwork("word-games-WORD-WHEEL")),
     imageAlt = Some("Word wheel illustration"),
@@ -250,7 +276,6 @@ object LocalJsonPuzzlesLayoutProvider {
     `type` = "wordiply",
     set = "all",
     cardVariant = "large",
-    cadence = Some("Today"),
     url = Some("https://www.wordiply.com/"),
     image = Some(puzzleArtwork("word-games-WORDIPLY")),
     imageAlt = Some("Wordiply illustration"),
@@ -304,5 +329,8 @@ object LocalJsonPuzzlesLayoutProvider {
     "azed" -> "crosswords/series/azed",
   )
 
-  private[controllers] case class CrosswordDynamicFields(url: String, image: String, setter: Option[String])
+  /** Series published as articles rather than CAPI `crossword` content, so there is no crossword number or player. */
+  private[controllers] val ArticleCrosswordSets: Set[String] = Set("genius")
+
+  private[controllers] case class CrosswordDynamicFields(url: String, image: Option[String], setter: Option[String])
 }

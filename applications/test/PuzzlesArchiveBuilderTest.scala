@@ -1,6 +1,6 @@
 package test
 
-import controllers.{ArchiveApiItem, ArchiveApiResponse, PuzzlesArchiveBuilder}
+import controllers.{PuzzlesApiItem, PuzzlesApiResponse, PuzzlesArchiveBuilder}
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
@@ -59,11 +59,34 @@ import play.api.libs.json.Json
     selection.apiType should be("SUDOKU_EASY")
   }
 
+  it should "use the documented archive titles and meta descriptions" in {
+    val expected = Seq(
+      "crosswords" -> (
+        "Crosswords",
+        "Play the full archive of crosswords from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "word-games" -> (
+        "Word games",
+        "Play the full archive of word games from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "logic-puzzles" -> (
+        "Logic puzzles",
+        "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started.",
+      ),
+    )
+
+    expected.foreach { case (category, (title, description)) =>
+      val selection = PuzzlesArchiveBuilder.select(layout, category, None).get
+      selection.title should be(title)
+      selection.description should be(description)
+    }
+  }
+
   it should "use an archive item's exact date in its puzzle page destination" in {
     val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", None).get
     val destination = PuzzlesArchiveBuilder.destination(
       selection,
-      ArchiveApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
+      PuzzlesApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
     )
     destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
   }
@@ -74,7 +97,7 @@ import play.api.libs.json.Json
 
     PuzzlesArchiveBuilder.destination(
       miniSelection,
-      ArchiveApiItem(
+      PuzzlesApiItem(
         "287",
         "CROSSWORD_MINI",
         "2026-09-30T00:00:00Z",
@@ -85,7 +108,7 @@ import play.api.libs.json.Json
     ) should be("/crosswords/mini/287")
     PuzzlesArchiveBuilder.destination(
       weekendSelection,
-      ArchiveApiItem(
+      PuzzlesApiItem(
         "820",
         "CROSSWORD_WEEKEND",
         "2026-09-30T00:00:00Z",
@@ -96,40 +119,37 @@ import play.api.libs.json.Json
     ) should be("/crosswords/weekend/820")
   }
 
+  it should "carry the API game status to the archive items" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    val archive = PuzzlesArchiveBuilder.build(
+      selection,
+      2026,
+      9,
+      Seq(
+        PuzzlesApiItem("a", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 10, None, None, Some("completed")),
+        PuzzlesApiItem("b", "SUDOKU_EASY", "2026-09-03T00:00:00Z", 100, None, None),
+      ),
+      hasError = false,
+      moreFrom = Nil,
+    )
+
+    archive.items.map(_.gameStatus) should be(Seq(Some("completed"), None))
+    archive.recentItems.map(_.gameStatus) should be(Seq(None, Some("completed")))
+    (Json.toJson(archive) \ "items" \ 1 \ "gameStatus").toOption should be(None)
+  }
+
   it should "exclude puzzles without an archive from the archive selector" in {
     val selection = PuzzlesArchiveBuilder.select(layout, "word-games", None).get
 
     selection.puzzles.map(_.id) should be(Seq("word-wheel"))
   }
 
-  it should "reuse Puzzle Page recommendations for the selected archive puzzle" in {
-    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
-    val items = Seq(
-      ArchiveApiItem(
-        "guardian-sudoku-20260902",
-        "SUDOKU_EASY",
-        "2026-09-02T00:00:00Z",
-        0,
-        None,
-        None,
-      ),
-    )
+  it should "look up recommendations by the selected puzzle" in {
+    val sudoku = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    PuzzlesArchiveBuilder.relatedPuzzleKey(sudoku) should be("sudoku-easy")
 
-    val related = PuzzlesArchiveBuilder.related(selection, 2026, 9, items)
-
-    related.map(_.id) should be(Seq("sudoku-medium", "word-wheel", "crossword-quick"))
-    related.map(_.cardVariant) should contain only "compact"
-    related.map(_.url) should contain(
-      Some("/puzzles-and-games/logic-puzzles/sudoku-medium/2026-09-02"),
-    )
-  }
-
-  it should "recommend logic and word games from crossword archives" in {
-    val selection = PuzzlesArchiveBuilder.select(layout, "crosswords", None).get
-
-    val related = PuzzlesArchiveBuilder.related(selection, 2026, 9, Nil)
-
-    related.map(_.id) should be(Seq("sudoku-easy", "word-wheel", "wordiply"))
+    val crosswords = PuzzlesArchiveBuilder.select(layout, "crosswords", None).get
+    PuzzlesArchiveBuilder.relatedPuzzleKey(crosswords) should be(crosswords.puzzle.set)
   }
 
   it should "parse the archive API envelope" in {
@@ -137,16 +157,17 @@ import play.api.libs.json.Json
       .parse(
         """{"results":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","publishDate":"2026-09-02T00:00:00Z","gameStatus":"completed","progress":100,"lastUpdated":null,"gameUrl":"https://www.theguardian.com/crosswords/quick/42"}]}""",
       )
-      .as[ArchiveApiResponse] should be(
-      ArchiveApiResponse(
+      .as[PuzzlesApiResponse] should be(
+      PuzzlesApiResponse(
         Seq(
-          ArchiveApiItem(
+          PuzzlesApiItem(
             "42",
             "CROSSWORD_QUICK",
             "2026-09-02T00:00:00Z",
             100,
             None,
             Some("https://www.theguardian.com/crosswords/quick/42"),
+            Some("completed"),
           ),
         ),
       ),

@@ -454,3 +454,11 @@ Location: London, UK
 
 Developer: Dominik Lander
 From: Ipswich, UK
+
+Developer: Dina Hafez
+Github: deedeeh
+Location: London, UK
+
+Developer: Zara Khan
+Github: zaraGNM
+Location: London, UK

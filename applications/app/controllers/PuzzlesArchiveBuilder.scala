@@ -9,17 +9,15 @@ import model.dotcomrendering.{
   PuzzlesLayout,
 }
 
-import java.time.YearMonth
-
 object PuzzlesArchiveBuilder {
   private val apiTypes: Map[(String, String), String] = Map(
     ("crossword", "quick") -> "CROSSWORD_QUICK",
     ("crossword", "mini") -> "CROSSWORD_MINI",
     ("crossword", "cryptic") -> "CROSSWORD_CRYPTIC",
-    ("crossword", "quick-cryptic") -> "CROSSWORD_QUICKCRYPTIC",
     ("crossword", "weekend") -> "CROSSWORD_WEEKEND",
-    ("crossword", "prize") -> "CROSSWORD_PRIZE",
+    ("crossword", "quick-cryptic") -> "CROSSWORD_QUICKCRYPTIC",
     ("crossword", "quiptic") -> "CROSSWORD_QUIPTIC",
+    ("crossword", "prize") -> "CROSSWORD_PRIZE",
     ("crossword", "sunday-quick") -> "CROSSWORD_SUNDAYQUICK",
     ("sudoku", "easy") -> "SUDOKU_EASY",
     ("sudoku", "medium") -> "SUDOKU_MEDIUM",
@@ -63,16 +61,18 @@ object PuzzlesArchiveBuilder {
     chosen.map { case (puzzle, apiType) =>
       val (title, description) = category match {
         case "crosswords" =>
-          "Crosswords" -> "Choose a crossword from our archive, and track which ones you’ve completed, started or are yet to play."
-        case "word-games"    => "Word games" -> "Choose a word game from our archive."
-        case "logic-puzzles" => "Logic puzzles" -> "Choose a logic puzzle from our archive."
-        case _               => container.map(_.title).getOrElse("Puzzles") -> "Choose a puzzle from our archive."
+          "Crosswords" -> "Play the full archive of crosswords from the Guardian. Track your progress of what you've played and started."
+        case "word-games" =>
+          "Word games" -> "Play the full archive of word games from the Guardian. Track your progress of what you've played and started."
+        case "logic-puzzles" =>
+          "Logic puzzles" -> "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started."
+        case _ => container.map(_.title).getOrElse("Puzzles") -> "Choose a puzzle from our archive."
       }
       Selection(category, title, description, puzzle, candidates.map(_._1), apiType)
     }
   }
 
-  def destination(selection: Selection, item: ArchiveApiItem): String =
+  def destination(selection: Selection, item: PuzzlesApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
       s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
     else {
@@ -80,25 +80,32 @@ object PuzzlesArchiveBuilder {
       s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
     }
 
-  private def relatedPuzzleKey(selection: Selection): String =
-    if (selection.category == "crosswords") selection.category
+  /** The key of the puzzle being browsed, used to look up its "More from Puzzles & games" recommendations. */
+  def relatedPuzzleKey(selection: Selection): String =
+    if (selection.category == "crosswords") selection.puzzle.set
     else selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
 
-  private def relatedPuzzleDate(year: Int, month: Int, items: Seq[ArchiveApiItem]): String =
-    items.map(_.publishDate.take(10)).sorted.lastOption.getOrElse(YearMonth.of(year, month).atEndOfMonth().toString)
-
-  def related(selection: Selection, year: Int, month: Int, items: Seq[ArchiveApiItem]): Seq[PuzzleItem] =
-    PuzzlesPageController.moreFromPuzzlesAndGames(
-      relatedPuzzleKey(selection),
-      relatedPuzzleDate(year, month, items),
+  /** Every archive item, wherever it is listed (the month's calendar or the recent cards), is built here so that none
+    * of them can drop a field such as the game status.
+    */
+  private def archiveItem(selection: Selection, item: PuzzlesApiItem): PuzzlesArchiveItem =
+    PuzzlesArchiveItem(
+      item.puzzleType,
+      item.publishDate.take(10),
+      item.progress,
+      item.setterName,
+      destination(selection, item),
+      item.gameStatus,
     )
 
   def build(
       selection: Selection,
       year: Int,
       month: Int,
-      items: Seq[ArchiveApiItem],
+      items: Seq[PuzzlesApiItem],
       hasError: Boolean,
+      moreFrom: Seq[PuzzleItem],
+      recentItems: Option[Seq[PuzzlesApiItem]] = None,
   ): PuzzlesArchive =
     PuzzlesArchive(
       category = selection.category,
@@ -108,16 +115,14 @@ object PuzzlesArchiveBuilder {
       puzzles = selection.puzzles,
       year = year,
       month = month,
-      items = items.map(item =>
-        PuzzlesArchiveItem(
-          item.puzzleType,
-          item.publishDate.take(10),
-          item.progress,
-          item.setterName,
-          destination(selection, item),
-        ),
-      ),
+      items = items.map(archiveItem(selection, _)),
       hasError = hasError,
-      moreFrom = related(selection, year, month, items),
+      moreFrom = moreFrom,
+      recentItems = recentItems
+        .getOrElse(items)
+        .sortBy(_.publishDate)
+        .reverse
+        .take(3)
+        .map(archiveItem(selection, _)),
     )
 }

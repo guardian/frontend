@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.{JsError, Json}
+import play.api.libs.json.{JsError, JsSuccess, Json}
 
 class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
@@ -142,7 +142,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     }
   }
 
-  it should "reject unsupported card variants and missing cadence" in {
+  it should "reject unsupported card variants" in {
     val invalidVariant = representativeLayoutJson.as[play.api.libs.json.JsObject] ++ Json.obj(
       "containers" -> Json.arr(
         Json.obj(
@@ -167,6 +167,12 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     )
 
     invalidVariant.validate[PuzzlesLayout] shouldBe a[JsError]
+  }
+
+  it should "accept a non-archive puzzle without a static cadence" in {
+    val item = PuzzleItem("crossword-quick", "Quick", "crossword", "quick", "primary")
+
+    Json.toJson(item).validate[PuzzleItem] shouldBe JsSuccess(item)
   }
 
   it should "reject duplicate puzzle IDs" in {
@@ -212,7 +218,7 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     result shouldBe a[JsError]
   }
 
-  it should "support ad placements and multiple archive choices" in {
+  it should "support ad placements and archive choices" in {
     val archive = PuzzleItem(
       "archive-one",
       "Archive one",
@@ -241,6 +247,28 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
     PuzzlesLayout.validationErrors(layout) shouldBe empty
     ((Json.toJson(layout) \ "containers")(1) \ "adSlot").as[String] shouldBe "inline1"
+  }
+
+  it should "support a single archive choice" in {
+    val archive = PuzzleItem(
+      "archive-word-games",
+      "Word games",
+      "word-game",
+      "all",
+      "archive",
+      url = Some("/puzzles-and-games/word-games/archive"),
+    )
+    val layout = PuzzlesLayout(
+      Seq(
+        PuzzleContainer(
+          id = "word-games",
+          title = "Word games",
+          content = PuzzleContent(Seq.empty, Seq.empty, archiveChoices = Some(Seq(archive))),
+        ),
+      ),
+    )
+
+    PuzzlesLayout.validationErrors(layout) shouldBe empty
   }
 
   it should "reject malformed ad and archive composition" in {

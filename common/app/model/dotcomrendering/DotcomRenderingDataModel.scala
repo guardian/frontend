@@ -59,6 +59,7 @@ case class DotcomRenderingDataModel(
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
     webPublicationSecondaryDateDisplay: String,
+    firstPublicationDate: String,
     editionLongForm: String,
     editionId: String,
     pageId: String,
@@ -112,6 +113,8 @@ case class DotcomRenderingDataModel(
     lang: Option[String],
     isRightToLeftLang: Boolean,
     crossword: Option[CrosswordData],
+    moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
+    puzzlesSupporting: Option[PuzzleGameSupporting],
 )
 
 object DotcomRenderingDataModel {
@@ -139,6 +142,7 @@ object DotcomRenderingDataModel {
         "webPublicationDateDeprecated" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
         "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
+        "firstPublicationDate" -> model.firstPublicationDate,
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
@@ -191,6 +195,8 @@ object DotcomRenderingDataModel {
         "lang" -> model.lang,
         "isRightToLeftLang" -> model.isRightToLeftLang,
         "crossword" -> model.crossword,
+        "moreFromPuzzlesAndGames" -> model.moreFromPuzzlesAndGames,
+        "puzzlesSupporting" -> model.puzzlesSupporting,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -287,7 +293,7 @@ object DotcomRenderingDataModel {
       bodyBlocks = blocks.body.getOrElse(Nil).toSeq,
       hasStoryPackage = mediaPage.related.hasStoryPackage,
       storyPackage = getStoryPackage(mediaPage.related.faciaItems, request),
-      customSubnav = None,
+      customSubnav = customSubnav,
     )
   }
 
@@ -350,6 +356,8 @@ object DotcomRenderingDataModel {
       request: RequestHeader,
       pageType: PageType,
       customSubnav: Option[CustomSubnav],
+      moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
+      puzzlesSupporting: Option[PuzzleGameSupporting] = None,
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -366,6 +374,8 @@ object DotcomRenderingDataModel {
       bodyBlocks = Seq.empty,
       crossword = Some(crosswordPage.crossword),
       customSubnav = customSubnav,
+      moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+      puzzlesSupporting = puzzlesSupporting,
     )
   }
 
@@ -466,6 +476,8 @@ object DotcomRenderingDataModel {
       forceLive: Boolean = false,
       crossword: Option[CrosswordData] = None,
       customSubnav: Option[CustomSubnav],
+      moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
+      puzzlesSupporting: Option[PuzzleGameSupporting] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -690,6 +702,7 @@ object DotcomRenderingDataModel {
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(content.trail.webPublicationDate, request),
       webPublicationSecondaryDateDisplay = secondaryDateString(content, request),
+      firstPublicationDate = content.fields.firstPublicationDate.getOrElse(content.trail.webPublicationDate).toString,
       webTitle = content.metadata.webTitle,
       webURL = content.metadata.webUrl,
       promotedNewsletter = newsletter,
@@ -697,6 +710,8 @@ object DotcomRenderingDataModel {
       lang = content.fields.lang,
       isRightToLeftLang = content.fields.isRightToLeftLang,
       crossword = crossword,
+      moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
+      puzzlesSupporting = puzzlesSupporting,
     )
   }
 }

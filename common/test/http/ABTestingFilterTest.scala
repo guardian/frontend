@@ -1,6 +1,6 @@
 package http
 
-import ab.{ABTests, PuzzlesHubExperiment}
+import ab.{ABTests, PuzzlesHubV1Experiment}
 import conf.switches.Switches.EnableNewServerSideABTestsHeader
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
@@ -40,22 +40,22 @@ import scala.concurrent.{ExecutionContext, Future}
 
   "ABTestingFilter" should "make the Fastly puzzles participation available to the shared helper" in {
     EnableNewServerSideABTestsHeader.switchOn()
-    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub:variant")
+    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub-v1:variant")
     var puzzlesHubEnabled: Boolean = false
 
     val result = new ABTestingFilter().apply { filteredRequest: RequestHeader =>
-      puzzlesHubEnabled = PuzzlesHubExperiment.isEnabled(filteredRequest)
+      puzzlesHubEnabled = PuzzlesHubV1Experiment.isEnabled(filteredRequest)
       Future.successful(Results.Ok)
     }(request).futureValue
 
     puzzlesHubEnabled should be(true)
-    result.header.headers.get(abTestHeader) should contain("puzzles-new-hub:variant")
+    result.header.headers.get(abTestHeader) should contain("puzzles-new-hub-v1:variant")
     result.header.headers.get("Vary") should contain(abTestHeader)
   }
 
   it should "preserve unrelated experiment participations" in {
     EnableNewServerSideABTestsHeader.switchOn()
-    val request = FakeRequest().withHeaders(abTestHeader -> "another-test:control,puzzles-new-hub:variant")
+    val request = FakeRequest().withHeaders(abTestHeader -> "another-test:control,puzzles-new-hub-v1:variant")
     var observedParticipations = Map.empty[String, String]
 
     new ABTestingFilter().apply { filteredRequest: RequestHeader =>
@@ -65,35 +65,35 @@ import scala.concurrent.{ExecutionContext, Future}
 
     observedParticipations should contain theSameElementsAs Map(
       "another-test" -> "control",
-      "puzzles-new-hub" -> "variant",
+      "puzzles-new-hub-v1" -> "variant",
     )
   }
 
   it should "make a Fastly control participation available as experiment-off" in {
     EnableNewServerSideABTestsHeader.switchOn()
-    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub:control")
+    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub-v1:control")
     var observedParticipations = Map.empty[String, String]
     var puzzlesHubEnabled: Boolean = true
 
     new ABTestingFilter().apply { filteredRequest: RequestHeader =>
       observedParticipations = ABTests.getParticipations(filteredRequest)
-      puzzlesHubEnabled = PuzzlesHubExperiment.isEnabled(filteredRequest)
+      puzzlesHubEnabled = PuzzlesHubV1Experiment.isEnabled(filteredRequest)
       Future.successful(Results.Ok)
     }(request).futureValue
 
     puzzlesHubEnabled should be(false)
     observedParticipations should contain theSameElementsAs Map(
-      "puzzles-new-hub" -> "control",
+      "puzzles-new-hub-v1" -> "control",
     )
   }
 
   it should "leave the request undecorated when the infrastructure switch is off" in {
     EnableNewServerSideABTestsHeader.switchOff()
-    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub:variant")
+    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub-v1:variant")
     var puzzlesHubEnabled: Boolean = true
 
     val result = new ABTestingFilter().apply { filteredRequest: RequestHeader =>
-      puzzlesHubEnabled = PuzzlesHubExperiment.isEnabled(filteredRequest)
+      puzzlesHubEnabled = PuzzlesHubV1Experiment.isEnabled(filteredRequest)
       Future.successful(Results.Ok)
     }(request).futureValue
 

@@ -1,6 +1,6 @@
 package test
 
-import controllers.CrosswordPageController
+import controllers.{CrosswordPageController, PuzzlesNewsletters}
 import model.{CrosswordData, Entry}
 import org.joda.time.DateTime
 import org.scalatest._
@@ -8,6 +8,9 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.time.{Millis, Span}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
+
+import scala.concurrent.ExecutionContext
 
 @DoNotDiscover class CrosswordDataTest
     extends AnyFreeSpec
@@ -23,7 +26,12 @@ import org.scalatest.time.{Millis, Span}
   "CrosswordData" - {
 
     lazy val crosswordPageController =
-      new CrosswordPageController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
+      new CrosswordPageController(
+        testContentApiClient,
+        play.api.test.Helpers.stubControllerComponents(),
+        wsClient,
+        new PuzzlesNewsletters(new NewsletterSignupAgent(NewsletterApi(wsClient)(ExecutionContext.global))),
+      )
 
     "fromCrossword should normalize separators for grouped entries" in {
 

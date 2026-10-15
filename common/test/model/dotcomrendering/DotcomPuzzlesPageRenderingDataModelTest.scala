@@ -29,7 +29,7 @@ import staticpages.StaticPages
     implicit val request: RequestHeader = FakeRequest("GET", "/puzzles-and-games")
       .withHeaders(
         "Host" -> "www.theguardian.com",
-        "X-GU-Server-AB-Tests" -> "puzzles-new-hub:variant,another-test:control",
+        "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v1:variant,another-test:control",
       )
     ABTests.decorateRequest("X-GU-Server-AB-Tests")
   }
@@ -44,7 +44,10 @@ import staticpages.StaticPages
     val json = DotcomPuzzlesPageRenderingDataModel.toJson(model)
 
     (json \ "id").as[String] should be("/puzzles-and-games")
-    (json \ "webTitle").as[String] should be("Puzzles and games")
+    (json \ "webTitle").as[String] should be("Puzzles & games | The Guardian")
+    (json \ "description").as[String] should be(
+      "The Guardian's puzzles & games page, where you can play free online daily crosswords, word games, logic puzzles and more",
+    )
     (json \ "editionId").as[String] should not be empty
     (json \ "nav").toOption should not be empty
     (json \ "pageFooter").toOption should not be empty
@@ -69,8 +72,21 @@ import staticpages.StaticPages
       .as[Map[String, String]]
 
     participations should contain theSameElementsAs Map(
-      "puzzles-new-hub" -> "variant",
+      "puzzles-new-hub-v1" -> "variant",
       "another-test" -> "control",
     )
+  }
+
+  it should "supply the documented archive page title and description" in {
+    val description =
+      "Play the full archive of crosswords from the Guardian. Track your progress of what you've played and started."
+    val page = StaticPages.dcrSimplePuzzlesArchivePage(
+      "/puzzles-and-games/crosswords/archive",
+      "Crosswords",
+      description,
+    )
+
+    page.metadata.webTitle should be("Crosswords archive - puzzles & games | The Guardian")
+    page.metadata.description should contain(description)
   }
 }

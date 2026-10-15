@@ -29,6 +29,7 @@ case class PuzzlePageInstance(
       * docs/puzzle-page.md), so it's safe/expected for this to be populated ahead of that tier shipping.
       */
     moreFromPuzzlesAndGames: Seq[PuzzleItem] = Nil,
+    puzzlesSupporting: Option[PuzzleGameSupporting] = None,
 )
 
 object PuzzlePageInstance {
