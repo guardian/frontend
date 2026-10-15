@@ -119,6 +119,25 @@ import play.api.libs.json.Json
     ) should be("/crosswords/weekend/820")
   }
 
+  it should "carry the API game status to the archive items" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    val archive = PuzzlesArchiveBuilder.build(
+      selection,
+      2026,
+      9,
+      Seq(
+        PuzzlesApiItem("a", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 10, None, None, Some("completed")),
+        PuzzlesApiItem("b", "SUDOKU_EASY", "2026-09-03T00:00:00Z", 100, None, None),
+      ),
+      hasError = false,
+      moreFrom = Nil,
+    )
+
+    archive.items.map(_.gameStatus) should be(Seq(Some("completed"), None))
+    archive.recentItems.map(_.gameStatus) should be(Seq(None, Some("completed")))
+    (Json.toJson(archive) \ "items" \ 1 \ "gameStatus").toOption should be(None)
+  }
+
   it should "exclude puzzles without an archive from the archive selector" in {
     val selection = PuzzlesArchiveBuilder.select(layout, "word-games", None).get
 
@@ -148,6 +167,7 @@ import play.api.libs.json.Json
             100,
             None,
             Some("https://www.theguardian.com/crosswords/quick/42"),
+            Some("completed"),
           ),
         ),
       ),

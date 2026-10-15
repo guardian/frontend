@@ -8,6 +8,7 @@ import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import services.SubnavAgent
+import services.eventgraphic.EventGraphicService
 import services.newsletters.NewsletterSignupAgent
 
 trait ApplicationsControllers {
@@ -20,6 +21,7 @@ trait ApplicationsControllers {
   def environment: Environment
   def subnavAgent: SubnavAgent
   def newsletterSignupAgent: NewsletterSignupAgent
+  def eventGraphicService: EventGraphicService
   implicit def appContext: ApplicationContext
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
