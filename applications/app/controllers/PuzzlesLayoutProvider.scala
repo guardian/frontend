@@ -30,7 +30,7 @@ class LocalJsonPuzzlesLayoutProvider(
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
       val scheduledLayout = resolveNewsletters(applyFeaturedSchedule(baseLayout))
-      val datedLayout = applyWordiplyDateFallback(scheduledLayout)
+      val datedLayout = applyIframeDateFallback(scheduledLayout)
       enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
         log.warn("Failed to enrich crossword cards from the Puzzles API using the scheduled layout", error)
         datedLayout
@@ -54,20 +54,22 @@ class LocalJsonPuzzlesLayoutProvider(
     })
   }
 
-  private def applyWordiplyDateFallback(layout: PuzzlesLayout): PuzzlesLayout = {
+  // Play links need a date before hydration; bare game routes redirect to the archive.
+  // Client-side API enrichment can still replace this with the latest publication date.
+  private def applyIframeDateFallback(layout: PuzzlesLayout): PuzzlesLayout = {
     val today = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).toString
-    layout.copy(containers = layout.containers.map(addWordiplyDate(_, today)))
+    layout.copy(containers = layout.containers.map(addIframeDate(_, today)))
   }
 
-  private def addWordiplyDate(container: PuzzleContainer, date: String): PuzzleContainer =
+  private def addIframeDate(container: PuzzleContainer, date: String): PuzzleContainer =
     container.copy(content =
       container.content.copy(
         items = container.content.items.map(_.map { item =>
-          if (item.`type` == "wordiply" && item.variant.contains("iframe-page") && item.date.isEmpty)
+          if (item.variant.contains("iframe-page") && item.date.forall(_.trim.isEmpty))
             item.copy(date = Some(date))
           else item
         }),
-        nestedContainers = container.content.nestedContainers.map(addWordiplyDate(_, date)),
+        nestedContainers = container.content.nestedContainers.map(addIframeDate(_, date)),
       ),
     )
 

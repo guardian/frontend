@@ -147,18 +147,23 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     Await.result(provider.getLayout(), 5.seconds).containers shouldBe empty
   }
 
-  it should "give Wordiply a London-date fallback and leave other iframe dates for Puzzles API enrichment" in {
-    val provider = productionProvider()
-
-    val items = allItems(Await.result(provider.getLayout(), 5.seconds))
+  it should "give every iframe play card a London date before client-side API enrichment" in {
+    val items = allItems(Await.result(productionProvider().getLayout(), 5.seconds))
     val iframeItems = items.filter(_.variant.contains("iframe-page"))
-    val wordiplyItems = iframeItems.filter(_.`type` == "wordiply")
-    val otherIframeItems = iframeItems.filterNot(_.`type` == "wordiply")
 
-    wordiplyItems should not be empty
-    all(wordiplyItems.map(_.date)) shouldBe Some("2026-09-07")
-    otherIframeItems should not be empty
-    all(otherIframeItems.map(_.date)) shouldBe None
+    iframeItems.map(_.`type`).toSet shouldBe Set("sudoku", "word-wheel", "wordiply")
+    all(iframeItems.map(_.date)) shouldBe Some("2026-09-07")
+  }
+
+  it should "use the London day at midnight and preserve explicitly selected puzzle dates" in {
+    val clock = Clock.fixed(Instant.parse("2026-09-06T23:30:00Z"), ZoneOffset.UTC)
+    val daily = PuzzleItem("wheel", "Word wheel", "word-wheel", "all", "primary", variant = Some("iframe-page"))
+    val dated = daily.copy(id = "dated-wheel", date = Some("2026-09-01"))
+    val archive = daily.copy(id = "wheel-archive", variant = Some("archive-page"))
+    val result =
+      Await.result(providerFor(layoutWith(Seq(daily, dated, archive)), archiveApi(Nil), clock).getLayout(), 5.seconds)
+
+    allItems(result).map(_.date) shouldBe Seq(Some("2026-09-07"), Some("2026-09-01"), None)
   }
 
   it should "use section-prefixed slugs and daily iframe destinations for word games and sudokus" in {
