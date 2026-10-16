@@ -54,7 +54,7 @@ object Dependencies {
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.14.3"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
-  val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
+  val jSoup = "org.jsoup" % "jsoup" % "1.23.2"
   val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
   val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
@@ -113,8 +113,8 @@ object Dependencies {
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.6"
-  val jacksonDatabindVersion = "2.21.6"
+  val jacksonVersion = "2.21.7"
+  val jacksonDatabindVersion = "2.21.7"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion
