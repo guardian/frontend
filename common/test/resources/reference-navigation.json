@@ -348,18 +348,6 @@
 					"classList": []
 				},
 				{
-					"title": "Science",
-					"url": "/science",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Tech",
-					"url": "/technology",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Global development",
 					"url": "/global-development",
 					"children": [],
@@ -368,6 +356,18 @@
 				{
 					"title": "Obituaries",
 					"url": "/obituaries",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "The Filter",
+					"url": "/uk/thefilter",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Puzzles",
+					"url": "/puzzles-and-games",
 					"children": [],
 					"classList": []
 				}
@@ -1180,18 +1180,6 @@
 					"classList": []
 				},
 				{
-					"title": "Tech",
-					"url": "/us/technology",
-					"children": [],
-					"classList": []
-				},
-				{
-					"title": "Science",
-					"url": "/science",
-					"children": [],
-					"classList": []
-				},
-				{
 					"title": "Newsletters",
 					"url": "/email-newsletters",
 					"children": [],
@@ -1206,6 +1194,12 @@
 				{
 					"title": "Wellness",
 					"url": "/us/wellness",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Puzzles",
+					"url": "/puzzles-and-games",
 					"children": [],
 					"classList": []
 				}
@@ -1960,6 +1954,12 @@
 				{
 					"title": "Newsletters",
 					"url": "/email-newsletters",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Puzzles",
+					"url": "/puzzles-and-games",
 					"children": [],
 					"classList": []
 				}
@@ -2757,6 +2757,12 @@
 				{
 					"title": "Obituaries",
 					"url": "/obituaries",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Puzzles",
+					"url": "/puzzles-and-games",
 					"children": [],
 					"classList": []
 				}
@@ -3744,6 +3750,12 @@
 				{
 					"title": "Obituaries",
 					"url": "/obituaries",
+					"children": [],
+					"classList": []
+				},
+				{
+					"title": "Puzzles",
+					"url": "/puzzles-and-games",
 					"children": [],
 					"classList": []
 				}
