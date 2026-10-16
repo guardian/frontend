@@ -410,7 +410,11 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "enrich featured cards and deduplicate nested lookups by puzzle type" in {
     val calls = ListBuffer.empty[String]
-    val nested = PuzzleContainer("nested", "Nested", content = PuzzleContent(Seq(Seq(crossword("quick"))), Nil))
+    val nested = PuzzleContainer(
+      "nested",
+      "Nested",
+      content = PuzzleContent(Seq(Seq(crossword("quick").copy(id = "nested-quick"))), Nil),
+    )
     val result = Await.result(
       providerFor(layoutWith(Seq(crossword("quick")), Seq(nested)), archiveApi(Seq(apiItem), calls)).getLayout(),
       5.seconds,
@@ -427,7 +431,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val calls = ListBuffer.empty[String]
     val base = layoutWith(
       Seq(crossword("unknown"), crossword("quick").copy(`type` = "sudoku")),
-      archive = Some(crossword("quick").copy(variant = Some("archive"))),
+      archive = Some(crossword("quick").copy(id = "archive-quick", cardVariant = "archive")),
     )
     Await.result(providerFor(base, archiveApi(Seq(apiItem), calls)).getLayout(), 5.seconds) shouldBe base
     calls shouldBe empty
