@@ -1,5 +1,6 @@
 package controllers
 
+import ab.ABTests
 import common._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import model.Cached.RevalidatableResult
@@ -28,24 +29,34 @@ class IndexController(
   protected def renderFaciaFront(model: IndexPage)(implicit request: RequestHeader): Future[Result] = {
     TagPagePicker.getTier(model) match {
       case RemoteRender =>
-        if (request.isJson) {
-          successful(
-            Cached(model.page) {
-              JsonComponent.fromWritable(
-                DotcomTagPagesRenderingDataModel(
-                  page = model,
-                  request = request,
-                  pageType = PageType(model, request, context),
-                ),
-              )
-            },
+        val maybeStorylinesContent = Option
+          .when(ABTests.isUserInTestGroup("newsroom-ai-tag-page-storylines", "variant"))(
+            StorylinesContent.getContent(model.metadata.id),
           )
-        } else
-          remoteRenderer.getTagPage(
-            ws = ws,
+          .getOrElse(successful(None))
+
+        maybeStorylinesContent.flatMap { storylines =>
+          val dataModel = DotcomTagPagesRenderingDataModel(
             page = model,
+            request = request,
             pageType = PageType(model, request, context),
-          )(request)
+            storylinesContent = storylines,
+          )
+          if (request.isJson) {
+            successful(
+              Cached(model.page) {
+                JsonComponent.fromWritable(
+                  dataModel,
+                )
+              },
+            )
+          } else
+            remoteRenderer.getTagPage(
+              ws = ws,
+              dataModel = dataModel,
+            )
+        }
+
       case LocalRender =>
         successful(
           Cached(model.page) {
