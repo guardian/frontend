@@ -257,8 +257,7 @@ object OpenGraphImage extends OverlayBase64 {
   }
 
   private[this] def getContentAgeFileName(prefix: String, publicationYear: Int): String = {
-    // WARNING: we have only produced these content age images up to the year 2025
-    if (publicationYear < 2025) {
+    if (publicationYear < 2037) {
       s"${prefix}-age-${publicationYear}.png"
     } else {
       s"${prefix}-default.png"
