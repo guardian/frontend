@@ -25,8 +25,8 @@ case class PuzzlePageInstance(
       * Games categories (excluding this instance's own game), populated by `PuzzlesPageController`. Reuses the same
       * `PuzzleItem` shape already used by the (unrelated) Puzzles Hub feature (see `PuzzlesLayout.scala`), rather than
       * a bespoke type, since DCR's rail consumes the same card fields (id/title/type/set/url/image/etc). DCR gates
-      * actually rendering this rail behind the `puzzles-new-hub-v1` tier (a v1-scoped feature, see
-      * docs/puzzle-page.md), so it's safe/expected for this to be populated ahead of that tier shipping.
+      * actually rendering this rail behind its own `isPuzzlesHubAvailable` check (see docs/puzzle-page.md), so it's
+      * safe/expected for this to be populated ahead of that check passing.
       */
     moreFromPuzzlesAndGames: Seq[PuzzleItem] = Nil,
     puzzlesSupporting: Option[PuzzleGameSupporting] = None,

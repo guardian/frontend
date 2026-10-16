@@ -1,6 +1,5 @@
 package controllers
 
-import ab.PuzzlesHubV1Experiment
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -8,7 +7,7 @@ import com.gu.contentapi.client.model.v1.{
   Content => ApiContent,
   Section => ApiSection,
 }
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.{ContentApiError, SearchQuery}
 import crosswords.{
@@ -51,7 +50,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def noResults()(implicit request: RequestHeader): Result
 
   def puzzlesSupporting(implicit request: RequestHeader): Option[PuzzleGameSupporting] =
-    if (PuzzlesHubV1Experiment.isEnabled) puzzlesNewsletters.forGame(PuzzlesNewsletters.CrosswordLinks)
+    if (PuzzlesHubAccess.isAvailable) puzzlesNewsletters.forGame(PuzzlesNewsletters.CrosswordLinks)
     else None
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
@@ -60,13 +59,13 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
     )
   }
 
-  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests in the puzzles hub
-    * v1 experiment, otherwise `None` so the page renders exactly as before.
+  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests where the puzzles
+    * hub is available (see `PuzzlesHubAccess`), otherwise `None` so the page renders exactly as before.
     */
   def moreFromPuzzlesAndGames(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[Seq[PuzzleItem]]] =
-    if (PuzzlesHubV1Experiment.isEnabled)
+    if (PuzzlesHubAccess.isAvailable)
       PuzzleRecommendations
         .resolve(
           crossword.crosswordType,
