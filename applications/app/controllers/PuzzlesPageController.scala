@@ -2,7 +2,6 @@ package controllers
 
 import ab.PuzzlesHubV1Experiment
 import common.ImplicitControllerExecutionContext
-import contentapi.ContentApiClient
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
 import model.dotcomrendering.{
@@ -20,6 +19,7 @@ import staticpages.StaticPages
 import java.time.{LocalDate, YearMonth, ZoneId}
 import scala.concurrent.Future
 import scala.util.Try
+import scala.util.control.NonFatal
 
 class PuzzlesPageController(
     wsClient: WSClient,
@@ -27,7 +27,7 @@ class PuzzlesPageController(
     puzzlesArchiveApi: PuzzlesArchiveApi,
     puzzlesProgressApi: PuzzlesProgressApi,
     remoteRenderer: DotcomRenderingService,
-    contentApiClient: ContentApiClient,
+    puzzlesGameApi: PuzzlesGameApi,
     puzzlesNewsletters: PuzzlesNewsletters,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
@@ -190,7 +190,7 @@ class PuzzlesPageController(
             .resolveForArchive(
               PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
               today.toString,
-              PuzzleRecommendations.capiLookup(contentApiClient),
+              PuzzleRecommendations.apiLookup(puzzlesArchiveApi),
             )
             .flatMap { moreFrom =>
               val calendarItems = puzzlesArchiveApi.get(startDate, endDate, selection.apiType, authorization)
@@ -228,35 +228,7 @@ class PuzzlesPageController(
     }
   }
 
-  /** Puzzle Page: a generic page template for iframe-based puzzle types, rendered by DCR via its `/PuzzlePage`
-    * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows the puzzle for the
-    * requested date according to the third party's own logic - so this repo only needs to provide a reasonable static
-    * title plus that date. All structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed
-    * by slug. See docs/puzzle-page.md for the full reference.
-    *
-    * Public URLs are nested under `/puzzles-and-games/{group}/{game}/{date}`, where `{group}` is each game's DCR
-    * `puzzleGroup` ("logic-puzzles" or "word-games") as a literal, hardcoded path segment on that game's own dedicated
-    * route/action - not a generic `:group` wildcard - consistent with each game having its own explicit route/action
-    * below (mirroring how the crossword controller handles each crossword type explicitly, rather than a single generic
-    * slug/group action).
-    *
-    * `{date}` is a real, always-present `yyyy-MM-dd` path segment (format-validated at the route level via a
-    * `$date<\d{4}-\d{2}-\d{2}>` constraint, so a malformed date 404s before reaching this controller at all - deeper
-    * calendar validity, e.g. rejecting a real Feb 30 or future dates, is intentionally not implemented, see
-    * docs/puzzle-page.md). The bare, dateless URL for each game redirects (temporarily - a real archive page doesn't
-    * exist yet) to that group's not-yet-built archive page, filtered to this puzzle via a `?puzzle=` query param.
-    *
-    * Sudoku takes a `variant` path segment (`renderSudoku`/`renderSudokuJson`, e.g. `.../sudoku-easy/2024-01-15`); word
-    * wheel and wordiply each have their own dedicated actions taking only `date` (their slug/title/group are hardcoded
-    * internally). All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated
-    * Puzzles Hub/listing page).
-    *
-    * Gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB test already used by the hub actions
-    * above - reusing the existing experiment rather than introducing a new one.
-    *
-    * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
-    * routes/controllers, untouched.
-    */
+  /** Iframe puzzle pages resolve their slug and URL date through GET /game. Crosswords retain their own routes. */
   def renderSudoku(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubV1Experiment.isEnabled) notFound
@@ -332,7 +304,7 @@ class PuzzlesPageController(
       webTitle: String,
       date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    buildPuzzlePageData(slug, webTitle, date).flatMap { dataModel =>
+    withPuzzlePageData(slug, webTitle, date) { dataModel =>
       remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
     }
   }
@@ -341,38 +313,66 @@ class PuzzlesPageController(
       slug: String,
       webTitle: String,
       date: String,
-  )(implicit request: RequestHeader): Future[Result] = {
-    buildPuzzlePageData(slug, webTitle, date).map { dataModel =>
-      Cached(CacheTime.NotFound)(
-        Cached.WithoutRevalidationResult(
-          Ok(DotcomPuzzlePageRenderingDataModel.toJson(dataModel)).as("application/json"),
+  )(implicit request: RequestHeader): Future[Result] =
+    withPuzzlePageData(slug, webTitle, date) { dataModel =>
+      Future.successful(
+        Cached(CacheTime.NotFound)(
+          Cached.WithoutRevalidationResult(
+            Ok(DotcomPuzzlePageRenderingDataModel.toJson(dataModel)).as("application/json"),
+          ),
         ),
       )
     }
+
+  private def withPuzzlePageData(slug: String, webTitle: String, date: String)(
+      render: DotcomPuzzlePageRenderingDataModel => Future[Result],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val selection = for {
+      puzzleType <- PuzzlesPageController.PuzzleTypesBySlug.get(slug)
+      parsedDate <- Try(LocalDate.parse(date)).toOption
+    } yield puzzleType -> parsedDate
+
+    selection match {
+      case None                           => notFound
+      case Some((puzzleType, parsedDate)) =>
+        puzzlesGameApi
+          .get(puzzleType, parsedDate)
+          .flatMap {
+            case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) =>
+              PuzzleRecommendations
+                .resolve(slug, currentId = None, date, PuzzleRecommendations.apiLookup(puzzlesArchiveApi))
+                .flatMap { recommendations =>
+                  val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
+                  val instance = PuzzlePageInstance(
+                    title = webTitle,
+                    puzzleDate = Some(date),
+                    gameUrl = game.gameUrl,
+                    moreFromPuzzlesAndGames = recommendations,
+                    puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = Seq.empty),
+                  )
+                  render(DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request))
+                }
+            case _ => notFound
+          }
+          .recover { case NonFatal(_) => NoCache(BadGateway("Failed to retrieve puzzle")) }
+    }
   }
 
-  private def buildPuzzlePageData(
-      slug: String,
-      webTitle: String,
-      date: String,
-  )(implicit request: RequestHeader): Future[DotcomPuzzlePageRenderingDataModel] =
-    PuzzleRecommendations
-      .resolve(slug, currentId = None, date, PuzzleRecommendations.capiLookup(contentApiClient))
-      .map { moreFromPuzzlesAndGames =>
-        val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
-        val instance = PuzzlePageInstance(
-          title = webTitle,
-          puzzleDate = Some(date),
-          moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
-          puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = Seq.empty),
-        )
-        DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
-      }
 }
 
 object PuzzlesPageController {
 
+  val PuzzleTypesBySlug: Map[String, String] = Map(
+    "sudoku-easy" -> "SUDOKU_EASY",
+    "sudoku-medium" -> "SUDOKU_MEDIUM",
+    "sudoku-hard" -> "SUDOKU_HARD",
+    "sudoku-killer" -> "SUDOKU_KILLER",
+    "word-wheel" -> "WORDWHEEL",
+    "wordiply" -> "WORDIPLY",
+  )
+
   val ProgressPuzzleTypes: Seq[String] = Seq(
+    "CROSSWORD_GENIUS",
     "CROSSWORD_QUICK",
     "CROSSWORD_MINI",
     "CROSSWORD_CRYPTIC",
