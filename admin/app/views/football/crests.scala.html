@@ -23,6 +23,9 @@
             <label for="contentUrl" class="control-label col-sm-1">Crest(s):</label>
             <div class="col-sm-6">
                 <input type="file" class="form-control" id="crestInput" multiple accept="image/png" required />
+                <p id="filenameErrorMessage" style="color: red" hidden>
+                    <span class="label label-danger">Error</span> Filename must be in the format PA_ID.png e.g. 64426.png
+                </p>
             </div>
         </div>
         <div class="form-group">
@@ -30,7 +33,7 @@
                 <input class="btn btn-default" id="uploadBtn" type="button" value="Upload"/>
             </div>
         </div>
-        <div class="col-sm-offset-1" id="progressBarsContainer"></div>
+        <div class="col-sm-offset-1" id="progressContainer"></div>
     </div>
     <br>
     <h2>Search Football Crests</h2>
@@ -50,7 +53,7 @@
         </div>
         <div class="form-group">
             <div class="controls col-sm-offset-1 col-sm-11" >
-                <input class="btn btn-default" id="searchBtn" type="button" value="Search"/>
+                <input class="btn btn-default" id="searchBtn" type="button" value="Search" />
             </div>
         </div>
         <img  class="col-sm-offset-1" id="crestContainer" alt="crest" width="128" hidden />
@@ -59,94 +62,82 @@
     <script>
         const searchBtn = document.getElementById('searchBtn');
         const crestContainer = document.getElementById('crestContainer');
+        const paIdInput = document.getElementById('paIdInput')
 
         searchBtn.addEventListener('click', async () => {
-            const paIdInput = document.getElementById('paIdInput');
             const paId = paIdInput.value;
             const response = await fetch("/admin/football/crests/" + paId);
             const responseJson = await response.json();
-            crestContainer.src = await responseJson["url"];
-            crestContainer.removeAttribute("hidden");
+            crestContainer.src = responseJson.url;
+            crestContainer.removeAttribute('hidden');
         });
 
+        const filenameErrorMessage = document.getElementById('filenameErrorMessage');
         const uploadBtn = document.getElementById('uploadBtn');
-        const progressBarsContainer = document.getElementById('progressBarsContainer');
+        const progressContainer = document.getElementById('progressContainer');
+        const crestInput = document.getElementById('crestInput');
 
         uploadBtn.addEventListener('click', async () => {
-            uploadBtn.disabled = true;
-            const crestInput = document.getElementById('crestInput');
+            filenameErrorMessage.setAttribute('hidden', 'true'); // reset error message
             const crests = crestInput.files;
 
             if (crests.length === 0) return;
 
-            progressBarsContainer.innerHTML = ''; // remove old progress bars
+            uploadBtn.disabled = true; // prevent new uploads
+            progressContainer.innerHTML = ''; // remove old progress messages
 
-            const uploadPromises = Array.from(crests).map(file => uploadSingleFile(file));
+            const uploadPromises = Array.from(crests).map(crest => uploadSingleCrest(crest));
 
             try {
                 await Promise.all(uploadPromises);
                 console.log("All files uploaded successfully!");
             } catch (error) {
                 console.error("One or more uploads failed: ", error);
+            } finally {
+                crestInput.value = null; // reset file input
+                uploadBtn.disabled = false; // allow more uploads
             }
-
-            crestInput.value = null; // reset file input
-            uploadBtn.disabled = false;
         });
 
-        function uploadSingleFile(file) {
-            return new Promise((resolve, reject) => {
-                const row = document.createElement('div');
-                row.style.margin = '8px 0';
+        function createProgressRowAndStatus(filename) {
+            const row = document.createElement('div');
+            row.style.margin = '8px 0';
 
-                const label = document.createElement('span');
-                label.textContent = `${file.name}`;
+            const label = document.createElement('span');
+            label.textContent = `${filename}`;
 
-                const progressBar = document.createElement('progress');
-                progressBar.style.margin = '-4px 4px'
-                progressBar.value = 0;
-                progressBar.max = 100;
+            const statusText = document.createElement('span');
+            statusText.textContent = '';
 
-                const statusText = document.createElement('span');
-                statusText.content = ' 0%';
+            row.appendChild(label);
+            row.appendChild(statusText);
+            return [row, statusText];
+        }
 
-                row.appendChild(label);
-                row.appendChild(progressBar);
-                row.appendChild(statusText);
-                progressBarsContainer.appendChild(row);
+        async function uploadSingleCrest(file) {
+            const [progressRow, statusText] = createProgressRowAndStatus(file.name);
+            progressContainer.appendChild(progressRow);
 
-                const formData = new FormData();
-                formData.append('crest', file);
+            const paID = file.name.split('.')[0];
+            if (isNaN(paID)) {
+                filenameErrorMessage.removeAttribute('hidden');
+                statusText.textContent = ' - Filename Error';
+                return;
+            }
 
-                const xhr = new XMLHttpRequest();
+            statusText.textContent = ' - Uploading';
 
-                xhr.upload.addEventListener("progress", (event) => {
-                    if (event.lengthComputable) {
-                        let progressPercentage = Math.round((event.loaded / event.total) * 100);
-                        progressBar.value = progressPercentage;
-                        statusText.textContent = `${progressPercentage}%`
-                    }
-                });
+            const formData = new FormData();
+            formData.append('crest', file);
 
-                xhr.addEventListener('load', () => {
-                    if (xhr.status === 200) {
-                        statusText.textContent = ' Complete!';
-                        resolve();
-                    } else {
-                        statusText.textContent = ' Failed';
-                        reject(new Error(`The server responded with an error for ${file.name}`));
-                    }
-                });
+            const response = await fetch('/admin/football/crests/upload', {method: 'POST', body: formData});
 
-                xhr.addEventListener('error', () => {
-                    statusText.textContent = ' Error';
-                    reject(new Error(`Failed to reach the server for ${file.name}`));
-                });
+            if (!response.ok) {
+                statusText.textContent = ' - Upload Failed';
+                throw new Error(`Error for ${file.name}`);
+            }
 
-                xhr.open('POST', '/admin/football/crests/upload')
-                xhr.send(formData);
-            });
-
+            statusText.textContent = ' - Complete';
         }
     </script>
 }
