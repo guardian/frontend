@@ -17,12 +17,12 @@ import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
 class IndexController(
-                       val contentApiClient: ContentApiClient,
-                       val sectionsLookUp: SectionsLookUp,
-                       val controllerComponents: ControllerComponents,
-                       val ws: WSClient,
-                     )(implicit val context: ApplicationContext)
-  extends IndexControllerCommon {
+    val contentApiClient: ContentApiClient,
+    val sectionsLookUp: SectionsLookUp,
+    val controllerComponents: ControllerComponents,
+    val ws: WSClient,
+)(implicit val context: ApplicationContext)
+    extends IndexControllerCommon {
 
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
 
@@ -36,26 +36,26 @@ class IndexController(
           .getOrElse(successful(None))
 
         maybeStorylinesContent.flatMap { storylines =>
-            val dataModel = DotcomTagPagesRenderingDataModel(
-              page = model,
-              request = request,
-              pageType = PageType(model, request, context),
-              storylinesContent = storylines
+          val dataModel = DotcomTagPagesRenderingDataModel(
+            page = model,
+            request = request,
+            pageType = PageType(model, request, context),
+            storylinesContent = storylines,
+          )
+          if (request.isJson) {
+            successful(
+              Cached(model.page) {
+                JsonComponent.fromWritable(
+                  dataModel,
+                )
+              },
             )
-            if (request.isJson) {
-              successful(
-                Cached(model.page) {
-                  JsonComponent.fromWritable(
-                    dataModel
-                  )
-                },
-              )
-            } else
-              remoteRenderer.getTagPage(
-                ws = ws,
-                dataModel = dataModel
-              )
-          }
+          } else
+            remoteRenderer.getTagPage(
+              ws = ws,
+              dataModel = dataModel,
+            )
+        }
 
       case LocalRender =>
         successful(

@@ -192,8 +192,11 @@ object S3Storylines extends S3 {
   def getAsync(key: String) = {
     val asyncClient = AWSv2.S3Async
 
-    val request = GetObjectRequest.builder().bucket(bucket)
-      .key(key).build()
+    val request = GetObjectRequest
+      .builder()
+      .bucket(bucket)
+      .key(key)
+      .build()
     asyncClient.getObject(request, AsyncResponseTransformer.toBytes[GetObjectResponse]()).asScala
   }
 }

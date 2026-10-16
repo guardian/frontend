@@ -1,19 +1,18 @@
 package model.dotcomrendering
 
-import ab.ABTests
-import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
+import common.{CanonicalLink, Edition}
 import conf.Configuration
-import model.{StorylinesContent, Tags}
+import model.PressedCollectionFormat.pressedContentFormat
 import model.pressed.PressedContent
+import model.{StorylinesContent, Tags}
 import navigation.{FooterLinks, Nav}
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json.{JsObject, JsValue, Json, Writes}
 import play.api.mvc.RequestHeader
 import services.IndexPage
 import views.support.PreviousAndNext
-import model.PressedCollectionFormat.pressedContentFormat
 
 case class DotcomTagPagesRenderingDataModel(
     contents: Seq[PressedContent],
@@ -74,7 +73,7 @@ object DotcomTagPagesRenderingDataModel {
       page: IndexPage,
       request: RequestHeader,
       pageType: PageType,
-      storylinesContent: Option[StorylinesContent]
+      storylinesContent: Option[StorylinesContent],
   ): DotcomTagPagesRenderingDataModel = {
     val edition = Edition.edition(request)
     val nav = Nav(page, edition, request, customSubnav = None)

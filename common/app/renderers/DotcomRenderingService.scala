@@ -1,6 +1,5 @@
 package renderers
 
-import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import com.gu.facia.client.models.CustomSubnav
 import common.LoggingField.LogField
@@ -14,14 +13,28 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering._
 import model.dotcomrendering.pageElements.EditionsCrosswordRenderingDataModel
 import model.meta.BlocksOn
-import model.{CacheTime, Cached, GalleryPage, ImageContentPage, InteractivePage, LiveBlogPage, MediaPage, NoCache, PageWithStoryPackage, PressedPage, RelatedContentItem, SimplePage, StorylinesContent}
+import model.{
+  CacheTime,
+  Cached,
+  GalleryPage,
+  ImageContentPage,
+  InteractivePage,
+  LiveBlogPage,
+  MediaPage,
+  NoCache,
+  PageWithStoryPackage,
+  PressedPage,
+  RelatedContentItem,
+  SimplePage,
+}
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.NewsletterData
 import services.newsletters.model.{NewsletterLayout, NewsletterResponseV2}
-import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -333,7 +346,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getTagPage(
       ws: WSClient,
-      dataModel: DotcomTagPagesRenderingDataModel
+      dataModel: DotcomTagPagesRenderingDataModel,
   )(implicit request: RequestHeader): Future[Result] = {
     val json = DotcomTagPagesRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.tagPageBaseURL + "/TagPage", CacheTime.Facia)
