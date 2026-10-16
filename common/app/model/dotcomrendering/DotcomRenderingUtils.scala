@@ -248,6 +248,24 @@ object DotcomRenderingUtils extends DCARUrlHelper {
   def isSpecialReport(page: ContentPage): Boolean =
     page.item.content.cardStyle == SpecialReport
 
+  def isRepublished(content: ContentType): Boolean =
+    content.content.hasBeenModified &&
+      content.fields.firstPublicationDate.exists(_ != content.trail.webPublicationDate)
+
+  // Matches hasFilterTag in DCR: the Filter series tags and commissioning desks
+  private val filterTagIds = Set(
+    "thefilter/series/the-filter",
+    "thefilter-us/series/thefilter-us",
+    "tracking/commissioningdesk/the-filter",
+    "tracking/commissioningdesk/filter-us",
+  )
+
+  def isFilterContent(content: ContentType): Boolean =
+    content.tags.tags.exists(tag => filterTagIds.contains(tag.id))
+
+  def isRepublishedFilterContent(content: ContentType): Boolean =
+    isFilterContent(content) && isRepublished(content)
+
   def secondaryDateString(content: ContentType, request: RequestHeader): String = {
     def format(dt: DateTime, req: RequestHeader): String = GUDateTimeFormatNew.formatDateTimeForDisplay(dt, req)
 

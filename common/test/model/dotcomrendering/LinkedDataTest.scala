@@ -1,9 +1,9 @@
 package model.dotcomrendering
 
 import com.gu.contentapi.client.model.schemaorg.{RecipeStep, SchemaOrg, SchemaRecipe}
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import com.gu.contentapi.client.model.v1.{ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
-import model.{Article, Content}
+import model.{Article, Content, SimpleContentPage}
 import conf.Configuration
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -110,6 +110,103 @@ class LinkedDataTest extends AnyFlatSpec with Matchers with MockitoSugar {
     linkedData.length shouldEqual (2)
     linkedData.head.`@type` shouldEqual ("NewsArticle")
     linkedData(1).`@type` shouldEqual ("WebPage")
+  }
+
+  it should "align JSON-LD and Open Graph modification dates only for republished UK and US Filter articles" in {
+    val published = new DateTime("2026-10-07T16:13:00Z")
+    val firstPublished = published.minusDays(5)
+    val lastModified = published.plusMinutes(10)
+    def capi(date: DateTime) = jodaToJavaInstant(date).atOffset(ZoneOffset.UTC).toCapiDateTime
+
+    Seq(
+      "thefilter/series/the-filter",
+      "thefilter-us/series/thefilter-us",
+      "tracking/commissioningdesk/the-filter",
+      "tracking/commissioningdesk/filter-us",
+      "lifeandstyle/lifeandstyle",
+    ).foreach { tagId =>
+      val item = ApiContent(
+        id = "thefilter/2026/oct/02/test-article",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDate = Some(capi(published)),
+        webTitle = "Test article",
+        webUrl = "https://www.theguardian.com/thefilter/2026/oct/02/test-article",
+        apiUrl = "https://content.guardianapis.com/thefilter/2026/oct/02/test-article",
+        tags = List(
+          ApiTag(
+            id = tagId,
+            `type` = TagType.Keyword,
+            webTitle = "",
+            sectionId = None,
+            sectionName = None,
+            webUrl = "",
+            apiUrl = "",
+            references = Nil,
+          ),
+        ),
+        fields = Some(
+          ContentFields(
+            firstPublicationDate = Some(capi(firstPublished)),
+            lastModified = Some(capi(lastModified)),
+          ),
+        ),
+      )
+      val article = Article.make(Content.make(item))
+      val linkedData = LinkedData.forArticle(article, Configuration.dotcom.baseUrl, Configuration.images.fallbackLogo)
+      val json = Json.toJson(linkedData.head)
+      val expectedModified =
+        if (tagId == "lifeandstyle/lifeandstyle") article.fields.lastModified else article.trail.webPublicationDate
+
+      (json \ "dateModified").as[String] shouldEqual expectedModified.toString()
+      (json \ "datePublished").as[String] shouldEqual article.trail.webPublicationDate.toString()
+      val openGraph = SimpleContentPage(article).getOpenGraphProperties
+      openGraph("article:modified_time") shouldEqual expectedModified.toString()
+      openGraph("article:published_time") shouldEqual article.trail.webPublicationDate.toString()
+    }
+  }
+
+  it should "keep lastModified as dateModified for a Filter article that has not been republished" in {
+    val published = new DateTime("2026-10-07T16:13:00Z")
+    val lastModified = published.plusMinutes(10)
+    def capi(date: DateTime) = jodaToJavaInstant(date).atOffset(ZoneOffset.UTC).toCapiDateTime
+
+    val item = ApiContent(
+      id = "thefilter/2026/oct/07/test-article",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDate = Some(capi(published)),
+      webTitle = "Test article",
+      webUrl = "https://www.theguardian.com/thefilter/2026/oct/07/test-article",
+      apiUrl = "https://content.guardianapis.com/thefilter/2026/oct/07/test-article",
+      tags = List(
+        ApiTag(
+          id = "thefilter/series/the-filter",
+          `type` = TagType.Keyword,
+          webTitle = "",
+          sectionId = None,
+          sectionName = None,
+          webUrl = "",
+          apiUrl = "",
+          references = Nil,
+        ),
+      ),
+      fields = Some(
+        ContentFields(
+          firstPublicationDate = Some(capi(published)),
+          lastModified = Some(capi(lastModified)),
+        ),
+      ),
+    )
+    val article = Article.make(Content.make(item))
+    val linkedData = LinkedData.forArticle(article, Configuration.dotcom.baseUrl, Configuration.images.fallbackLogo)
+    val json = Json.toJson(linkedData.head)
+
+    (json \ "dateModified").as[String] shouldEqual article.fields.lastModified.toString()
+    (json \ "datePublished").as[String] shouldEqual article.trail.webPublicationDate.toString()
+    val openGraph = SimpleContentPage(article).getOpenGraphProperties
+    openGraph("article:modified_time") shouldEqual article.fields.lastModified.toString()
+    openGraph("article:published_time") shouldEqual article.trail.webPublicationDate.toString()
   }
 
   "LinkedData.forArticle" should "return recipe linkedData if there is any present" in {

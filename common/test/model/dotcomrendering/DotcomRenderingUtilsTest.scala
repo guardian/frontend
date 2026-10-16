@@ -9,7 +9,9 @@ import com.gu.contentapi.client.model.v1.{
   ContentFields,
   ElementType,
   ImageElementFields,
+  TagType,
   Content => ApiContent,
+  Tag => ApiTag,
 }
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.contentapi.client.utils.format.LiveBlogDesign
@@ -192,6 +194,76 @@ class DotcomRenderingUtilsTest extends AnyFlatSpec with Matchers with MockitoSug
 
   private val sampleArticleBody =
     """<p>Opening paragraph.</p><p>Second paragraph with some content.</p>"""
+
+  private def datedArticle(
+      tagIds: Seq[String],
+      republished: Boolean,
+      hasFirstPublicationDate: Boolean = true,
+  ): Article = {
+    val firstPublished = new DateTime(2026, 10, 2, 16, 13)
+    val published = if (republished) firstPublished.plusDays(5) else firstPublished
+    def capi(dt: DateTime) = jodaToJavaInstant(dt).atOffset(ZoneOffset.UTC).toCapiDateTime
+    val item = ApiContent(
+      id = "thefilter/2026/oct/02/test-article",
+      sectionId = None,
+      sectionName = None,
+      webPublicationDate = Some(capi(published)),
+      webTitle = "Test article",
+      webUrl = "http://www.theguardian.com/thefilter/2026/oct/02/test-article",
+      apiUrl = "http://content.guardianapis.com/thefilter/2026/oct/02/test-article",
+      tags = tagIds
+        .map(id =>
+          ApiTag(
+            id = id,
+            `type` = TagType.Keyword,
+            webTitle = "",
+            sectionId = None,
+            sectionName = None,
+            webUrl = "",
+            apiUrl = "",
+            references = Nil,
+          ),
+        )
+        .toList,
+      elements = None,
+      fields = Some(
+        ContentFields(
+          firstPublicationDate = if (hasFirstPublicationDate) Some(capi(firstPublished)) else None,
+          lastModified = Some(capi(published.plusMinutes(10))),
+        ),
+      ),
+    )
+    Article.make(Content.make(item))
+  }
+
+  "isRepublishedFilterContent" should "identify a republished Filter article" in {
+    val article = datedArticle(Seq("thefilter/series/the-filter"), republished = true)
+    DotcomRenderingUtils.isRepublishedFilterContent(article) should be(true)
+  }
+
+  it should "identify a republished article from the Filter commissioning desk" in {
+    val article = datedArticle(Seq("tracking/commissioningdesk/filter-us"), republished = true)
+    DotcomRenderingUtils.isRepublishedFilterContent(article) should be(true)
+  }
+
+  it should "exclude a Filter article that has not been republished" in {
+    val article = datedArticle(Seq("thefilter/series/the-filter"), republished = false)
+    DotcomRenderingUtils.isRepublishedFilterContent(article) should be(false)
+  }
+
+  it should "exclude a republished article that is not Filter content" in {
+    val article = datedArticle(Seq("lifeandstyle/lifeandstyle"), republished = true)
+    DotcomRenderingUtils.isRepublishedFilterContent(article) should be(false)
+  }
+
+  it should "exclude a Filter article without a first publication date" in {
+    val article = datedArticle(
+      Seq("thefilter/series/the-filter"),
+      republished = true,
+      hasFirstPublicationDate = false,
+    )
+    DotcomRenderingUtils.isRepublishedFilterContent(article) should be(false)
+  }
 
   "shouldAddAffiliateLinks" should "return false when the affiliate links switch is off" in {
     Switches.AffiliateLinks.switchOff()
