@@ -4,9 +4,9 @@
 
 Puzzle Page is a generic page template for iframe-based Guardian puzzle types (sudoku and word
 games), rendered by dotcom-rendering (DCR). This repo (`frontend`) assembles a small amount of
-per-instance data (currently just a title and the puzzle date requested) and POSTs it to DCR's
+per-instance data (title, requested date, and the API-resolved `gameUrl`) and POSTs it to DCR's
 `/PuzzlePage` endpoint; DCR owns all layout, styling, and structural/rendering behaviour, including
-the third-party iframe URL for each puzzle.
+reader-specific additions to the third-party iframe URL.
 
 **Crosswords are not part of Puzzle Page.** They remain entirely on their own, separate
 `/crosswords/*` routes and controllers (`CrosswordsController.scala`, `CrosswordPageController`,
@@ -18,11 +18,11 @@ Per confirmed team direction, individual puzzle-page URLs are nested under the `
 hub, grouped by DCR's `puzzleGroup` ("logic-puzzles" or "word-games"), and always carry a real
 `YYYY-MM-DD` date:
 
-- Hub (unchanged): `https://www.theguardian.com/puzzles-and-games/`
-- Sudoku: `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`
-  (and `sudoku-medium`, `sudoku-hard`, `sudoku-killer`)
-- Word wheel: `https://www.theguardian.com/puzzles-and-games/word-games/word-wheel/2024-01-15`
-- Wordiply: `https://www.theguardian.com/puzzles-and-games/word-games/wordiply/2024-01-15`
+-   Hub (unchanged): `https://www.theguardian.com/puzzles-and-games/`
+-   Sudoku: `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`
+    (and `sudoku-medium`, `sudoku-hard`, `sudoku-killer`)
+-   Word wheel: `https://www.theguardian.com/puzzles-and-games/word-games/word-wheel/2024-01-15`
+-   Wordiply: `https://www.theguardian.com/puzzles-and-games/word-games/wordiply/2024-01-15`
 
 The **bare URL** for each game (no date segment, e.g.
 `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy`) is not itself a page -
@@ -48,38 +48,47 @@ Matching DCR's own V0 registry:
 | `/puzzles-and-games/word-games/word-wheel/{date}`       | `renderWordWheel(date)`        | `word-wheel`       | Word wheel        |
 | `/puzzles-and-games/word-games/wordiply/{date}`         | `renderWordiply(date)`         | `wordiply`         | Wordiply          |
 
-For all six, this repo sends **only a static placeholder title plus the requested date** - there is
-no real per-instance content sourcing on the frontend side for any of these, since the iframe itself
-always shows the puzzle for that date according to the third party's own logic. Whatever DCR renders
-is driven entirely by its own static per-slug config (see "DCR's `PuzzleConfig` registry" below)
-plus that placeholder title and date.
+For all six, frontend maps the slug to `puzzleType` and requests
+`GET /game?puzzleType=...&date=YYYY-MM-DD` using `Configuration.puzzlesApi.baseUrl`
+and the configured API key. The response is a single archive item (no envelope).
+Its `gameUrl` becomes `instance.gameUrl`; DCR preserves its path, puzzle ID and provider
+parameters, adding reader context after hydration. This server request is anonymous so
+cached HTML never contains another reader's provider identity.
+
+Missing games or absent game URLs return 404. Upstream failures and invalid responses
+return an uncached 502. The existing `puzzles.api.url` configuration must point to the
+new API deployment that serves `/game`, `/archive` and `/progress/query`.
+
+Hub crossword cards, archive calendar/recent cards and their recommendation rails use
+API `gameUrl` values directly, including dated Genius article URLs. They no longer look
+up CAPI to construct crossword destinations. Other puzzle card destinations are unchanged.
 
 ### Code
 
-- `applications/app/controllers/PuzzlesPageController.scala`:
-    - `renderSudoku(variant, date)`/`renderSudokuJson(variant, date)` - the nested, dated Sudoku
-      actions, backed by `sudokuVariantTitles` (variant -> title map).
-    - `renderWordWheel(date)`/`renderWordWheelJson(date)` - dedicated word wheel actions, hardcoding
-      `WordWheelSlug`/`WordWheelTitle` internally.
-    - `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions, hardcoding
-      `WordiplySlug`/`WordiplyTitle` internally.
-    - `redirectSudokuArchive(variant)`, `redirectWordWheelArchive()`, `redirectWordiplyArchive()` - the
-      bare (dateless) archive-redirect actions (see "Archive redirects" below).
-    - All actions are deliberately named distinctly from this controller's other, pre-existing
-      `renderPuzzles()`/`renderPuzzlesJson()` actions, which serve the unrelated Puzzles Hub/listing
-      page.
-- `common/app/model/dotcomrendering/DotcomPuzzlePageRenderingDataModel.scala` -
-  `DotcomPuzzlePageRenderingDataModel`/`PuzzlePageInstance`, the JSON contract sent to DCR (see field
-  reference below).
-- `common/app/renderers/DotcomRenderingService.scala` - `getPuzzlePage` POSTs to
-  `<articleBaseURL>/PuzzlePage`.
-- `common/app/staticpages/StaticPages.scala` - `dcrSimplePuzzlePage` builds the minimal `SimplePage`
-  metadata used for each instance.
-- Routes (identical in `applications/conf/routes` and `dev-build/conf/routes`, under the
-  `# Puzzle Page` comment, positioned right after the crossword routes and well ahead of the
-  generic `IndexController` catch-all further down the file - Play resolves routes in file order,
-  so this positioning is required for these paths to not fall through to the tag/section catch-all,
-  exactly like `/crosswords/*` already relies on):
+-   `applications/app/controllers/PuzzlesPageController.scala`:
+    -   `renderSudoku(variant, date)`/`renderSudokuJson(variant, date)` - the nested, dated Sudoku
+        actions, backed by `sudokuVariantTitles` (variant -> title map).
+    -   `renderWordWheel(date)`/`renderWordWheelJson(date)` - dedicated word wheel actions, hardcoding
+        `WordWheelSlug`/`WordWheelTitle` internally.
+    -   `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions, hardcoding
+        `WordiplySlug`/`WordiplyTitle` internally.
+    -   `redirectSudokuArchive(variant)`, `redirectWordWheelArchive()`, `redirectWordiplyArchive()` - the
+        bare (dateless) archive-redirect actions (see "Archive redirects" below).
+    -   All actions are deliberately named distinctly from this controller's other, pre-existing
+        `renderPuzzles()`/`renderPuzzlesJson()` actions, which serve the unrelated Puzzles Hub/listing
+        page.
+-   `common/app/model/dotcomrendering/DotcomPuzzlePageRenderingDataModel.scala` -
+    `DotcomPuzzlePageRenderingDataModel`/`PuzzlePageInstance`, the JSON contract sent to DCR (see field
+    reference below).
+-   `common/app/renderers/DotcomRenderingService.scala` - `getPuzzlePage` POSTs to
+    `<articleBaseURL>/PuzzlePage`.
+-   `common/app/staticpages/StaticPages.scala` - `dcrSimplePuzzlePage` builds the minimal `SimplePage`
+    metadata used for each instance.
+-   Routes (identical in `applications/conf/routes` and `dev-build/conf/routes`, under the
+    `# Puzzle Page` comment, positioned right after the crossword routes and well ahead of the
+    generic `IndexController` catch-all further down the file - Play resolves routes in file order,
+    so this positioning is required for these paths to not fall through to the tag/section catch-all,
+    exactly like `/crosswords/*` already relies on):
 
     ```
     GET /puzzles-and-games/logic-puzzles/sudoku-:variant/:date       -> PuzzlesPageController.renderSudoku       (variant constrained to easy|medium|hard|killer, date constrained to \d{4}-\d{2}-\d{2})
@@ -117,12 +126,9 @@ entirely, along with the `java.time.LocalDate`-based "default to today" fallback
 longer optional plumbing, it's a meaningful part of every puzzle-page URL, since users will navigate
 here from a calendar for a specific day's puzzle.
 
-**Format validation only.** The date's _shape_ is validated at the route level via a
-`$date<\d{4}-\d{2}-\d{2}>` constraint - a structurally malformed date (wrong number of digits, missing
-dashes, etc.) fails to match the route and 404s before ever reaching the controller. **Deeper calendar
-validity is intentionally not implemented** - e.g. `2024-02-30` (not a real date) or a future date
-will still route through and render, since only the digit/dash shape is checked, not whether the date
-is real or sensible. This is an accepted, known limitation for this task (see "Open questions" below).
+The route validates the date's shape and the controller validates its calendar value
+with `LocalDate.parse`. Impossible dates return 404 without calling the API. Valid dates
+are looked up exactly as requested; publication availability is determined by `/game`.
 
 ### Archive redirects
 
@@ -140,7 +146,7 @@ redirect target that isn't ready yet.
 
 ### How to configure/add a new puzzle type
 
-All per-slug _structural_ configuration (iframe URL, render mode, which UI chrome is enabled) lives
+All per-slug presentation configuration (render mode and which UI chrome is enabled) lives
 in DCR's `PuzzleConfig` registry, not in this repo - this repo does not duplicate that data. To onboard
 a new **flat** (single-segment identity) iframe-based puzzle (like word-wheel/wordiply) on the
 **frontend side**:
@@ -164,9 +170,8 @@ dedicated action(s) taking the appropriate additional path segment(s), mirroring
 `renderSudoku`/`renderSudokuJson` - this repo's internal naming/routes should always match the
 public URL shape, not be flattened internally just because that's simpler.
 
-Puzzle Page is scoped to iframe-based puzzles with no real per-instance content by design - a puzzle
-type that needs real per-instance content fetched from somewhere is a larger change to discuss and
-design explicitly, not something to bolt onto this flow unilaterally.
+Also register each new slug in `PuzzlesPageController.PuzzleTypesBySlug` and ensure the
+Puzzles API supports that type in `/game`. The API owns provider URLs and puzzle IDs.
 
 ### Local testing
 
@@ -234,20 +239,14 @@ value for it instead of a today-only default.
 
 ## Open questions / known limitations
 
-- **Iframe-only by design.** Puzzle Page covers iframe-based puzzles only; crosswords are out of
-  scope on product direction, not a gap to fill later.
-- **No real per-instance content for any puzzle.** All 6 puzzles get a static placeholder title
-  only.
-- **Date format, not calendar validity, is checked.** A structurally well-formed but calendrically
-  invalid date (e.g. `2024-02-30`) or a future date will still route through and render - only the
-  `\d{4}-\d{2}-\d{2}` shape is enforced at the route level. Not implemented for this task; an
-  accepted limitation.
-- **The archive pages don't exist yet.** The bare, dateless URL for each game redirects to a
-  `.../archive?puzzle=...` URL that 404s today - this is expected until the archive (a V1 feature)
-  is built.
-- **This URL structure is not yet formally confirmed by the business** in the sense of a final,
-  permanent public commitment - it was arrived at through iterative confirmed decisions during
-  development and may still evolve.
-- **Deeper technical open items (AmuseLabs archive URLs, the user-id/postMessage mechanism, etc.)
-  are tracked on the DCR side**, in that repo's own equivalent consolidated Puzzle Page doc, not
-  duplicated here - check the `dotcom-rendering` repo for the current location of that document.
+-   **Iframe-only by design.** Puzzle Page covers iframe-based puzzles only; crosswords are out of
+    scope on product direction, not a gap to fill later.
+-   **The archive pages don't exist yet.** The bare, dateless URL for each game redirects to a
+    `.../archive?puzzle=...` URL that 404s today - this is expected until the archive (a V1 feature)
+    is built.
+-   **This URL structure is not yet formally confirmed by the business** in the sense of a final,
+    permanent public commitment - it was arrived at through iterative confirmed decisions during
+    development and may still evolve.
+-   **Deeper technical open items (AmuseLabs archive URLs, the user-id/postMessage mechanism, etc.)
+    are tracked on the DCR side**, in that repo's own equivalent consolidated Puzzle Page doc, not
+    duplicated here - check the `dotcom-rendering` repo for the current location of that document.
