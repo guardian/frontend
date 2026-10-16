@@ -12,6 +12,7 @@ import model.dotcomrendering.{
 object PuzzlesArchiveBuilder {
   private val apiTypes: Map[(String, String), String] = Map(
     ("crossword", "quick") -> "CROSSWORD_QUICK",
+    ("crossword", "genius") -> "CROSSWORD_GENIUS",
     ("crossword", "mini") -> "CROSSWORD_MINI",
     ("crossword", "cryptic") -> "CROSSWORD_CRYPTIC",
     ("crossword", "weekend") -> "CROSSWORD_WEEKEND",
@@ -25,6 +26,8 @@ object PuzzlesArchiveBuilder {
     ("sudoku", "killer") -> "SUDOKU_KILLER",
     ("word-wheel", "all") -> "WORDWHEEL",
   )
+
+  def apiType(puzzleType: String, set: String): Option[String] = apiTypes.get((puzzleType, set))
 
   case class Selection(
       category: String,
@@ -74,7 +77,11 @@ object PuzzlesArchiveBuilder {
 
   def destination(selection: Selection, item: PuzzlesApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
-      s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
+      item.gameUrl
+        .filter(_.trim.nonEmpty)
+        .getOrElse(
+          throw new IllegalArgumentException("Crossword archive item is missing gameUrl"),
+        )
     else {
       val slug = selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
       s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
@@ -106,7 +113,14 @@ object PuzzlesArchiveBuilder {
       hasError: Boolean,
       moreFrom: Seq[PuzzleItem],
       recentItems: Option[Seq[PuzzlesApiItem]] = None,
-  ): PuzzlesArchive =
+  ): PuzzlesArchive = {
+    // Missing crossword destinations must not become fabricated links in either list.
+    def playable(values: Seq[PuzzlesApiItem]): Seq[PuzzlesApiItem] =
+      values.filter(item =>
+        item.puzzleType == selection.apiType &&
+          (!selection.apiType.startsWith("CROSSWORD_") || item.gameUrl.exists(_.trim.nonEmpty)),
+      )
+
     PuzzlesArchive(
       category = selection.category,
       title = selection.title,
@@ -115,14 +129,14 @@ object PuzzlesArchiveBuilder {
       puzzles = selection.puzzles,
       year = year,
       month = month,
-      items = items.map(archiveItem(selection, _)),
+      items = playable(items).map(archiveItem(selection, _)),
       hasError = hasError,
       moreFrom = moreFrom,
-      recentItems = recentItems
-        .getOrElse(items)
+      recentItems = playable(recentItems.getOrElse(items))
         .sortBy(_.publishDate)
         .reverse
         .take(3)
         .map(archiveItem(selection, _)),
     )
+  }
 }
