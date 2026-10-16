@@ -25,10 +25,10 @@ class CrestsController(
     }
 
   def getCrest(teamId: String): Action[AnyContent] =
-      Action { implicit request =>
-        val url = S3SportsAssets.getPresignedUrl("football/crests/" + teamId + ".png")
-        Ok(Json.obj("url" -> url))
-      }
+    Action { implicit request =>
+      val url = S3SportsAssets.getPresignedUrl("football/crests/" + teamId + ".png")
+      Ok(Json.obj("url" -> url))
+    }
 
   def upload: Action[MultipartFormData[TemporaryFile]] =
     Action.async(parse.multipartFormData) { implicit request =>
