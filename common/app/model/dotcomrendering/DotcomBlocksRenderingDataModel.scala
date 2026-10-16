@@ -70,7 +70,7 @@ object DotcomBlocksRenderingDataModel {
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
-    val isLivePricingEnabled = AffiliateProductLivePricing.isEnabledForPage(request.uri)
+    val isLivePricingEnabled = AffiliateProductLivePricing.isEnabledForPage(content.fields.livePricingEnabled)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
     val edition = Edition(request)
