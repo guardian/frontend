@@ -85,11 +85,11 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
   }
 
   it should "prefer a specific-article match over a tag match" in {
-    val c = content(List("sport/cycling"))
+    val contentWithCyclingTag = content(List("sport/cycling"))
     val tagSubnav = subnav("tag", List(tag("sport/cycling")))
-    val articleSubnav = subnav("article", List(articlePage(c.metadata.id)))
+    val articleSubnav = subnav("article", List(articlePage(contentWithCyclingTag.metadata.id)))
     val config = CustomSubnavConfig(live = List(tagSubnav, articleSubnav), draft = Nil)
-    agentWith(config).getSubnavForContent(c).map(_.id) should be(Some("article"))
+    agentWith(config).getSubnavForContent(contentWithCyclingTag).map(_.id) should be(Some("article"))
   }
 
   it should "match tags in content priority order (first tag wins)" in {
@@ -98,7 +98,7 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
     val cyclingSubnav = subnav("cycling", List(tag("sport/cycling")))
     // Config order deliberately lists football first; cycling should still win as it is the first tag.
     val config = CustomSubnavConfig(live = List(footballSubnav, cyclingSubnav), draft = Nil)
-    agentWith(config).getSubnavForContent(c).map(_.id) should be(Some("cycling"))
+    agentWith(config).getSubnavForContent(contentWithCyclingFirst).map(_.id) should be(Some("cycling"))
   }
 
   it should "search newest subnavs first when several match the same tag" in {
