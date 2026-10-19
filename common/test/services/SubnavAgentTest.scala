@@ -93,7 +93,7 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
   }
 
   it should "match tags in content priority order (first tag wins)" in {
-    val c = content(List("sport/cycling", "sport/football"))
+    val contentWithCyclingFirst = content(List("sport/cycling", "sport/football"))
     val footballSubnav = subnav("football", List(tag("sport/football")))
     val cyclingSubnav = subnav("cycling", List(tag("sport/cycling")))
     // Config order deliberately lists football first; cycling should still win as it is the first tag.
