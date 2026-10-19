@@ -11,7 +11,7 @@ case class MediaSelect(
     showMainVideo: Boolean,
     imageSlideshowReplace: Boolean,
     videoReplace: Boolean,
-    multimediaSlideshowReplace: Boolean,
+    multimediaSlideshowReplace: Boolean = false,
 )
 
 final case class PressedProperties(
