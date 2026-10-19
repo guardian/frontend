@@ -29,6 +29,7 @@ class PuzzlesPageController(
     remoteRenderer: DotcomRenderingService,
     puzzlesGameApi: PuzzlesGameApi,
     puzzlesNewsletters: PuzzlesNewsletters,
+    indexController: IndexController,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -39,9 +40,15 @@ class PuzzlesPageController(
       Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
     )
 
+  /** Readers outside the `puzzles-new-hub-v1` variant get the existing `/puzzles-and-games` tag page, as if the hub did
+    * not exist, rather than a 404.
+    */
+  private def tagPage(implicit request: RequestHeader): Future[Result] =
+    indexController.renderItem(PuzzlesPageController.HubTagPath)
+
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) tagPage
       else
         request.getRequestFormat match {
           case HtmlFormat =>
@@ -61,7 +68,7 @@ class PuzzlesPageController(
 
   def renderPuzzlesJson(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) tagPage
       else
         request.getRequestFormat match {
           case JsonFormat =>
@@ -361,6 +368,9 @@ class PuzzlesPageController(
 }
 
 object PuzzlesPageController {
+
+  /** Path of the tag page served at `/puzzles-and-games` when the hub is not enabled for the reader. */
+  val HubTagPath = "puzzles-and-games"
 
   val PuzzleTypesBySlug: Map[String, String] = Map(
     "sudoku-easy" -> "SUDOKU_EASY",
