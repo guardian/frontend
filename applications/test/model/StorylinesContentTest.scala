@@ -49,7 +49,7 @@ class StorylinesContentTest extends AnyFlatSpec with Matchers {
   it should "decode an article and its image" in {
     val content = StorylinesContent.decode(fixture).toOption.get
 
-    val article = content.storylines.head.content.head.articles.get.head
+    val article = content.storylines.head.content.head.articles.head
 
     article.url shouldBe "https://www.theguardian.com/music/2026/sep/25/dolly-parton-day-declared"
     article.headline shouldBe "Dolly Parton Day declared in various cities and states across the US on 9/25"
@@ -70,8 +70,7 @@ class StorylinesContentTest extends AnyFlatSpec with Matchers {
     val mediaData = for {
       storyline <- content.storylines
       category <- storyline.content
-      articles <- category.articles.toList
-      article <- articles
+      article <- category.articles
       image <- article.image.toList
       media <- image.mediaData.toList
     } yield media

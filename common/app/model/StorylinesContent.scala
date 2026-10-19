@@ -28,7 +28,7 @@ case class Storyline(
 
 case class CategoryContent(
     category: String,
-    articles: Option[List[ArticleData]],
+    articles: List[ArticleData] = List.empty,
 )
 
 case class ImageData(
@@ -105,12 +105,12 @@ object Storyline {
 }
 
 object CategoryContent {
-  implicit val reads: Reads[CategoryContent] = Json.reads[CategoryContent]
+  implicit val reads: Reads[CategoryContent] = Json.using[Json.WithDefaultValues].reads[CategoryContent]
   implicit val categoryContentWrites: Writes[CategoryContent] = Json.writes[CategoryContent]
 }
 
 object ImageData {
-  implicit val reads: Reads[ImageData] = Json.reads[ImageData]
+  implicit val reads: Reads[ImageData] = Json.using[Json.WithDefaultValues].reads[ImageData]
   implicit val imageDataWrites: Writes[ImageData] = Json.writes[ImageData]
 
 }
