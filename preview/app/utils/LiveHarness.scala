@@ -87,7 +87,6 @@ object LiveHarness {
     reviews = Seq.empty,
     timelines = Seq.empty,
     callToAction = Seq.empty,
-    multimediaSlideshows = Seq.empty,
   )
 
   private val voidTextElements = Set("br", "hr", "wbr")

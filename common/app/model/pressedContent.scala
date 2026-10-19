@@ -116,7 +116,7 @@ final case class CuratedContent(
     supportingContent: List[PressedContent],
     cardStyle: CardStyle,
     mediaAtom: Option[MediaAtom],
-    multimediaSlideshowAtom: Option[MultimediaSlideshowAtom],
+    multimediaSlideshow: Option[MultimediaSlideshowAtom],
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -165,13 +165,7 @@ object CuratedContent {
           case _ => None
         }
       },
-      multimediaSlideshowAtom = content.multimediaSlideshowAtom.flatMap { atom =>
-        atom.data match {
-          case slideshow: com.gu.contentatom.thrift.AtomData.MultimediaSlideshow =>
-            Some(MultimediaSlideshowAtom.makeFromThrift(atom.id, slideshow.multimediaSlideshow))
-          case _ => None
-        }
-      },
+      multimediaSlideshow = content.multimediaSlideshow.map(MultimediaSlideshowAtom.fromFacia),
     )
   }
 }

@@ -139,7 +139,7 @@ object FixtureBuilder {
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
       mediaAtom = None,
-      multimediaSlideshowAtom = None,
+      multimediaSlideshow = None,
     )
   }
 

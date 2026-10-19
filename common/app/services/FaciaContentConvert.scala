@@ -42,7 +42,7 @@ object FaciaContentConvert {
       atomId = None,
       mediaAtom = None,
       multimediaSlideshowAtomId = None,
-      multimediaSlideshowAtom = None,
+      multimediaSlideshow = None,
       tests = None,
     )
 

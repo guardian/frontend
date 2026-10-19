@@ -7,11 +7,6 @@ import com.gu.contentatom.thrift.atom.media.{
 }
 import com.gu.contentatom.thrift.AtomDataAliases.{MediaAlias => MediaAtomData}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
-import com.gu.contentatom.thrift.atom.multimediaslideshow.{
-  MultimediaSlideshowAtom => AtomApiMultimediaSlideshowAtom,
-  Slide => AtomApiSlide,
-  SlideContent => AtomApiSlideContent,
-}
 import com.gu.contentatom.thrift.{
   AtomData,
   Atom => AtomApiAtom,
@@ -19,6 +14,7 @@ import com.gu.contentatom.thrift.{
   ImageAsset => AtomApiImageAsset,
   atom => atomapi,
 }
+import com.gu.facia.api.models.{FaciaMultimediaSlideshow, FaciaSlideImage, FaciaSlideVideo}
 import com.madgag.scala.collection.decorators.MapDecorator
 import enumeratum._
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
@@ -361,10 +357,7 @@ sealed trait MultimediaSlideshowSlideContent
 
 final case class MultimediaSlideshowImage(image: ImageMedia) extends MultimediaSlideshowSlideContent
 
-// References a media (video) atom by its atom id. On fronts the atom is resolved at press time and
-// inlined as `mediaAtom`; it may be None if resolution failed or the referencing surface hasn't resolved it.
-final case class MultimediaSlideshowVideo(mediaAtomId: String, mediaAtom: Option[MediaAtom] = None)
-    extends MultimediaSlideshowSlideContent
+final case class MultimediaSlideshowVideo(mediaAtom: MediaAtom) extends MultimediaSlideshowSlideContent
 
 final case class MultimediaSlideshowSlide(
     content: MultimediaSlideshowSlideContent,
@@ -376,41 +369,29 @@ final case class MultimediaSlideshowSlide(
 final case class MultimediaSlideshowAtom(
     override val id: String,
     title: Option[String],
+    aspectRatio: Option[String],
     slides: Seq[MultimediaSlideshowSlide],
 ) extends Atom
 
-object MultimediaSlideshowAtom extends common.GuLogging {
+object MultimediaSlideshowAtom {
 
-  def make(atom: AtomApiAtom): MultimediaSlideshowAtom = {
-    val slideshow = atom.data.asInstanceOf[AtomData.MultimediaSlideshow].multimediaSlideshow
-    makeFromThrift(atom.id, slideshow)
-  }
-
-  def makeFromThrift(id: String, slideshow: AtomApiMultimediaSlideshowAtom): MultimediaSlideshowAtom =
+  def fromFacia(slideshow: FaciaMultimediaSlideshow): MultimediaSlideshowAtom =
     MultimediaSlideshowAtom(
-      id = id,
+      id = slideshow.id,
       title = slideshow.title,
-      slides = slideshow.slides.flatMap(makeSlide).toSeq,
+      aspectRatio = slideshow.aspectRatio,
+      slides = slideshow.slides.flatMap { slide =>
+        val content: Option[MultimediaSlideshowSlideContent] = slide.content match {
+          case FaciaSlideImage(image) => Some(MultimediaSlideshowImage(Atoms.atomImageToImageMedia(image)))
+          case FaciaSlideVideo(atom)  =>
+            atom.data match {
+              case AtomData.Media(media) => Some(MultimediaSlideshowVideo(MediaAtom.makeFromThrift(atom.id, media)))
+              case _                     => None
+            }
+        }
+        content.map(MultimediaSlideshowSlide(_, slide.caption, slide.label, slide.credit))
+      },
     )
-
-  private def makeSlide(slide: AtomApiSlide): Option[MultimediaSlideshowSlide] =
-    slideContent(slide.content).map { content =>
-      MultimediaSlideshowSlide(
-        content = content,
-        caption = slide.caption,
-        label = slide.label,
-        credit = slide.credit,
-      )
-    }
-
-  private def slideContent(content: AtomApiSlideContent): Option[MultimediaSlideshowSlideContent] =
-    content match {
-      case AtomApiSlideContent.Image(image) => Some(MultimediaSlideshowImage(Atoms.atomImageToImageMedia(image)))
-      case AtomApiSlideContent.MediaAtom(reference) => Some(MultimediaSlideshowVideo(reference.mediaAtomId))
-      case AtomApiSlideContent.UnknownUnionField(_) =>
-        log.warn("Ignoring unknown MultimediaSlideshow SlideContent field")
-        None
-    }
 }
 
 // ----------------------------------------
