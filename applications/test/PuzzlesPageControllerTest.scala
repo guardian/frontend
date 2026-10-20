@@ -582,10 +582,13 @@ import scala.concurrent.{ExecutionContext, Future}
     )
     related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
     related.map(_.cadence) should be(Seq(Some("Today"), Some("Today"), Some("Today")))
-    (json \ "instance" \ "puzzlesSupporting").toOption should be(None)
+    (json \ "instance" \ "puzzlesSupporting" \ "usefulLinks" \\ "title").map(_.as[String]) should be(
+      PuzzlesNewsletters.GameLinks.map(_.title),
+    )
+    (json \ "instance" \ "puzzlesSupporting" \ "newsletter").toOption should be(None)
   }
 
-  it should "include the Cluesletter, with no useful links, when it is live" in {
+  it should "include the Cluesletter and the useful links when it is live" in {
     val agent = mock[NewsletterSignupAgent]
     when(agent.getV2NewsletterByName("cluesletter")).thenReturn(
       Right(
@@ -621,7 +624,7 @@ import scala.concurrent.{ExecutionContext, Future}
       )
 
     val supporting = Json.parse(contentAsString(result)) \ "instance" \ "puzzlesSupporting"
-    (supporting \ "usefulLinks").as[Seq[JsValue]] shouldBe empty
+    (supporting \ "usefulLinks" \\ "url").map(_.as[String]) should be(PuzzlesNewsletters.GameLinks.map(_.url))
     (supporting \ "newsletter" \ "identityName").as[String] should be("cluesletter")
   }
 
