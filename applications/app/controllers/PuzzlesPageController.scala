@@ -1,7 +1,7 @@
 package controllers
 
 import ab.PuzzlesHubV1Experiment
-import common.ImplicitControllerExecutionContext
+import common.{ImplicitControllerExecutionContext, InternalRedirect}
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
 import model.dotcomrendering.{
@@ -14,6 +14,7 @@ import play.api.libs.ws.WSClient
 import play.api.libs.json.Json
 import play.api.mvc._
 import renderers.DotcomRenderingService
+import services.ConfigAgent
 import staticpages.StaticPages
 
 import java.time.{LocalDate, YearMonth, ZoneId}
@@ -39,9 +40,21 @@ class PuzzlesPageController(
       Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
     )
 
+  /** Readers outside the `puzzles-new-hub-v1` variant get the `puzzles-and-games` front curated in the Fronts tool, as
+    * if the hub did not exist. Facia owns fronts, so the request is handed over to it. Facia hands a path that is not a
+    * front back to this app, so we only do it when the front is configured, otherwise the two apps would redirect to
+    * each other forever. If it is not configured we keep the 404.
+    */
+  private def hubFront(implicit request: RequestHeader): Future[Result] =
+    if (ConfigAgent.shouldServeFront(PuzzlesPageController.HubFrontPath)) {
+      val path =
+        if (request.isJson) s"${PuzzlesPageController.HubFrontPath}.json" else PuzzlesPageController.HubFrontPath
+      Future.successful(InternalRedirect.internalRedirect("facia", path, request.rawQueryStringOption.map("?" + _)))
+    } else notFound
+
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) hubFront
       else
         request.getRequestFormat match {
           case HtmlFormat =>
@@ -61,7 +74,7 @@ class PuzzlesPageController(
 
   def renderPuzzlesJson(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) hubFront
       else
         request.getRequestFormat match {
           case JsonFormat =>
@@ -361,6 +374,9 @@ class PuzzlesPageController(
 }
 
 object PuzzlesPageController {
+
+  /** Id of the front served at `/puzzles-and-games` when the hub is not enabled for the reader. */
+  val HubFrontPath = "puzzles-and-games"
 
   val PuzzleTypesBySlug: Map[String, String] = Map(
     "sudoku-easy" -> "SUDOKU_EASY",

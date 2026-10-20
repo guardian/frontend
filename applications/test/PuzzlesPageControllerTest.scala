@@ -10,6 +10,7 @@ import controllers.{
   PuzzlesPageController,
   PuzzlesProgressApi,
 }
+import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
@@ -24,6 +25,7 @@ import play.api.mvc.{AnyContent, Headers, Request, RequestHeader, Results}
 import play.api.test.Helpers._
 import play.api.test.FakeRequest
 import renderers.DotcomRenderingService
+import services.ConfigAgent
 import services.newsletters.model.NewsletterResponseV2
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
@@ -499,6 +501,14 @@ import scala.concurrent.{ExecutionContext, Future}
     status(result) should be(NOT_FOUND)
   }
 
+  private def frontsConfig(frontIds: String*): ConfigJson =
+    ConfigJson(
+      frontIds
+        .map(id => id -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None))
+        .toMap,
+      Map.empty,
+    )
+
   Seq(
     "control" -> "puzzles-new-hub-v1:control",
     "absent" -> "",
@@ -507,18 +517,33 @@ import scala.concurrent.{ExecutionContext, Future}
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
     s"puzzles hub access with $participationCase participation" should
-      "return not found for HTML and JSON without loading the layout or calling DCR" in {
-        val provider = mock[PuzzlesLayoutProvider]
-        val renderer = mock[DotcomRenderingService]
-        val puzzlesController = controller(provider, renderer)
+      "hand over to the puzzles-and-games front for HTML and JSON without loading the layout or calling DCR" in {
+        ConfigAgent.refreshWith(frontsConfig("puzzles-and-games")).futureValue
+        try {
+          val provider = mock[PuzzlesLayoutProvider]
+          val renderer = mock[DotcomRenderingService]
+          val puzzlesController = controller(provider, renderer)
 
-        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))
-        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
+          val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))
+          val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
 
-        status(htmlResult) should be(NOT_FOUND)
-        status(jsonResult) should be(NOT_FOUND)
-        verifyNoInteractions(provider, renderer)
+          status(htmlResult) should be(OK)
+          header("X-Accel-Redirect", htmlResult) should be(Some("/facia/puzzles-and-games"))
+          status(jsonResult) should be(OK)
+          header("X-Accel-Redirect", jsonResult) should be(Some("/facia/puzzles-and-games.json"))
+          verifyNoInteractions(provider, renderer)
+        } finally ConfigAgent.refreshWith(frontsConfig()).futureValue
       }
+
+    it should "return not found, rather than redirect back and forth with facia, when the front is not configured" in {
+      ConfigAgent.refreshWith(frontsConfig()).futureValue
+      val puzzlesController = controller(mock[PuzzlesLayoutProvider], mock[DotcomRenderingService])
+
+      status(puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))) should be(NOT_FOUND)
+      status(puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))) should be(
+        NOT_FOUND,
+      )
+    }
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
