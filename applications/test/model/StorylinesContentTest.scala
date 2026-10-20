@@ -9,6 +9,11 @@ import scala.io.Source
 class StorylinesContentTest extends AnyFlatSpec with Matchers {
 
   private val fixture: String = {
+
+    /** The fixture is derived from the Storylines API:
+      * https://storylines.gutools.co.uk/api/generation-runs/<GENERATION_RUN_ID>/rendered Generation runs are listed at:
+      * https://storylines.gutools.co.uk/home
+      */
     val stream = getClass.getResourceAsStream("/StorylinesContent.fixture.json")
     val source = Source.fromInputStream(stream)
     try source.mkString

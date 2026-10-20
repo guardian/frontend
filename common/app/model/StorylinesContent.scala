@@ -11,8 +11,9 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
 import scala.util.control.NonFatal
 
-// this mirrors the structure in the tool generating the content
-// https://github.com/guardian/tag-page-supercharger/blob/main/app/models/FrontendContent.scala#L18
+/** This mirrors the structure in the tool generating the content
+  * https://github.com/guardian/storylines/blob/de23efe6890ccf83cb6053848c0213d565021c12/app/models/FrontendContent.scala#L33
+  */
 case class StorylinesContent(
     created: Instant,
     tag: String,
@@ -48,10 +49,12 @@ case class ArticleData(
     ],
 )
 
-// These mirror the definitions from DCR: https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/src/types/mainMedia.ts
-// In DCR, we effectively bypass the usual transformations done to Frontend/CAPI data,
-// but need to provide the fields below so multimedia cards can render correctly.
-// There are existing Video/Gallery/Audio references in Frontend, so we define separate types here to avoid confusion.
+/** These mirror the definitions from the Storylines app which produces the Storylines data:
+  * https://github.com/guardian/storylines/blob/de23efe6890ccf83cb6053848c0213d565021c12/app/models/FrontendContent.scala#L150
+  * Both are modelled after the corresponding typed in DCR:
+  * https://github.com/guardian/dotcom-rendering/blob/673184a8877118d666e1a2de3a49f015cda7c84d/dotcom-rendering/src/types/mainMedia.ts#L6
+  * There are existing Video/Gallery/Audio references in Frontend, so we define separate types here to avoid confusion.
+  */
 sealed trait StorylinesMediaData {
   def `type`: String
 }
