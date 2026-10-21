@@ -24,6 +24,12 @@ class CrestsController(
       Cached(60)(RevalidatableResult.Ok(views.html.football.crests()))
     }
 
+  def getCrest(teamId: String): Action[AnyContent] =
+    Action { implicit request =>
+      val url = S3SportsAssets.getPresignedUrl("football/crests/" + teamId + ".png")
+      Ok(Json.obj("url" -> url))
+    }
+
   def upload: Action[MultipartFormData[TemporaryFile]] =
     Action.async(parse.multipartFormData) { implicit request =>
       request.body.file("crest") match {
