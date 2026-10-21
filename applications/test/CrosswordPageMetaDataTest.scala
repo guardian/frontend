@@ -1,10 +1,13 @@
 package test
 
-import controllers.CrosswordPageController
+import controllers.{CrosswordPageController, PuzzlesNewsletters}
 import metadata.MetaDataMatcher
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
+import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
+
+import scala.concurrent.ExecutionContext
 
 @DoNotDiscover class CrosswordPageMetaDataTest
     extends AnyFlatSpec
@@ -18,7 +21,12 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 
   val crosswordUrl = "crosswords/cryptic/26697"
   lazy val crosswordPageController =
-    new CrosswordPageController(testContentApiClient, play.api.test.Helpers.stubControllerComponents(), wsClient)
+    new CrosswordPageController(
+      testContentApiClient,
+      play.api.test.Helpers.stubControllerComponents(),
+      wsClient,
+      new PuzzlesNewsletters(new NewsletterSignupAgent(NewsletterApi(wsClient)(ExecutionContext.global))),
+    )
 
   it should "not include the ios deep link" in {
     val result = crosswordPageController.crossword("cryptic", 26697)(TestRequest(crosswordUrl))

@@ -113,15 +113,6 @@
 				"nestedContainers": [],
 				"archiveChoices": [
 					{
-						"id": "archive-mini",
-						"title": "Mini",
-						"type": "crossword",
-						"set": "mini",
-						"cardVariant": "archive",
-						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-mini",
-						"variant": "archive-page"
-					},
-					{
 						"id": "archive-quick",
 						"title": "Quick",
 						"type": "crossword",
@@ -131,12 +122,30 @@
 						"variant": "archive-page"
 					},
 					{
+						"id": "archive-mini",
+						"title": "Mini",
+						"type": "crossword",
+						"set": "mini",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-mini",
+						"variant": "archive-page"
+					},
+					{
 						"id": "archive-cryptic",
 						"title": "Cryptic",
 						"type": "crossword",
 						"set": "cryptic",
 						"cardVariant": "archive",
 						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-cryptic",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-weekend",
+						"title": "Weekend",
+						"type": "crossword",
+						"set": "weekend",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-weekend",
 						"variant": "archive-page"
 					},
 					{
@@ -155,15 +164,6 @@
 						"set": "quiptic",
 						"cardVariant": "archive",
 						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-quiptic",
-						"variant": "archive-page"
-					},
-					{
-						"id": "archive-weekend",
-						"title": "Weekend",
-						"type": "crossword",
-						"set": "weekend",
-						"cardVariant": "archive",
-						"url": "/puzzles-and-games/crosswords/archive?puzzle=archive-weekend",
 						"variant": "archive-page"
 					},
 					{
@@ -393,20 +393,14 @@
 				"usefulLinks": [
 					{
 						"title": "Support the Guardian",
-						"url": "https://support.theguardian.com"
+						"url": "https://support.theguardian.com?utm_medium=ACQUISITIONS_EDITORIAL_LINK&utm_campaign=puzzles_games&utm_content=puzzles_hub&utm_term=puzzles_hub&utm_source=GUARDIAN_WEB"
 					},
 					{
-						"title": "Help Centre",
+						"title": "Help centre",
 						"url": "https://help.theguardian.com"
 					}
 				],
-				"newsletter": {
-					"identityName": "saturday-edition",
-					"name": "Saturday Edition",
-					"frequency": "Weekly",
-					"description": "An exclusive roundup of the week’s best Guardian journalism from the editor-in-chief, Katharine Viner, free to your inbox every Saturday.",
-					"illustrationSquare": "https://i.guim.co.uk/img/uploads/2023/11/01/SaturdayEdition_-_5-3.jpg?width=220&dpr=2&s=none&crop=5%3A3"
-				},
+				"newsletterIdentityName": "cluesletter",
 				"popularTitle": "Most popular puzzles",
 				"popularGroups": [
 					{

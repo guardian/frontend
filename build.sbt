@@ -104,6 +104,10 @@ val common = library("common")
       pekkoSerializationJackson,
       pekkoActorTyped,
       supportInternationalisation,
+      // Transitive dependency of Pekko, this evicts an older version temporarily
+      lz4Java,
+      // Transitive dependency of content-api-models-json, this evicts an older version temporarily
+      circeParser,
     ) ++ jackson,
   )
 

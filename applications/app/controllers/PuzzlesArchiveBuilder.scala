@@ -12,12 +12,13 @@ import model.dotcomrendering.{
 object PuzzlesArchiveBuilder {
   private val apiTypes: Map[(String, String), String] = Map(
     ("crossword", "quick") -> "CROSSWORD_QUICK",
+    ("crossword", "genius") -> "CROSSWORD_GENIUS",
     ("crossword", "mini") -> "CROSSWORD_MINI",
     ("crossword", "cryptic") -> "CROSSWORD_CRYPTIC",
-    ("crossword", "quick-cryptic") -> "CROSSWORD_QUICKCRYPTIC",
     ("crossword", "weekend") -> "CROSSWORD_WEEKEND",
-    ("crossword", "prize") -> "CROSSWORD_PRIZE",
+    ("crossword", "quick-cryptic") -> "CROSSWORD_QUICKCRYPTIC",
     ("crossword", "quiptic") -> "CROSSWORD_QUIPTIC",
+    ("crossword", "prize") -> "CROSSWORD_PRIZE",
     ("crossword", "sunday-quick") -> "CROSSWORD_SUNDAYQUICK",
     ("sudoku", "easy") -> "SUDOKU_EASY",
     ("sudoku", "medium") -> "SUDOKU_MEDIUM",
@@ -25,6 +26,8 @@ object PuzzlesArchiveBuilder {
     ("sudoku", "killer") -> "SUDOKU_KILLER",
     ("word-wheel", "all") -> "WORDWHEEL",
   )
+
+  def apiType(puzzleType: String, set: String): Option[String] = apiTypes.get((puzzleType, set))
 
   case class Selection(
       category: String,
@@ -74,7 +77,11 @@ object PuzzlesArchiveBuilder {
 
   def destination(selection: Selection, item: PuzzlesApiItem): String =
     if (selection.puzzle.puzzleType.startsWith("CROSSWORD_"))
-      s"/crosswords/${selection.puzzle.set}/${item.puzzleId}"
+      item.gameUrl
+        .filter(_.trim.nonEmpty)
+        .getOrElse(
+          throw new IllegalArgumentException("Crossword archive item is missing gameUrl"),
+        )
     else {
       val slug = selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
       s"/puzzles-and-games/${selection.category}/$slug/${item.publishDate.take(10)}"
@@ -85,6 +92,19 @@ object PuzzlesArchiveBuilder {
     if (selection.category == "crosswords") selection.puzzle.set
     else selection.puzzle.slug.flatMap(_.split('/').lastOption).getOrElse(selection.puzzle.id)
 
+  /** Every archive item, wherever it is listed (the month's calendar or the recent cards), is built here so that none
+    * of them can drop a field such as the game status.
+    */
+  private def archiveItem(selection: Selection, item: PuzzlesApiItem): PuzzlesArchiveItem =
+    PuzzlesArchiveItem(
+      item.puzzleType,
+      item.publishDate.take(10),
+      item.progress,
+      item.setterName,
+      destination(selection, item),
+      item.gameStatus,
+    )
+
   def build(
       selection: Selection,
       year: Int,
@@ -92,7 +112,15 @@ object PuzzlesArchiveBuilder {
       items: Seq[PuzzlesApiItem],
       hasError: Boolean,
       moreFrom: Seq[PuzzleItem],
-  ): PuzzlesArchive =
+      recentItems: Option[Seq[PuzzlesApiItem]] = None,
+  ): PuzzlesArchive = {
+    // Missing crossword destinations must not become fabricated links in either list.
+    def playable(values: Seq[PuzzlesApiItem]): Seq[PuzzlesApiItem] =
+      values.filter(item =>
+        item.puzzleType == selection.apiType &&
+          (!selection.apiType.startsWith("CROSSWORD_") || item.gameUrl.exists(_.trim.nonEmpty)),
+      )
+
     PuzzlesArchive(
       category = selection.category,
       title = selection.title,
@@ -101,16 +129,14 @@ object PuzzlesArchiveBuilder {
       puzzles = selection.puzzles,
       year = year,
       month = month,
-      items = items.map(item =>
-        PuzzlesArchiveItem(
-          item.puzzleType,
-          item.publishDate.take(10),
-          item.progress,
-          item.setterName,
-          destination(selection, item),
-        ),
-      ),
+      items = playable(items).map(archiveItem(selection, _)),
       hasError = hasError,
       moreFrom = moreFrom,
+      recentItems = playable(recentItems.getOrElse(items))
+        .sortBy(_.publishDate)
+        .reverse
+        .take(3)
+        .map(archiveItem(selection, _)),
     )
+  }
 }

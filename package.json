@@ -120,7 +120,6 @@
 		"webpack": "^5.79.0",
 		"webpack-bundle-analyzer": "^4.10.2",
 		"webpack-cli": "^5.0.1",
-		"webpack-dev-server": "^5.2.2",
 		"webpack-merge": "^4.2.2",
 		"wolfy87-eventemitter": "~5.2.4",
 		"yargs": "^17.7.1"

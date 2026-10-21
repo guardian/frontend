@@ -91,7 +91,7 @@ import play.api.libs.json.Json
     destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
   }
 
-  it should "build canonical crossword destinations instead of using the API game URL" in {
+  it should "use API crossword destinations without rebuilding them" in {
     val miniSelection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("mini")).get
     val weekendSelection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("weekend")).get
 
@@ -105,7 +105,7 @@ import play.api.libs.json.Json
         None,
         Some("/crosswords/mini-crossword/287"),
       ),
-    ) should be("/crosswords/mini/287")
+    ) should be("/crosswords/mini-crossword/287")
     PuzzlesArchiveBuilder.destination(
       weekendSelection,
       PuzzlesApiItem(
@@ -116,7 +116,35 @@ import play.api.libs.json.Json
         None,
         Some("/crosswords/weekend-crossword/820"),
       ),
-    ) should be("/crosswords/weekend/820")
+    ) should be("/crosswords/weekend-crossword/820")
+  }
+
+  it should "omit crossword items without API destinations from calendar and recent cards" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("quick")).get
+    val missing = PuzzlesApiItem("123", "CROSSWORD_QUICK", "2026-09-02", 0, None, None)
+    val valid = missing.copy(gameUrl = Some("https://www.theguardian.com/crosswords/quick/456"))
+    val archive = PuzzlesArchiveBuilder.build(selection, 2026, 9, Seq(missing, valid), false, Nil)
+    archive.items.map(_.url) shouldBe Seq(valid.gameUrl.get)
+    archive.recentItems.map(_.url) shouldBe Seq(valid.gameUrl.get)
+  }
+
+  it should "carry the API game status to the archive items" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    val archive = PuzzlesArchiveBuilder.build(
+      selection,
+      2026,
+      9,
+      Seq(
+        PuzzlesApiItem("a", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 10, None, None, Some("completed")),
+        PuzzlesApiItem("b", "SUDOKU_EASY", "2026-09-03T00:00:00Z", 100, None, None),
+      ),
+      hasError = false,
+      moreFrom = Nil,
+    )
+
+    archive.items.map(_.gameStatus) should be(Seq(Some("completed"), None))
+    archive.recentItems.map(_.gameStatus) should be(Seq(None, Some("completed")))
+    (Json.toJson(archive) \ "items" \ 1 \ "gameStatus").toOption should be(None)
   }
 
   it should "exclude puzzles without an archive from the archive selector" in {
@@ -148,6 +176,7 @@ import play.api.libs.json.Json
             100,
             None,
             Some("https://www.theguardian.com/crosswords/quick/42"),
+            Some("completed"),
           ),
         ),
       ),

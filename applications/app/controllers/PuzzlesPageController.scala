@@ -2,7 +2,6 @@ package controllers
 
 import ab.PuzzlesHubV1Experiment
 import common.ImplicitControllerExecutionContext
-import contentapi.ContentApiClient
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
 import model.dotcomrendering.{
@@ -10,7 +9,7 @@ import model.dotcomrendering.{
   DotcomPuzzlesPageRenderingDataModel,
   PuzzlePageInstance,
 }
-import model.{ApplicationContext, CacheTime, Cached, NoCache}
+import model.{ApplicationContext, CacheTime, Cached, Cors, NoCache, TinyResponse}
 import play.api.libs.ws.WSClient
 import play.api.libs.json.Json
 import play.api.mvc._
@@ -20,6 +19,7 @@ import staticpages.StaticPages
 import java.time.{LocalDate, YearMonth, ZoneId}
 import scala.concurrent.Future
 import scala.util.Try
+import scala.util.control.NonFatal
 
 class PuzzlesPageController(
     wsClient: WSClient,
@@ -27,7 +27,9 @@ class PuzzlesPageController(
     puzzlesArchiveApi: PuzzlesArchiveApi,
     puzzlesProgressApi: PuzzlesProgressApi,
     remoteRenderer: DotcomRenderingService,
-    contentApiClient: ContentApiClient,
+    puzzlesGameApi: PuzzlesGameApi,
+    puzzlesNewsletters: PuzzlesNewsletters,
+    indexController: IndexController,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -38,9 +40,15 @@ class PuzzlesPageController(
       Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
     )
 
+  /** Readers outside the `puzzles-new-hub-v1` variant get the existing `/puzzles-and-games` tag page, as if the hub did
+    * not exist, rather than a 404.
+    */
+  private def tagPage(implicit request: RequestHeader): Future[Result] =
+    indexController.renderItem(PuzzlesPageController.HubTagPath)
+
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) tagPage
       else
         request.getRequestFormat match {
           case HtmlFormat =>
@@ -60,7 +68,7 @@ class PuzzlesPageController(
 
   def renderPuzzlesJson(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled) tagPage
       else
         request.getRequestFormat match {
           case JsonFormat =>
@@ -86,9 +94,16 @@ class PuzzlesPageController(
           PuzzlesPageController.ProgressPuzzleTypes,
           request.headers.get("Authorization"),
         )
-        .map(items => NoCache(Ok(Json.toJson(PuzzlesApiResponse(items)))))
-        .recover { case _ => NoCache(BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress"))) }
+        .map(items => Ok(Json.toJson(PuzzlesApiResponse(items))))
+        .recover { case _ => BadGateway(Json.obj("message" -> "Failed to retrieve puzzle progress")) }
+        .map(result => Cors(NoCache(result)))
     }
+
+  def puzzlesDataOptions(): Action[AnyContent] = Action { implicit request =>
+    TinyResponse.noContent(Some("GET, OPTIONS"))
+  }
+
+  def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
@@ -120,7 +135,7 @@ class PuzzlesPageController(
   // their selection in the path so that CODE/PROD receive the requested month.
   def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      Try(YearMonth.of(year, month)).toOption match {
+      val result = Try(YearMonth.of(year, month)).toOption match {
         case None                 => Future.successful(BadRequest)
         case Some(requestedMonth) =>
           buildArchive(
@@ -130,10 +145,11 @@ class PuzzlesPageController(
             request.headers.get("Authorization"),
           )
             .map { case (_, archive) =>
-              NoCache(Ok(Json.toJson(archive)))
+              Ok(Json.toJson(archive))
             }
             .recoverWith { case _: NoSuchElementException => notFound }
       }
+      result.map(response => Cors(NoCache(response)))
     }
 
   private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
@@ -181,17 +197,19 @@ class PuzzlesPageController(
             .resolveForArchive(
               PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
               today.toString,
-              PuzzleRecommendations.capiLookup(contentApiClient),
+              PuzzleRecommendations.apiLookup(puzzlesArchiveApi),
             )
             .flatMap { moreFrom =>
-              puzzlesArchiveApi
-                .get(
-                  startDate,
-                  endDate,
-                  selection.apiType,
-                  authorization,
-                )
-                .map { items =>
+              val calendarItems = puzzlesArchiveApi.get(startDate, endDate, selection.apiType, authorization)
+              // Recent cards are relative to today, not the calendar's selected month.
+              // Reuse the current month's request, which already includes a 31-day lookback.
+              val recentItems =
+                if (isCurrentMonth) calendarItems
+                else puzzlesArchiveApi.get(today.minusDays(31), today, selection.apiType, authorization)
+
+              calendarItems
+                .zip(recentItems.recover { case _ => Nil })
+                .map { case (items, recent) =>
                   layout -> PuzzlesArchiveBuilder.build(
                     selection,
                     yearMonth.getYear,
@@ -199,6 +217,7 @@ class PuzzlesPageController(
                     items,
                     hasError = false,
                     moreFrom = moreFrom,
+                    recentItems = Some(recent),
                   )
                 }
                 .recover { case _ =>
@@ -216,35 +235,7 @@ class PuzzlesPageController(
     }
   }
 
-  /** Puzzle Page: a generic page template for iframe-based puzzle types, rendered by DCR via its `/PuzzlePage`
-    * endpoint. There is no per-instance content to fetch for any of these - the iframe always shows the puzzle for the
-    * requested date according to the third party's own logic - so this repo only needs to provide a reasonable static
-    * title plus that date. All structural rendering (iframe URL, flags) is resolved by DCR's own static registry, keyed
-    * by slug. See docs/puzzle-page.md for the full reference.
-    *
-    * Public URLs are nested under `/puzzles-and-games/{group}/{game}/{date}`, where `{group}` is each game's DCR
-    * `puzzleGroup` ("logic-puzzles" or "word-games") as a literal, hardcoded path segment on that game's own dedicated
-    * route/action - not a generic `:group` wildcard - consistent with each game having its own explicit route/action
-    * below (mirroring how the crossword controller handles each crossword type explicitly, rather than a single generic
-    * slug/group action).
-    *
-    * `{date}` is a real, always-present `yyyy-MM-dd` path segment (format-validated at the route level via a
-    * `$date<\d{4}-\d{2}-\d{2}>` constraint, so a malformed date 404s before reaching this controller at all - deeper
-    * calendar validity, e.g. rejecting a real Feb 30 or future dates, is intentionally not implemented, see
-    * docs/puzzle-page.md). The bare, dateless URL for each game redirects (temporarily - a real archive page doesn't
-    * exist yet) to that group's not-yet-built archive page, filtered to this puzzle via a `?puzzle=` query param.
-    *
-    * Sudoku takes a `variant` path segment (`renderSudoku`/`renderSudokuJson`, e.g. `.../sudoku-easy/2024-01-15`); word
-    * wheel and wordiply each have their own dedicated actions taking only `date` (their slug/title/group are hardcoded
-    * internally). All are deliberately named distinctly from `renderPuzzles`/`renderPuzzlesJson` above (the unrelated
-    * Puzzles Hub/listing page).
-    *
-    * Gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1") AB test already used by the hub actions
-    * above - reusing the existing experiment rather than introducing a new one.
-    *
-    * Note: crosswords are explicitly out of scope for Puzzle Page - they remain on their own, separate crossword-only
-    * routes/controllers, untouched.
-    */
+  /** Iframe puzzle pages resolve their slug and URL date through GET /game. Crosswords retain their own routes. */
   def renderSudoku(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubV1Experiment.isEnabled) notFound
@@ -320,7 +311,7 @@ class PuzzlesPageController(
       webTitle: String,
       date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    buildPuzzlePageData(slug, webTitle, date).flatMap { dataModel =>
+    withPuzzlePageData(slug, webTitle, date) { dataModel =>
       remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
     }
   }
@@ -329,37 +320,69 @@ class PuzzlesPageController(
       slug: String,
       webTitle: String,
       date: String,
-  )(implicit request: RequestHeader): Future[Result] = {
-    buildPuzzlePageData(slug, webTitle, date).map { dataModel =>
-      Cached(CacheTime.NotFound)(
-        Cached.WithoutRevalidationResult(
-          Ok(DotcomPuzzlePageRenderingDataModel.toJson(dataModel)).as("application/json"),
+  )(implicit request: RequestHeader): Future[Result] =
+    withPuzzlePageData(slug, webTitle, date) { dataModel =>
+      Future.successful(
+        Cached(CacheTime.NotFound)(
+          Cached.WithoutRevalidationResult(
+            Ok(DotcomPuzzlePageRenderingDataModel.toJson(dataModel)).as("application/json"),
+          ),
         ),
       )
     }
+
+  private def withPuzzlePageData(slug: String, webTitle: String, date: String)(
+      render: DotcomPuzzlePageRenderingDataModel => Future[Result],
+  )(implicit request: RequestHeader): Future[Result] = {
+    val selection = for {
+      puzzleType <- PuzzlesPageController.PuzzleTypesBySlug.get(slug)
+      parsedDate <- Try(LocalDate.parse(date)).toOption
+    } yield puzzleType -> parsedDate
+
+    selection match {
+      case None                           => notFound
+      case Some((puzzleType, parsedDate)) =>
+        puzzlesGameApi
+          .get(puzzleType, parsedDate)
+          .flatMap {
+            case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) =>
+              PuzzleRecommendations
+                .resolve(slug, currentId = None, date, PuzzleRecommendations.apiLookup(puzzlesArchiveApi))
+                .flatMap { recommendations =>
+                  val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
+                  val instance = PuzzlePageInstance(
+                    title = webTitle,
+                    puzzleDate = Some(date),
+                    gameUrl = game.gameUrl,
+                    moreFromPuzzlesAndGames = recommendations,
+                    puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = PuzzlesNewsletters.GameLinks),
+                  )
+                  render(DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request))
+                }
+            case _ => notFound
+          }
+          .recover { case NonFatal(_) => NoCache(BadGateway("Failed to retrieve puzzle")) }
+    }
   }
 
-  private def buildPuzzlePageData(
-      slug: String,
-      webTitle: String,
-      date: String,
-  )(implicit request: RequestHeader): Future[DotcomPuzzlePageRenderingDataModel] =
-    PuzzleRecommendations
-      .resolve(slug, currentId = None, date, PuzzleRecommendations.capiLookup(contentApiClient))
-      .map { moreFromPuzzlesAndGames =>
-        val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
-        val instance = PuzzlePageInstance(
-          title = webTitle,
-          puzzleDate = Some(date),
-          moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
-        )
-        DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
-      }
 }
 
 object PuzzlesPageController {
 
+  /** Path of the tag page served at `/puzzles-and-games` when the hub is not enabled for the reader. */
+  val HubTagPath = "puzzles-and-games"
+
+  val PuzzleTypesBySlug: Map[String, String] = Map(
+    "sudoku-easy" -> "SUDOKU_EASY",
+    "sudoku-medium" -> "SUDOKU_MEDIUM",
+    "sudoku-hard" -> "SUDOKU_HARD",
+    "sudoku-killer" -> "SUDOKU_KILLER",
+    "word-wheel" -> "WORDWHEEL",
+    "wordiply" -> "WORDIPLY",
+  )
+
   val ProgressPuzzleTypes: Seq[String] = Seq(
+    "CROSSWORD_GENIUS",
     "CROSSWORD_QUICK",
     "CROSSWORD_MINI",
     "CROSSWORD_CRYPTIC",

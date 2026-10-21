@@ -1,12 +1,10 @@
 package controllers
 
-import com.gu.contentapi.client.model.SearchQuery
-import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.GuLogging
-import contentapi.ContentApiClient
 import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
 import play.api.Environment
 import play.api.libs.json.{JsError, JsSuccess, Json}
+import services.newsletters.NewsletterSignupAgent
 
 import java.time.{Clock, DayOfWeek, LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future, blocking}
@@ -20,18 +18,21 @@ trait PuzzlesLayoutProvider {
 
 class LocalJsonPuzzlesLayoutProvider(
     environment: Environment,
-    contentApiClient: ContentApiClient,
+    puzzlesArchiveApi: PuzzlesArchiveApi,
+    newsletterSignupAgent: NewsletterSignupAgent,
     resourceName: String = LocalJsonPuzzlesLayoutProvider.DefaultResourceName,
     clock: Clock = Clock.systemUTC(),
 ) extends PuzzlesLayoutProvider
     with GuLogging {
 
+  private val newsletters = new PuzzlesNewsletters(newsletterSignupAgent)
+
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>
-      val scheduledLayout = applyFeaturedSchedule(baseLayout)
-      val datedLayout = applyWordiplyDateFallback(scheduledLayout)
+      val scheduledLayout = resolveNewsletters(applyFeaturedSchedule(baseLayout))
+      val datedLayout = applyIframeDateFallback(scheduledLayout)
       enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
-        log.warn("Failed to enrich crossword cards from CAPI using the scheduled layout", error)
+        log.warn("Failed to enrich crossword cards from the Puzzles API using the scheduled layout", error)
         datedLayout
       }
     }
@@ -53,22 +54,33 @@ class LocalJsonPuzzlesLayoutProvider(
     })
   }
 
-  private def applyWordiplyDateFallback(layout: PuzzlesLayout): PuzzlesLayout = {
+  // Play links need a date before hydration; bare game routes redirect to the archive.
+  // Client-side API enrichment can still replace this with the latest publication date.
+  private def applyIframeDateFallback(layout: PuzzlesLayout): PuzzlesLayout = {
     val today = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).toString
-    layout.copy(containers = layout.containers.map(addWordiplyDate(_, today)))
+    layout.copy(containers = layout.containers.map(addIframeDate(_, today)))
   }
 
-  private def addWordiplyDate(container: PuzzleContainer, date: String): PuzzleContainer =
+  private def addIframeDate(container: PuzzleContainer, date: String): PuzzleContainer =
     container.copy(content =
       container.content.copy(
         items = container.content.items.map(_.map { item =>
-          if (item.`type` == "wordiply" && item.variant.contains("iframe-page") && item.date.isEmpty)
+          if (item.variant.contains("iframe-page") && item.date.forall(_.trim.isEmpty))
             item.copy(date = Some(date))
           else item
         }),
-        nestedContainers = container.content.nestedContainers.map(addWordiplyDate(_, date)),
+        nestedContainers = container.content.nestedContainers.map(addIframeDate(_, date)),
       ),
     )
+
+  private def resolveNewsletters(layout: PuzzlesLayout): PuzzlesLayout =
+    layout.copy(containers = layout.containers.map { container =>
+      container.copy(supporting = container.supporting.map { supporting =>
+        supporting.newsletterIdentityName.fold(supporting) { identityName =>
+          supporting.copy(newsletter = newsletters.live(identityName), newsletterIdentityName = None)
+        }
+      })
+    })
 
   private def loadLayout(): PuzzlesLayout = {
     val inputStream = environment
@@ -138,7 +150,7 @@ class LocalJsonPuzzlesLayoutProvider(
         .map(dynamicFields =>
           item.copy(
             url = Some(dynamicFields.url),
-            image = item.image.orElse(Some(dynamicFields.image)),
+            image = item.image.orElse(dynamicFields.image),
             imageAlt = item.imageAlt.orElse(Some(s"${item.title} illustration")),
             setter = dynamicFields.setter.orElse(item.setter),
           ),
@@ -154,36 +166,39 @@ class LocalJsonPuzzlesLayoutProvider(
   private def latestCrosswordForSet(set: String)(implicit
       executionContext: ExecutionContext,
   ): Future[Option[CrosswordDynamicFields]] =
-    LocalJsonPuzzlesLayoutProvider.CrosswordSeriesTags
-      .get(set)
-      .fold(Future.successful(Option.empty[CrosswordDynamicFields])) { tag =>
-        val query = SearchQuery()
-          .contentType("crossword")
-          .tag(tag)
-          .useDate("newspaper-edition")
-          .orderBy("newest")
-          .pageSize(1)
-          .showFields("all")
-
-        contentApiClient
-          .getResponse(query)
-          .map(_.results.headOption.flatMap(toDynamicFields(set, _)))
+    PuzzlesArchiveBuilder
+      .apiType("crossword", set)
+      .fold(Future.successful(Option.empty[CrosswordDynamicFields])) { puzzleType =>
+        val today = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone))
+        puzzlesArchiveApi
+          .get(today.minusDays(62), today, puzzleType)
+          .map { items =>
+            items
+              .filter(_.puzzleType == puzzleType)
+              .sortBy(_.publishDate)
+              .reverse
+              .flatMap { item =>
+                item.gameUrl.filter(_.trim.nonEmpty).map { url =>
+                  CrosswordDynamicFields(
+                    url = url,
+                    image =
+                      if (set == "genius") None
+                      else Some(s"https://api.nextgen.guardianapps.co.uk/crosswords/$set/${item.puzzleId}.svg"),
+                    setter = item.setterName.map(_.trim).filter(_.nonEmpty),
+                  )
+                }
+              }
+              .headOption
+          }
           .recover { case NonFatal(error) =>
-            log.warn(s"Failed to fetch latest '$set' crossword from CAPI keeping its base layout values", error)
+            log.warn(
+              s"Failed to fetch latest '$set' crossword from the Puzzles API keeping its base layout values",
+              error,
+            )
             None
           }
       }
 
-  private def toDynamicFields(set: String, content: ApiContent): Option[CrosswordDynamicFields] =
-    content.crossword.map { crossword =>
-      val crosswordNumber = crossword.number
-
-      CrosswordDynamicFields(
-        url = s"/crosswords/$set/$crosswordNumber",
-        image = s"https://api.nextgen.guardianapps.co.uk/crosswords/$set/$crosswordNumber.svg",
-        setter = crossword.creator.map(_.name.trim).filter(_.nonEmpty),
-      )
-    }
 }
 
 object LocalJsonPuzzlesLayoutProvider {
@@ -297,5 +312,5 @@ object LocalJsonPuzzlesLayoutProvider {
     "azed" -> "crosswords/series/azed",
   )
 
-  private[controllers] case class CrosswordDynamicFields(url: String, image: String, setter: Option[String])
+  private[controllers] case class CrosswordDynamicFields(url: String, image: Option[String], setter: Option[String])
 }
