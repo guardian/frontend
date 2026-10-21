@@ -89,4 +89,49 @@ import staticpages.StaticPages
     page.metadata.webTitle should be("Crosswords archive - puzzles & games | The Guardian")
     page.metadata.description should contain(description)
   }
+
+  it should "send hub sponsorship as commercial properties for sponsored editions only" in {
+    val sponsor = PuzzleSponsor(
+      name = "Example sponsor",
+      label = "Supported by",
+      sponsorUri = "https://example.com",
+      aboutUri = Some("https://example.com/about"),
+      logo = PuzzleSponsorLogo("https://example.com/logo.png", None, 2),
+    )
+    val sponsoredLayout = layout.copy(sponsorship = Map("AU" -> sponsor))
+    val hub = DotcomPuzzlesPageRenderingDataModel.toJson(
+      DotcomPuzzlesPageRenderingDataModel(
+        StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"),
+        sponsoredLayout,
+        requestWithParticipations,
+      ),
+    )
+
+    (hub \ "commercialProperties" \ "AU" \ "branding" \ "sponsorName").as[String] should be("Example sponsor")
+    (hub \ "commercialProperties" \ "AU" \ "branding" \ "brandingType" \ "name").as[String] should be("sponsored")
+    (hub \ "commercialProperties" \ "AU" \ "branding" \ "logo" \ "dimensions" \ "width").as[Int] should be(200)
+    (hub \ "commercialProperties" \ "UK").toOption shouldBe None
+    (hub \ "layout" \ "sponsorship").toOption shouldBe None
+
+    val archive = DotcomPuzzlesPageRenderingDataModel.toJson(
+      DotcomPuzzlesPageRenderingDataModel.archive(
+        StaticPages.dcrSimplePuzzlesArchivePage("/puzzles-and-games/crosswords/archive", "Crosswords", ""),
+        sponsoredLayout,
+        PuzzlesArchive(
+          category = "crosswords",
+          title = "Crosswords",
+          description = "",
+          selectedPuzzle = PuzzlesArchivePuzzle("quick", "Quick", "CROSSWORD_QUICK", None, "quick"),
+          puzzles = Seq.empty,
+          year = 2026,
+          month = 10,
+          items = Seq.empty,
+          hasError = false,
+          moreFrom = Seq.empty,
+        ),
+        requestWithParticipations,
+      ),
+    )
+    (archive \ "commercialProperties" \ "AU").toOption shouldBe None
+  }
 }
