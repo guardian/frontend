@@ -1,6 +1,6 @@
 package test
 
-import controllers.PuzzleRecommendations
+import controllers.{PuzzlesApiItem, PuzzlesArchiveApi, PuzzleRecommendations}
 import controllers.PuzzleRecommendations.{CrosswordLookup, LatestCrossword}
 import model.dotcomrendering.PuzzleItem
 import org.scalatest.flatspec.AnyFlatSpec
@@ -31,6 +31,33 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     Await.result(PuzzleRecommendations.resolve(key, id, date, l, today), 5.seconds)
 
   private def ids(items: Seq[PuzzleItem]): Seq[String] = items.map(_.id)
+
+  "API recommendations" should "preserve the latest destination and omit unavailable crossword links" in {
+    val api = new PuzzlesArchiveApi {
+      override def get(start: LocalDate, end: LocalDate, puzzleType: String, authorization: Option[String])(implicit
+          ec: ExecutionContext,
+      ): Future[Seq[PuzzlesApiItem]] =
+        Future.successful(
+          if (puzzleType == "CROSSWORD_QUICK")
+            Seq(
+              PuzzlesApiItem("old", puzzleType, "2026-09-23", 0, None, Some("/old")),
+              PuzzlesApiItem(
+                "opaque",
+                puzzleType,
+                date,
+                0,
+                None,
+                Some("https://www.theguardian.com/crosswords/quick/123?source=api"),
+              ),
+            )
+          else Seq(PuzzlesApiItem("unavailable", puzzleType, date, 0, None, None)),
+        )
+    }
+    val items = resolve("word-wheel", l = PuzzleRecommendations.apiLookup(api))
+    items.map(_.id) shouldBe Seq("word-wheel", "crossword-quick")
+    items.last.url shouldBe Some("https://www.theguardian.com/crosswords/quick/123?source=api")
+    items.last.date shouldBe Some(date)
+  }
 
   "Table" should "have the 18 rows of the design table, each with 3 slots" in {
     PuzzleRecommendations.Table.keySet shouldBe Set(

@@ -30,6 +30,8 @@ case class PuzzlePageInstance(
       */
     moreFromPuzzlesAndGames: Seq[PuzzleItem] = Nil,
     puzzlesSupporting: Option[PuzzleGameSupporting] = None,
+    /** The dated provider URL returned by the Puzzles API. */
+    gameUrl: Option[String] = None,
 )
 
 object PuzzlePageInstance {
