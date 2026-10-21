@@ -42,8 +42,12 @@ object PuzzlesNewsletters {
   def siteUrl(url: String): String =
     if (url.matches("https?://.+")) url else s"/${url.stripPrefix("/")}"
 
-  val CrosswordLinks: Seq[PuzzleLink] = Seq(
-    PuzzleLink("Crossword setter A-Z", "https://www.theguardian.com/crosswords/search"),
-    PuzzleLink("Crossword blog", "https://www.theguardian.com/crosswords/crossword-blog"),
+  val SupportUrl =
+    "https://support.theguardian.com?utm_medium=ACQUISITIONS_EDITORIAL_LINK&utm_campaign=puzzles_games&utm_content=puzzles_hub_game_page&utm_term=puzzles_hub_game_page&utm_source=GUARDIAN_WEB"
+
+  // Matches the hub's useful links in puzzles-layout.json, with game-page UTM values on the support link.
+  val GameLinks: Seq[PuzzleLink] = Seq(
+    PuzzleLink("Support the Guardian", SupportUrl),
+    PuzzleLink("Help centre", "https://help.theguardian.com"),
   )
 }

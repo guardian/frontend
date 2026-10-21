@@ -355,7 +355,7 @@ class PuzzlesPageController(
                     puzzleDate = Some(date),
                     gameUrl = game.gameUrl,
                     moreFromPuzzlesAndGames = recommendations,
-                    puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = Seq.empty),
+                    puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = PuzzlesNewsletters.GameLinks),
                   )
                   render(DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request))
                 }
