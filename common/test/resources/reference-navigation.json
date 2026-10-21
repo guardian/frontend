@@ -893,18 +893,6 @@
 		],
 		"brandExtensions": [
 			{
-				"title": "Search jobs",
-				"url": "https://jobs.theguardian.com",
-				"children": [],
-				"classList": []
-			},
-			{
-				"title": "Hire with Guardian Jobs",
-				"url": "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs",
-				"children": [],
-				"classList": []
-			},
-			{
 				"title": "Holidays",
 				"url": "https://holidays.theguardian.com?INTCMP=holidays_uk_web_newheader",
 				"children": [],
@@ -1681,12 +1669,6 @@
 			}
 		],
 		"brandExtensions": [
-			{
-				"title": "Search jobs",
-				"url": "https://jobs.theguardian.com",
-				"children": [],
-				"classList": []
-			},
 			{
 				"title": "Digital Archive",
 				"url": "https://theguardian.newspapers.com",
@@ -3252,12 +3234,6 @@
 		],
 		"brandExtensions": [
 			{
-				"title": "Search jobs",
-				"url": "https://jobs.theguardian.com",
-				"children": [],
-				"classList": []
-			},
-			{
 				"title": "Holidays",
 				"url": "https://holidays.theguardian.com?INTCMP=holidays_int_web_newheader",
 				"children": [],
@@ -4238,12 +4214,6 @@
 			}
 		],
 		"brandExtensions": [
-			{
-				"title": "Search jobs",
-				"url": "https://jobs.theguardian.com",
-				"children": [],
-				"classList": []
-			},
 			{
 				"title": "Holidays",
 				"url": "https://holidays.theguardian.com?INTCMP=holidays_int_web_newheader",
