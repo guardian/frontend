@@ -172,7 +172,7 @@ case class ContentCard(
 
   def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
-  val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if (displaySettings.isBoosted) "+" else ""}"
+  val analyticsPrefix = s"${cardStyle.toneString} | group-$group"
 
   val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
 

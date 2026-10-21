@@ -316,22 +316,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
-        &.fc-item--is-boosted {
-            .fc-item__header {
-                @include fs-headline(6);
-            }
-
-            @include mq($from: tablet) {
-                .fc-item__content:before {
-                    display: none;
-                }
-
-                .fc-item__header {
-                    @include fs-headline(9);
-                }
-            }
-        }
-
         // Flip the headline and image!
         &.fc-item--three-quarters-tall-tablet,
         &.fc-item--full-media-100-tablet {

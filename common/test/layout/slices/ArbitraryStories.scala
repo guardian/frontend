@@ -7,8 +7,7 @@ object ArbitraryStories {
   def storyGen(maxGroup: Int): Gen[Story] =
     for {
       group <- Gen.choose(0, maxGroup)
-      isBoosted <- Arbitrary.arbitrary[Boolean]
-    } yield Story(group, isBoosted)
+    } yield Story(group)
 
   def storySeqGen(maxGroup: Int): Gen[Seq[Story]] =
     Gen.listOf(storyGen(maxGroup)).map(_.reverseSorted)
