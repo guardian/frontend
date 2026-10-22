@@ -20,6 +20,7 @@ import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
 import services.{ArticleAbTestAgent, CAPIChannel, CAPILookup, NewsletterService, SubnavAgent}
 import views.support.RenderOtherStatus
+import conf.switches.Switches.{EditorialABTests, EditorialArticleABTests}
 
 import scala.concurrent.Future
 
@@ -42,8 +43,10 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
   private def determineArticleABTestPath(path: String)(implicit req: RequestHeader): String = {
-    val isUserInVariantBBucket = !req.isApps && ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
-    if (isUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
+    val isArticleABTestingEnabled = EditorialABTests.isSwitchedOn && EditorialArticleABTests.isSwitchedOn
+    val isWebUserInVariantBBucket =
+      isArticleABTestingEnabled && !req.isApps && ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")
+    if (isWebUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
   }
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
