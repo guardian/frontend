@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "10.0.0"
   val awsVersion = "2.54.12"
   val capiVersion = "50.0.0"
-  val faciaVersion = "44.0.0"
+  val faciaVersion = "45.0.0-PREVIEW.abremove-dynamic.2026-10-21T1643.88f7b918"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
