@@ -1,6 +1,5 @@
 package test
 
-import ab.ABTests
 import controllers.{
   IndexController,
   PuzzlesApiItem,
@@ -129,10 +128,8 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
-  private def request(path: String, participations: String = "puzzles-new-hub-v1:variant"): Request[AnyContent] = {
-    val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
-    rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
-  }
+  private def request(path: String, edition: String = "INT"): Request[AnyContent] =
+    TestRequest(path).withHeaders("X-Gu-Edition" -> edition)
 
   private val allowedOrigin = "http://www.random.com" // Included in the test CORS configuration.
 
@@ -194,7 +191,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .archiveDataForMonth("crosswords", "archive-quick", 2020, 9)(
         request(
           "/puzzles-and-games/crosswords/archive-data/archive-quick/2020/9",
-          participations = "",
+          edition = "UK",
         ),
       )
 
@@ -253,7 +250,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .archiveDataForMonth("crosswords", "archive-quick", 2999, 12)(
         request(
           "/puzzles-and-games/crosswords/archive-data/archive-quick/2999/12",
-          participations = "",
+          edition = "UK",
         ),
       )
 
@@ -275,7 +272,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .thenReturn(Future.successful(Nil))
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
       .archiveDataForMonth("crosswords", "archive-mini", 2020, 8)(
-        request("/puzzles-and-games/crosswords/archive-data/archive-mini/2020/8", participations = ""),
+        request("/puzzles-and-games/crosswords/archive-data/archive-mini/2020/8", edition = "UK"),
       )
 
     status(result) should be(OK)
@@ -299,7 +296,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .thenReturn(Future.successful(Nil))
     val result = controller(archiveProvider, mock[DotcomRenderingService], archiveApi)
       .archiveDataForMonth("crosswords", "archive-mini", 2020, 13)(
-        request("/", participations = "").withHeaders(Headers("Origin" -> allowedOrigin)),
+        request("/", edition = "UK").withHeaders(Headers("Origin" -> allowedOrigin)),
       )
     status(result) should be(BAD_REQUEST)
     header("Access-Control-Allow-Origin", result) should contain(allowedOrigin)
@@ -503,13 +500,13 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub-v1:control",
-    "absent" -> "",
-    "malformed" -> "puzzles-new-hub-v1:,puzzles-new-hub-v1:variant:extra",
-    "unknown group" -> "puzzles-new-hub-v1:unknown",
-    "unrelated experiment" -> "another-test:variant",
-  ).foreach { case (participationCase, participations) =>
-    s"puzzles hub access with $participationCase participation" should
+    "UK" -> "UK",
+    "US" -> "US",
+    "AU" -> "AU",
+    "EUR" -> "EUR",
+    "unknown edition" -> "not-an-edition",
+  ).foreach { case (editionCase, edition) =>
+    s"puzzles hub access with the $editionCase edition" should
       "serve the tag page for HTML and JSON without loading the layout or calling DCR" in {
         val provider = mock[PuzzlesLayoutProvider]
         val renderer = mock[DotcomRenderingService]
@@ -518,8 +515,8 @@ import scala.concurrent.{ExecutionContext, Future}
           .thenReturn(Future.successful(Results.Ok("tag page")))
         val puzzlesController = controller(provider, renderer, indexController = indexController)
 
-        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))
-        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
+        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", edition))
+        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", edition))
 
         status(htmlResult) should be(OK)
         contentAsString(htmlResult) should be("tag page")
@@ -531,9 +528,9 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1")
-    * AB test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are
-    * explicitly out of scope for Puzzle Page and are not exercised by these tests.
+    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubAccess` edition check as the hub
+    * actions above - reusing the existing gate rather than a new one. Crosswords are explicitly out of scope for Puzzle
+    * Page and are not exercised by these tests.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
@@ -675,7 +672,7 @@ import scala.concurrent.{ExecutionContext, Future}
     val renderer = mock[DotcomRenderingService]
 
     val result = controller(successfulProvider, renderer)
-      .renderWordWheel("2024-01-15")(request("/puzzles-and-games/word-games/word-wheel/2024-01-15", ""))
+      .renderWordWheel("2024-01-15")(request("/puzzles-and-games/word-games/word-wheel/2024-01-15", "UK"))
 
     status(result) should be(NOT_FOUND)
     verifyNoInteractions(renderer)
@@ -729,7 +726,7 @@ import scala.concurrent.{ExecutionContext, Future}
     val renderer = mock[DotcomRenderingService]
 
     val result = controller(successfulProvider, renderer)
-      .renderWordiply("2024-01-15")(request("/puzzles-and-games/word-games/wordiply/2024-01-15", ""))
+      .renderWordiply("2024-01-15")(request("/puzzles-and-games/word-games/wordiply/2024-01-15", "UK"))
 
     status(result) should be(NOT_FOUND)
     verifyNoInteractions(renderer)
@@ -815,26 +812,28 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   Seq(
-    "control" -> "puzzles-new-hub-v1:control",
-    "absent" -> "",
-    "unrelated experiment" -> "another-test:variant",
-  ).foreach { case (participationCase, participations) =>
-    s"puzzle page access with $participationCase participation" should
+    "UK" -> "UK",
+    "US" -> "US",
+    "AU" -> "AU",
+    "EUR" -> "EUR",
+    "unknown edition" -> "not-an-edition",
+  ).foreach { case (editionCase, edition) =>
+    s"puzzle page access with the $editionCase edition" should
       "return not found for sudoku, word wheel, and wordiply (both dated and archive-redirect routes) without calling DCR" in {
         val renderer = mock[DotcomRenderingService]
         val puzzlesController = controller(successfulProvider, renderer)
 
         val sudokuResult = puzzlesController.renderSudoku("easy", "2024-01-15")(
-          request("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15", participations),
+          request("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15", edition),
         )
         val sudokuRedirectResult = puzzlesController.redirectSudokuArchive("easy")(
-          request("/puzzles-and-games/logic-puzzles/sudoku-easy", participations),
+          request("/puzzles-and-games/logic-puzzles/sudoku-easy", edition),
         )
         val wordWheelResult = puzzlesController.renderWordWheel("2024-01-15")(
-          request("/puzzles-and-games/word-games/word-wheel/2024-01-15", participations),
+          request("/puzzles-and-games/word-games/word-wheel/2024-01-15", edition),
         )
         val wordiplyResult = puzzlesController.renderWordiply("2024-01-15")(
-          request("/puzzles-and-games/word-games/wordiply/2024-01-15", participations),
+          request("/puzzles-and-games/word-games/wordiply/2024-01-15", edition),
         )
 
         status(sudokuResult) should be(NOT_FOUND)
