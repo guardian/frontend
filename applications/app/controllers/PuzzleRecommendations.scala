@@ -19,7 +19,7 @@ import scala.util.control.NonFatal
   * The table is keyed by the puzzle being played and lists the (up to) 3 puzzles to recommend, in slot order. A key
   * that equals the row's own key means "most recent of the same puzzle, excluding the current one". Resolution depends
   * on the kind of puzzle referenced:
-  *   - crossword: the most recent crossword of that series, found via CAPI (never the current article)
+  *   - crossword: the most recent crossword of that series, using the supplied API lookup (never the current article)
   *   - iframe game (sudoku, word wheel, wordiply): date arithmetic, no CAPI. Any puzzle => today (London), except the
   *     one being played when it is itself today's, which would just repeat the page: that one => the day before.
   *
@@ -149,7 +149,12 @@ object PuzzleRecommendations extends GuLogging {
   val Default: Seq[String] = Seq("quick", "sudoku-easy", "word-wheel")
 
   /** Most recent crossword of a series, as needed to build a card. */
-  case class LatestCrossword(crosswordType: String, number: Int, date: Option[LocalDate] = None)
+  case class LatestCrossword(
+      crosswordType: String,
+      number: Int,
+      date: Option[LocalDate] = None,
+      gameUrl: Option[String] = None,
+  )
 
   /** Looks up the most recent crossword of `set`, ignoring the article whose CAPI id is `excludeId`. */
   type CrosswordLookup = (String, Option[String]) => Future[Option[LatestCrossword]]
@@ -192,6 +197,36 @@ object PuzzleRecommendations extends GuLogging {
       today: LocalDate,
   )(implicit ec: ExecutionContext): Future[Seq[PuzzleItem]] =
     Future.sequence(keys.map(key => resolveSlot(key, currentKey, currentId, date, lookup, today))).map(_.flatten)
+
+  /** Puzzles pages use the API's destination verbatim, including article-style crossword URLs. */
+  def apiLookup(api: PuzzlesArchiveApi)(implicit ec: ExecutionContext): CrosswordLookup =
+    (set, excludeId) =>
+      PuzzlesArchiveBuilder
+        .apiType("crossword", set)
+        .fold(Future.successful(Option.empty[LatestCrossword])) { puzzleType =>
+          val today = londonToday()
+          api
+            .get(today.minusDays(62), today, puzzleType)
+            .map { items =>
+              items
+                .filter(_.puzzleType == puzzleType)
+                .sortBy(_.publishDate)
+                .reverse
+                .flatMap { item =>
+                  item.gameUrl
+                    .filter(_.trim.nonEmpty)
+                    .filterNot(url => excludeId.exists(id => url.stripPrefix("/") == id))
+                    .map(url =>
+                      LatestCrossword(set, 0, Try(LocalDate.parse(item.publishDate.take(10))).toOption, Some(url)),
+                    )
+                }
+                .headOption
+            }
+            .recover { case NonFatal(error) =>
+              log.warn(s"Failed to fetch '$set' recommendations from the Puzzles API", error)
+              None
+            }
+        }
 
   /** The [[CrosswordLookup]] backed by CAPI. Failures are logged and degrade to "no card". */
   def capiLookup(contentApiClient: ContentApiClient)(implicit ec: ExecutionContext): CrosswordLookup =
@@ -270,7 +305,7 @@ object PuzzleRecommendations extends GuLogging {
       set = card.key,
       cardVariant = "compact",
       cadence = latest.date.map(cadenceFor(_, today)),
-      url = Some(s"/crosswords/${latest.crosswordType}/${latest.number}"),
+      url = latest.gameUrl.orElse(Some(s"/crosswords/${latest.crosswordType}/${latest.number}")),
       backgroundColour = Some(card.backgroundColour),
       date = latest.date.map(_.toString),
     )

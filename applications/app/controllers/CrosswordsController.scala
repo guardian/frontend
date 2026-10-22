@@ -51,7 +51,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def noResults()(implicit request: RequestHeader): Result
 
   def puzzlesSupporting(implicit request: RequestHeader): Option[PuzzleGameSupporting] =
-    if (PuzzlesHubV1Experiment.isEnabled) puzzlesNewsletters.forGame(PuzzlesNewsletters.CrosswordLinks)
+    if (PuzzlesHubV1Experiment.isEnabled) puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
     else None
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
