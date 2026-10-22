@@ -2,6 +2,7 @@ package test
 
 import ab.ABTests
 import controllers.{
+  IndexController,
   PuzzlesApiItem,
   PuzzlesArchiveApi,
   PuzzlesGameApi,
@@ -59,6 +60,7 @@ import scala.concurrent.{ExecutionContext, Future}
       puzzlesProgressApi: PuzzlesProgressApi = mock[PuzzlesProgressApi],
       newsletterAgent: NewsletterSignupAgent = new NewsletterSignupAgent(mock[NewsletterApi]),
       gameApi: PuzzlesGameApi = successfulGameApi,
+      indexController: IndexController = mock[IndexController],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
@@ -68,6 +70,7 @@ import scala.concurrent.{ExecutionContext, Future}
       renderer,
       gameApi,
       new PuzzlesNewsletters(newsletterAgent),
+      indexController,
       stubControllerComponents(),
     )
 
@@ -507,16 +510,22 @@ import scala.concurrent.{ExecutionContext, Future}
     "unrelated experiment" -> "another-test:variant",
   ).foreach { case (participationCase, participations) =>
     s"puzzles hub access with $participationCase participation" should
-      "return not found for HTML and JSON without loading the layout or calling DCR" in {
+      "serve the tag page for HTML and JSON without loading the layout or calling DCR" in {
         val provider = mock[PuzzlesLayoutProvider]
         val renderer = mock[DotcomRenderingService]
-        val puzzlesController = controller(provider, renderer)
+        val indexController = mock[IndexController]
+        when(indexController.renderItem(eqTo("puzzles-and-games"))(any[RequestHeader]))
+          .thenReturn(Future.successful(Results.Ok("tag page")))
+        val puzzlesController = controller(provider, renderer, indexController = indexController)
 
         val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", participations))
         val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
 
-        status(htmlResult) should be(NOT_FOUND)
-        status(jsonResult) should be(NOT_FOUND)
+        status(htmlResult) should be(OK)
+        contentAsString(htmlResult) should be("tag page")
+        status(jsonResult) should be(OK)
+        contentAsString(jsonResult) should be("tag page")
+        verify(indexController, times(2)).renderItem(eqTo("puzzles-and-games"))(any[RequestHeader])
         verifyNoInteractions(provider, renderer)
       }
   }
@@ -582,10 +591,13 @@ import scala.concurrent.{ExecutionContext, Future}
     )
     related.map(_.cardVariant) should be(Seq("compact", "compact", "compact"))
     related.map(_.cadence) should be(Seq(Some("Today"), Some("Today"), Some("Today")))
-    (json \ "instance" \ "puzzlesSupporting").toOption should be(None)
+    (json \ "instance" \ "puzzlesSupporting" \ "usefulLinks" \\ "title").map(_.as[String]) should be(
+      PuzzlesNewsletters.GameLinks.map(_.title),
+    )
+    (json \ "instance" \ "puzzlesSupporting" \ "newsletter").toOption should be(None)
   }
 
-  it should "include the Cluesletter, with no useful links, when it is live" in {
+  it should "include the Cluesletter and the useful links when it is live" in {
     val agent = mock[NewsletterSignupAgent]
     when(agent.getV2NewsletterByName("cluesletter")).thenReturn(
       Right(
@@ -621,7 +633,7 @@ import scala.concurrent.{ExecutionContext, Future}
       )
 
     val supporting = Json.parse(contentAsString(result)) \ "instance" \ "puzzlesSupporting"
-    (supporting \ "usefulLinks").as[Seq[JsValue]] shouldBe empty
+    (supporting \ "usefulLinks" \\ "url").map(_.as[String]) should be(PuzzlesNewsletters.GameLinks.map(_.url))
     (supporting \ "newsletter" \ "identityName").as[String] should be("cluesletter")
   }
 

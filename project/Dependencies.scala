@@ -125,6 +125,7 @@ object Dependencies {
   val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
   val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
 
+  val circeParser = "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
   val jackson =
     Seq(
       jacksonCore,
