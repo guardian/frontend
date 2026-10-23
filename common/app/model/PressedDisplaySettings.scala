@@ -19,7 +19,8 @@ object PressedDisplaySettings {
     val contentProperties = PressedProperties.getProperties(content)
     PressedDisplaySettings(
       imageHide = shouldSuppressImages || contentProperties.imageHide,
-      isBoosted = FaciaContentUtils.isBoosted(content),
+      // Not part of these changes: will get lost in rebase
+      isBoosted = false,
       boostLevel = Some(FaciaContentUtils.boostLevel(content)),
       isImmersive = Some(FaciaContentUtils.isImmersive(content)),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
