@@ -1,8 +1,9 @@
 package model.dotcomrendering
 
+import com.gu.commercial.branding.{Dimensions, Logo}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.{JsError, JsSuccess, Json}
+import play.api.libs.json.{JsError, JsObject, JsSuccess, Json}
 
 class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
@@ -282,5 +283,56 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     val layout = PuzzlesLayout(Seq(malformedAd))
 
     Json.toJson(layout).validate[PuzzlesLayout] shouldBe a[JsError]
+  }
+
+  private def withSponsorship(sponsorship: String) =
+    representativeLayoutJson.as[JsObject] + ("sponsorship" -> Json.parse(sponsorship))
+
+  private val auSponsorship =
+    """{
+      |  "AU": {
+      |    "name": "Example sponsor",
+      |    "label": "Supported by",
+      |    "accessibilityLabel": "This content is sponsored by Example sponsor",
+      |    "sponsorUri": "https://example.com",
+      |    "aboutUri": "https://example.com/about",
+      |    "logo": { "src": "https://example.com/logo.png", "darkSrc": "https://example.com/logo-dark.png", "aspectRatio": 2.5, "baseline": 0.8 },
+      |    "layout": { "labelPosition": "leading", "labelAlignment": "center", "verticalPlacement": "center", "logoHeight": 32, "gap": 8 }
+      |  }
+      |}""".stripMargin
+
+  it should "read hub sponsorship per edition, ignoring app-only fields, and keep it out of the DCR layout" in {
+    val layout = withSponsorship(auSponsorship).as[PuzzlesLayout]
+
+    layout.sponsorship.keySet shouldBe Set("AU")
+    Json.toJson(layout) shouldBe representativeLayoutJson
+  }
+
+  it should "map a sponsor to per-edition sponsored branding" in {
+    val branding = withSponsorship(auSponsorship).as[PuzzlesLayout].commercialProperties("AU").branding.get
+
+    branding.isSponsored shouldBe true
+    branding.sponsorName shouldBe "Example sponsor"
+    branding.aboutThisLink shouldBe "https://example.com/about"
+    branding.logo shouldBe Logo(
+      "https://example.com/logo.png",
+      Some(Dimensions(250, 100)),
+      "https://example.com",
+      "Supported by",
+    )
+    branding.logoForDarkBackground.map(_.src) shouldBe Some("https://example.com/logo-dark.png")
+  }
+
+  it should "default a missing about link to empty and have no sponsorship when the block is absent" in {
+    val withoutAbout = withSponsorship(auSponsorship.replace(""""aboutUri": "https://example.com/about",""", ""))
+
+    withoutAbout.as[PuzzlesLayout].commercialProperties("AU").branding.map(_.aboutThisLink) shouldBe Some("")
+    representativeLayoutJson.as[PuzzlesLayout].commercialProperties shouldBe empty
+  }
+
+  it should "reject sponsorship for an unknown edition or with an invalid URL" in {
+    withSponsorship(auSponsorship.replace(""""AU"""", """"XX"""")).validate[PuzzlesLayout] shouldBe a[JsError]
+    withSponsorship(auSponsorship.replace("https://example.com/logo.png", "javascript:alert(1)"))
+      .validate[PuzzlesLayout] shouldBe a[JsError]
   }
 }
