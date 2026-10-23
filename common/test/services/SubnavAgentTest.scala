@@ -61,10 +61,56 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
     Content.make(apiContent)
   }
 
-  private def agentWith(config: CustomSubnavConfig): SubnavAgent =
-    new SubnavAgent(ApplicationIdentity("test")) {
+  private def agentWith(
+      config: CustomSubnavConfig,
+      appIdentity: ApplicationIdentity = ApplicationIdentity("test"),
+  ): SubnavAgent =
+    new SubnavAgent(appIdentity) {
       override def getSubnavConfig(): Option[CustomSubnavConfig] = Some(config)
     }
+
+  "getSubnavById" should "return None when the config has not loaded" in {
+    new SubnavAgent(ApplicationIdentity("test")).getSubnavById("missing") shouldBe None
+  }
+
+  it should "return None when the ID does not exist" in {
+    val config = CustomSubnavConfig(live = List(subnav("other", Nil)), draft = Nil)
+    agentWith(config).getSubnavById("missing") shouldBe None
+  }
+
+  it should "return the full subnav matching the ID without requiring a targeted page" in {
+    val matching = subnav("matching", Nil)
+    val config = CustomSubnavConfig(live = List(subnav("other", Nil), matching), draft = Nil)
+    agentWith(config).getSubnavById("matching") shouldBe Some(matching)
+  }
+
+  it should "ignore draft-only subnavs for live requests, including explicit live requests in preview" in {
+    val config = CustomSubnavConfig(live = Nil, draft = List(subnav("draft", Nil)))
+    agentWith(config).getSubnavById("draft") shouldBe None
+    agentWith(config, ApplicationIdentity("preview")).getSubnavById("draft", Live) shouldBe None
+  }
+
+  it should "return a draft-only subnav for draft requests" in {
+    val matching = subnav("draft", Nil)
+    val config = CustomSubnavConfig(live = Nil, draft = List(matching))
+    agentWith(config).getSubnavById("draft", Draft) shouldBe Some(matching)
+  }
+
+  it should "prefer the draft version of an ID in draft requests and the live version in live requests" in {
+    val liveSubnav = subnav("matching", Nil)
+    val draftSubnav = liveSubnav.copy(updatedBy = "draft editor")
+    val config = CustomSubnavConfig(live = List(liveSubnav), draft = List(draftSubnav))
+
+    agentWith(config).getSubnavById("matching", Draft) shouldBe Some(draftSubnav)
+    agentWith(config).getSubnavById("matching", Live) shouldBe Some(liveSubnav)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavById("matching") shouldBe Some(draftSubnav)
+  }
+
+  it should "fall back to the live version when no draft exists" in {
+    val matching = subnav("matching", Nil)
+    val config = CustomSubnavConfig(live = List(matching), draft = Nil)
+    agentWith(config).getSubnavById("matching", Draft) shouldBe Some(matching)
+  }
 
   "getSubnavForContent" should "return None when there is no config" in {
     val agent = new SubnavAgent(ApplicationIdentity("test")) {

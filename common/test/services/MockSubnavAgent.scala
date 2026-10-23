@@ -10,6 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class MockSubnavAgent extends SubnavAgent(ApplicationIdentity("mock")) {
   override def isLoaded(): Boolean = true
   override def getSubnavConfig(): Option[CustomSubnavConfig] = None
+  override def getSubnavById(subnavId: String, status: PublicationStatus): Option[CustomSubnav] = None
   override def getSubnavForFront(frontId: String, status: PublicationStatus): Option[CustomSubnav] = None
   override def getSubnavForContent(content: Content, status: PublicationStatus): Option[CustomSubnav] = None
   override def getClient(implicit ec: ExecutionContext): ApiClient = ???

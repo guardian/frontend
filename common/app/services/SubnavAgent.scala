@@ -28,6 +28,12 @@ class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
 
   def getSubnavConfig(): Option[CustomSubnavConfig] = subnavConfigBox.get()
 
+  def getSubnavById(subnavId: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
+    getSubnavConfig().flatMap { config =>
+      CustomSubnavService.getSubnavById(config, subnavId, status)
+    }
+  }
+
   /** Look up the custom subnav targeted at the given front, if any. */
   def getSubnavForFront(frontId: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
     getSubnavConfig().flatMap { config =>
