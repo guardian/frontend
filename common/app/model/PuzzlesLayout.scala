@@ -195,17 +195,30 @@ object PuzzleSponsor {
 }
 
 /** @param sponsorship hub sponsor per edition ID; sent to DCR as `commercialProperties`, not in the layout. */
-case class PuzzlesLayout(containers: Seq[PuzzleContainer], sponsorship: Map[String, PuzzleSponsor] = Map.empty) {
+case class PuzzlesLayout(
+    containers: Seq[PuzzleContainer],
+    sponsorship: Map[String, PuzzleSponsor] = Map.empty,
+    gameSponsorship: Map[String, Map[String, PuzzleSponsor]] = Map.empty,
+) {
   def commercialProperties: Map[String, EditionCommercialProperties] =
     sponsorship.map { case (editionId, sponsor) =>
+      editionId -> EditionCommercialProperties(Some(sponsor.toBranding), Set.empty)
+    }
+
+  def gameCommercialProperties(group: String): Map[String, EditionCommercialProperties] =
+    gameSponsorship.getOrElse(group, Map.empty).map { case (editionId, gameSponsor) =>
+      val sponsor = sponsorship.getOrElse(editionId, gameSponsor)
       editionId -> EditionCommercialProperties(Some(sponsor.toBranding), Set.empty)
     }
 }
 
 object PuzzlesLayout {
+  private val GameSponsorshipGroups = Set("word-games", "logic-puzzles")
+
   private val rawReads: Reads[PuzzlesLayout] = (
     (__ \ "containers").read[Seq[PuzzleContainer]] and
-      (__ \ "sponsorship").readNullable[Map[String, PuzzleSponsor]].map(_.getOrElse(Map.empty))
+      (__ \ "sponsorship").readNullable[Map[String, PuzzleSponsor]].map(_.getOrElse(Map.empty)) and
+      (__ \ "gameSponsorship").readNullable[Map[String, Map[String, PuzzleSponsor]]].map(_.getOrElse(Map.empty))
   )(PuzzlesLayout.apply _)
 
   private val writes: OWrites[PuzzlesLayout] = OWrites(layout => Json.obj("containers" -> layout.containers))
@@ -233,6 +246,10 @@ object PuzzlesLayout {
 
     duplicateValues("container", containerIds) ++
       sponsorshipErrors(layout.sponsorship) ++
+      layout.gameSponsorship.toSeq.sortBy(_._1).flatMap { case (group, sponsors) =>
+        Option.when(!GameSponsorshipGroups.contains(group))(s"game sponsorship group '$group' is unsupported") ++
+          sponsorshipErrors(sponsors)
+      } ++
       duplicateValues("puzzle", itemIds) ++
       supportingItemIds.filterNot(itemIds.contains).distinct.map(id => s"popular puzzle '$id' is not defined") ++
       containers.collect {

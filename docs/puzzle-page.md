@@ -173,6 +173,20 @@ public URL shape, not be flattened internally just because that's simpler.
 Also register each new slug in `PuzzlesPageController.PuzzleTypesBySlug` and ensure the
 Puzzles API supports that type in `/game`. The API owns provider URLs and puzzle IDs.
 
+### Sponsorship
+
+`gameSponsorship` in `applications/conf/puzzles-layout.json` maps a category (`word-games` or
+`logic-puzzles`) to edition IDs and sponsor objects, using the same sponsor shape as the hub's
+`sponsorship` block. Other categories are rejected; crosswords retain their separate article flow.
+
+A game category must have an explicit sponsor for the reader's edition. Hub sponsorship alone
+never activates game sponsorship. Where both are configured for that category and edition, the
+hub sponsor wins; otherwise the game sponsor is used. No sponsor is inherited from another
+edition or category.
+
+The config-only provider resolves this without loading hub cards or newsletters. Both HTML and
+JSON actions send the result to DCR as `commercialProperties`, not the raw configuration.
+
 ### Local testing
 
 Both servers must be running to see real HTML: DCR locally on `http://localhost:3030` (`make dev` in
