@@ -3,8 +3,18 @@ package frontpress
 import com.gu.contentapi.client.ContentApiClient
 import com.gu.contentapi.client.model.{HttpResponse, SearchQuery}
 import com.gu.facia.api.models.LatestSnap
-import com.gu.facia.client.models.{SupportingItemMetaData, Trail, TrailMetaData}
+import com.gu.facia.client.models.{
+  CustomSubnav,
+  CustomSubnavConfig,
+  CustomSubnavFormat,
+  CustomSubnavHeader,
+  SupportingItem,
+  SupportingItemMetaData,
+  Trail,
+  TrailMetaData,
+}
 import model.pressed.PressedDisplaySettings
+import org.joda.time.DateTime
 import org.scalatest.flatspec._
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -18,6 +28,19 @@ class FaciaClientTest extends AsyncFlatSpec with Matchers with MockitoSugar {
     val json = Json.obj("showMiniNav" -> true, "miniNavId" -> "test-subnav")
     val trailMeta = json.as[TrailMetaData]
     val supportingMeta = json.as[SupportingItemMetaData]
+    val subnav = CustomSubnav(
+      id = "test-subnav",
+      header = CustomSubnavHeader(headerText = "Subnav", dotcomPath = None, copy = "Subnav copy"),
+      format = CustomSubnavFormat.Large,
+      links = Nil,
+      pages = Nil,
+      images = None,
+      palette = None,
+      lastUpdated = new DateTime(),
+      updatedBy = "editor",
+      updatedEmail = "editor@example.com",
+    )
+    val subnavConfig = CustomSubnavConfig(live = List(subnav), draft = Nil)
 
     trailMeta.showMiniNav shouldBe Some(true)
     trailMeta.miniNavId shouldBe Some("test-subnav")
@@ -25,7 +48,22 @@ class FaciaClientTest extends AsyncFlatSpec with Matchers with MockitoSugar {
     supportingMeta.miniNavId shouldBe Some("test-subnav")
 
     val trail = Trail("snap/test", 0L, None, Some(trailMeta), None)
-    LatestSnap.fromTrailAndContent(trail, None).showMiniNav shouldBe true
+    val trailSnap = LatestSnap.fromTrailAndContent(trail, None, Some(subnavConfig))
+    trailSnap.showMiniNav shouldBe true
+    trailSnap.miniNavData shouldBe Some(subnav)
+
+    val supportingItem = SupportingItem("snap/test", None, None, Some(supportingMeta), None)
+    val supportingSnap =
+      LatestSnap.fromSupportingItemAndContent(supportingItem, None, Some(subnavConfig))
+    supportingSnap.showMiniNav shouldBe true
+    supportingSnap.miniNavData shouldBe Some(subnav)
+
+    val display = PressedDisplaySettings.make(trailSnap, None)
+    display.showMiniNav shouldBe true
+    display.miniNavData shouldBe Some(subnav)
+    val displayJson = Json.toJson(display)(model.PressedContentFormat.pressedDisplaySettings)
+    (displayJson \ "showMiniNav").as[Boolean] shouldBe true
+    (displayJson \ "miniNavData" \ "id").as[String] shouldBe subnav.id
   }
 
   it should "support existing cards without mini-nav settings" in {
@@ -37,7 +75,10 @@ class FaciaClientTest extends AsyncFlatSpec with Matchers with MockitoSugar {
     meta.miniNavId shouldBe None
     content.showMiniNav shouldBe false
     content.miniNavData shouldBe None
-    PressedDisplaySettings.make(content, None).isBoosted shouldBe false
+    val display = PressedDisplaySettings.make(content, None)
+    display.isBoosted shouldBe false
+    display.showMiniNav shouldBe false
+    display.miniNavData shouldBe None
   }
 
   "FAPI Client" should "send a CAPI client request without a runtime error like java.lang.NoSuchMethodError" in {

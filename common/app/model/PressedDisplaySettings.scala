@@ -2,6 +2,7 @@ package model.pressed
 
 import com.gu.facia.api.utils.{BoostLevel, FaciaContentUtils}
 import com.gu.facia.api.{models => fapi}
+import com.gu.facia.client.models.CustomSubnav
 
 final case class PressedDisplaySettings(
     isBoosted: Boolean,
@@ -11,6 +12,8 @@ final case class PressedDisplaySettings(
     showQuotedHeadline: Boolean,
     imageHide: Boolean,
     showLivePlayable: Boolean,
+    showMiniNav: Boolean = false,
+    miniNavData: Option[CustomSubnav] = None,
 )
 
 object PressedDisplaySettings {
@@ -26,6 +29,8 @@ object PressedDisplaySettings {
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
       showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
       showLivePlayable = FaciaContentUtils.showLivePlayable(content),
+      showMiniNav = content.showMiniNav,
+      miniNavData = content.miniNavData,
     )
   }
 }
