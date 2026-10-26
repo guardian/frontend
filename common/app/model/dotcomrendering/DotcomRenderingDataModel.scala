@@ -412,13 +412,13 @@ object DotcomRenderingDataModel {
     })
 
     val bodyBlocks = blocksForLiveblogPage(pageBlocks).map(ensureSummaryTitle)
-    val overridePinnedPost = page.item.metadata.id == "us-news/live/2026/oct/21/testing-election-tracker-liveblog"
-    val customPinnedPost = bodyBlocks.lift(1).filter(_ => overridePinnedPost)
+    // val overridePinnedPost = page.item.metadata.id == "us-news/live/2026/oct/21/testing-election-tracker-liveblog"
+    // val customPinnedPost = bodyBlocks.lift(1).filter(_ => overridePinnedPost)
 
-    def updatePinnedAttribute(block: APIBlock): APIBlock =
-      if (overridePinnedPost)
-        block.copy(attributes = block.attributes.copy(pinned = Some(customPinnedPost.exists(_.id == block.id))))
-      else block
+    // def updatePinnedAttribute(block: APIBlock): APIBlock =
+    //   if (overridePinnedPost)
+    //     block.copy(attributes = block.attributes.copy(pinned = Some(customPinnedPost.exists(_.id == block.id))))
+    //   else block
 
     val blocks = pageBlocks.blocks
     val allTimelineBlocks = blocks.body match {
@@ -445,8 +445,8 @@ object DotcomRenderingDataModel {
         .headOption
         .map(ensureSummaryTitle)
 
-    val updatedPinnedPost =
-      if (overridePinnedPost) customPinnedPost.map(updatePinnedAttribute) else pinnedPost
+    // val updatedPinnedPost =
+    //   if (overridePinnedPost) customPinnedPost.map(updatePinnedAttribute) else pinnedPost
 
     val mostRecentBlockId = getMostRecentBlockId(blocks)
 
@@ -456,12 +456,12 @@ object DotcomRenderingDataModel {
       pagination = pagination,
       linkedData = linkedData,
       mainBlock = blocks.main,
-      bodyBlocks = bodyBlocks.map(updatePinnedAttribute),
+      bodyBlocks = bodyBlocks,
       pageType = pageType,
       hasStoryPackage = page.related.hasStoryPackage,
       storyPackage = getStoryPackage(page.related.faciaItems, request), // todo
-      pinnedPost = updatedPinnedPost,
-      keyEvents = timelineBlocks.map(updatePinnedAttribute),
+      pinnedPost = pinnedPost,
+      keyEvents = timelineBlocks,
       mostRecentBlockId = mostRecentBlockId,
       forceLive = forceLive,
       newsletter = newsletter,
