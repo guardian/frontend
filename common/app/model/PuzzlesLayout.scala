@@ -67,6 +67,7 @@ case class PuzzleContainer(
     desktopSpan: Option[Int] = None,
     adSlot: Option[String] = None,
     supporting: Option[PuzzlesSupportingContent] = None,
+    sponsorship: Map[String, PuzzleSponsor] = Map.empty,
 )
 
 object PuzzleContainer {
@@ -80,7 +81,8 @@ object PuzzleContainer {
       (__ \ "enabled").readNullable[Boolean] and
       (__ \ "desktopSpan").readNullable[Int] and
       (__ \ "adSlot").readNullable[String] and
-      (__ \ "supporting").readNullable[PuzzlesSupportingContent]
+      (__ \ "supporting").readNullable[PuzzlesSupportingContent] and
+      (__ \ "sponsorship").readNullable[Map[String, PuzzleSponsor]].map(_.getOrElse(Map.empty))
   )(PuzzleContainer.apply _).filter(JsonValidationError("container variant, span or ad slot is unsupported"))(
     container =>
       container.id.matches("[a-z0-9]+(?:-[a-z0-9]+)*") &&
@@ -97,8 +99,21 @@ object PuzzleContainer {
       (__ \ "enabled").writeNullable[Boolean] and
       (__ \ "desktopSpan").writeNullable[Int] and
       (__ \ "adSlot").writeNullable[String] and
-      (__ \ "supporting").writeNullable[PuzzlesSupportingContent]
-  )(unlift(PuzzleContainer.unapply))
+      (__ \ "supporting").writeNullable[PuzzlesSupportingContent] and
+      (__ \ "commercialProperties").writeNullable[Map[String, EditionCommercialProperties]]
+  )(container =>
+    (
+      container.id,
+      container.title,
+      container.variant,
+      container.content,
+      container.enabled,
+      container.desktopSpan,
+      container.adSlot,
+      container.supporting,
+      Option.when(container.sponsorship.nonEmpty)(PuzzleSponsor.commercialProperties(container.sponsorship)),
+    ),
+  )
 
   implicit lazy val format: OFormat[PuzzleContainer] = OFormat(reads, writes)
 }
@@ -192,14 +207,17 @@ case class PuzzleSponsor(
 
 object PuzzleSponsor {
   implicit val reads: Reads[PuzzleSponsor] = Json.reads[PuzzleSponsor]
+
+  def commercialProperties(sponsorship: Map[String, PuzzleSponsor]): Map[String, EditionCommercialProperties] =
+    sponsorship.map { case (editionId, sponsor) =>
+      editionId -> EditionCommercialProperties(Some(sponsor.toBranding), Set.empty)
+    }
 }
 
 /** @param sponsorship hub sponsor per edition ID; sent to DCR as `commercialProperties`, not in the layout. */
 case class PuzzlesLayout(containers: Seq[PuzzleContainer], sponsorship: Map[String, PuzzleSponsor] = Map.empty) {
   def commercialProperties: Map[String, EditionCommercialProperties] =
-    sponsorship.map { case (editionId, sponsor) =>
-      editionId -> EditionCommercialProperties(Some(sponsor.toBranding), Set.empty)
-    }
+    PuzzleSponsor.commercialProperties(sponsorship)
 }
 
 object PuzzlesLayout {
@@ -233,6 +251,13 @@ object PuzzlesLayout {
 
     duplicateValues("container", containerIds) ++
       sponsorshipErrors(layout.sponsorship) ++
+      containers.flatMap(container => sponsorshipErrors(container.sponsorship)) ++
+      containers.collect {
+        case container
+            if container.sponsorship.nonEmpty &&
+              (!topLevelIds.contains(container.id) || container.variant.exists(Set("ad", "supporting"))) =>
+          s"container '${container.id}' sponsorship is only supported on top-level featured or standard containers"
+      } ++
       duplicateValues("puzzle", itemIds) ++
       supportingItemIds.filterNot(itemIds.contains).distinct.map(id => s"popular puzzle '$id' is not defined") ++
       containers.collect {
