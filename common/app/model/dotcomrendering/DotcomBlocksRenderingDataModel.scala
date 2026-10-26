@@ -98,27 +98,6 @@ object DotcomBlocksRenderingDataModel {
       )
       .toList
 
-    val updatedBlocks: List[Block] =
-      if (content.metadata.id == "us-news/live/2026/oct/21/testing-election-tracker-liveblog")
-        bodyBlocksDCR.updated(
-          1,
-          bodyBlocksDCR(1).copy(elements =
-            bodyBlocksDCR(1).elements :+ InteractiveAtomBlockElement(
-              id = "interactives/2026/11/election-trackers/us-election-tracker-2026",
-              url =
-                "https://api.nextgen.guardianapps.co.uk/embed/atom/interactive/interactives/2026/11/election-trackers/us-election-tracker-2026",
-              html = None,
-              css = None,
-              js = None,
-              placeholderUrl = None,
-              role = None,
-              title = "US Election Tracker 2026",
-              customData = None,
-            ),
-          ),
-        )
-      else bodyBlocksDCR
-
     val switches: Map[String, Boolean] = conf.switches.Switches.all
       .filter(_.exposeClientSide)
       .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
@@ -126,7 +105,7 @@ object DotcomBlocksRenderingDataModel {
       })
 
     DotcomBlocksRenderingDataModel(
-      blocks = updatedBlocks,
+      blocks = bodyBlocksDCR,
       format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       pageId = content.metadata.id,
       webTitle = content.metadata.webTitle,
