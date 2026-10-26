@@ -1,5 +1,8 @@
 package model.dotcomrendering
 
+import com.gu.commercial.branding.{Branding, Dimensions, Logo, Sponsored}
+import common.Edition
+import common.commercial.EditionCommercialProperties
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
@@ -159,12 +162,55 @@ object PuzzleGameSupporting {
   implicit val writes: OWrites[PuzzleGameSupporting] = Json.writes[PuzzleGameSupporting]
 }
 
-case class PuzzlesLayout(containers: Seq[PuzzleContainer])
+case class PuzzleSponsorLogo(src: String, darkSrc: Option[String], aspectRatio: Double)
+
+object PuzzleSponsorLogo {
+  implicit val reads: Reads[PuzzleSponsorLogo] = Json.reads[PuzzleSponsorLogo]
+}
+
+case class PuzzleSponsor(
+    name: String,
+    label: String,
+    sponsorUri: String,
+    aboutUri: Option[String],
+    logo: PuzzleSponsorLogo,
+) {
+  def toBranding: Branding = {
+    // DCR needs dimensions to reserve space; only the aspect ratio matters.
+    val dimensions = Some(Dimensions(width = math.round(logo.aspectRatio * 100).toInt, height = 100))
+    def brandingLogo(src: String) = Logo(src, dimensions, sponsorUri, label)
+    Branding(
+      brandingType = Sponsored,
+      sponsorName = name,
+      logo = brandingLogo(logo.src),
+      logoForDarkBackground = logo.darkSrc.map(brandingLogo),
+      aboutThisLink = aboutUri.getOrElse(""),
+      hostedCampaignColour = None,
+    )
+  }
+}
+
+object PuzzleSponsor {
+  implicit val reads: Reads[PuzzleSponsor] = Json.reads[PuzzleSponsor]
+}
+
+/** @param sponsorship hub sponsor per edition ID; sent to DCR as `commercialProperties`, not in the layout. */
+case class PuzzlesLayout(containers: Seq[PuzzleContainer], sponsorship: Map[String, PuzzleSponsor] = Map.empty) {
+  def commercialProperties: Map[String, EditionCommercialProperties] =
+    sponsorship.map { case (editionId, sponsor) =>
+      editionId -> EditionCommercialProperties(Some(sponsor.toBranding), Set.empty)
+    }
+}
 
 object PuzzlesLayout {
-  private val rawFormat: OFormat[PuzzlesLayout] = Json.format[PuzzlesLayout]
+  private val rawReads: Reads[PuzzlesLayout] = (
+    (__ \ "containers").read[Seq[PuzzleContainer]] and
+      (__ \ "sponsorship").readNullable[Map[String, PuzzleSponsor]].map(_.getOrElse(Map.empty))
+  )(PuzzlesLayout.apply _)
 
-  private val reads: Reads[PuzzlesLayout] = rawFormat.flatMap { layout =>
+  private val writes: OWrites[PuzzlesLayout] = OWrites(layout => Json.obj("containers" -> layout.containers))
+
+  private val reads: Reads[PuzzlesLayout] = rawReads.flatMap { layout =>
     Reads { _ =>
       validationErrors(layout) match {
         case Seq()  => JsSuccess(layout)
@@ -173,7 +219,7 @@ object PuzzlesLayout {
     }
   }
 
-  implicit lazy val format: OFormat[PuzzlesLayout] = OFormat(reads, rawFormat)
+  implicit lazy val format: OFormat[PuzzlesLayout] = OFormat(reads, writes)
 
   def validationErrors(layout: PuzzlesLayout): Seq[String] = {
     val containers = flattenContainers(layout.containers)
@@ -186,6 +232,7 @@ object PuzzlesLayout {
     val supportingItemIds = containers.flatMap(_.supporting.toSeq.flatMap(_.popularGroups.flatMap(_.itemIds)))
 
     duplicateValues("container", containerIds) ++
+      sponsorshipErrors(layout.sponsorship) ++
       duplicateValues("puzzle", itemIds) ++
       supportingItemIds.filterNot(itemIds.contains).distinct.map(id => s"popular puzzle '$id' is not defined") ++
       containers.collect {
@@ -259,6 +306,19 @@ object PuzzlesLayout {
 
   private def flattenContainers(containers: Seq[PuzzleContainer]): Seq[PuzzleContainer] =
     containers ++ containers.flatMap(container => flattenContainers(container.content.nestedContainers))
+
+  private def sponsorshipErrors(sponsorship: Map[String, PuzzleSponsor]): Seq[String] = {
+    val editionIds = Edition.allEditions.map(_.id).toSet
+    def isUrl(value: String) = value.matches("https://.+")
+    sponsorship.toSeq.sortBy(_._1).flatMap { case (editionId, sponsor) =>
+      Option.when(!editionIds.contains(editionId))(s"sponsorship edition '$editionId' is not a known edition") ++
+        Option.when(
+          sponsor.name.trim.isEmpty || sponsor.label.trim.isEmpty || !isUrl(sponsor.sponsorUri) ||
+            sponsor.aboutUri.exists(!isUrl(_)) || !isUrl(sponsor.logo.src) || sponsor.logo.darkSrc.exists(!isUrl(_)) ||
+            sponsor.logo.aspectRatio <= 0,
+        )(s"sponsorship for '$editionId' has an empty name or label, a non-https URL or an invalid logo aspect ratio")
+    }
+  }
 
   private def duplicateValues(label: String, values: Seq[String]): Seq[String] =
     values
