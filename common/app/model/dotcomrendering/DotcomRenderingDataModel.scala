@@ -412,13 +412,6 @@ object DotcomRenderingDataModel {
     })
 
     val bodyBlocks = blocksForLiveblogPage(pageBlocks).map(ensureSummaryTitle)
-    // val overridePinnedPost = page.item.metadata.id == "us-news/live/2026/oct/21/testing-election-tracker-liveblog"
-    // val customPinnedPost = bodyBlocks.lift(1).filter(_ => overridePinnedPost)
-
-    // def updatePinnedAttribute(block: APIBlock): APIBlock =
-    //   if (overridePinnedPost)
-    //     block.copy(attributes = block.attributes.copy(pinned = Some(customPinnedPost.exists(_.id == block.id))))
-    //   else block
 
     val blocks = pageBlocks.blocks
     val allTimelineBlocks = blocks.body match {
@@ -444,9 +437,6 @@ object DotcomRenderingDataModel {
         .getOrElse(blocks.body.fold(Seq.empty[APIBlock])(_.filter(_.attributes.pinned.contains(true)).toSeq))
         .headOption
         .map(ensureSummaryTitle)
-
-    // val updatedPinnedPost =
-    //   if (overridePinnedPost) customPinnedPost.map(updatePinnedAttribute) else pinnedPost
 
     val mostRecentBlockId = getMostRecentBlockId(blocks)
 
@@ -611,9 +601,42 @@ object DotcomRenderingDataModel {
         .map(toDCRBlock())
         .toList
 
+    val overridePinnedPost = content.metadata.id == "us-news/live/2026/oct/21/testing-election-tracker-liveblog"
+
+    val updatedBlocks: List[Block] =
+      if (overridePinnedPost && bodyBlocksDCR.size > 1) {
+        bodyBlocksDCR.updated(
+          1,
+          bodyBlocksDCR(1).copy(elements =
+            bodyBlocksDCR(1).elements :+ InteractiveAtomBlockElement(
+              id = "interactives/2026/11/election-trackers/us-election-tracker-2026",
+              url =
+                "https://api.nextgen.guardianapps.co.uk/embed/atom/interactive/interactives/2026/11/election-trackers/us-election-tracker-2026",
+              html = None,
+              css = None,
+              js = None,
+              placeholderUrl = None,
+              role = None,
+              title = "US Election Tracker 2026",
+              customData = None,
+            ),
+          ),
+        )
+      } else bodyBlocksDCR
+
     val keyEventsDCR = keyEvents.map(toDCRBlock())
 
     val pinnedPostDCR = pinnedPost.map(toDCRBlock())
+
+    val customPinnedPost = updatedBlocks.lift(1).filter(_ => overridePinnedPost)
+
+    def updatePinnedAttribute(block: Block): Block =
+      if (overridePinnedPost)
+        block.copy(attributes = block.attributes.copy(pinned = customPinnedPost.exists(_.id == block.id)))
+      else block
+
+    val updatedPinnedPost =
+      if (overridePinnedPost) customPinnedPost.map(updatePinnedAttribute) else pinnedPostDCR
 
     val commercial: Commercial = {
       val editionCommercialProperties = content.metadata.commercial
@@ -654,7 +677,7 @@ object DotcomRenderingDataModel {
       author = author,
       badge = Badges.badgeFor(content).map(badge => DCRBadge(badge.seriesTag, badge.imageUrl)),
       beaconURL = Configuration.debug.beaconUrl,
-      blocks = bodyBlocksDCR,
+      blocks = updatedBlocks.map(updatePinnedAttribute),
       byline = content.trail.byline,
       commercialProperties = commercial.editionCommercialProperties,
       config = combinedConfig,
@@ -674,8 +697,8 @@ object DotcomRenderingDataModel {
       isImmersive = isImmersive,
       isLegacyInteractive = isLegacyInteractive,
       isSpecialReport = isSpecialReport(page),
-      pinnedPost = pinnedPostDCR,
-      keyEvents = keyEventsDCR.toList,
+      pinnedPost = updatedPinnedPost,
+      keyEvents = keyEventsDCR.map(updatePinnedAttribute).toList,
       mostRecentBlockId = mostRecentBlockId,
       linkedData = linkedData,
       main = content.fields.main,
