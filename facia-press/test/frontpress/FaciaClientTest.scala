@@ -64,6 +64,13 @@ class FaciaClientTest extends AsyncFlatSpec with Matchers with MockitoSugar {
     val displayJson = Json.toJson(display)(model.PressedContentFormat.pressedDisplaySettings)
     (displayJson \ "showMiniNav").as[Boolean] shouldBe true
     (displayJson \ "miniNavData" \ "id").as[String] shouldBe subnav.id
+
+    val legacyDisplayJson =
+      displayJson.as[play.api.libs.json.JsObject] - "showMiniNav" - "miniNavData"
+    val legacyDisplay =
+      legacyDisplayJson.as[PressedDisplaySettings](model.PressedContentFormat.pressedDisplaySettings)
+    legacyDisplay.showMiniNav shouldBe false
+    legacyDisplay.miniNavData shouldBe None
   }
 
   it should "support existing cards without mini-nav settings" in {

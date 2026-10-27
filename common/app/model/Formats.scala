@@ -275,7 +275,8 @@ object PressedContentFormat {
   implicit val tagKickerFormat: OFormat[TagKicker] = ItemKickerFormat.tagKickerFormat
   implicit val pressedCardHeader: OFormat[PressedCardHeader] = Json.format[PressedCardHeader]
   implicit val boostLevel: BoostLevelFormat.type = BoostLevelFormat
-  implicit val pressedDisplaySettings: OFormat[PressedDisplaySettings] = Json.format[PressedDisplaySettings]
+  implicit val pressedDisplaySettings: OFormat[PressedDisplaySettings] =
+    Json.using[Json.WithDefaultValues].format[PressedDisplaySettings]
   implicit val pressedDiscussionSettings: OFormat[PressedDiscussionSettings] = Json.format[PressedDiscussionSettings]
   implicit val pressedCard: OFormat[PressedCard] = Json.format[PressedCard]
   implicit val pressedFields: OFormat[PressedFields] = Json.format[PressedFields]

@@ -1,0 +1,111 @@
+{
+  "live": [
+    {
+      "id": "internal-code/page/17712690",
+      "frontPublicationDate": 1792591575398,
+      "meta": {
+        "miniNavUrl": "https://fronts.local.dev-gutools.co.uk/v2/subnavs/4c1bf2d9-ee4f-4d4c-829a-9bcc2c25b9fb",
+        "boostLevel": "default",
+        "showMiniNav": true,
+        "showKickerCustom": true,
+        "supporting": [
+          {
+            "id": "internal-code/page/17731294",
+            "frontPublicationDate": 1793024049133,
+            "meta": {
+              "baselineCapiHeadline": "Anthropic files for stock market IPO; Meta announces $95bn fundraising drive to pay for AI expansion \u2013 business live",
+              "boostLevel": "default"
+            }
+          }
+        ],
+        "miniNavId": "4c1bf2d9-ee4f-4d4c-829a-9bcc2c25b9fb",
+        "baselineCapiHeadline": "PSG beat Bar\u00e7a, Rio\u2019s grand for Liverpool and Ronaldo\u2019s CV | Football Weekly \u2013 video",
+        "group": "3",
+        "customKicker": "Football"
+      }
+    },
+    {
+      "id": "internal-code/page/17609873",
+      "frontPublicationDate": 1791214507143,
+      "meta": {
+        "miniNavUrl": "https://fronts.local.dev-gutools.co.uk/v2/subnavs/6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "boostLevel": "boost",
+        "showMiniNav": true,
+        "miniNavId": "6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "baselineCapiHeadline": "Rachel Kneebone review \u2013 who knew porcelain could be so edgy, nerve-racking and marvellous?",
+        "showLargeHeadline": true,
+        "customKicker": "Something",
+        "showKickerCustom": true,
+        "showByline": true
+      }
+    },
+    {
+      "id": "internal-code/page/17653635",
+      "frontPublicationDate": 1791214507143,
+      "meta": {
+        "miniNavUrl": "https://fronts.local.dev-gutools.co.uk/v2/subnavs/6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "boostLevel": "default",
+        "showMiniNav": true,
+        "miniNavId": "6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "baselineCapiHeadline": "Sainsbury\u2019s and Morrisons \u2018held talks this year\u2019 on multibillion-pound merger"
+      }
+    }
+  ],
+  "draft": [
+    {
+      "id": "internal-code/page/17712690",
+      "frontPublicationDate": 1792591575398,
+      "meta": {
+        "miniNavUrl": "https://fronts.local.dev-gutools.co.uk/v2/subnavs/4c1bf2d9-ee4f-4d4c-829a-9bcc2c25b9fb",
+        "boostLevel": "default",
+        "showMiniNav": true,
+        "showKickerCustom": true,
+        "supporting": [
+          {
+            "id": "internal-code/page/17731294",
+            "frontPublicationDate": 1793024049133,
+            "meta": {
+              "baselineCapiHeadline": "Anthropic files for stock market IPO; Meta announces $95bn fundraising drive to pay for AI expansion \u2013 business live",
+              "boostLevel": "default"
+            }
+          }
+        ],
+        "miniNavId": "4c1bf2d9-ee4f-4d4c-829a-9bcc2c25b9fb",
+        "baselineCapiHeadline": "PSG beat Bar\u00e7a, Rio\u2019s grand for Liverpool and Ronaldo\u2019s CV | Football Weekly \u2013 video",
+        "group": "3",
+        "customKicker": "Football"
+      }
+    },
+    {
+      "id": "internal-code/page/17609873",
+      "frontPublicationDate": 1791214507143,
+      "meta": {
+        "miniNavUrl": "https://fronts.local.dev-gutools.co.uk/v2/subnavs/6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "boostLevel": "boost",
+        "showMiniNav": true,
+        "miniNavId": "6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "baselineCapiHeadline": "Rachel Kneebone review \u2013 who knew porcelain could be so edgy, nerve-racking and marvellous?",
+        "showLargeHeadline": true,
+        "customKicker": "Something",
+        "showKickerCustom": true,
+        "showByline": true
+      }
+    },
+    {
+      "id": "internal-code/page/17653635",
+      "frontPublicationDate": 1791214507143,
+      "meta": {
+        "miniNavUrl": "https://fronts.local.dev-gutools.co.uk/v2/subnavs/6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "boostLevel": "default",
+        "showMiniNav": true,
+        "miniNavId": "6d4a8d7a-1048-4a55-87f3-ee6399e36d34",
+        "baselineCapiHeadline": "Sainsbury\u2019s and Morrisons \u2018held talks this year\u2019 on multibillion-pound merger"
+      }
+    }
+  ],
+  "lastUpdated": 1793031866891,
+  "updatedBy": "Olwen Pearce (Contractor)",
+  "updatedEmail": "olwen.pearce.contractor@guardian.co.uk",
+  "displayName": "Container 1",
+  "previously": []
+}
