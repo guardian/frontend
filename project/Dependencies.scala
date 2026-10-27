@@ -4,8 +4,8 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "10.0.0"
-  val awsVersion = "2.54.12"
-  val capiVersion = "50.0.0"
+  val awsVersion = "2.54.20"
+  val capiVersion = "50.1.0"
   val faciaVersion = "44.0.0-PREVIEW.glspike-multimedia-atom.2026-10-18T1910.1d96b33b"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -79,7 +79,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.37"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.38"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion

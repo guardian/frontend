@@ -77,9 +77,6 @@ object DotcomPuzzlesPageRenderingDataModel {
       request: RequestHeader,
   ): DotcomPuzzlesPageRenderingDataModel = {
     val edition = Edition.edition(request)
-    val commercialProperties = page.metadata.commercial
-      .map(_.perEdition.map { case (key, value) => key.id -> value })
-      .getOrElse(Map.empty)
 
     DotcomPuzzlesPageRenderingDataModel(
       id = page.metadata.id,
@@ -91,7 +88,7 @@ object DotcomPuzzlesPageRenderingDataModel {
       config = DotcomRenderingConfig(page, request, isPreview = false),
       nav = Nav(page, edition, request, customSubnav = None),
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
-      commercialProperties = commercialProperties,
+      commercialProperties = pageCommercialProperties(page) ++ layout.commercialProperties,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       layout = layout,
@@ -105,7 +102,12 @@ object DotcomPuzzlesPageRenderingDataModel {
       archive: PuzzlesArchive,
       request: RequestHeader,
   ): DotcomPuzzlesPageRenderingDataModel =
-    apply(page, layout, request).copy(archive = Some(archive))
+    apply(page, layout, request).copy(archive = Some(archive), commercialProperties = pageCommercialProperties(page))
+
+  private def pageCommercialProperties(page: SimplePage): Map[String, EditionCommercialProperties] =
+    page.metadata.commercial
+      .map(_.perEdition.map { case (key, value) => key.id -> value })
+      .getOrElse(Map.empty)
 
   def toJson(model: DotcomPuzzlesPageRenderingDataModel): JsValue =
     DotcomRenderingUtils.withoutNull(Json.toJson(model))

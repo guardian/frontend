@@ -275,6 +275,7 @@ object ContentFormat {
       case "InteractiveDesign"         => InteractiveDesign
       case "PhotoEssayDesign"          => PhotoEssayDesign
       case "ObituaryDesign"            => ObituaryDesign
+      case "WeekendEssayDesign"        => WeekendEssayDesign
       case _                           => ArticleDesign
     }
 

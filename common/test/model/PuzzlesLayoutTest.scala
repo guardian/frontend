@@ -1,8 +1,9 @@
 package model.dotcomrendering
 
+import com.gu.commercial.branding.{Dimensions, Logo}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-import play.api.libs.json.{JsError, JsSuccess, Json}
+import play.api.libs.json.{JsError, JsObject, JsSuccess, Json}
 
 class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
 
@@ -282,5 +283,134 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
     val layout = PuzzlesLayout(Seq(malformedAd))
 
     Json.toJson(layout).validate[PuzzlesLayout] shouldBe a[JsError]
+  }
+
+  private def withSponsorship(sponsorship: String) =
+    representativeLayoutJson.as[JsObject] + ("sponsorship" -> Json.parse(sponsorship))
+
+  private val auSponsorship =
+    """{
+      |  "AU": {
+      |    "name": "Example sponsor",
+      |    "label": "Supported by",
+      |    "accessibilityLabel": "This content is sponsored by Example sponsor",
+      |    "sponsorUri": "https://example.com",
+      |    "aboutUri": "https://example.com/about",
+      |    "logo": { "src": "https://example.com/logo.png", "darkSrc": "https://example.com/logo-dark.png", "aspectRatio": 2.5, "baseline": 0.8 },
+      |    "layout": { "labelPosition": "leading", "labelAlignment": "center", "verticalPlacement": "center", "logoHeight": 32, "gap": 8 }
+      |  }
+      |}""".stripMargin
+
+  it should "read hub sponsorship per edition, ignoring app-only fields, and keep it out of the DCR layout" in {
+    val layout = withSponsorship(auSponsorship).as[PuzzlesLayout]
+
+    layout.sponsorship.keySet shouldBe Set("AU")
+    Json.toJson(layout) shouldBe representativeLayoutJson
+  }
+
+  it should "map a sponsor to per-edition sponsored branding" in {
+    val branding = withSponsorship(auSponsorship).as[PuzzlesLayout].commercialProperties("AU").branding.get
+
+    branding.isSponsored shouldBe true
+    branding.sponsorName shouldBe "Example sponsor"
+    branding.aboutThisLink shouldBe "https://example.com/about"
+    branding.logo shouldBe Logo(
+      "https://example.com/logo.png",
+      Some(Dimensions(250, 100)),
+      "https://example.com",
+      "Supported by",
+    )
+    branding.logoForDarkBackground.map(_.src) shouldBe Some("https://example.com/logo-dark.png")
+  }
+
+  it should "default a missing about link to empty and have no sponsorship when the block is absent" in {
+    val withoutAbout = withSponsorship(auSponsorship.replace(""""aboutUri": "https://example.com/about",""", ""))
+
+    withoutAbout.as[PuzzlesLayout].commercialProperties("AU").branding.map(_.aboutThisLink) shouldBe Some("")
+    representativeLayoutJson.as[PuzzlesLayout].commercialProperties shouldBe empty
+  }
+
+  it should "reject sponsorship for an unknown edition or with an invalid URL" in {
+    withSponsorship(auSponsorship.replace(""""AU"""", """"XX"""")).validate[PuzzlesLayout] shouldBe a[JsError]
+    withSponsorship(auSponsorship.replace("https://example.com/logo.png", "javascript:alert(1)"))
+      .validate[PuzzlesLayout] shouldBe a[JsError]
+  }
+
+  private def withContainerSponsorship(sponsorship: String) = {
+    val layout = representativeLayoutJson.as[JsObject]
+    val containers = (layout \ "containers").as[Seq[JsObject]]
+    layout + ("containers" -> Json.toJson(
+      containers.updated(0, containers.head + ("sponsorship" -> Json.parse(sponsorship))),
+    ))
+  }
+
+  it should "send container sponsorship as commercial properties only for the configured edition" in {
+    val layout = withContainerSponsorship(auSponsorship).as[PuzzlesLayout]
+    val container = (Json.toJson(layout) \ "containers")(0)
+
+    (container \ "commercialProperties" \ "AU" \ "branding" \ "sponsorName").as[String] shouldBe "Example sponsor"
+    (container \ "commercialProperties" \ "UK").toOption shouldBe None
+    (container \ "sponsorship").toOption shouldBe None
+    layout.commercialProperties shouldBe empty
+    (container \ "content") shouldBe ((representativeLayoutJson \ "containers")(0) \ "content")
+  }
+
+  it should "accept sponsorship on top-level featured, standard and default containers" in {
+    val sponsored = (withContainerSponsorship(auSponsorship) \ "containers")(0).as[JsObject]
+    Seq(None, Some("featured"), Some("standard")).foreach { variant =>
+      val container =
+        (sponsored - "variant" - "enabled") ++ variant.fold(Json.obj())(value => Json.obj("variant" -> value))
+      Json.obj("containers" -> Json.arr(container)).validate[PuzzlesLayout].isSuccess shouldBe true
+    }
+  }
+
+  it should "reject sponsorship on nested containers" in {
+    val sponsored = (withContainerSponsorship(auSponsorship) \ "containers")(0)
+    val parent = Json.obj(
+      "id" -> "parent",
+      "title" -> "Parent",
+      "content" -> Json.obj("items" -> Json.arr(), "nestedContainers" -> Json.arr(sponsored)),
+    )
+
+    Json.obj("containers" -> Json.arr(parent)).validate[PuzzlesLayout] shouldBe a[JsError]
+  }
+
+  it should "reject sponsorship on otherwise valid ad and supporting containers" in {
+    Seq("ad", "supporting").foreach { variant =>
+      val container = Json.obj(
+        "id" -> s"$variant-container",
+        "title" -> "",
+        "variant" -> variant,
+        "adSlot" -> (if (variant == "ad") "inline1" else "mostpop"),
+        "content" -> Json.obj("items" -> Json.arr(), "nestedContainers" -> Json.arr()),
+      ) ++ (if (variant == "supporting")
+              Json.obj(
+                "supporting" -> Json.obj(
+                  "usefulLinksTitle" -> "Useful links",
+                  "usefulLinks" -> Json.arr(),
+                  "popularTitle" -> "Popular puzzles",
+                  "popularGroups" -> Json.arr(),
+                ),
+              )
+            else Json.obj())
+
+      Json.obj("containers" -> Json.arr(container)).validate[PuzzlesLayout].isSuccess shouldBe true
+      val sponsored = container + ("sponsorship" -> Json.parse(auSponsorship))
+      Json.obj("containers" -> Json.arr(sponsored)).validate[PuzzlesLayout] shouldBe a[JsError]
+    }
+  }
+
+  it should "reject invalid sponsorship on top-level and nested containers" in {
+    withContainerSponsorship(auSponsorship.replace("\"AU\"", "\"XX\""))
+      .validate[PuzzlesLayout] shouldBe a[JsError]
+    withContainerSponsorship(auSponsorship.replace("https://example.com/logo.png", "javascript:alert(1)"))
+      .validate[PuzzlesLayout] shouldBe a[JsError]
+    val sponsored = withContainerSponsorship(auSponsorship).as[PuzzlesLayout].containers.head
+    val invalid = sponsored.copy(sponsorship = Map("XX" -> sponsored.sponsorship("AU")))
+    val parent = sponsored.copy(id = "parent", content = PuzzleContent(Seq.empty, Seq(invalid)))
+
+    PuzzlesLayout.validationErrors(PuzzlesLayout(Seq(parent))) should contain(
+      "sponsorship edition 'XX' is not a known edition",
+    )
   }
 }
