@@ -416,6 +416,30 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
+  "Puzzles hub trivia visibility" should "use the existing hub opt-in in HTML and JSON" in {
+    val trivia = PuzzleContainer(
+      id = "trivia-and-quizzes",
+      title = "Trivia & quizzes",
+      variant = Some("standard"),
+      content = PuzzleContent(Seq.empty, Seq.empty),
+    )
+    val fullLayout = layout.copy(containers = layout.containers :+ trivia)
+    val provider = mock[PuzzlesLayoutProvider]
+    when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(fullLayout))
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+    val c = controller(provider, renderer)
+    val html = c.renderPuzzles()(request("/puzzles-and-games"))
+    status(html) shouldBe OK
+    val payload = org.mockito.ArgumentCaptor.forClass(classOf[JsValue])
+    verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+    val json = c.renderPuzzlesJson()(request("/puzzles-and-games.json"))
+    status(json) shouldBe OK
+    (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe fullLayout
+    (contentAsJson(json) \ "layout").as[PuzzlesLayout] shouldBe fullLayout
+  }
+
   "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
     val progressApi = mock[PuzzlesProgressApi]
     val item = PuzzlesApiItem(
