@@ -3,8 +3,6 @@ package model.pressed
 import com.gu.facia.api.utils.{BoostLevel, FaciaContentUtils}
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.CustomSubnav
-import common.GuLogging
-import conf.Configuration
 
 final case class PressedDisplaySettings(
     isBoosted: Boolean,
@@ -18,21 +16,13 @@ final case class PressedDisplaySettings(
     miniNavData: Option[CustomSubnav] = None,
 )
 
-object PressedDisplaySettings extends GuLogging {
+object PressedDisplaySettings {
   def make(content: fapi.FaciaContent, suppressImages: Option[Boolean]): PressedDisplaySettings = {
     val shouldSuppressImages = suppressImages.getOrElse(false)
     val contentProperties = PressedProperties.getProperties(content)
-    if (Configuration.environment.isDev) {
-      log.info(
-        s"[mini-nav] pressing contentId=${FaciaContentUtils.maybeContentId(content)} " +
-          s"showMiniNav=${content.showMiniNav} miniNavId=${content.miniNavData.map(_.id)} " +
-          s"miniNavLinks=${content.miniNavData.map(_.links.size)}",
-      )
-    }
     PressedDisplaySettings(
       imageHide = shouldSuppressImages || contentProperties.imageHide,
-      // Not part of these changes: will get lost in rebase
-      isBoosted = false,
+      isBoosted = FaciaContentUtils.isBoosted(content),
       boostLevel = Some(FaciaContentUtils.boostLevel(content)),
       isImmersive = Some(FaciaContentUtils.isImmersive(content)),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),

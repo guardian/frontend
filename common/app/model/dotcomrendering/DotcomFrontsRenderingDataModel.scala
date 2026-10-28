@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import com.gu.facia.client.models.CustomSubnav
-import common.{CanonicalLink, Edition, GuLogging}
+import common.{CanonicalLink, Edition}
 import common.Maps.RichMap
 import common.commercial.EditionCommercialProperties
 import conf.Configuration
@@ -70,29 +70,6 @@ object DotcomFrontsRenderingDataModel extends GuLogging {
         ),
       ),
     )
-
-    if (Configuration.environment.isDev) {
-      def logMiniNav(content: PressedContent, collectionId: String, source: String): Unit = {
-        log.info(
-          s"[mini-nav] DCR front=${page.metadata.id} preview=${pageType.isPreview} " +
-            s"collection=$collectionId source=$source cardId=${content.card.id} " +
-            s"showMiniNav=${content.display.showMiniNav} miniNavId=${content.display.miniNavData.map(_.id)} " +
-            s"miniNavLinks=${content.display.miniNavData.map(_.links.size)}",
-        )
-        content match {
-          case curated: CuratedContent =>
-            curated.supportingContent.foreach(logMiniNav(_, collectionId, s"$source/supporting"))
-          case _ =>
-        }
-      }
-
-      log.info(s"[mini-nav] DCR front=${page.metadata.id} collections=${lighterPage.collections.size}")
-      lighterPage.collections.foreach { collection =>
-        collection.curated.foreach(logMiniNav(_, collection.id, "curated"))
-        collection.backfill.foreach(logMiniNav(_, collection.id, "backfill"))
-        collection.treats.foreach(logMiniNav(_, collection.id, "treats"))
-      }
-    }
 
     DotcomFrontsRenderingDataModel(
       pressedPage = lighterPage,
