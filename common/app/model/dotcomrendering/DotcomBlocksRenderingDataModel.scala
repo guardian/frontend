@@ -30,6 +30,7 @@ case class DotcomBlocksRenderingDataModel(
     adUnit: String,
     switches: Map[String, Boolean],
     serverSideABTests: Map[String, String],
+    stage: String,
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -52,6 +53,7 @@ object DotcomBlocksRenderingDataModel {
         "adUnit" -> model.adUnit,
         "switches" -> model.switches,
         "serverSideABTests" -> model.serverSideABTests,
+        "stage" -> model.stage,
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -117,6 +119,7 @@ object DotcomBlocksRenderingDataModel {
       adUnit = content.metadata.adUnitSuffix,
       switches = switches,
       serverSideABTests = ABTests.getParticipations(request),
+      stage = common.Environment.stage,
     )
   }
 }
