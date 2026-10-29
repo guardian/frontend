@@ -774,6 +774,103 @@ import scala.concurrent.{ExecutionContext, Future}
     related.map(_.id) should be(Seq("crossword-mini", "word-wheel", "sudoku-easy"))
   }
 
+  Seq(
+    ("film-reveal", "FILMREVEAL", "Film reveal"),
+    ("on-the-ball", "ONTHEBALL", "On the ball"),
+  ).foreach { case (slug, puzzleType, title) =>
+    def jsonAction(c: PuzzlesPageController, date: String) =
+      if (slug == "film-reveal") c.renderFilmRevealJson(date) else c.renderOnTheBallJson(date)
+    def htmlAction(c: PuzzlesPageController, date: String) =
+      if (slug == "film-reveal") c.renderFilmReveal(date) else c.renderOnTheBall(date)
+    def archiveAction(c: PuzzlesPageController) =
+      if (slug == "film-reveal") c.redirectFilmRevealArchive() else c.redirectOnTheBallArchive()
+    val path = s"/puzzles-and-games/trivia-and-quizzes/$slug"
+    val date = "2026-09-26"
+
+    slug should "render HTML via the existing puzzle page renderer" in {
+      val renderer = stubbedPuzzlePageRenderer()
+      val result = htmlAction(controller(successfulProvider, renderer), date)(request(s"$path/$date"))
+      status(result) shouldBe OK
+      verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+    }
+
+    it should "pass the exact API URL and page metadata to DCR without invented progress" in {
+      val api = mock[PuzzlesGameApi]
+      val gameUrl = s"https://provider.example/play?opaque=$slug&date=$date&token=api-value"
+      when(api.get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext]))
+        .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, Some(gameUrl)))))
+      val result = jsonAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api), date)(
+        request(s"$path/$date.json"),
+      )
+      status(result) shouldBe OK
+      val json = contentAsJson(result)
+      (json \ "slug").as[String] shouldBe slug
+      (json \ "webTitle").as[String] shouldBe title
+      (json \ "instance" \ "title").as[String] shouldBe title
+      (json \ "instance" \ "puzzleDate").as[String] shouldBe date
+      (json \ "instance" \ "gameUrl").as[String] shouldBe gameUrl
+      (json \ "instance" \ "gameStatus").toOption shouldBe None
+      (json \ "instance" \ "progress").toOption shouldBe None
+      (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]].map(_.id) shouldBe
+        Seq(slug, if (slug == "film-reveal") "on-the-ball" else "film-reveal", "crossword-quick")
+      verify(api).get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext])
+    }
+
+    it should "redirect its bare URL to the selected trivia archive" in {
+      val api = mock[PuzzlesGameApi]
+      val result = archiveAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api))(
+        request(path),
+      )
+      status(result) shouldBe FOUND
+      redirectLocation(result) shouldBe Some(s"/puzzles-and-games/trivia-and-quizzes/archive?puzzle=$slug")
+      verifyNoInteractions(api)
+    }
+
+    it should "apply the existing experiment gate to HTML, JSON and archive redirects" in {
+      Seq("", "puzzles-new-hub-v1:control").foreach { participation =>
+        val api = mock[PuzzlesGameApi]
+        val renderer = mock[DotcomRenderingService]
+        val c = controller(successfulProvider, renderer, gameApi = api)
+        status(htmlAction(c, date)(request(s"$path/$date", participation))) shouldBe NOT_FOUND
+        status(jsonAction(c, date)(request(s"$path/$date.json", participation))) shouldBe NOT_FOUND
+        status(archiveAction(c)(request(path, participation))) shouldBe NOT_FOUND
+        verifyNoInteractions(api, renderer)
+      }
+    }
+
+    it should "return 404 without a usable API game URL, never falling back to a vendor URL" in {
+      Seq(None, Some(""), Some("  ")).foreach { url =>
+        val api = mock[PuzzlesGameApi]
+        when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+          .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, url))))
+        val renderer = mock[DotcomRenderingService]
+        status(
+          htmlAction(controller(successfulProvider, renderer, gameApi = api), date)(request(s"$path/$date")),
+        ) shouldBe NOT_FOUND
+        verifyNoInteractions(renderer)
+      }
+    }
+
+    it should "reject invalid dates before contacting the API" in {
+      val api = mock[PuzzlesGameApi]
+      val c = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
+      status(jsonAction(c, "2026-02-30")(request(s"$path/2026-02-30.json"))) shouldBe NOT_FOUND
+      verifyNoInteractions(api)
+    }
+
+    it should "return an uncached 502 when the API fails" in {
+      val api = mock[PuzzlesGameApi]
+      when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+        .thenReturn(Future.failed(new RuntimeException("private upstream detail")))
+      val result = jsonAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api), date)(
+        request(s"$path/$date.json"),
+      )
+      status(result) shouldBe BAD_GATEWAY
+      header("Cache-Control", result).get should include("no-cache")
+      contentAsString(result) should not include "private upstream detail"
+    }
+  }
+
   "Puzzle game lookup" should "map every supported slug to its API type and forward the returned URL" in {
     PuzzlesPageController.PuzzleTypesBySlug.foreach { case (slug, puzzleType) =>
       val api = mock[PuzzlesGameApi]
@@ -785,9 +882,11 @@ import scala.concurrent.{ExecutionContext, Future}
         )
       val c = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
       val action = slug match {
-        case "word-wheel" => c.renderWordWheelJson(date.toString)
-        case "wordiply"   => c.renderWordiplyJson(date.toString)
-        case _            => c.renderSudokuJson(slug.stripPrefix("sudoku-"), date.toString)
+        case "word-wheel"  => c.renderWordWheelJson(date.toString)
+        case "wordiply"    => c.renderWordiplyJson(date.toString)
+        case "film-reveal" => c.renderFilmRevealJson(date.toString)
+        case "on-the-ball" => c.renderOnTheBallJson(date.toString)
+        case _             => c.renderSudokuJson(slug.stripPrefix("sudoku-"), date.toString)
       }
       val result = action(request(s"/puzzles-and-games/test/$slug/$date.json"))
       status(result) shouldBe OK
