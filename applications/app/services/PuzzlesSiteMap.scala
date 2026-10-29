@@ -8,6 +8,7 @@ object PuzzlesSiteMap {
     "/puzzles-and-games/crosswords/archive",
     "/puzzles-and-games/logic-puzzles/archive",
     "/puzzles-and-games/word-games/archive",
+    "/puzzles-and-games/trivia-and-quizzes/archive",
   )
 
   // Canonical production URLs, independent of the request's host or experiment cookies.
