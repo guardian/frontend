@@ -10,7 +10,7 @@ import model.dotcomrendering.{
   PuzzlesSupportingContent,
 }
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{verifyNoInteractions, when}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -325,6 +325,31 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
     Await.result(provider.getLayout(), 5.seconds) shouldBe PuzzlesLayout(Seq.empty)
     stream.wasClosed shouldBe true
+  }
+
+  it should "resolve game sponsorship from configuration without fetching hub content" in {
+    val sponsor = Json.obj(
+      "name" -> "Game sponsor",
+      "label" -> "Supported by",
+      "sponsorUri" -> "https://example.com",
+      "logo" -> Json.obj("src" -> "https://example.com/logo.png", "aspectRatio" -> 2.0),
+    )
+    val json = Json.obj(
+      "containers" -> Json.arr(),
+      "sponsorship" -> Json.obj("AU" -> (sponsor + ("name" -> Json.toJson("Hub sponsor")))),
+      "gameSponsorship" -> Json.obj("word-games" -> Json.obj("AU" -> sponsor)),
+    )
+    val stream = new CloseTrackingInputStream(Json.stringify(json))
+    val api = mock[PuzzlesArchiveApi]
+    val newsletters = mock[NewsletterSignupAgent]
+    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), api, newsletters)
+
+    val commercialProperties = Await.result(provider.getGameCommercialProperties("word-games"), 5.seconds)
+
+    commercialProperties.keySet shouldBe Set("AU")
+    commercialProperties("AU").branding.map(_.sponsorName) shouldBe Some("Hub sponsor")
+    stream.wasClosed shouldBe true
+    verifyNoInteractions(api, newsletters)
   }
 
   it should "fail clearly and close the stream when the blueprint is invalid" in {
