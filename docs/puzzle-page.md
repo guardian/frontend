@@ -179,8 +179,9 @@ Configure web sponsorship in `applications/conf/puzzles-layout.json`, using edit
 
 Containers must be top-level `featured` or `standard` sections (including an omitted variant).
 Nested, `ad` and `supporting` sponsorship is rejected; empty or disabled sections remain hidden.
-Game categories cover Word wheel/Wordiply and the four Sudoku variants respectively. Crosswords
-and archives are unchanged; apps sponsorship is configured separately.
+Game categories cover Word wheel/Wordiply and the four Sudoku variants respectively; other
+categories are rejected. Crosswords and archives are unchanged; apps sponsorship is configured
+separately.
 
 #### Sponsor format
 

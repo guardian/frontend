@@ -336,6 +336,66 @@ class PuzzlesLayoutTest extends AnyFlatSpec with Matchers {
       .validate[PuzzlesLayout] shouldBe a[JsError]
   }
 
+  private def withGameSponsorship(sponsorship: String, group: String = "word-games") =
+    representativeLayoutJson.as[JsObject] + ("gameSponsorship" -> Json.obj(group -> Json.parse(sponsorship)))
+
+  it should "read game sponsorship without sending the configuration to DCR" in {
+    val layout = withGameSponsorship(auSponsorship).as[PuzzlesLayout]
+
+    layout.gameSponsorship.keySet shouldBe Set("word-games")
+    Json.toJson(layout) shouldBe representativeLayoutJson
+  }
+
+  it should "not activate game sponsorship from a hub sponsor alone" in {
+    val layout = withSponsorship(auSponsorship).as[PuzzlesLayout]
+
+    layout.gameCommercialProperties("word-games") shouldBe empty
+  }
+
+  it should "use the game sponsor when no hub sponsor is configured" in {
+    val layout = withGameSponsorship(auSponsorship).as[PuzzlesLayout]
+
+    layout.gameCommercialProperties("word-games")("AU").branding.map(_.sponsorName) shouldBe Some("Example sponsor")
+    layout.gameCommercialProperties("word-games").keySet shouldBe Set("AU")
+    layout.gameCommercialProperties("logic-puzzles") shouldBe empty
+  }
+
+  it should "prefer the hub sponsor only for editions with explicit game sponsorship" in {
+    val gameLayout = withGameSponsorship(auSponsorship).as[PuzzlesLayout]
+    val gameSponsor = gameLayout.gameSponsorship("word-games")("AU")
+    val layout = gameLayout.copy(sponsorship =
+      Map(
+        "AU" -> gameSponsor.copy(name = "Hub sponsor"),
+        "UK" -> gameSponsor.copy(name = "UK hub sponsor"),
+      ),
+    )
+
+    layout.gameCommercialProperties("word-games")("AU").branding.map(_.sponsorName) shouldBe Some("Hub sponsor")
+    layout.gameCommercialProperties("word-games").keySet shouldBe Set("AU")
+    layout.gameCommercialProperties("logic-puzzles") shouldBe empty
+  }
+
+  it should "not override a game sponsor with a hub sponsor for a different edition" in {
+    val gameLayout = withGameSponsorship(auSponsorship).as[PuzzlesLayout]
+    val layout = gameLayout.copy(sponsorship =
+      Map(
+        "UK" -> gameLayout.gameSponsorship("word-games")("AU").copy(name = "UK hub sponsor"),
+      ),
+    )
+
+    layout.gameCommercialProperties("word-games")("AU").branding.map(_.sponsorName) shouldBe Some("Example sponsor")
+    layout.gameCommercialProperties("word-games").keySet shouldBe Set("AU")
+  }
+
+  it should "reject game sponsorship with an unknown group, edition or invalid URL" in {
+    withGameSponsorship(auSponsorship, "unknown-game").validate[PuzzlesLayout] shouldBe a[JsError]
+    withGameSponsorship(auSponsorship, "crosswords").validate[PuzzlesLayout] shouldBe a[JsError]
+    withGameSponsorship(auSponsorship, "trivia-and-quizzes").validate[PuzzlesLayout] shouldBe a[JsError]
+    withGameSponsorship(auSponsorship.replace("\"AU\"", "\"XX\"")).validate[PuzzlesLayout] shouldBe a[JsError]
+    withGameSponsorship(auSponsorship.replace("https://example.com/logo.png", "javascript:alert(1)"))
+      .validate[PuzzlesLayout] shouldBe a[JsError]
+  }
+
   private def withContainerSponsorship(sponsorship: String) = {
     val layout = representativeLayoutJson.as[JsObject]
     val containers = (layout \ "containers").as[Seq[JsObject]]
