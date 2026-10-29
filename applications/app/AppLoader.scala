@@ -39,6 +39,7 @@ trait ApplicationsServices {
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
+  lazy val filterSiteMapService = wire[FilterSiteMap]
   lazy val siteMapJob = wire[SiteMapJob]
   lazy val sectionsLookUp = wire[SectionsLookUp]
   lazy val ophanApi = wire[OphanApi]

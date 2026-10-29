@@ -282,6 +282,9 @@ GET            /series/*path.json                                               
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
+GET            /sitemaps/thefilter.xml                                                                                           controllers.SiteMapController.renderFilterSiteMapIndex()
+GET            /sitemaps/thefilter-uk.xml                                                                                        controllers.SiteMapController.renderFilterSiteMap(region = "uk")
+GET            /sitemaps/thefilter-us.xml                                                                                        controllers.SiteMapController.renderFilterSiteMap(region = "us")
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()

@@ -178,6 +178,19 @@ class GuardianConfiguration extends GuLogging {
     lazy val apiKey: String = configuration.getStringProperty("puzzles.api.key").getOrElse("test-api")
   }
 
+  object filterSiteMap {
+    lazy val manualIds: Seq[String] = configuration
+      .getStringProperty("filter.sitemap.manualIds")
+      .toSeq
+      .flatMap(_.split(","))
+      .map(_.trim)
+      .filter(_.nonEmpty)
+      .distinct
+    lazy val automaticEnabled: Boolean =
+      configuration.getStringProperty("filter.sitemap.automaticEnabled").exists(_.toBoolean)
+    lazy val automaticFrom: Option[String] = configuration.getStringProperty("filter.sitemap.automaticFrom")
+  }
+
   object indexes {
     lazy val tagIndexesBucket =
       configuration.getMandatoryStringProperty("tag_indexes.bucket")
