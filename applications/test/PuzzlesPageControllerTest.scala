@@ -11,7 +11,14 @@ import controllers.{
   PuzzlesPageController,
   PuzzlesProgressApi,
 }
-import model.dotcomrendering.{PuzzleContent, PuzzleContainer, PuzzleItem, PuzzlesLayout}
+import model.dotcomrendering.{
+  PuzzleContent,
+  PuzzleContainer,
+  PuzzleItem,
+  PuzzlesLayout,
+  PuzzleSponsor,
+  PuzzleSponsorLogo,
+}
 import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
@@ -103,6 +110,8 @@ import scala.concurrent.{ExecutionContext, Future}
   private def successfulProvider: PuzzlesLayoutProvider = {
     val provider = mock[PuzzlesLayoutProvider]
     when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(layout))
+    when(provider.getGameCommercialProperties(any[String])(any[ExecutionContext]))
+      .thenReturn(Future.successful(Map.empty))
     provider
   }
 
@@ -130,8 +139,12 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
-  private def request(path: String, participations: String = "puzzles-new-hub-v1:variant"): Request[AnyContent] = {
-    val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations)
+  private def request(
+      path: String,
+      participations: String = "puzzles-new-hub-v1:variant",
+      edition: String = "UK",
+  ): Request[AnyContent] = {
+    val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations, "X-Gu-Edition" -> edition)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)
   }
 
@@ -764,6 +777,51 @@ import scala.concurrent.{ExecutionContext, Future}
     renderer
   }
 
+  Seq("hub only", "game only", "both", "different hub edition", "unsponsored edition", "different game group")
+    .foreach { scenario =>
+      "game sponsorship" should s"resolve $scenario consistently for HTML and JSON" in {
+        val gameSponsor = PuzzleSponsor(
+          "Game sponsor",
+          "Supported by",
+          "https://example.com",
+          None,
+          PuzzleSponsorLogo("https://example.com/logo.png", None, 2.0),
+        )
+        val hubSponsor = gameSponsor.copy(name = "Hub sponsor")
+        val gameConfiguration = Map("word-games" -> Map("AU" -> gameSponsor))
+        val sponsoredLayout = scenario match {
+          case "hub only"  => layout.copy(sponsorship = Map("AU" -> hubSponsor))
+          case "game only" => layout.copy(gameSponsorship = gameConfiguration)
+          case "both"      => layout.copy(sponsorship = Map("AU" -> hubSponsor), gameSponsorship = gameConfiguration)
+          case "different hub edition" =>
+            layout.copy(sponsorship = Map("UK" -> hubSponsor), gameSponsorship = gameConfiguration)
+          case "unsponsored edition" => layout.copy(gameSponsorship = gameConfiguration)
+          case _                     => layout.copy(gameSponsorship = Map("logic-puzzles" -> Map("AU" -> gameSponsor)))
+        }
+        val edition = if (scenario == "unsponsored edition") "UK" else "AU"
+        val expectedSponsor = scenario match {
+          case "both"                                => Some("Hub sponsor")
+          case "game only" | "different hub edition" => Some("Game sponsor")
+          case _                                     => None
+        }
+        val provider = successfulProvider
+        when(provider.getGameCommercialProperties(eqTo("word-games"))(any[ExecutionContext]))
+          .thenReturn(Future.successful(sponsoredLayout.gameCommercialProperties("word-games")))
+        val renderer = stubbedPuzzlePageRenderer()
+        val puzzlesController = controller(provider, renderer)
+        val path = "/puzzles-and-games/word-games/word-wheel/2024-01-15"
+        val jsonResult = puzzlesController.renderWordWheelJson("2024-01-15")(request(s"$path.json", edition = edition))
+        status(jsonResult) shouldBe OK
+        val json = Json.parse(contentAsString(jsonResult))
+        (json \ "commercialProperties" \ edition \ "branding" \ "sponsorName").asOpt[String] shouldBe expectedSponsor
+        val htmlResult = puzzlesController.renderWordWheel("2024-01-15")(request(path, edition = edition))
+        status(htmlResult) shouldBe OK
+        val payload = ArgumentCaptor.forClass(classOf[JsValue])
+        verify(renderer).getPuzzlePage(any[WSClient], payload.capture())(any[RequestHeader])
+        (payload.getValue \ "commercialProperties") shouldBe (json \ "commercialProperties")
+      }
+    }
+
   "renderSudoku" should "render a sudoku variant via DCR, using the flattened sudoku-<variant> slug and given date" in {
     val renderer = stubbedPuzzlePageRenderer()
 
@@ -773,6 +831,44 @@ import scala.concurrent.{ExecutionContext, Future}
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
     verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+  }
+
+  it should "resolve the sponsorship category for word wheel, Wordiply and sudoku" in {
+    val sponsor = PuzzleSponsor(
+      "Word sponsor",
+      "Supported by",
+      "https://example.com",
+      None,
+      PuzzleSponsorLogo("https://example.com/logo.png", None, 2.0),
+    )
+    val sponsoredLayout = layout.copy(gameSponsorship =
+      Map(
+        "word-games" -> Map("AU" -> sponsor),
+        "logic-puzzles" -> Map("AU" -> sponsor.copy(name = "Logic sponsor")),
+      ),
+    )
+    val provider = successfulProvider
+    Seq("word-games", "logic-puzzles").foreach { group =>
+      when(provider.getGameCommercialProperties(eqTo(group))(any[ExecutionContext]))
+        .thenReturn(Future.successful(sponsoredLayout.gameCommercialProperties(group)))
+    }
+    val puzzlesController = controller(provider, mock[DotcomRenderingService])
+    val date = "2024-01-15"
+    Seq(
+      puzzlesController.renderWordWheelJson(date)(
+        request(s"/puzzles-and-games/word-games/word-wheel/$date.json", edition = "AU"),
+      ) -> "Word sponsor",
+      puzzlesController.renderWordiplyJson(date)(
+        request(s"/puzzles-and-games/word-games/wordiply/$date.json", edition = "AU"),
+      ) -> "Word sponsor",
+      puzzlesController.renderSudokuJson("easy", date)(
+        request(s"/puzzles-and-games/logic-puzzles/sudoku-easy/$date.json", edition = "AU"),
+      ) -> "Logic sponsor",
+    ).foreach { case (result, expectedSponsor) =>
+      status(result) shouldBe OK
+      (Json.parse(contentAsString(result)) \ "commercialProperties" \ "AU" \ "branding" \ "sponsorName")
+        .as[String] shouldBe expectedSponsor
+    }
   }
 
   it should "return not found for an unrecognised variant" in {
@@ -987,9 +1083,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
     slug should "render HTML via the existing puzzle page renderer" in {
       val renderer = stubbedPuzzlePageRenderer()
-      val result = htmlAction(controller(successfulProvider, renderer), date)(request(s"$path/$date", v2Participations))
+      val provider = successfulProvider
+      val result = htmlAction(controller(provider, renderer), date)(request(s"$path/$date", v2Participations))
       status(result) shouldBe OK
       verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+      verify(provider).getGameCommercialProperties(eqTo("trivia-and-quizzes"))(any[ExecutionContext])
     }
 
     it should "pass the exact API URL and page metadata to DCR without invented progress" in {
@@ -997,7 +1095,8 @@ import scala.concurrent.{ExecutionContext, Future}
       val gameUrl = s"https://provider.example/play?opaque=$slug&date=$date&token=api-value"
       when(api.get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext]))
         .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, Some(gameUrl)))))
-      val result = jsonAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api), date)(
+      val provider = successfulProvider
+      val result = jsonAction(controller(provider, mock[DotcomRenderingService], gameApi = api), date)(
         request(s"$path/$date.json", v2Participations),
       )
       status(result) shouldBe OK
@@ -1012,6 +1111,7 @@ import scala.concurrent.{ExecutionContext, Future}
       (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]].map(_.id) shouldBe
         Seq(slug, if (slug == "film-reveal") "on-the-ball" else "film-reveal", "crossword-quick")
       verify(api).get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext])
+      verify(provider).getGameCommercialProperties(eqTo("trivia-and-quizzes"))(any[ExecutionContext])
     }
 
     it should "redirect its bare URL to the selected trivia archive" in {
