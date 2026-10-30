@@ -2,7 +2,7 @@ package model.dotcomrendering
 
 import com.gu.commercial.display.AdTargetParamValue
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
-import common.Edition
+import common.{Edition, Environment}
 import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
 import model.dotcomrendering.pageElements.PageElement
@@ -119,7 +119,7 @@ object DotcomBlocksRenderingDataModel {
       adUnit = content.metadata.adUnitSuffix,
       switches = switches,
       serverSideABTests = ABTests.getParticipations(request),
-      stage = common.Environment.stage,
+      stage = Environment.stage,
     )
   }
 }
