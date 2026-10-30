@@ -169,10 +169,11 @@ object PuzzleRecommendations extends GuLogging {
       date: String,
       lookup: CrosswordLookup,
       today: LocalDate = londonToday(),
+      includeV2Games: Boolean = false,
   )(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] = {
-    resolveKeys(keysFor(currentKey), currentKey, currentId, date, lookup, today)
+    resolveKeys(visibleKeys(keysFor(currentKey), includeV2Games), currentKey, currentId, date, lookup, today)
   }
 
   /** The recommendations for the archive of the puzzle `archivedKey`, as of `date` (yyyy-MM-dd). Uses [[ArchiveTable]]
@@ -183,10 +184,14 @@ object PuzzleRecommendations extends GuLogging {
       date: String,
       lookup: CrosswordLookup,
       today: LocalDate = londonToday(),
+      includeV2Games: Boolean = false,
   )(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] =
-    resolveKeys(archiveKeysFor(archivedKey), archivedKey, None, date, lookup, today)
+    resolveKeys(visibleKeys(archiveKeysFor(archivedKey), includeV2Games), archivedKey, None, date, lookup, today)
+
+  private def visibleKeys(keys: Seq[String], includeV2Games: Boolean): Seq[String] =
+    if (includeV2Games) keys else keys.filterNot(key => key == "film-reveal" || key == "on-the-ball")
 
   private def resolveKeys(
       keys: Seq[String],

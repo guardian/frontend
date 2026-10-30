@@ -28,7 +28,7 @@ GET        /puzzles-and-games/trivia-and-quizzes/archive-data/:puzzle/:year/:mon
 OPTIONS    /puzzles-and-games/crosswords/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
 OPTIONS    /puzzles-and-games/word-games/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
 OPTIONS    /puzzles-and-games/logic-puzzles/archive-data/:puzzle/:year/:month                                                              controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
-OPTIONS    /puzzles-and-games/trivia-and-quizzes/archive-data/:puzzle/:year/:month                                                         controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
+OPTIONS    /puzzles-and-games/trivia-and-quizzes/archive-data/:puzzle/:year/:month                                                         controllers.PuzzlesPageController.triviaArchiveDataOptions(puzzle: String, year: Int, month: Int)
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.

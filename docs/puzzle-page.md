@@ -118,8 +118,14 @@ controller's `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `4
 request carries the `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant` header (via this repo's normal server-side AB test
 framework, `common/app/ab/ABTests.scala`).
 
-Hub access and trivia visibility share the existing v1 opt-in. This change does
-not add another experiment or alter DCR's pre-existing presentation flags.
+Film reveal, On the ball and the Trivia & quizzes hub container and archive additionally
+require the existing cumulative `ab.PuzzlesHubV2Experiment`: both
+`puzzles-new-hub-v1:variant` and `puzzles-new-hub-v2:variant`. This covers dated HTML/JSON,
+bare redirects and trivia archive HTML/data; denied requests never call the game/archive
+backends. Filtering covers featured/nested cards and archive choices before archive
+selection. Recommendations omit these games without cumulative v2 participation.
+Other v1 surfaces, including the intentionally ungated existing archive data endpoints,
+are unchanged. Both helpers preserve the local development bypass.
 
 ### The date path segment
 
@@ -182,9 +188,9 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-**The AB-test header is required** (see "Access gate" above) - without
-`X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant`, every URL below 404s. Set it via a browser extension
-(e.g. ModHeader) or `curl -H "X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant" ...`.
+Outside local development, set the AB-test header (see "Access gate" above) via a
+browser extension or `curl -H "X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant" ...`.
+V1 participation alone still enables the existing sudoku and word-game pages, but not trivia.
 
 The `.json` route variant returns the exact JSON payload this repo would send to DCR, without
 needing DCR itself to be reachable.
