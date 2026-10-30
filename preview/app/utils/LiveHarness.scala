@@ -1,11 +1,29 @@
 package utils
 
-import com.gu.contentapi.client.model.v1.{BlockElement, ContentAtomElementFields, ElementType, TextElementFields}
+import com.gu.contentapi.client.model.v1.{
+  Block,
+  BlockAttributes,
+  BlockElement,
+  ContentAtomElementFields,
+  ElementType,
+  TextElementFields,
+}
 import model.content.{Atoms, InteractiveAtom}
 import model.meta.BlocksOn
 import model.{ArticlePage, Content, ContentPage, InteractivePage}
-import play.api.libs.json.{Json, Reads}
+import play.api.libs.json.{Json, JsString, JsSuccess, Reads}
 import scala.xml.XML
+
+sealed trait AtomPlacement
+case object Body extends AtomPlacement
+case object MainMedia extends AtomPlacement
+
+object AtomPlacement {
+  implicit val reads: Reads[AtomPlacement] = Reads {
+    case JsString("mainMedia") => JsSuccess(MainMedia)
+    case _                     => JsSuccess(Body)
+  }
+}
 
 case class LiveHarnessInteractiveAtom(
     id: String,
@@ -14,7 +32,8 @@ case class LiveHarnessInteractiveAtom(
     html: String,
     js: String,
     weighting: String,
-    position: Option[Int] = None, // 1-based visual index; defaults to 1 (before everything)
+    position: Option[Int] = None, // 1-based visual index; defaults to 1 (before everything); ignored for mainMedia
+    placement: Option[AtomPlacement] = None, // defaults to Body
     customData: Option[String] = None,
 ) {
   val atom = InteractiveAtom(
@@ -65,12 +84,34 @@ object LiveHarness {
         .copy(interactives = interactives)
       updater.update(page, content.copy(atoms = Some(updatedAtoms)))
     },
-    blocks =>
-      blocks.copy(body = blocks.body.map { bodyBlocks =>
+    blocks => {
+      val (mainMediaAtoms, bodyAtoms) = harnessAtoms.partition(_.placement.contains(MainMedia))
+
+      val withMain =
+        if (mainMediaAtoms.isEmpty) blocks
+        else
+          blocks.copy(main =
+            Some(
+              blocks.main
+                .getOrElse(
+                  Block(
+                    id = "harness-main",
+                    bodyHtml = "",
+                    bodyTextSummary = "",
+                    attributes = BlockAttributes(),
+                    published = true,
+                  ),
+                )
+                .copy(elements = mainMediaAtoms.map(_.blockElement).toIndexedSeq),
+            ),
+          )
+
+      withMain.copy(body = withMain.body.map { bodyBlocks =>
         bodyBlocks.map { block =>
-          block.copy(elements = insertAtomsAtNthPoints(block.elements.toSeq, harnessAtoms))
+          block.copy(elements = insertAtomsAtNthPoints(block.elements.toSeq, bodyAtoms))
         }
-      }),
+      })
+    },
   )
 
   private val emptyAtoms = Atoms(
