@@ -38,6 +38,7 @@ object QueryDefaults {
     "commentCloseDate",
     "starRating",
     "productionOffice",
+    "livePricingEnabled",
   )
 
   val mainField = List[String]("main")
