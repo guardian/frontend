@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock}
 import common.{Edition, Environment}
 import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
-import model.dotcomrendering.pageElements.PageElement
+import model.dotcomrendering.pageElements.{InteractiveAtomBlockElement, PageElement}
 import model.{AffiliateProductLivePricing, ContentFormat, ContentPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
