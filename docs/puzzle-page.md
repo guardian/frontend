@@ -2,8 +2,8 @@
 
 ## What is implemented
 
-Puzzle Page is a generic page template for iframe-based Guardian puzzle types (sudoku and word
-games), rendered by dotcom-rendering (DCR). This repo (`frontend`) assembles a small amount of
+Puzzle Page is a generic page template for iframe-based Guardian puzzle types (sudoku, word
+games, and trivia), rendered by dotcom-rendering (DCR). This repo (`frontend`) assembles a small amount of
 per-instance data (title, requested date, and the API-resolved `gameUrl`) and POSTs it to DCR's
 `/PuzzlePage` endpoint; DCR owns all layout, styling, and structural/rendering behaviour, including
 reader-specific additions to the third-party iframe URL.
@@ -15,7 +15,7 @@ etc.), untouched by any of this. This is a deliberate product decision.
 ### Public URL structure: nested under the hub, grouped, and dated
 
 Per confirmed team direction, individual puzzle-page URLs are nested under the `/puzzles-and-games`
-hub, grouped by DCR's `puzzleGroup` ("logic-puzzles" or "word-games"), and always carry a real
+hub, grouped by public section (`logic-puzzles`, `word-games`, or `trivia-and-quizzes`), and always carry a real
 `YYYY-MM-DD` date:
 
 -   Hub (unchanged): `https://www.theguardian.com/puzzles-and-games/`
@@ -23,21 +23,23 @@ hub, grouped by DCR's `puzzleGroup` ("logic-puzzles" or "word-games"), and alway
     (and `sudoku-medium`, `sudoku-hard`, `sudoku-killer`)
 -   Word wheel: `https://www.theguardian.com/puzzles-and-games/word-games/word-wheel/2024-01-15`
 -   Wordiply: `https://www.theguardian.com/puzzles-and-games/word-games/wordiply/2024-01-15`
+-   Film reveal: `https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/film-reveal/2024-01-15`
+-   On the ball: `https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/on-the-ball/2024-01-15`
 
 The **bare URL** for each game (no date segment, e.g.
 `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy`) is not itself a page -
 it **redirects** (temporarily - see "Archive redirects" below) to that group's archive page, filtered
 to this puzzle.
 
-Each game's group segment (`logic-puzzles`/`word-games`) is a **literal, hardcoded path segment** on
-that game's own dedicated route/action, matching its DCR `puzzleGroup` - not a generic `:group`
+Each game's section segment (`logic-puzzles`/`word-games`/`trivia-and-quizzes`) is a **literal, hardcoded path segment** on
+that game's own dedicated route/action - not a generic `:group`
 wildcard. This is a natural consequence of every game having its own explicit route/action (see
 "Code" below), and avoids ever routing a request for a group a given game doesn't actually belong
 to.
 
-### Current scope (V0): 6 puzzles
+### Current scope: 8 puzzles
 
-Matching DCR's own V0 registry:
+Matching DCR's puzzle registry (the trivia games use DCR's `trivia` group):
 
 | Public URL (dated)                                      | Controller action              | `slug` sent to DCR | Title sent to DCR |
 | ------------------------------------------------------- | ------------------------------ | ------------------ | ----------------- |
@@ -47,8 +49,10 @@ Matching DCR's own V0 registry:
 | `/puzzles-and-games/logic-puzzles/sudoku-killer/{date}` | `renderSudoku("killer", date)` | `sudoku-killer`    | Killer sudoku     |
 | `/puzzles-and-games/word-games/word-wheel/{date}`       | `renderWordWheel(date)`        | `word-wheel`       | Word wheel        |
 | `/puzzles-and-games/word-games/wordiply/{date}`         | `renderWordiply(date)`         | `wordiply`         | Wordiply          |
+| `/puzzles-and-games/trivia-and-quizzes/film-reveal/{date}` | `renderFilmReveal(date)` | `film-reveal` | Film reveal |
+| `/puzzles-and-games/trivia-and-quizzes/on-the-ball/{date}` | `renderOnTheBall(date)` | `on-the-ball` | On the ball |
 
-For all six, frontend maps the slug to `puzzleType` and requests
+For all eight, frontend maps the slug to `puzzleType` and requests
 `GET /game?puzzleType=...&date=YYYY-MM-DD` using `Configuration.puzzlesApi.baseUrl`
 and the configured API key. The response is a single archive item (no envelope).
 Its `gameUrl` becomes `instance.gameUrl`; DCR preserves its path, puzzle ID and provider
@@ -70,8 +74,10 @@ up CAPI to construct crossword destinations. Other puzzle card destinations are 
         actions, backed by `sudokuVariantTitles` (variant -> title map).
     -   `renderWordWheel(date)`/`renderWordWheelJson(date)` - dedicated word wheel actions, hardcoding
         `WordWheelSlug`/`WordWheelTitle` internally.
-    -   `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions, hardcoding
-        `WordiplySlug`/`WordiplyTitle` internally.
+    -   `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions.
+    -   `renderFilmReveal(date)`/`renderFilmRevealJson(date)` and
+        `renderOnTheBall(date)`/`renderOnTheBallJson(date)` - dedicated MovieGrid actions using
+        the same API-backed rendering path.
     -   `redirectSudokuArchive(variant)`, `redirectWordWheelArchive()`, `redirectWordiplyArchive()` - the
         bare (dateless) archive-redirect actions (see "Archive redirects" below).
     -   All actions are deliberately named distinctly from this controller's other, pre-existing
@@ -112,11 +118,14 @@ controller's `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `4
 request carries the `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant` header (via this repo's normal server-side AB test
 framework, `common/app/ab/ABTests.scala`).
 
-**Note for future v2 work:** DCR uses a 2-tier, cumulative rollout gating structure for this
-feature (`puzzles-new-hub-v1`, `puzzles-new-hub-v2`, defined in `ab-testing/config/abTests.ts`,
-checked via `isPuzzlesHubV1Enabled`/`isPuzzlesHubV2Enabled` in
-`src/lib/puzzlesHubVersionExperiment.ts`). This repo only checks the v1 tier today; a v2-scoped
-frontend feature will need its own equivalent cumulative check.
+Film reveal, On the ball and the Trivia & quizzes hub container and archive additionally
+require the existing cumulative `ab.PuzzlesHubV2Experiment`: both
+`puzzles-new-hub-v1:variant` and `puzzles-new-hub-v2:variant`. This covers dated HTML/JSON,
+bare redirects and trivia archive HTML/data; denied requests never call the game/archive
+backends. Filtering covers featured/nested cards and archive choices before archive
+selection. Recommendations omit these games without cumulative v2 participation.
+Other v1 surfaces, including the intentionally ungated existing archive data endpoints,
+are unchanged. Both helpers preserve the local development bypass.
 
 ### The date path segment
 
@@ -133,9 +142,8 @@ are looked up exactly as requested; publication availability is determined by `/
 ### Archive redirects
 
 Dateless game URLs return a temporary `302` redirect to
-`/puzzles-and-games/{group}/archive?puzzle={slug}`, for example
-`/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy`. Archives use their existing
-rendering flow and do not inherit game sponsorship.
+`/puzzles-and-games/{group}/archive?puzzle={slug}`, including Film reveal and On the ball.
+Archives use the shared `PuzzlesArchiveBuilder` flow and do not inherit game sponsorship.
 
 ### How to configure/add a new puzzle type
 
@@ -237,9 +245,10 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-When gated, use `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant`. Scope browser header rules
-to localhost to avoid CORS failures on third-party resources. DCR's development bypass does not
-bypass frontend's experiment gate.
+Outside local development, use
+`X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant` for trivia.
+V1 alone enables existing sudoku and word-game pages. Scope browser header rules to localhost
+to avoid CORS failures on third-party resources; frontend and DCR apply their gates independently.
 
 The `.json` route variant returns the exact JSON payload this repo would send to DCR, without
 needing DCR itself to be reachable.

@@ -20,11 +20,10 @@ import scala.util.control.NonFatal
   * that equals the row's own key means "most recent of the same puzzle, excluding the current one". Resolution depends
   * on the kind of puzzle referenced:
   *   - crossword: the most recent crossword of that series, using the supplied API lookup (never the current article)
-  *   - iframe game (sudoku, word wheel, wordiply): date arithmetic, no CAPI. Any puzzle => today (London), except the
-  *     one being played when it is itself today's, which would just repeat the page: that one => the day before.
+  *   - iframe game: date arithmetic, no CAPI. Any puzzle => today (London), except the one being played when it is
+  *     itself today's, which would just repeat the page: that one => the day before.
   *
-  * A key without a catalogue entry (e.g. `on-the-ball` and `film-reveal`, which are not built yet) is simply left out
-  * of the result, so the rail shows fewer cards rather than failing.
+  * A key without a catalogue entry is simply left out of the result, so the rail shows fewer cards rather than failing.
   */
 object PuzzleRecommendations extends GuLogging {
 
@@ -69,6 +68,7 @@ object PuzzleRecommendations extends GuLogging {
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
+  val TriviaAndQuizzesGroup = "trivia-and-quizzes"
 
   private val crosswordCards: Seq[CrosswordCard] = Seq(
     CrosswordCard("quick", "Quick crossword"),
@@ -90,6 +90,8 @@ object PuzzleRecommendations extends GuLogging {
     IframeCard("sudoku-killer", "Killer sudoku", "sudoku", "killer", LogicPuzzlesGroup, "#CDECFB"),
     IframeCard("word-wheel", "Word wheel", "word-wheel", "all", WordGamesGroup, "#F9D4E8"),
     IframeCard("wordiply", "Wordiply", "wordiply", "all", WordGamesGroup, "#F8D0C9"),
+    IframeCard("film-reveal", "Film reveal", "film-reveal", "all", TriviaAndQuizzesGroup, "#F3FBFB"),
+    IframeCard("on-the-ball", "On the ball", "on-the-ball", "all", TriviaAndQuizzesGroup, "#F3FBFB"),
   )
 
   private val crosswordCatalogue: Map[String, CrosswordCard] = crosswordCards.map(c => c.key -> c).toMap
@@ -115,7 +117,6 @@ object PuzzleRecommendations extends GuLogging {
     "sudoku-medium" -> Seq("sudoku-medium", "sudoku-hard", "quick"),
     "sudoku-hard" -> Seq("sudoku-hard", "sudoku-medium", "quick"),
     "sudoku-killer" -> Seq("sudoku-killer", "sudoku-hard", "sudoku-medium"),
-    // Not built yet: their own/each other's cards have no catalogue entry, so only "quick" resolves for now.
     "on-the-ball" -> Seq("on-the-ball", "film-reveal", "quick"),
     "film-reveal" -> Seq("film-reveal", "on-the-ball", "quick"),
   )
@@ -140,7 +141,6 @@ object PuzzleRecommendations extends GuLogging {
     "sudoku-medium" -> Seq("sudoku-easy", "sudoku-hard", "quick"),
     "sudoku-hard" -> Seq("sudoku-medium", "sudoku-killer", "quick"),
     "sudoku-killer" -> Seq("sudoku-medium", "sudoku-hard", "quick"),
-    // Not built yet: only the entries with a catalogue card resolve for now.
     "on-the-ball" -> Seq("film-reveal", "quick", "sudoku-medium"),
     "film-reveal" -> Seq("on-the-ball", "quick", "sudoku-medium"),
   )
@@ -169,10 +169,11 @@ object PuzzleRecommendations extends GuLogging {
       date: String,
       lookup: CrosswordLookup,
       today: LocalDate = londonToday(),
+      includeV2Games: Boolean = false,
   )(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] = {
-    resolveKeys(keysFor(currentKey), currentKey, currentId, date, lookup, today)
+    resolveKeys(visibleKeys(keysFor(currentKey), includeV2Games), currentKey, currentId, date, lookup, today)
   }
 
   /** The recommendations for the archive of the puzzle `archivedKey`, as of `date` (yyyy-MM-dd). Uses [[ArchiveTable]]
@@ -183,10 +184,14 @@ object PuzzleRecommendations extends GuLogging {
       date: String,
       lookup: CrosswordLookup,
       today: LocalDate = londonToday(),
+      includeV2Games: Boolean = false,
   )(implicit
       ec: ExecutionContext,
   ): Future[Seq[PuzzleItem]] =
-    resolveKeys(archiveKeysFor(archivedKey), archivedKey, None, date, lookup, today)
+    resolveKeys(visibleKeys(archiveKeysFor(archivedKey), includeV2Games), archivedKey, None, date, lookup, today)
+
+  private def visibleKeys(keys: Seq[String], includeV2Games: Boolean): Seq[String] =
+    if (includeV2Games) keys else keys.filterNot(key => key == "film-reveal" || key == "on-the-ball")
 
   private def resolveKeys(
       keys: Seq[String],

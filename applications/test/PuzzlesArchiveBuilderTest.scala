@@ -35,6 +35,9 @@ import play.api.libs.json.Json
     "primary",
     slug = Some("word-games/wordiply"),
   )
+  private val trivia = Seq("film-reveal" -> "Film reveal", "on-the-ball" -> "On the ball").map { case (slug, title) =>
+    PuzzleItem(slug, title, slug, "all", "primary", slug = Some(s"trivia-and-quizzes/$slug"))
+  }
   private val layout = PuzzlesLayout(
     Seq(
       PuzzleContainer(
@@ -44,6 +47,7 @@ import play.api.libs.json.Json
         PuzzleContent(Nil, Nil, archiveChoices = Some(Seq(quick, mini, weekend))),
       ),
       PuzzleContainer("logic-puzzles", "Logic puzzles", Some("standard"), PuzzleContent(Seq(Seq(sudoku)), Nil)),
+      PuzzleContainer("trivia-and-quizzes", "Trivia & quizzes", Some("standard"), PuzzleContent(Seq(trivia), Nil)),
       PuzzleContainer(
         "word-games",
         "Word games",
@@ -73,12 +77,31 @@ import play.api.libs.json.Json
         "Logic puzzles",
         "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started.",
       ),
+      "trivia-and-quizzes" -> (
+        "Trivia & quizzes",
+        "Play the full archive of trivia and quizzes from the Guardian. Track your progress of what you've played and started.",
+      ),
     )
 
     expected.foreach { case (category, (title, description)) =>
       val selection = PuzzlesArchiveBuilder.select(layout, category, None).get
       selection.title should be(title)
       selection.description should be(description)
+    }
+  }
+
+  it should "select MovieGrid API types and build dated trivia links without manufacturing played states" in {
+    Seq("film-reveal" -> "FILMREVEAL", "on-the-ball" -> "ONTHEBALL").foreach { case (slug, apiType) =>
+      val selection = PuzzlesArchiveBuilder.select(layout, "trivia-and-quizzes", Some(slug)).get
+      selection.title shouldBe "Trivia & quizzes"
+      selection.apiType shouldBe apiType
+      selection.puzzles.map(_.id) shouldBe Seq("film-reveal", "on-the-ball")
+      PuzzlesArchiveBuilder.relatedPuzzleKey(selection) shouldBe slug
+      val item = PuzzlesApiItem("opaque", apiType, "2026-09-02T00:00:00Z", 0, None, None)
+      val archive = PuzzlesArchiveBuilder.build(selection, 2026, 9, Seq(item), false, Nil)
+      archive.items.map(_.url) shouldBe Seq(s"/puzzles-and-games/trivia-and-quizzes/$slug/2026-09-02")
+      archive.items.map(_.gameStatus) shouldBe Seq(None)
+      archive.recentItems.map(_.gameStatus) shouldBe Seq(None)
     }
   }
 

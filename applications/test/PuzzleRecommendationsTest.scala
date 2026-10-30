@@ -27,8 +27,13 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     )
   }
 
-  private def resolve(key: String, id: Option[String] = None, l: CrosswordLookup = lookup): Seq[PuzzleItem] =
-    Await.result(PuzzleRecommendations.resolve(key, id, date, l, today), 5.seconds)
+  private def resolve(
+      key: String,
+      id: Option[String] = None,
+      l: CrosswordLookup = lookup,
+      includeV2Games: Boolean = false,
+  ): Seq[PuzzleItem] =
+    Await.result(PuzzleRecommendations.resolve(key, id, date, l, today, includeV2Games), 5.seconds)
 
   private def ids(items: Seq[PuzzleItem]): Seq[String] = items.map(_.id)
 
@@ -181,9 +186,17 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     resolve("sudoku-easy", l = failing).map(_.id) shouldBe Seq("sudoku-easy", "sudoku-medium")
   }
 
-  it should "only resolve the quick crossword for the not yet built games" in {
-    ids(resolve("on-the-ball")) shouldBe Seq("crossword-quick")
-    ids(resolve("film-reveal")) shouldBe Seq("crossword-quick")
+  it should "resolve MovieGrid recommendations to dated public pages, not provider URLs" in {
+    ids(resolve("on-the-ball", includeV2Games = true)) shouldBe Seq("on-the-ball", "film-reveal", "crossword-quick")
+    ids(resolve("film-reveal", includeV2Games = true)) shouldBe Seq("film-reveal", "on-the-ball", "crossword-quick")
+    val cards = resolve("film-reveal", includeV2Games = true).take(2)
+    cards.map(_.url) shouldBe Seq(
+      Some("/puzzles-and-games/trivia-and-quizzes/film-reveal/2026-09-23"),
+      Some("/puzzles-and-games/trivia-and-quizzes/on-the-ball/2026-09-24"),
+    )
+    cards.map(_.`type`) shouldBe Seq("film-reveal", "on-the-ball")
+    all(cards.map(_.set)) shouldBe "all"
+    cards.flatMap(_.image) shouldBe empty
   }
 
   it should "recommend one puzzle of each group for a puzzle without a row" in {
@@ -198,8 +211,23 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     items.foreach(item => item.id should fullyMatch regex "[a-z0-9]+(?:-[a-z0-9]+)*")
   }
 
-  private def resolveArchive(key: String, l: CrosswordLookup = lookup): Seq[PuzzleItem] =
-    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l, today), 5.seconds)
+  private def resolveArchive(
+      key: String,
+      l: CrosswordLookup = lookup,
+      includeV2Games: Boolean = false,
+  ): Seq[PuzzleItem] =
+    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l, today, includeV2Games), 5.seconds)
+
+  "V1 recommendations" should "omit MovieGrid cards unless explicitly enabled by the request" in {
+    Seq("film-reveal", "on-the-ball").foreach { key =>
+      ids(resolve(key)) shouldBe Seq("crossword-quick")
+      ids(resolveArchive(key)) shouldBe Seq("crossword-quick", "sudoku-medium")
+    }
+    PuzzleRecommendations.Table.keys.filterNot(Set("film-reveal", "on-the-ball")).foreach { key =>
+      resolve(key) shouldBe resolve(key, includeV2Games = true)
+      resolveArchive(key) shouldBe resolveArchive(key, includeV2Games = true)
+    }
+  }
 
   "ArchiveTable" should "have the same 18 rows as the puzzle table, each with 3 slots and never its own puzzle" in {
     PuzzleRecommendations.ArchiveTable.keySet shouldBe PuzzleRecommendations.Table.keySet
@@ -215,7 +243,16 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     ids(resolveArchive("wordiply")) shouldBe Seq("word-wheel", "crossword-quick", "sudoku-medium")
     ids(resolveArchive("sudoku-easy")) shouldBe Seq("sudoku-medium", "sudoku-hard", "crossword-quick")
     ids(resolveArchive("sudoku-hard")) shouldBe Seq("sudoku-medium", "sudoku-killer", "crossword-quick")
-    ids(resolveArchive("on-the-ball")) shouldBe Seq("crossword-quick", "sudoku-medium")
+    ids(resolveArchive("on-the-ball", includeV2Games = true)) shouldBe Seq(
+      "film-reveal",
+      "crossword-quick",
+      "sudoku-medium",
+    )
+    ids(resolveArchive("film-reveal", includeV2Games = true)) shouldBe Seq(
+      "on-the-ball",
+      "crossword-quick",
+      "sudoku-medium",
+    )
   }
 
   it should "label every iframe card as today (the archive's own day) and fall back to the default for an unlisted puzzle" in {

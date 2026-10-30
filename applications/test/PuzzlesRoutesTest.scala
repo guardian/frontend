@@ -20,7 +20,7 @@ import org.scalatest.matchers.should.Matchers
     route.url should be("/puzzles-and-games.json")
   }
 
-  it should "expose the three archive endpoints" in {
+  it should "expose the archive endpoints" in {
     controllers.routes.PuzzlesPageController.renderCrosswordsArchive().url should be(
       "/puzzles-and-games/crosswords/archive",
     )
@@ -30,14 +30,23 @@ import org.scalatest.matchers.should.Matchers
     controllers.routes.PuzzlesPageController.renderLogicPuzzlesArchive().url should be(
       "/puzzles-and-games/logic-puzzles/archive",
     )
+    controllers.routes.PuzzlesPageController.renderTriviaAndQuizzesArchive().url should be(
+      "/puzzles-and-games/trivia-and-quizzes/archive",
+    )
   }
 
   it should "keep archive data selections in the path when the CDN strips query parameters" in {
-    Seq("crosswords", "word-games", "logic-puzzles").foreach { category =>
+    Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes").foreach { category =>
       controllers.routes.PuzzlesPageController.archiveDataForMonth(category, "test-puzzle", 2020, 8).url should be(
         s"/puzzles-and-games/$category/archive-data/test-puzzle/2020/8",
       )
     }
+  }
+
+  it should "use the gated trivia archive preflight action" in {
+    val route = controllers.routes.PuzzlesPageController.triviaArchiveDataOptions("film-reveal", 2020, 9)
+    route.method shouldBe "OPTIONS"
+    route.url shouldBe "/puzzles-and-games/trivia-and-quizzes/archive-data/film-reveal/2020/9"
   }
 
   it should "expose the nested, dated Sudoku HTML endpoint" in {
@@ -101,6 +110,30 @@ import org.scalatest.matchers.should.Matchers
 
     route.method should be("GET")
     route.url should be("/puzzles-and-games/word-games/wordiply")
+  }
+
+  it should "expose dated HTML, JSON and bare archive redirects for MovieGrid games" in {
+    val routes = controllers.routes.PuzzlesPageController
+    Seq(
+      (
+        "film-reveal",
+        routes.renderFilmReveal("2026-09-26"),
+        routes.renderFilmRevealJson("2026-09-26"),
+        routes.redirectFilmRevealArchive(),
+      ),
+      (
+        "on-the-ball",
+        routes.renderOnTheBall("2026-09-26"),
+        routes.renderOnTheBallJson("2026-09-26"),
+        routes.redirectOnTheBallArchive(),
+      ),
+    ).foreach { case (slug, html, json, archive) =>
+      val path = s"/puzzles-and-games/trivia-and-quizzes/$slug"
+      html.url shouldBe s"$path/2026-09-26"
+      json.url shouldBe s"$path/2026-09-26.json"
+      archive.url shouldBe path
+      Seq(html, json, archive).foreach(_.method shouldBe "GET")
+    }
   }
 
   it should "not clash with, or reorder, the existing crossword routes" in {

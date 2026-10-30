@@ -430,6 +430,118 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
+  private val v2Participations = "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant"
+
+  Seq(
+    "puzzles-new-hub-v1:variant" -> false,
+    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:control" -> false,
+    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:unknown" -> false,
+    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:,puzzles-new-hub-v2:variant:extra" -> false,
+    v2Participations -> true,
+  ).foreach { case (participations, enabled) =>
+    "Puzzles hub trivia visibility" should s"require cumulative v2 participation in HTML and JSON: $participations" in {
+      val trivia = PuzzleContainer(
+        id = "trivia-and-quizzes",
+        title = "Trivia & quizzes",
+        variant = Some("standard"),
+        content = PuzzleContent(
+          Seq(Seq(PuzzleItem("film-reveal", "Film reveal", "film-reveal", "all", "primary"))),
+          Seq.empty,
+        ),
+      )
+      val quick = layout.containers.head.content.items.head.head
+      val filmReveal = trivia.content.items.head.head
+      val onTheBall = filmReveal.copy(id = "on-the-ball", `type` = "on-the-ball", title = "On the ball")
+      val featuredQuick = quick.copy(id = "featured-quick")
+      val nestedQuick = quick.copy(id = "nested-quick")
+      val archiveQuick = quick.copy(id = "archive-quick", cardVariant = "archive")
+      val v1Nested = layout.containers.head.copy(
+        id = "nested-v1",
+        content = PuzzleContent(Seq(Seq(nestedQuick)), Nil),
+      )
+      val v1Featured = layout.containers.head.copy(
+        id = "featured-puzzles",
+        variant = Some("featured"),
+        content = PuzzleContent(
+          Seq(Seq(featuredQuick)),
+          Seq(v1Nested),
+          archiveChoices = Some(Seq(archiveQuick)),
+        ),
+      )
+      val featuredWithV2Games = v1Featured.copy(content =
+        v1Featured.content.copy(
+          items = Seq(Seq(featuredQuick, filmReveal.copy(id = "featured-film"), onTheBall.copy(id = "featured-ball"))),
+          nestedContainers = Seq(
+            v1Nested.copy(content =
+              v1Nested.content.copy(
+                items = Seq(Seq(nestedQuick, onTheBall.copy(id = "nested-ball"), filmReveal.copy(id = "nested-film"))),
+                archive = Some(filmReveal.copy(id = "nested-film-archive", cardVariant = "archive")),
+              ),
+            ),
+          ),
+          archiveChoices = Some(
+            Seq(
+              filmReveal.copy(id = "archive-film", cardVariant = "archive"),
+              archiveQuick,
+              onTheBall.copy(id = "archive-ball", cardVariant = "archive"),
+            ),
+          ),
+        ),
+      )
+      val v1Layout = layout.copy(containers = layout.containers :+ v1Featured)
+      val fullLayout = v1Layout.copy(containers = layout.containers ++ Seq(featuredWithV2Games, trivia))
+      val expectedLayout = if (enabled) fullLayout else v1Layout
+      val provider = mock[PuzzlesLayoutProvider]
+      when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(fullLayout))
+      val renderer = mock[DotcomRenderingService]
+      when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+        .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+      val c = controller(provider, renderer)
+      val html = c.renderPuzzles()(request("/puzzles-and-games", participations))
+      status(html) shouldBe OK
+      val payload = ArgumentCaptor.forClass(classOf[JsValue])
+      verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+      val json = c.renderPuzzlesJson()(request("/puzzles-and-games.json", participations))
+      status(json) shouldBe OK
+      (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe expectedLayout
+      (contentAsJson(json) \ "layout").as[PuzzlesLayout] shouldBe expectedLayout
+    }
+  }
+
+  "V1 archive rendering" should "use the filtered layout rather than exposing trivia through archive pages" in {
+    val crosswords = PuzzleContainer(
+      "crosswords",
+      "Crosswords",
+      content = PuzzleContent(
+        Nil,
+        Nil,
+        archiveChoices = Some(
+          Seq(
+            PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive"),
+          ),
+        ),
+      ),
+    )
+    val trivia = PuzzleContainer(
+      "trivia-and-quizzes",
+      "Trivia & quizzes",
+      content = PuzzleContent(Seq(Seq(PuzzleItem("film-reveal", "Film reveal", "film-reveal", "all", "primary"))), Nil),
+    )
+    val provider = mock[PuzzlesLayoutProvider]
+    when(provider.getLayout()(any[ExecutionContext]))
+      .thenReturn(Future.successful(layout.copy(containers = Seq(crosswords, trivia))))
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+
+    status(
+      controller(provider, renderer).renderCrosswordsArchive()(request("/puzzles-and-games/crosswords/archive")),
+    ) shouldBe OK
+    val payload = ArgumentCaptor.forClass(classOf[JsValue])
+    verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+    (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe layout.copy(containers = Seq(crosswords))
+  }
+
   "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
     val progressApi = mock[PuzzlesProgressApi]
     val item = PuzzlesApiItem(
@@ -518,6 +630,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
   Seq(
     "control" -> "puzzles-new-hub-v1:control",
+    "v2 only" -> "puzzles-new-hub-v2:variant",
+    "v1 control with v2 variant" -> "puzzles-new-hub-v1:control,puzzles-new-hub-v2:variant",
     "absent" -> "",
     "malformed" -> "puzzles-new-hub-v1:,puzzles-new-hub-v1:variant:extra",
     "unknown group" -> "puzzles-new-hub-v1:unknown",
@@ -544,10 +658,117 @@ import scala.concurrent.{ExecutionContext, Future}
       }
   }
 
-  /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubV1Experiment` ("puzzles-new-hub-v1")
-    * AB test as the hub actions above - reusing the existing experiment rather than a new one. Crosswords are
-    * explicitly out of scope for Puzzle Page and are not exercised by these tests.
+  Seq(
+    "",
+    "puzzles-new-hub-v1:variant",
+    "puzzles-new-hub-v2:variant",
+    "puzzles-new-hub-v1:control,puzzles-new-hub-v2:variant",
+    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:control",
+    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:unknown",
+    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant:extra",
+  ).foreach { participations =>
+    "Trivia archive access" should s"deny HTML, data and preflights without backend calls: $participations" in {
+      val provider = mock[PuzzlesLayoutProvider]
+      val renderer = mock[DotcomRenderingService]
+      val archiveApi = mock[PuzzlesArchiveApi]
+      val gameApi = mock[PuzzlesGameApi]
+      val c = controller(provider, renderer, puzzlesArchiveApi = archiveApi, gameApi = gameApi)
+      val path = "/puzzles-and-games/trivia-and-quizzes"
+      status(c.renderTriviaAndQuizzesArchive()(request(s"$path/archive", participations))) shouldBe NOT_FOUND
+      status(c.archiveData("trivia-and-quizzes")(request(s"$path/archive-data", participations))) shouldBe NOT_FOUND
+      status(
+        c.archiveDataForMonth("trivia-and-quizzes", "film-reveal", 2020, 9)(
+          request(s"$path/archive-data/film-reveal/2020/9", participations),
+        ),
+      ) shouldBe NOT_FOUND
+      status(
+        c.triviaArchiveDataOptions("film-reveal", 2020, 9)(
+          request(s"$path/archive-data/film-reveal/2020/9", participations),
+        ),
+      ) shouldBe NOT_FOUND
+      verifyNoInteractions(provider, renderer, archiveApi, gameApi)
+    }
+  }
+
+  Seq("film-reveal" -> "FILMREVEAL", "on-the-ball" -> "ONTHEBALL").foreach { case (slug, apiType) =>
+    "Trivia archive access" should s"allow $slug HTML and calendar data with both variants" in {
+      val items = Seq("film-reveal", "on-the-ball").map { key =>
+        PuzzleItem(key, key, key, "all", "primary", slug = Some(s"trivia-and-quizzes/$key"))
+      }
+      val provider = mock[PuzzlesLayoutProvider]
+      when(provider.getLayout()(any[ExecutionContext])).thenReturn(
+        Future.successful(
+          PuzzlesLayout(
+            Seq(
+              PuzzleContainer("trivia-and-quizzes", "Trivia & quizzes", content = PuzzleContent(Seq(items), Nil)),
+            ),
+          ),
+        ),
+      )
+      val renderer = mock[DotcomRenderingService]
+      when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+        .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+      val c = controller(provider, renderer)
+      val path = "/puzzles-and-games/trivia-and-quizzes"
+      val html = c.renderTriviaAndQuizzesArchive()(
+        request(s"$path/archive?puzzle=$slug", v2Participations),
+      )
+      status(html) shouldBe OK
+      val payload = ArgumentCaptor.forClass(classOf[JsValue])
+      verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+      (payload.getValue \ "archive" \ "selectedPuzzle" \ "puzzleType").as[String] shouldBe apiType
+      val data = c.archiveDataForMonth("trivia-and-quizzes", slug, 2020, 9)(
+        request(s"$path/archive-data/$slug/2020/9", v2Participations),
+      )
+      status(data) shouldBe OK
+      (contentAsJson(data) \ "selectedPuzzle" \ "puzzleType").as[String] shouldBe apiType
+      (contentAsJson(data) \ "items" \ 0 \ "url").as[String] shouldBe s"$path/$slug/2020-09-30"
+      val options = c.triviaArchiveDataOptions(slug, 2020, 9)(
+        request(s"$path/archive-data/$slug/2020/9", v2Participations),
+      )
+      status(options) shouldBe NO_CONTENT
+    }
+  }
+
+  Seq(
+    ("crosswords", "crossword", "quick"),
+    ("word-games", "word-wheel", "all"),
+    ("logic-puzzles", "sudoku", "easy"),
+  ).foreach { case (category, puzzleType, set) =>
+    "Existing archive data" should s"keep $category ungated and remove V2 choices before selecting puzzles" in {
+      val item = PuzzleItem("existing-puzzle", "Existing puzzle", puzzleType, set, "primary")
+      val choice = item.copy(id = "archive-existing", cardVariant = "archive")
+      val film = PuzzleItem("film-reveal", "Film reveal", "film-reveal", "all", "primary")
+      val content =
+        if (category == "crosswords")
+          PuzzleContent(Nil, Nil, archiveChoices = Some(Seq(film.copy(cardVariant = "archive"), choice)))
+        else PuzzleContent(Seq(Seq(film, item)), Nil)
+      val provider = mock[PuzzlesLayoutProvider]
+      when(provider.getLayout()(any[ExecutionContext])).thenReturn(
+        Future.successful(
+          PuzzlesLayout(
+            Seq(
+              PuzzleContainer(category, category, content = content),
+            ),
+          ),
+        ),
+      )
+      val c = controller(provider, mock[DotcomRenderingService])
+      val path = s"/puzzles-and-games/$category/archive-data"
+      val data = c.archiveData(category)(request(path, participations = ""))
+      status(data) shouldBe OK
+      (contentAsJson(data) \ "puzzles").as[Seq[JsValue]].map(value => (value \ "id").as[String]) shouldBe
+        Seq(if (category == "crosswords") choice.id else item.id)
+      val calendar = c.archiveDataForMonth(category, item.id, 2020, 9)(
+        request(s"$path/${item.id}/2020/9", participations = ""),
+      )
+      status(calendar) shouldBe OK
+      (contentAsJson(calendar) \ "selectedPuzzle" \ "puzzleType").as[String] should not be "FILMREVEAL"
+    }
+  }
+
+  /** Existing iframe pages retain v1 access; MovieGrid additionally requires cumulative v2. Crosswords keep their
+    * routes.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]
@@ -847,6 +1068,119 @@ import scala.concurrent.{ExecutionContext, Future}
     related.map(_.id) should be(Seq("crossword-mini", "word-wheel", "sudoku-easy"))
   }
 
+  Seq(
+    ("film-reveal", "FILMREVEAL", "Film reveal"),
+    ("on-the-ball", "ONTHEBALL", "On the ball"),
+  ).foreach { case (slug, puzzleType, title) =>
+    def jsonAction(c: PuzzlesPageController, date: String) =
+      if (slug == "film-reveal") c.renderFilmRevealJson(date) else c.renderOnTheBallJson(date)
+    def htmlAction(c: PuzzlesPageController, date: String) =
+      if (slug == "film-reveal") c.renderFilmReveal(date) else c.renderOnTheBall(date)
+    def archiveAction(c: PuzzlesPageController) =
+      if (slug == "film-reveal") c.redirectFilmRevealArchive() else c.redirectOnTheBallArchive()
+    val path = s"/puzzles-and-games/trivia-and-quizzes/$slug"
+    val date = "2026-09-26"
+
+    slug should "render HTML via the existing puzzle page renderer" in {
+      val renderer = stubbedPuzzlePageRenderer()
+      val provider = successfulProvider
+      val result = htmlAction(controller(provider, renderer), date)(request(s"$path/$date", v2Participations))
+      status(result) shouldBe OK
+      verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
+      verify(provider).getGameCommercialProperties(eqTo("trivia-and-quizzes"))(any[ExecutionContext])
+    }
+
+    it should "pass the exact API URL and page metadata to DCR without invented progress" in {
+      val api = mock[PuzzlesGameApi]
+      val gameUrl = s"https://provider.example/play?opaque=$slug&date=$date&token=api-value"
+      when(api.get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext]))
+        .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, Some(gameUrl)))))
+      val provider = successfulProvider
+      val result = jsonAction(controller(provider, mock[DotcomRenderingService], gameApi = api), date)(
+        request(s"$path/$date.json", v2Participations),
+      )
+      status(result) shouldBe OK
+      val json = contentAsJson(result)
+      (json \ "slug").as[String] shouldBe slug
+      (json \ "webTitle").as[String] shouldBe title
+      (json \ "instance" \ "title").as[String] shouldBe title
+      (json \ "instance" \ "puzzleDate").as[String] shouldBe date
+      (json \ "instance" \ "gameUrl").as[String] shouldBe gameUrl
+      (json \ "instance" \ "gameStatus").toOption shouldBe None
+      (json \ "instance" \ "progress").toOption shouldBe None
+      (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]].map(_.id) shouldBe
+        Seq(slug, if (slug == "film-reveal") "on-the-ball" else "film-reveal", "crossword-quick")
+      verify(api).get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext])
+      verify(provider).getGameCommercialProperties(eqTo("trivia-and-quizzes"))(any[ExecutionContext])
+    }
+
+    it should "redirect its bare URL to the selected trivia archive" in {
+      val api = mock[PuzzlesGameApi]
+      val result = archiveAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api))(
+        request(path, v2Participations),
+      )
+      status(result) shouldBe FOUND
+      redirectLocation(result) shouldBe Some(s"/puzzles-and-games/trivia-and-quizzes/archive?puzzle=$slug")
+      verifyNoInteractions(api)
+    }
+
+    it should "require cumulative v2 participation for HTML, JSON and archive redirects" in {
+      Seq(
+        "",
+        "puzzles-new-hub-v1:variant",
+        "puzzles-new-hub-v2:variant",
+        "puzzles-new-hub-v1:control,puzzles-new-hub-v2:variant",
+        "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:control",
+        "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:unknown",
+        "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant:extra",
+      ).foreach { participation =>
+        val api = mock[PuzzlesGameApi]
+        val renderer = mock[DotcomRenderingService]
+        val provider = mock[PuzzlesLayoutProvider]
+        val archiveApi = mock[PuzzlesArchiveApi]
+        val c = controller(provider, renderer, puzzlesArchiveApi = archiveApi, gameApi = api)
+        status(htmlAction(c, date)(request(s"$path/$date", participation))) shouldBe NOT_FOUND
+        status(jsonAction(c, date)(request(s"$path/$date.json", participation))) shouldBe NOT_FOUND
+        status(archiveAction(c)(request(path, participation))) shouldBe NOT_FOUND
+        verifyNoInteractions(api, archiveApi, provider, renderer)
+      }
+    }
+
+    it should "return 404 without a usable API game URL, never falling back to a vendor URL" in {
+      Seq(None, Some(""), Some("  ")).foreach { url =>
+        val api = mock[PuzzlesGameApi]
+        when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+          .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, url))))
+        val renderer = mock[DotcomRenderingService]
+        status(
+          htmlAction(controller(successfulProvider, renderer, gameApi = api), date)(
+            request(s"$path/$date", v2Participations),
+          ),
+        ) shouldBe NOT_FOUND
+        verifyNoInteractions(renderer)
+      }
+    }
+
+    it should "reject invalid dates before contacting the API" in {
+      val api = mock[PuzzlesGameApi]
+      val c = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
+      status(jsonAction(c, "2026-02-30")(request(s"$path/2026-02-30.json", v2Participations))) shouldBe NOT_FOUND
+      verifyNoInteractions(api)
+    }
+
+    it should "return an uncached 502 when the API fails" in {
+      val api = mock[PuzzlesGameApi]
+      when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+        .thenReturn(Future.failed(new RuntimeException("private upstream detail")))
+      val result = jsonAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api), date)(
+        request(s"$path/$date.json", v2Participations),
+      )
+      status(result) shouldBe BAD_GATEWAY
+      header("Cache-Control", result).get should include("no-cache")
+      contentAsString(result) should not include "private upstream detail"
+    }
+  }
+
   "Puzzle game lookup" should "map every supported slug to its API type and forward the returned URL" in {
     PuzzlesPageController.PuzzleTypesBySlug.foreach { case (slug, puzzleType) =>
       val api = mock[PuzzlesGameApi]
@@ -858,11 +1192,13 @@ import scala.concurrent.{ExecutionContext, Future}
         )
       val c = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
       val action = slug match {
-        case "word-wheel" => c.renderWordWheelJson(date.toString)
-        case "wordiply"   => c.renderWordiplyJson(date.toString)
-        case _            => c.renderSudokuJson(slug.stripPrefix("sudoku-"), date.toString)
+        case "word-wheel"  => c.renderWordWheelJson(date.toString)
+        case "wordiply"    => c.renderWordiplyJson(date.toString)
+        case "film-reveal" => c.renderFilmRevealJson(date.toString)
+        case "on-the-ball" => c.renderOnTheBallJson(date.toString)
+        case _             => c.renderSudokuJson(slug.stripPrefix("sudoku-"), date.toString)
       }
-      val result = action(request(s"/puzzles-and-games/test/$slug/$date.json"))
+      val result = action(request(s"/puzzles-and-games/test/$slug/$date.json", v2Participations))
       status(result) shouldBe OK
       (contentAsJson(result) \ "instance" \ "gameUrl").as[String] shouldBe gameUrl
       verify(api).get(eqTo(puzzleType), eqTo(date))(any[ExecutionContext])

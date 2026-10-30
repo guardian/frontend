@@ -383,6 +383,64 @@
 			}
 		},
 		{
+			"id": "trivia-and-quizzes",
+			"title": "Trivia & quizzes",
+			"variant": "standard",
+			"content": {
+				"items": [
+					[
+						{
+							"id": "film-reveal",
+							"title": "Film reveal",
+							"type": "film-reveal",
+							"set": "all",
+							"cardVariant": "primary",
+							"cadence": "Daily",
+							"slug": "trivia-and-quizzes/film-reveal",
+							"variant": "iframe-page",
+							"image": "https://i.guim.co.uk/img/uploads/2026/10/28/film-reveal-standard.png?width=440&dpr=2&s=none",
+							"imageAlt": "Film reveal illustration",
+							"backgroundColour": "#F3FBFB"
+						},
+						{
+							"id": "on-the-ball",
+							"title": "On the ball",
+							"type": "on-the-ball",
+							"set": "all",
+							"cardVariant": "primary",
+							"cadence": "Daily",
+							"slug": "trivia-and-quizzes/on-the-ball",
+							"variant": "iframe-page",
+							"image": "https://i.guim.co.uk/img/uploads/2026/10/28/on-the-ball-standard.png?width=440&dpr=2&s=none",
+							"imageAlt": "On the ball illustration",
+							"backgroundColour": "#F3FBFB"
+						}
+					]
+				],
+				"nestedContainers": [],
+				"archiveChoices": [
+					{
+						"id": "archive-film-reveal",
+						"title": "Film reveal",
+						"type": "film-reveal",
+						"set": "all",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=film-reveal",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-on-the-ball",
+						"title": "On the ball",
+						"type": "on-the-ball",
+						"set": "all",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=on-the-ball",
+						"variant": "archive-page"
+					}
+				]
+			}
+		},
+		{
 			"id": "puzzles-supporting",
 			"title": "",
 			"variant": "supporting",
