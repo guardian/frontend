@@ -55,6 +55,19 @@ Its `gameUrl` becomes `instance.gameUrl`; DCR preserves its path, puzzle ID and 
 parameters, adding reader context after hydration. This server request is anonymous so
 cached HTML never contains another reader's provider identity.
 
+After hydration, signed-in readers request
+`GET /puzzles-and-games/game/{slug}/{date}.json` with their Identity access token
+in `Authorization: Bearer ...` on the page's own origin. Frontend forwards that header and its server-side
+API key to `GET /game`. The browser receives the API's game data with
+`Cache-Control: no-store`; the endpoint also supports CORS preflights.
+DCR waits for this response before loading the iframe and preserves its `uid`.
+Signed-out readers use the anonymous URL already supplied in the page.
+
+The web router already forwards `/puzzles-and-games/` to applications. DCR uses a
+relative URL rather than `ajaxUrl`, so this flow needs no change to platform or
+the AJAX router. Deploy the frontend endpoint before the DCR consumer. Responses
+use frontend's standard `NoCache` headers (`private, no-store, no-cache`).
+
 Missing games or absent game URLs return 404. Upstream failures and invalid responses
 return an uncached 502. The existing `puzzles.api.url` configuration must point to the
 new API deployment that serves `/game`, `/archive` and `/progress/query`.
@@ -171,11 +184,11 @@ Puzzles API supports that type in `/game`. The API owns provider URLs and puzzle
 Configure web sponsorship in `applications/conf/puzzles-layout.json`, using edition IDs
 `UK`, `US`, `AU`, `INT` or `EUR`. Each location takes the same sponsor object:
 
-| Placement | JSON location (AU example) |
-| --- | --- |
-| Hub header | `sponsorship.AU` |
-| Directory section | `containers[].sponsorship.AU` on the relevant container |
-| Game category | `gameSponsorship.word-games.AU` or `gameSponsorship.logic-puzzles.AU` |
+| Placement         | JSON location (AU example)                                            |
+| ----------------- | --------------------------------------------------------------------- |
+| Hub header        | `sponsorship.AU`                                                      |
+| Directory section | `containers[].sponsorship.AU` on the relevant container               |
+| Game category     | `gameSponsorship.word-games.AU` or `gameSponsorship.logic-puzzles.AU` |
 
 Containers must be top-level `featured` or `standard` sections (including an omitted variant).
 Nested, `ad` and `supporting` sponsorship is rejected; empty or disabled sections remain hidden.
@@ -189,15 +202,15 @@ Insert an object with this shape at the chosen location. Example URLs are placeh
 
 ```json
 {
-    "name": "Example sponsor",
-    "label": "Supported by",
-    "sponsorUri": "https://example.com",
-    "aboutUri": "https://example.com/about",
-    "logo": {
-        "src": "https://example.com/logo.png",
-        "darkSrc": "https://example.com/logo-dark.png",
-        "aspectRatio": 2
-    }
+	"name": "Example sponsor",
+	"label": "Supported by",
+	"sponsorUri": "https://example.com",
+	"aboutUri": "https://example.com/about",
+	"logo": {
+		"src": "https://example.com/logo.png",
+		"darkSrc": "https://example.com/logo-dark.png",
+		"aspectRatio": 2
+	}
 }
 ```
 
@@ -210,12 +223,12 @@ and must be positive; frontend generates dimensions with height 100 and rounded 
 
 For each game category and edition:
 
-| Hub sponsor | Explicit game sponsor | Game result |
-| --- | --- | --- |
-| No | No | Unsponsored |
-| Yes | No | Unsponsored |
-| No | Yes | Game sponsor |
-| Yes | Yes | Hub sponsor |
+| Hub sponsor | Explicit game sponsor | Game result  |
+| ----------- | --------------------- | ------------ |
+| No          | No                    | Unsponsored  |
+| Yes         | No                    | Unsponsored  |
+| No          | Yes                   | Game sponsor |
+| Yes         | Yes                   | Hub sponsor  |
 
 There is no fallback across editions or categories. Container sponsorship is independent.
 The config-only provider resolves game branding without fetching hub cards or newsletters;
@@ -261,29 +274,29 @@ Bare URLs return a temporary redirect to the relevant `.../archive?puzzle=...` p
 
 This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 
-| Field          | Type   | Meaning                                                                                                                                                         |
-| -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`           | string | The page's canonical content id. Not Puzzle-Page-specific.                                                                                                      |
-| `slug`         | string | The puzzle type identifier DCR uses to look up its own `PuzzleConfig` entry (e.g. `"sudoku-easy"`, `"word-wheel"`). Always the flattened form, even for Sudoku. |
-| `webTitle`     | string | The page's `<title>`/web title.                                                                                                                                 |
-| `config`       | object | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific.                                                  |
-| `nav`          | object | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                     |
-| `pageFooter`   | object | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                   |
-| `canonicalUrl` | string | The canonical URL for this page (e.g. `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`).                                    |
-| `editionId`    | string | The edition (e.g. `UK`, `US`, `AU`) resolved from the request.                                                                                                  |
-| `instance`     | object | Per-instance data - see below.                                                                                                                                  |
-| `isAdFreeUser` | boolean | Whether the reader has an ad-free subscription. This suppresses ads, not sponsorship. |
-| `commercialProperties` | object | Resolved sponsorship by edition ID, using the existing article branding shape. Empty when there is no explicit game sponsorship; DCR also accepts an omitted field for backwards compatibility. |
+| Field                  | Type    | Meaning                                                                                                                                                                                         |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                   | string  | The page's canonical content id. Not Puzzle-Page-specific.                                                                                                                                      |
+| `slug`                 | string  | The puzzle type identifier DCR uses to look up its own `PuzzleConfig` entry (e.g. `"sudoku-easy"`, `"word-wheel"`). Always the flattened form, even for Sudoku.                                 |
+| `webTitle`             | string  | The page's `<title>`/web title.                                                                                                                                                                 |
+| `config`               | object  | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific.                                                                                  |
+| `nav`                  | object  | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                                                     |
+| `pageFooter`           | object  | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                                                   |
+| `canonicalUrl`         | string  | The canonical URL for this page (e.g. `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`).                                                                    |
+| `editionId`            | string  | The edition (e.g. `UK`, `US`, `AU`) resolved from the request.                                                                                                                                  |
+| `instance`             | object  | Per-instance data - see below.                                                                                                                                                                  |
+| `isAdFreeUser`         | boolean | Whether the reader has an ad-free subscription. This suppresses ads, not sponsorship.                                                                                                           |
+| `commercialProperties` | object  | Resolved sponsorship by edition ID, using the existing article branding shape. Empty when there is no explicit game sponsorship; DCR also accepts an omitted field for backwards compatibility. |
 
 `instance` fields (`PuzzlePageInstance`):
 
-| Field                     | Type             | Meaning                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`                   | string           | Display title for the instance (e.g. `"Sudoku (easy)"`).                                                                                                                                                                                                                                                                                                                                                 |
-| `puzzleDate` | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context. |
-| `gameUrl` | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
-| `moreFromPuzzlesAndGames` | array | Best-effort related puzzle cards; may be empty. |
-| `puzzlesSupporting` | object, optional | Useful links and an optional live newsletter. |
+| Field                     | Type             | Meaning                                                                        |
+| ------------------------- | ---------------- | ------------------------------------------------------------------------------ |
+| `title`                   | string           | Display title for the instance (e.g. `"Sudoku (easy)"`).                       |
+| `puzzleDate`              | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context.  |
+| `gameUrl`                 | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
+| `moreFromPuzzlesAndGames` | array            | Best-effort related puzzle cards; may be empty.                                |
+| `puzzlesSupporting`       | object, optional | Useful links and an optional live newsletter.                                  |
 
 ## Open questions / known limitations
 

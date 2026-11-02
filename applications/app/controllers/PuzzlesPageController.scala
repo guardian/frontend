@@ -103,6 +103,34 @@ class PuzzlesPageController(
     TinyResponse.noContent(Some("GET, OPTIONS"))
   }
 
+  /** Resolve the iframe URL with the browser's token; personalised URLs must never be cached. */
+  def puzzleGame(slug: String, date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val selection = for {
+        puzzleType <- PuzzlesPageController.PuzzleTypesBySlug.get(slug)
+        parsedDate <- Try(LocalDate.parse(date)).toOption
+      } yield puzzleType -> parsedDate
+
+      val result = selection match {
+        case None                           => Future.successful(NotFound)
+        case Some((puzzleType, parsedDate)) =>
+          puzzlesGameApi
+            .get(puzzleType, parsedDate, request.headers.get(AUTHORIZATION))
+            .map {
+              case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) => Ok(Json.toJson(game))
+              case _                                                  => NotFound
+            }
+            .recover {
+              case PuzzlesGameApiError(status) if status == 401 || status == 403 =>
+                Status(status)(Json.obj("message" -> "Not authorised"))
+              case NonFatal(_) => BadGateway(Json.obj("message" -> "Failed to retrieve puzzle"))
+            }
+      }
+      result.map(response => Cors(NoCache(response)))
+    }
+
+  def puzzleGameOptions(slug: String, date: String): Action[AnyContent] = puzzlesDataOptions()
+
   def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
@@ -379,7 +407,7 @@ class PuzzlesPageController(
       case None                           => notFound
       case Some((puzzleType, parsedDate)) =>
         puzzlesGameApi
-          .get(puzzleType, parsedDate)
+          .get(puzzleType, parsedDate, None)
           .flatMap {
             case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) =>
               PuzzleRecommendations
