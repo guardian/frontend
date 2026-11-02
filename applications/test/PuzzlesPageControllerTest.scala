@@ -6,6 +6,7 @@ import controllers.{
   PuzzlesApiItem,
   PuzzlesArchiveApi,
   PuzzlesGameApi,
+  PuzzlesGameApiError,
   PuzzlesLayoutProvider,
   PuzzlesNewsletters,
   PuzzlesPageController,
@@ -90,7 +91,7 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   private def successfulGameApi: PuzzlesGameApi = new PuzzlesGameApi {
-    override def get(puzzleType: String, date: LocalDate)(implicit
+    override def get(puzzleType: String, date: LocalDate, authorization: Option[String])(implicit
         ec: ExecutionContext,
     ): Future[Option[PuzzlesApiItem]] =
       Future.successful(
@@ -852,7 +853,7 @@ import scala.concurrent.{ExecutionContext, Future}
       val api = mock[PuzzlesGameApi]
       val date = LocalDate.of(2026, 9, 26)
       val gameUrl = "https://tg.amuselabs.com/guardian/date-picker?id=opaque-id&set=from-api&embed=1"
-      when(api.get(eqTo(puzzleType), eqTo(date))(any[ExecutionContext]))
+      when(api.get(eqTo(puzzleType), eqTo(date), eqTo(None))(any[ExecutionContext]))
         .thenReturn(
           Future.successful(Some(PuzzlesApiItem("opaque-id", puzzleType, date.toString, 0, None, Some(gameUrl)))),
         )
@@ -865,14 +866,15 @@ import scala.concurrent.{ExecutionContext, Future}
       val result = action(request(s"/puzzles-and-games/test/$slug/$date.json"))
       status(result) shouldBe OK
       (contentAsJson(result) \ "instance" \ "gameUrl").as[String] shouldBe gameUrl
-      verify(api).get(eqTo(puzzleType), eqTo(date))(any[ExecutionContext])
+      verify(api).get(eqTo(puzzleType), eqTo(date), eqTo(None))(any[ExecutionContext])
     }
   }
 
   it should "return 404 for a missing game or a game without a playable URL" in {
     Seq(None, Some(PuzzlesApiItem("id", "WORDWHEEL", "2026-09-26", 0, None, None))).foreach { game =>
       val api = mock[PuzzlesGameApi]
-      when(api.get(any[String], any[LocalDate])(any[ExecutionContext])).thenReturn(Future.successful(game))
+      when(api.get(any[String], any[LocalDate], any[Option[String]])(any[ExecutionContext]))
+        .thenReturn(Future.successful(game))
       val renderer = mock[DotcomRenderingService]
       val result = controller(successfulProvider, renderer, gameApi = api)
         .renderWordWheel("2026-09-26")(request("/puzzles-and-games/word-games/word-wheel/2026-09-26"))
@@ -891,13 +893,67 @@ import scala.concurrent.{ExecutionContext, Future}
 
   it should "return an uncached 502 when game lookup fails" in {
     val api = mock[PuzzlesGameApi]
-    when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+    when(api.get(any[String], any[LocalDate], any[Option[String]])(any[ExecutionContext]))
       .thenReturn(Future.failed(new RuntimeException("secret")))
     val result = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
       .renderWordWheelJson("2026-09-26")(request("/puzzles-and-games/word-games/word-wheel/2026-09-26.json"))
     status(result) shouldBe BAD_GATEWAY
     contentAsString(result) should not include "secret"
     header("Cache-Control", result).get should include("no-cache")
+  }
+
+  "puzzleGame" should "forward the token and return the API URL without caching personalised data" in {
+    val api = mock[PuzzlesGameApi]
+    val date = LocalDate.of(2026, 9, 26)
+    val gameUrl = "https://tg.amuselabs.com/guardian/date-picker?id=opaque&uid=api-user"
+    when(api.get(eqTo("WORDWHEEL"), eqTo(date), eqTo(Some("Bearer reader-token")))(any[ExecutionContext]))
+      .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", "WORDWHEEL", date.toString, 0, None, Some(gameUrl)))))
+    val result = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
+      .puzzleGame("word-wheel", date.toString)(
+        request(s"/puzzles-and-games/game/word-wheel/$date.json")
+          .withHeaders(Headers("Authorization" -> "Bearer reader-token", "Origin" -> allowedOrigin)),
+      )
+    status(result) shouldBe OK
+    (contentAsJson(result) \ "gameUrl").as[String] shouldBe gameUrl
+    header("Cache-Control", result) shouldBe Some("no-store")
+    header("Access-Control-Allow-Origin", result) shouldBe Some(allowedOrigin)
+    contentAsString(result) should not include "reader-token"
+    verify(api).get(eqTo("WORDWHEEL"), eqTo(date), eqTo(Some("Bearer reader-token")))(any[ExecutionContext])
+  }
+
+  it should "support anonymous lookups" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .puzzleGame("word-wheel", "2026-09-26")(request("/puzzles-and-games/game/word-wheel/2026-09-26.json"))
+    status(result) shouldBe OK
+    header("Cache-Control", result) shouldBe Some("no-store")
+  }
+
+  it should "reject unknown slugs and impossible dates without calling the API" in {
+    Seq("unknown" -> "2026-09-26", "word-wheel" -> "2026-02-30").foreach { case (slug, date) =>
+      val api = mock[PuzzlesGameApi]
+      val result = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
+        .puzzleGame(slug, date)(request(s"/puzzles-and-games/game/$slug/$date.json"))
+      status(result) shouldBe NOT_FOUND
+      header("Cache-Control", result) shouldBe Some("no-store")
+      verifyNoInteractions(api)
+    }
+  }
+
+  it should "return uncached missing-game, authentication and upstream errors" in {
+    Seq(
+      Future.successful(None) -> NOT_FOUND,
+      Future.failed(PuzzlesGameApiError(401)) -> UNAUTHORIZED,
+      Future.failed(PuzzlesGameApiError(403)) -> FORBIDDEN,
+      Future.failed(new RuntimeException("secret")) -> BAD_GATEWAY,
+    ).foreach { case (response, expectedStatus) =>
+      val api = mock[PuzzlesGameApi]
+      when(api.get(any[String], any[LocalDate], any[Option[String]])(any[ExecutionContext])).thenReturn(response)
+      val result = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
+        .puzzleGame("word-wheel", "2026-09-26")(request("/puzzles-and-games/game/word-wheel/2026-09-26.json"))
+      status(result) shouldBe expectedStatus
+      header("Cache-Control", result) shouldBe Some("no-store")
+      contentAsString(result) should not include "secret"
+    }
   }
 
   "redirectWordiplyArchive" should "temporarily redirect to the word-games archive, filtered to wordiply" in {
