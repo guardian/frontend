@@ -22,7 +22,7 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     raw.withAttrs(ABTests.decorateRequest(abTestHeader)(raw).attrs)
   }
 
-  "Puzzles sitemap" should "serve only the canonical hub and three archive URLs to the experiment variant" in {
+  "Puzzles sitemap" should "serve only the canonical hub and four archive URLs to the experiment variant" in {
     val result = controller.renderPuzzlesSiteMap()(request("puzzles-new-hub-v1:variant"))
 
     status(result) shouldBe OK
@@ -36,6 +36,7 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
       "https://www.theguardian.com/puzzles-and-games/crosswords/archive",
       "https://www.theguardian.com/puzzles-and-games/logic-puzzles/archive",
       "https://www.theguardian.com/puzzles-and-games/word-games/archive",
+      "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive",
     )
     verifyNoInteractions(job)
   }
