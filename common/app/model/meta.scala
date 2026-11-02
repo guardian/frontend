@@ -76,6 +76,7 @@ object Fields {
       lang = apiContent.fields.flatMap(_.lang),
       showAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks),
       showTableOfContents = apiContent.fields.flatMap(_.showTableOfContents),
+      livePricingEnabled = apiContent.fields.flatMap(_.livePricingEnabled),
     )
   }
 
@@ -114,6 +115,7 @@ final case class Fields(
     lang: Option[String],
     showAffiliateLinks: Option[Boolean],
     showTableOfContents: Option[Boolean],
+    livePricingEnabled: Option[Boolean] = None,
 ) {
 
   lazy val shortUrlId = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
@@ -215,7 +217,7 @@ object MetaData {
       contentType = DotcomContentType(apiContent),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
-        else if (AffiliateProductLivePricing.isEnabledForPage(url)) CacheTime.LivePricing
+        else if (AffiliateProductLivePricing.isEnabledForPage(fields.livePricingEnabled)) CacheTime.LivePricing
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated

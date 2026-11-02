@@ -1,6 +1,7 @@
 package model.dotcomrendering
 
 import common.{CanonicalLink, Edition}
+import common.commercial.EditionCommercialProperties
 import model.Page
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
@@ -59,6 +60,7 @@ case class DotcomPuzzlePageRenderingDataModel(
       * gap this field closes, coordinated with that DCR-side change.
       */
     isAdFreeUser: Boolean,
+    commercialProperties: Map[String, EditionCommercialProperties] = Map.empty,
 )
 
 object DotcomPuzzlePageRenderingDataModel {

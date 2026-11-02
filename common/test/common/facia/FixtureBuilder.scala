@@ -55,6 +55,7 @@ object FixtureBuilder {
           showMainVideo = false,
           imageSlideshowReplace = false,
           videoReplace = false,
+          multimediaSlideshowReplace = false,
         ),
       ),
       showKickerTag = false,
@@ -116,7 +117,6 @@ object FixtureBuilder {
 
   def mkDisplay(): PressedDisplaySettings =
     PressedDisplaySettings(
-      isBoosted = false,
       boostLevel = Some(BoostLevel.Default),
       isImmersive = Some(false),
       showBoostedHeadline = false,
@@ -138,6 +138,7 @@ object FixtureBuilder {
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
       mediaAtom = None,
+      multimediaSlideshow = None,
     )
   }
 

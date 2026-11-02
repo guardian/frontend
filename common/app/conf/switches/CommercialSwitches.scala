@@ -196,6 +196,16 @@ trait CommercialSwitchGroup {
     exposeClientSide = true,
     highImpact = false,
   )
+  val DoubleVerifySwitch = Switch(
+    group = Commercial,
+    name = "double-verify",
+    description = "If this switch is on, then DoubleVerify ad filtering is enabled",
+    owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+    highImpact = false,
+  )
 }
 
 trait CommercialHeaderBiddingSwitchGroup {

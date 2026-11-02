@@ -5,7 +5,6 @@ import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.CustomSubnav
 
 final case class PressedDisplaySettings(
-    isBoosted: Boolean,
     boostLevel: Option[BoostLevel],
     isImmersive: Option[Boolean],
     showBoostedHeadline: Boolean,
@@ -22,7 +21,6 @@ object PressedDisplaySettings {
     val contentProperties = PressedProperties.getProperties(content)
     PressedDisplaySettings(
       imageHide = shouldSuppressImages || contentProperties.imageHide,
-      isBoosted = FaciaContentUtils.isBoosted(content),
       boostLevel = Some(FaciaContentUtils.boostLevel(content)),
       isImmersive = Some(FaciaContentUtils.isImmersive(content)),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),

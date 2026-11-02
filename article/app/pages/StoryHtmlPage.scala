@@ -72,7 +72,6 @@ object StoryHtmlPage {
         header,
         mainContent(),
         content,
-        twentyFourSevenTraining(),
         footer(),
         message(),
         inlineJSNonBlocking(),
