@@ -902,6 +902,22 @@ import scala.concurrent.{ExecutionContext, Future}
     header("Cache-Control", result).get should include("no-cache")
   }
 
+  "puzzleGameOptions" should "allow authenticated GET preflights from approved origins" in {
+    val result = controller(successfulProvider, mock[DotcomRenderingService])
+      .puzzleGameOptions("sudoku-easy", "2026-11-02")(
+        FakeRequest(OPTIONS, "/puzzles-and-games/game/sudoku-easy/2026-11-02.json").withHeaders(
+          "Origin" -> allowedOrigin,
+          "Access-Control-Request-Method" -> "GET",
+          "Access-Control-Request-Headers" -> "authorization, cache-control",
+        ),
+      )
+    status(result) shouldBe NO_CONTENT
+    header("Access-Control-Allow-Origin", result) shouldBe Some(allowedOrigin)
+    header("Access-Control-Allow-Methods", result) shouldBe Some("GET, OPTIONS")
+    header("Access-Control-Allow-Headers", result).get should include("authorization")
+    header("Cache-Control", result) shouldBe Some("private, no-store, no-cache")
+  }
+
   "puzzleGame" should "forward the token and return the API URL without caching personalised data" in {
     val api = mock[PuzzlesGameApi]
     val date = LocalDate.of(2026, 9, 26)
@@ -915,7 +931,7 @@ import scala.concurrent.{ExecutionContext, Future}
       )
     status(result) shouldBe OK
     (contentAsJson(result) \ "gameUrl").as[String] shouldBe gameUrl
-    header("Cache-Control", result) shouldBe Some("no-store")
+    header("Cache-Control", result) shouldBe Some("private, no-store, no-cache")
     header("Access-Control-Allow-Origin", result) shouldBe Some(allowedOrigin)
     contentAsString(result) should not include "reader-token"
     verify(api).get(eqTo("WORDWHEEL"), eqTo(date), eqTo(Some("Bearer reader-token")))(any[ExecutionContext])
@@ -925,7 +941,7 @@ import scala.concurrent.{ExecutionContext, Future}
     val result = controller(successfulProvider, mock[DotcomRenderingService])
       .puzzleGame("word-wheel", "2026-09-26")(request("/puzzles-and-games/game/word-wheel/2026-09-26.json"))
     status(result) shouldBe OK
-    header("Cache-Control", result) shouldBe Some("no-store")
+    header("Cache-Control", result) shouldBe Some("private, no-store, no-cache")
   }
 
   it should "reject unknown slugs and impossible dates without calling the API" in {
@@ -934,7 +950,7 @@ import scala.concurrent.{ExecutionContext, Future}
       val result = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
         .puzzleGame(slug, date)(request(s"/puzzles-and-games/game/$slug/$date.json"))
       status(result) shouldBe NOT_FOUND
-      header("Cache-Control", result) shouldBe Some("no-store")
+      header("Cache-Control", result) shouldBe Some("private, no-store, no-cache")
       verifyNoInteractions(api)
     }
   }
@@ -951,7 +967,7 @@ import scala.concurrent.{ExecutionContext, Future}
       val result = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
         .puzzleGame("word-wheel", "2026-09-26")(request("/puzzles-and-games/game/word-wheel/2026-09-26.json"))
       status(result) shouldBe expectedStatus
-      header("Cache-Control", result) shouldBe Some("no-store")
+      header("Cache-Control", result) shouldBe Some("private, no-store, no-cache")
       contentAsString(result) should not include "secret"
     }
   }

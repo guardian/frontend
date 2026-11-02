@@ -126,7 +126,7 @@ class PuzzlesPageController(
               case NonFatal(_) => BadGateway(Json.obj("message" -> "Failed to retrieve puzzle"))
             }
       }
-      result.map(response => Cors(response.withHeaders(CACHE_CONTROL -> "no-store")))
+      result.map(response => Cors(NoCache(response)))
     }
 
   def puzzleGameOptions(slug: String, date: String): Action[AnyContent] = puzzlesDataOptions()
