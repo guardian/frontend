@@ -667,7 +667,7 @@ import scala.concurrent.{ExecutionContext, Future}
     "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:unknown",
     "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant:extra",
   ).foreach { participations =>
-    "Trivia archive access" should s"deny HTML, data and preflights without backend calls: $participations" in {
+    "Trivia archive access" should s"deny HTML without backend calls: $participations" in {
       val provider = mock[PuzzlesLayoutProvider]
       val renderer = mock[DotcomRenderingService]
       val archiveApi = mock[PuzzlesArchiveApi]
@@ -675,22 +675,68 @@ import scala.concurrent.{ExecutionContext, Future}
       val c = controller(provider, renderer, puzzlesArchiveApi = archiveApi, gameApi = gameApi)
       val path = "/puzzles-and-games/trivia-and-quizzes"
       status(c.renderTriviaAndQuizzesArchive()(request(s"$path/archive", participations))) shouldBe NOT_FOUND
-      status(c.archiveData("trivia-and-quizzes")(request(s"$path/archive-data", participations))) shouldBe NOT_FOUND
-      status(
-        c.archiveDataForMonth("trivia-and-quizzes", "film-reveal", 2020, 9)(
-          request(s"$path/archive-data/film-reveal/2020/9", participations),
+      val options = c.triviaArchiveDataOptions("film-reveal", 2020, 9)(
+        request(s"$path/archive-data/film-reveal/2020/9", participations).withHeaders(
+          Headers(
+            "Origin" -> allowedOrigin,
+            "Access-Control-Request-Method" -> "GET",
+            "Access-Control-Request-Headers" -> "authorization",
+          ),
         ),
-      ) shouldBe NOT_FOUND
-      status(
-        c.triviaArchiveDataOptions("film-reveal", 2020, 9)(
-          request(s"$path/archive-data/film-reveal/2020/9", participations),
-        ),
-      ) shouldBe NOT_FOUND
+      )
+      status(options) shouldBe NO_CONTENT
+      header("Access-Control-Allow-Origin", options) should contain(allowedOrigin)
+      header("Cache-Control", options) should contain("private, no-store, no-cache")
       verifyNoInteractions(provider, renderer, archiveApi, gameApi)
     }
   }
 
   Seq("film-reveal" -> "FILMREVEAL", "on-the-ball" -> "ONTHEBALL").foreach { case (slug, apiType) =>
+    "Trivia archive data" should s"refresh authenticated $slug progress without experiment cookies" in {
+      val items = Seq("film-reveal", "on-the-ball").map { key =>
+        PuzzleItem(key, key, key, "all", "primary", slug = Some(s"trivia-and-quizzes/$key"))
+      }
+      val provider = mock[PuzzlesLayoutProvider]
+      when(provider.getLayout()(any[ExecutionContext])).thenReturn(
+        Future.successful(
+          PuzzlesLayout(
+            Seq(PuzzleContainer("trivia-and-quizzes", "Trivia & quizzes", content = PuzzleContent(Seq(items), Nil))),
+          ),
+        ),
+      )
+      val archiveApi = mock[PuzzlesArchiveApi]
+      when(archiveApi.get(any[LocalDate], any[LocalDate], any[String], any[Option[String]])(any[ExecutionContext]))
+        .thenReturn(
+          Future.successful(
+            Seq(PuzzlesApiItem("opaque", apiType, "2020-09-30T00:00:00Z", 100, None, None, Some("completed"))),
+          ),
+        )
+      val c = controller(provider, mock[DotcomRenderingService], puzzlesArchiveApi = archiveApi)
+      val path = "/puzzles-and-games/trivia-and-quizzes/archive-data"
+      val data = c.archiveDataForMonth("trivia-and-quizzes", slug, 2020, 9)(
+        request(s"$path/$slug/2020/9", participations = "").withHeaders(
+          Headers(
+            "Origin" -> allowedOrigin,
+            "Authorization" -> "Bearer access-token",
+          ),
+        ),
+      )
+      status(data) shouldBe OK
+      header("Cache-Control", data) should contain("private, no-store, no-cache")
+      header("Access-Control-Allow-Origin", data) should contain(allowedOrigin)
+      (contentAsJson(data) \ "selectedPuzzle" \ "puzzleType").as[String] shouldBe apiType
+      (contentAsJson(data) \ "items" \ 0 \ "gameStatus").as[String] shouldBe "completed"
+      verify(archiveApi, times(2))
+        .get(any[LocalDate], any[LocalDate], eqTo(apiType), eqTo(Some("Bearer access-token")))(any[ExecutionContext])
+
+      val legacyData = c.archiveData("trivia-and-quizzes")(
+        request(s"$path?puzzle=$slug&year=2020&month=9", participations = ""),
+      )
+      status(legacyData) shouldBe OK
+      header("Cache-Control", legacyData) should contain("private, no-store, no-cache")
+      (contentAsJson(legacyData) \ "selectedPuzzle" \ "puzzleType").as[String] shouldBe apiType
+    }
+
     "Trivia archive access" should s"allow $slug HTML and calendar data with both variants" in {
       val items = Seq("film-reveal", "on-the-ball").map { key =>
         PuzzleItem(key, key, key, "all", "primary", slug = Some(s"trivia-and-quizzes/$key"))
@@ -1090,11 +1136,12 @@ import scala.concurrent.{ExecutionContext, Future}
       verify(provider).getGameCommercialProperties(eqTo("trivia-and-quizzes"))(any[ExecutionContext])
     }
 
-    it should "pass the exact API URL and page metadata to DCR without invented progress" in {
+    it should "pass the exact API URL and progress identity to DCR without invented progress" in {
       val api = mock[PuzzlesGameApi]
       val gameUrl = s"https://provider.example/play?opaque=$slug&date=$date&token=api-value"
+      val publishDate = s"${date}T00:00:00Z"
       when(api.get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext]))
-        .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, Some(gameUrl)))))
+        .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, publishDate, 0, None, Some(gameUrl)))))
       val provider = successfulProvider
       val result = jsonAction(controller(provider, mock[DotcomRenderingService], gameApi = api), date)(
         request(s"$path/$date.json", v2Participations),
@@ -1106,6 +1153,9 @@ import scala.concurrent.{ExecutionContext, Future}
       (json \ "instance" \ "title").as[String] shouldBe title
       (json \ "instance" \ "puzzleDate").as[String] shouldBe date
       (json \ "instance" \ "gameUrl").as[String] shouldBe gameUrl
+      (json \ "instance" \ "progressIdentity" \ "puzzleId").as[String] shouldBe "opaque"
+      (json \ "instance" \ "progressIdentity" \ "puzzleType").as[String] shouldBe puzzleType
+      (json \ "instance" \ "progressIdentity" \ "publishDate").as[String] shouldBe publishDate
       (json \ "instance" \ "gameStatus").toOption shouldBe None
       (json \ "instance" \ "progress").toOption shouldBe None
       (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]].map(_.id) shouldBe

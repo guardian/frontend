@@ -121,11 +121,17 @@ framework, `common/app/ab/ABTests.scala`).
 Film reveal, On the ball and the Trivia & quizzes hub container and archive additionally
 require the existing cumulative `ab.PuzzlesHubV2Experiment`: both
 `puzzles-new-hub-v1:variant` and `puzzles-new-hub-v2:variant`. This covers dated HTML/JSON,
-bare redirects and trivia archive HTML/data; denied requests never call the game/archive
-backends. Filtering covers featured/nested cards and archive choices before archive
-selection. Recommendations omit these games without cumulative v2 participation.
-Other v1 surfaces, including the intentionally ungated existing archive data endpoints,
-are unchanged. Both helpers preserve the local development bypass.
+bare redirects and trivia archive HTML; denied page requests never call the game/archive
+backends. Filtering covers featured/nested cards and existing archive choices before
+archive selection. Recommendations omit these games without cumulative v2 participation.
+
+All archive JSON endpoints and their CORS preflights remain ungated and uncached,
+including trivia. DCR fetches these through `config.page.ajaxUrl` to avoid the page-host
+CDN cache when refreshing a reader's progress; that host does not receive the page's
+experiment cookie. The trivia data builder therefore selects from the complete trivia
+layout, while existing categories keep their V2 filtering. Reader-specific progress is
+still resolved from the Authorization header, never from an experiment cookie.
+Both experiment helpers preserve the local development bypass.
 
 ### The date path segment
 
@@ -291,6 +297,7 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 | `title`                   | string           | Display title for the instance (e.g. `"Sudoku (easy)"`).                                                                                                                                                                                                                                                                                                                                                 |
 | `puzzleDate` | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context. |
 | `gameUrl` | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
+| `progressIdentity` | object, optional | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL. |
 | `moreFromPuzzlesAndGames` | array | Best-effort related puzzle cards; may be empty. |
 | `puzzlesSupporting` | object, optional | Useful links and an optional live newsletter. |
 

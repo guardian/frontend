@@ -8,6 +8,7 @@ import model.dotcomrendering.{
   DotcomPuzzlePageRenderingDataModel,
   DotcomPuzzlesPageRenderingDataModel,
   PuzzlePageInstance,
+  PuzzleProgressIdentity,
 }
 import model.{ApplicationContext, CacheTime, Cached, Cors, NoCache, TinyResponse}
 import play.api.libs.ws.WSClient
@@ -130,10 +131,7 @@ class PuzzlesPageController(
   def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
   def triviaArchiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] =
-    Action.async { implicit request =>
-      if (!PuzzlesHubV2Experiment.isEnabled) notFound
-      else Future.successful(TinyResponse.noContent(Some("GET, OPTIONS")))
-    }
+    archiveDataOptions(puzzle, year, month)
 
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
@@ -159,36 +157,31 @@ class PuzzlesPageController(
 
   def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!archiveEnabled(category)) notFound
-      else
-        buildArchive(category, authorization = request.headers.get("Authorization"))
-          .map { case (_, archive) =>
-            NoCache(Ok(Json.toJson(archive)))
-          }
-          .recoverWith { case _: NoSuchElementException => notFound }
+      buildArchive(category, authorization = request.headers.get("Authorization"))
+        .map { case (_, archive) =>
+          NoCache(Ok(Json.toJson(archive)))
+        }
+        .recoverWith { case _: NoSuchElementException => notFound }
     }
 
   // Fastly strips unrecognised query parameters. Calendar requests must carry
   // their selection in the path so that CODE/PROD receive the requested month.
   def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      val result =
-        if (!archiveEnabled(category)) notFound
-        else
-          Try(YearMonth.of(year, month)).toOption match {
-            case None                 => Future.successful(BadRequest)
-            case Some(requestedMonth) =>
-              buildArchive(
-                category,
-                Some(puzzle),
-                Some(requestedMonth),
-                request.headers.get("Authorization"),
-              )
-                .map { case (_, archive) =>
-                  Ok(Json.toJson(archive))
-                }
-                .recoverWith { case _: NoSuchElementException => notFound }
-          }
+      val result = Try(YearMonth.of(year, month)).toOption match {
+        case None                 => Future.successful(BadRequest)
+        case Some(requestedMonth) =>
+          buildArchive(
+            category,
+            Some(puzzle),
+            Some(requestedMonth),
+            request.headers.get("Authorization"),
+          )
+            .map { case (_, archive) =>
+              Ok(Json.toJson(archive))
+            }
+            .recoverWith { case _: NoSuchElementException => notFound }
+      }
       result.map(response => Cors(NoCache(response)))
     }
 
@@ -220,7 +213,9 @@ class PuzzlesPageController(
     val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
 
     puzzlesLayoutProvider.getLayout().flatMap { fullLayout =>
-      val layout = hubLayout(fullLayout)
+      // The uncached AJAX host does not receive the page's experiment cookie.
+      // Trivia HTML access is gated before reaching this shared data builder.
+      val layout = if (category == PuzzlesPageController.TriviaAndQuizzesGroup) fullLayout else hubLayout(fullLayout)
       PuzzlesArchiveBuilder.select(
         layout,
         category,
@@ -494,6 +489,7 @@ class PuzzlesPageController(
                     title = webTitle,
                     puzzleDate = Some(date),
                     gameUrl = game.gameUrl,
+                    progressIdentity = Some(PuzzleProgressIdentity(game.puzzleId, game.puzzleType, game.publishDate)),
                     moreFromPuzzlesAndGames = recommendations,
                     puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = PuzzlesNewsletters.GameLinks),
                   )

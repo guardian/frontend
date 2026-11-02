@@ -43,7 +43,7 @@ import org.scalatest.matchers.should.Matchers
     }
   }
 
-  it should "use the gated trivia archive preflight action" in {
+  it should "expose the trivia archive preflight action" in {
     val route = controllers.routes.PuzzlesPageController.triviaArchiveDataOptions("film-reveal", 2020, 9)
     route.method shouldBe "OPTIONS"
     route.url shouldBe "/puzzles-and-games/trivia-and-quizzes/archive-data/film-reveal/2020/9"
