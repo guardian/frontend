@@ -1,7 +1,6 @@
 package services
 
 import app.LifecycleComponent
-import com.gu.facia.api.CustomSubnavService
 import com.gu.facia.api.models.PublicationStatus
 import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
 import com.gu.facia.client.ApiClient
@@ -27,6 +26,12 @@ class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
   def isLoaded(): Boolean = subnavConfigBox.get().isDefined
 
   def getSubnavConfig(): Option[CustomSubnavConfig] = subnavConfigBox.get()
+
+  def getSubnavByUrl(subnavUrl: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
+    getSubnavConfig().flatMap { config =>
+      CustomSubnavService.getSubnavByUrl(config, subnavUrl, status)
+    }
+  }
 
   /** Look up the custom subnav targeted at the given front, if any. */
   def getSubnavForFront(frontId: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {

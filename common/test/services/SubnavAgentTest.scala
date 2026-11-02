@@ -21,10 +21,10 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  private def subnav(id: String, pages: List[TargetedPage]): CustomSubnav =
+  private def subnav(id: String, pages: List[TargetedPage], url: Option[String] = None): CustomSubnav =
     CustomSubnav(
       id = id,
-      header = CustomSubnavHeader(headerText = "subnav 1", dotcomPath = None, copy = "copy"),
+      header = CustomSubnavHeader(headerText = "subnav 1", dotcomPath = url, copy = "copy"),
       format = CustomSubnavFormat.Large,
       links = Nil,
       pages = pages,
@@ -61,10 +61,29 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
     Content.make(apiContent)
   }
 
-  private def agentWith(config: CustomSubnavConfig): SubnavAgent =
-    new SubnavAgent(ApplicationIdentity("test")) {
+  private def agentWith(
+      config: CustomSubnavConfig,
+      appIdentity: ApplicationIdentity = ApplicationIdentity("test"),
+  ): SubnavAgent =
+    new SubnavAgent(appIdentity) {
       override def getSubnavConfig(): Option[CustomSubnavConfig] = Some(config)
     }
+
+  "getSubnavByUrl" should "return None when the config has not loaded" in {
+    new SubnavAgent(ApplicationIdentity("test")).getSubnavByUrl("/missing") shouldBe None
+  }
+
+  it should "use live data by default and draft data in preview" in {
+    val live = subnav("live", Nil, Some("/sport"))
+    val draft = subnav("draft", Nil, Some("/sport"))
+    val config = CustomSubnavConfig(live = List(live), draft = List(draft))
+
+    agentWith(config).getSubnavByUrl("/sport") shouldBe Some(live)
+    agentWith(config).getSubnavByUrl("/sport", Draft) shouldBe Some(draft)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavByUrl("/sport") shouldBe Some(draft)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavByUrl("/sport", Live) shouldBe Some(live)
+    agentWith(config).getSubnavByUrl("/missing") shouldBe None
+  }
 
   "getSubnavForContent" should "return None when there is no config" in {
     val agent = new SubnavAgent(ApplicationIdentity("test")) {

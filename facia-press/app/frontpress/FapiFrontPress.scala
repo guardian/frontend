@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.model.{ItemQuery, SearchQuery}
 import com.gu.facia.api.contentapi.ContentApi.{AdjustItemQuery, AdjustSearchQuery}
 import com.gu.facia.api.models.{Collection, Front}
+import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
 import com.gu.facia.api.{FAPI, Response}
 import com.gu.facia.client.ApiClient
 import com.gu.facia.client.models.{Breaking, Canonical, ConfigJson, Metadata, Special}
@@ -15,7 +16,7 @@ import conf.Configuration
 import conf.switches.Switches
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi._
-import services.{ConfigAgent, NewsletterService, S3FrontsApi}
+import services.{ConfigAgent, NewsletterService, S3FrontsApi, SubnavAgent}
 import services.fronts.FrontsApi
 import services.eventgraphic.EventGraphicService
 import model._
@@ -34,6 +35,7 @@ class LiveFapiFrontPress(
     val capiClientForFrontsSeo: ContentApiClient,
     val newsletterService: NewsletterService,
     val eventGraphicService: EventGraphicService,
+    val subnavAgent: SubnavAgent,
 )(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
@@ -48,7 +50,7 @@ class LiveFapiFrontPress(
     apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
   )
 
-  implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
+  implicit lazy val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   override def collectionContentWithSnaps(
       collection: Collection,
@@ -57,9 +59,13 @@ class LiveFapiFrontPress(
   ): Response[List[PressedContent]] =
     FAPI
       .liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
-      .map(
-        _.map((item) =>
-          PressedContent.make(item, collection.collectionConfig.displayHints.flatMap(_.suppressImages).getOrElse(false)),
+      .map(items =>
+        MiniNavContentPressing.pressContents(
+          items,
+          collection.live,
+          collection.collectionConfig.displayHints.flatMap(_.suppressImages).getOrElse(false),
+          Live,
+          subnavAgent,
         ),
       )
 }
@@ -69,6 +75,7 @@ class DraftFapiFrontPress(
     val capiClientForFrontsSeo: ContentApiClient,
     val newsletterService: NewsletterService,
     val eventGraphicService: EventGraphicService,
+    val subnavAgent: SubnavAgent,
 )(implicit
     ec: ExecutionContext,
 ) extends FapiFrontPress {
@@ -81,7 +88,7 @@ class DraftFapiFrontPress(
     apiKey = Configuration.contentApi.key.getOrElse("facia-press"),
   )
 
-  implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
+  implicit lazy val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
   override def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit =
     S3FrontsApi.putDraftFapiPressedJson(path, json, pressedType)
@@ -94,9 +101,13 @@ class DraftFapiFrontPress(
   ): Response[List[PressedContent]] =
     FAPI
       .draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery)
-      .map(
-        _.map((item) =>
-          PressedContent.make(item, collection.collectionConfig.displayHints.flatMap(_.suppressImages).getOrElse(false)),
+      .map(items =>
+        MiniNavContentPressing.pressContents(
+          items,
+          collection.draft.getOrElse(collection.live),
+          collection.collectionConfig.displayHints.flatMap(_.suppressImages).getOrElse(false),
+          Draft,
+          subnavAgent,
         ),
       )
 }
@@ -219,6 +230,7 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   val wsClient: WSClient
   val newsletterService: NewsletterService
   val eventGraphicService: EventGraphicService
+  val subnavAgent: SubnavAgent
   def putPressedJson(path: String, json: String, pressedType: PressedPageType): Unit
   def isLiveContent: Boolean
 
@@ -437,7 +449,15 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
   )(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
     FAPI
       .getTreatsForCollection(collection, searchApiQuery, itemApiQuery)
-      .map(_.map((item) => PressedContent.make(item, false)))
+      .map(items =>
+        MiniNavContentPressing.pressContents(
+          items,
+          collection.treats,
+          suppressImages = false,
+          status = if (isLiveContent) Live else Draft,
+          subnavAgent = subnavAgent,
+        ),
+      )
   }
 
   private def getBackfill(
