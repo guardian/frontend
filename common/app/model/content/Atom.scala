@@ -14,6 +14,7 @@ import com.gu.contentatom.thrift.{
   ImageAsset => AtomApiImageAsset,
   atom => atomapi,
 }
+import com.gu.facia.api.models.{FaciaMultimediaSlideshow, FaciaSlideImage, FaciaSlideVideo}
 import com.madgag.scala.collection.decorators.MapDecorator
 import enumeratum._
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
@@ -346,6 +347,51 @@ object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[Med
   case object Dailymotion extends MediaAssetPlatform
   case object Mainstream extends MediaAssetPlatform
   case object Url extends MediaAssetPlatform
+}
+
+// ----------------------------------------
+// MultimediaSlideshowAtom
+// ----------------------------------------
+
+sealed trait MultimediaSlideshowSlideContent
+
+final case class MultimediaSlideshowImage(image: ImageMedia) extends MultimediaSlideshowSlideContent
+
+final case class MultimediaSlideshowVideo(mediaAtom: MediaAtom) extends MultimediaSlideshowSlideContent
+
+final case class MultimediaSlideshowSlide(
+    content: MultimediaSlideshowSlideContent,
+    caption: Option[String],
+    label: Option[String],
+    credit: Option[String],
+)
+
+final case class MultimediaSlideshowAtom(
+    override val id: String,
+    title: Option[String],
+    aspectRatio: Option[String],
+    slides: Seq[MultimediaSlideshowSlide],
+) extends Atom
+
+object MultimediaSlideshowAtom {
+
+  def fromFacia(slideshow: FaciaMultimediaSlideshow): MultimediaSlideshowAtom =
+    MultimediaSlideshowAtom(
+      id = slideshow.id,
+      title = slideshow.title,
+      aspectRatio = slideshow.aspectRatio,
+      slides = slideshow.slides.flatMap { slide =>
+        val content: Option[MultimediaSlideshowSlideContent] = slide.content match {
+          case FaciaSlideImage(image) => Some(MultimediaSlideshowImage(Atoms.atomImageToImageMedia(image)))
+          case FaciaSlideVideo(atom)  =>
+            atom.data match {
+              case AtomData.Media(media) => Some(MultimediaSlideshowVideo(MediaAtom.makeFromThrift(atom.id, media)))
+              case _                     => None
+            }
+        }
+        content.map(MultimediaSlideshowSlide(_, slide.caption, slide.label, slide.credit))
+      },
+    )
 }
 
 // ----------------------------------------
