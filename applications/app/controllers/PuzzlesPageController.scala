@@ -8,6 +8,7 @@ import model.dotcomrendering.{
   DotcomPuzzlePageRenderingDataModel,
   DotcomPuzzlesPageRenderingDataModel,
   PuzzlePageInstance,
+  PuzzleProgressIdentity,
 }
 import model.{ApplicationContext, CacheTime, Cached, Cors, NoCache, TinyResponse}
 import play.api.libs.ws.WSClient
@@ -129,13 +130,18 @@ class PuzzlesPageController(
 
   def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
+  def triviaArchiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] =
+    archiveDataOptions(puzzle, year, month)
+
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
   def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
+  def renderTriviaAndQuizzesArchive(): Action[AnyContent] = renderArchive(PuzzlesPageController.TriviaAndQuizzesGroup)
 
   private def renderArchive(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled || request.getRequestFormat != HtmlFormat) notFound
+      if (!PuzzlesHubV1Experiment.isEnabled || !archiveEnabled(category) || request.getRequestFormat != HtmlFormat)
+        notFound
       else
         buildArchive(category)
           .flatMap { case (layout, archive) =>
@@ -145,6 +151,9 @@ class PuzzlesPageController(
           }
           .recoverWith { case _: NoSuchElementException => notFound }
     }
+
+  private def archiveEnabled(category: String)(implicit request: RequestHeader): Boolean =
+    category != PuzzlesPageController.TriviaAndQuizzesGroup || PuzzlesHubV2Experiment.isEnabled
 
   def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
@@ -204,7 +213,9 @@ class PuzzlesPageController(
     val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
 
     puzzlesLayoutProvider.getLayout().flatMap { fullLayout =>
-      val layout = hubLayout(fullLayout)
+      // The uncached AJAX host does not receive the page's experiment cookie.
+      // Trivia HTML access is gated before reaching this shared data builder.
+      val layout = if (category == PuzzlesPageController.TriviaAndQuizzesGroup) fullLayout else hubLayout(fullLayout)
       PuzzlesArchiveBuilder.select(
         layout,
         category,
@@ -223,6 +234,7 @@ class PuzzlesPageController(
               PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
               today.toString,
               PuzzleRecommendations.apiLookup(puzzlesArchiveApi),
+              includeV2Games = PuzzlesHubV2Experiment.isEnabled,
             )
             .flatMap { moreFrom =>
               val calendarItems = puzzlesArchiveApi.get(startDate, endDate, selection.apiType, authorization)
@@ -355,11 +367,67 @@ class PuzzlesPageController(
       else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordiplySlug)
     }
 
-  /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. The archive page itself doesn't exist yet
-    * (a V1 feature), so this will 404 downstream until it's built - that's an accepted, explicitly confirmed
-    * limitation. A temporary (not permanent) redirect is used deliberately, so browsers/caches don't lock in a redirect
-    * target that doesn't exist yet.
-    */
+  def renderFilmReveal(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContent(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.FilmRevealSlug,
+          "Film reveal",
+          date,
+        )
+    }
+
+  def renderFilmRevealJson(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.FilmRevealSlug,
+          "Film reveal",
+          date,
+        )
+    }
+
+  def redirectFilmRevealArchive(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else redirectToArchive(PuzzlesPageController.TriviaAndQuizzesGroup, PuzzlesPageController.FilmRevealSlug)
+    }
+
+  def renderOnTheBall(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContent(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.OnTheBallSlug,
+          "On the ball",
+          date,
+        )
+    }
+
+  def renderOnTheBallJson(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.OnTheBallSlug,
+          "On the ball",
+          date,
+        )
+    }
+
+  def redirectOnTheBallArchive(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else redirectToArchive(PuzzlesPageController.TriviaAndQuizzesGroup, PuzzlesPageController.OnTheBallSlug)
+    }
+
+  /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. */
   private def redirectToArchive(group: String, slug: String)(implicit request: RequestHeader): Future[Result] =
     Future.successful(
       Redirect(s"/puzzles-and-games/$group/archive", Map("puzzle" -> Seq(slug)), status = FOUND),
@@ -408,13 +476,20 @@ class PuzzlesPageController(
           .flatMap {
             case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) =>
               PuzzleRecommendations
-                .resolve(slug, currentId = None, date, PuzzleRecommendations.apiLookup(puzzlesArchiveApi))
+                .resolve(
+                  slug,
+                  currentId = None,
+                  date,
+                  PuzzleRecommendations.apiLookup(puzzlesArchiveApi),
+                  includeV2Games = PuzzlesHubV2Experiment.isEnabled,
+                )
                 .flatMap { recommendations =>
                   val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
                   val instance = PuzzlePageInstance(
                     title = webTitle,
                     puzzleDate = Some(date),
                     gameUrl = game.gameUrl,
+                    progressIdentity = Some(PuzzleProgressIdentity(game.puzzleId, game.puzzleType, game.publishDate)),
                     moreFromPuzzlesAndGames = recommendations,
                     puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = PuzzlesNewsletters.GameLinks),
                   )
@@ -445,6 +520,8 @@ object PuzzlesPageController {
     "sudoku-killer" -> "SUDOKU_KILLER",
     "word-wheel" -> "WORDWHEEL",
     "wordiply" -> "WORDIPLY",
+    "film-reveal" -> "FILMREVEAL",
+    "on-the-ball" -> "ONTHEBALL",
   )
 
   val ProgressPuzzleTypes: Seq[String] = Seq(
@@ -467,6 +544,7 @@ object PuzzlesPageController {
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
+  val TriviaAndQuizzesGroup = "trivia-and-quizzes"
 
   /** Accepted sudoku variants for the `/puzzles-and-games/logic-puzzles/sudoku-:variant/:date` route. Play's route
     * regex (`$variant<easy|medium|hard|killer>`) already constrains this at the HTTP layer, but this is re-checked here
@@ -484,4 +562,6 @@ object PuzzlesPageController {
 
   val WordWheelSlug = "word-wheel"
   val WordiplySlug = "wordiply"
+  val FilmRevealSlug = "film-reveal"
+  val OnTheBallSlug = "on-the-ball"
 }

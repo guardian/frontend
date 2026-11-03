@@ -25,6 +25,8 @@ object PuzzlesArchiveBuilder {
     ("sudoku", "hard") -> "SUDOKU_HARD",
     ("sudoku", "killer") -> "SUDOKU_KILLER",
     ("word-wheel", "all") -> "WORDWHEEL",
+    ("film-reveal", "all") -> "FILMREVEAL",
+    ("on-the-ball", "all") -> "ONTHEBALL",
   )
 
   def apiType(puzzleType: String, set: String): Option[String] = apiTypes.get((puzzleType, set))
@@ -69,6 +71,8 @@ object PuzzlesArchiveBuilder {
           "Word games" -> "Play the full archive of word games from the Guardian. Track your progress of what you've played and started."
         case "logic-puzzles" =>
           "Logic puzzles" -> "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started."
+        case "trivia-and-quizzes" =>
+          "Trivia & quizzes" -> "Play the full archive of trivia and quizzes from the Guardian. Track your progress of what you've played and started."
         case _ => container.map(_.title).getOrElse("Puzzles") -> "Choose a puzzle from our archive."
       }
       Selection(category, title, description, puzzle, candidates.map(_._1), apiType)

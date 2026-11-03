@@ -120,7 +120,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     allItems(layout).map(_.id).distinct should have size allItems(layout).size
   }
 
-  it should "provide the trivia hub cards with uploaded artwork and no archive links" in {
+  it should "provide trivia hub cards with uploaded artwork and archive links" in {
     val layout = Await.result(productionProvider().getLayout(), 5.seconds)
     val trivia = layout.containers.find(_.id == "trivia-and-quizzes").get
     val cards = trivia.content.items.flatten
@@ -140,8 +140,10 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       "https://i.guim.co.uk/img/uploads/2026/10/28/on-the-ball-standard.png?width=440&dpr=2&s=none",
     )
     cards.flatMap(_.imageAlt) shouldBe Seq("Film reveal illustration", "On the ball illustration")
-    all(cards.map(_.backgroundColour)) shouldBe Some("#F3FBFB")
-    trivia.content.archiveChoices shouldBe None
+    trivia.content.archiveChoices.toSeq.flatten.flatMap(_.url) shouldBe Seq(
+      "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=film-reveal",
+      "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=on-the-ball",
+    )
   }
 
   it should "select the configured featured puzzles for each London weekday" in {
