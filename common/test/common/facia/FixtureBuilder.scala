@@ -55,6 +55,7 @@ object FixtureBuilder {
           showMainVideo = false,
           imageSlideshowReplace = false,
           videoReplace = false,
+          multimediaSlideshowReplace = false,
         ),
       ),
       showKickerTag = false,
@@ -137,6 +138,7 @@ object FixtureBuilder {
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
       mediaAtom = None,
+      multimediaSlideshow = None,
     )
   }
 

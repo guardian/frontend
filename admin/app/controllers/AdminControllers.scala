@@ -39,7 +39,7 @@ trait AdminControllers {
       // POST /interactive-librarian/live-presser/*path
       // POST /interactive-librarian/read-clean-write/*path
       // in [admin].
-      "/interactive-librarian/",
+//      "/interactive-librarian/",
     ),
     requiredEditorialPermissionName = "admin_tool_access",
   )
