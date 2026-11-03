@@ -112,11 +112,12 @@ controller's `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `4
 request carries the `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant` header (via this repo's normal server-side AB test
 framework, `common/app/ab/ABTests.scala`).
 
-**Note for future v2 work:** DCR uses a 2-tier, cumulative rollout gating structure for this
-feature (`puzzles-new-hub-v1`, `puzzles-new-hub-v2`, defined in `ab-testing/config/abTests.ts`,
-checked via `isPuzzlesHubV1Enabled`/`isPuzzlesHubV2Enabled` in
-`src/lib/puzzlesHubVersionExperiment.ts`). This repo only checks the v1 tier today; a v2-scoped
-frontend feature will need its own equivalent cumulative check.
+The hub's Trivia & quizzes container (Film reveal and On the ball) additionally requires
+`ab.PuzzlesHubV2Experiment`: both `puzzles-new-hub-v1:variant` and
+`puzzles-new-hub-v2:variant`. It is omitted from both HTML rendering data and JSON for
+v1-only readers, including featured/nested cards and archive choices. Archive rendering
+uses the same filtered layout; other v1 containers and the existing tag-page fallback are
+unchanged. Both helpers preserve the local development bypass.
 
 ### The date path segment
 

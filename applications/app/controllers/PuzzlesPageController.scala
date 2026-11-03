@@ -1,6 +1,6 @@
 package controllers
 
-import ab.PuzzlesHubV1Experiment
+import ab.{PuzzlesHubV1Experiment, PuzzlesHubV2Experiment}
 import common.ImplicitControllerExecutionContext
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -46,6 +46,30 @@ class PuzzlesPageController(
   private def tagPage(implicit request: RequestHeader): Future[Result] =
     indexController.renderItem(PuzzlesPageController.HubTagPath)
 
+  private def hubLayout(layout: model.dotcomrendering.PuzzlesLayout)(implicit
+      request: RequestHeader,
+  ): model.dotcomrendering.PuzzlesLayout = {
+    def isV2Game(item: model.dotcomrendering.PuzzleItem): Boolean =
+      item.`type` == "film-reveal" || item.`type` == "on-the-ball"
+
+    def filterContainers(
+        containers: Seq[model.dotcomrendering.PuzzleContainer],
+    ): Seq[model.dotcomrendering.PuzzleContainer] =
+      containers.filterNot(_.id == "trivia-and-quizzes").map { container =>
+        container.copy(content =
+          container.content.copy(
+            items = container.content.items.map(_.filterNot(isV2Game)),
+            nestedContainers = filterContainers(container.content.nestedContainers),
+            archive = container.content.archive.filterNot(isV2Game),
+            archiveChoices = container.content.archiveChoices.map(_.filterNot(isV2Game)).filter(_.nonEmpty),
+          ),
+        )
+      }
+
+    if (PuzzlesHubV2Experiment.isEnabled) layout
+    else layout.copy(containers = filterContainers(layout.containers))
+  }
+
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubV1Experiment.isEnabled) tagPage
@@ -55,7 +79,7 @@ class PuzzlesPageController(
             val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
             puzzlesLayoutProvider.getLayout().flatMap { layout =>
-              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, hubLayout(layout), request)
               remoteRenderer.getPuzzlesPage(
                 wsClient,
                 DotcomPuzzlesPageRenderingDataModel.toJson(renderingData),
@@ -75,7 +99,7 @@ class PuzzlesPageController(
             val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
             puzzlesLayoutProvider.getLayout().map { layout =>
-              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, hubLayout(layout), request)
               common
                 .renderJson(DotcomPuzzlesPageRenderingDataModel.toJson(renderingData), page)
                 .as("application/json")
@@ -179,7 +203,8 @@ class PuzzlesPageController(
     val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
     val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
 
-    puzzlesLayoutProvider.getLayout().flatMap { layout =>
+    puzzlesLayoutProvider.getLayout().flatMap { fullLayout =>
+      val layout = hubLayout(fullLayout)
       PuzzlesArchiveBuilder.select(
         layout,
         category,

@@ -59,6 +59,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       "Crosswords",
       "Word games",
       "Logic puzzles",
+      "Trivia & quizzes",
     )
     layout.containers.filter(_.variant.contains("ad")).map(_.adSlot) shouldBe Seq(
       Some("inline1"),
@@ -119,6 +120,30 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     allItems(layout).map(_.id).distinct should have size allItems(layout).size
   }
 
+  it should "provide the trivia hub cards with uploaded artwork and no archive links" in {
+    val layout = Await.result(productionProvider().getLayout(), 5.seconds)
+    val trivia = layout.containers.find(_.id == "trivia-and-quizzes").get
+    val cards = trivia.content.items.flatten
+
+    trivia.title shouldBe "Trivia & quizzes"
+    cards.map(_.title) shouldBe Seq("Film reveal", "On the ball")
+    cards.map(_.`type`) shouldBe Seq("film-reveal", "on-the-ball")
+    all(cards.map(_.cadence)) shouldBe Some("Daily")
+    all(cards.map(_.set)) shouldBe "all"
+    all(cards.map(_.cardVariant)) shouldBe "primary"
+    all(cards.map(_.variant)) shouldBe Some("iframe-page")
+    all(cards.map(_.date)) shouldBe Some("2026-09-07")
+    cards.map(_.slug) shouldBe Seq(Some("trivia-and-quizzes/film-reveal"), Some("trivia-and-quizzes/on-the-ball"))
+    cards.flatMap(_.url) shouldBe empty
+    cards.flatMap(_.image) shouldBe Seq(
+      "https://i.guim.co.uk/img/uploads/2026/10/28/film-reveal-standard.png?width=440&dpr=2&s=none",
+      "https://i.guim.co.uk/img/uploads/2026/10/28/on-the-ball-standard.png?width=440&dpr=2&s=none",
+    )
+    cards.flatMap(_.imageAlt) shouldBe Seq("Film reveal illustration", "On the ball illustration")
+    all(cards.map(_.backgroundColour)) shouldBe Some("#F3FBFB")
+    trivia.content.archiveChoices shouldBe None
+  }
+
   it should "select the configured featured puzzles for each London weekday" in {
     val expectedByDate = Seq(
       "2026-09-07T12:00:00Z" -> Seq("Quick crossword", "Easy sudoku"),
@@ -151,7 +176,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val items = allItems(Await.result(productionProvider().getLayout(), 5.seconds))
     val iframeItems = items.filter(_.variant.contains("iframe-page"))
 
-    iframeItems.map(_.`type`).toSet shouldBe Set("sudoku", "word-wheel", "wordiply")
+    iframeItems.map(_.`type`).toSet shouldBe Set("sudoku", "word-wheel", "wordiply", "film-reveal", "on-the-ball")
     all(iframeItems.map(_.date)) shouldBe Some("2026-09-07")
   }
 
