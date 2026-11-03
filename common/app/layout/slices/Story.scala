@@ -8,7 +8,6 @@ import scala.util.Try
 
 case class Story(
     group: Int,
-    isBoosted: Boolean,
 )
 
 object Story {
@@ -16,7 +15,7 @@ object Story {
 
   implicit val ordering: Ordering[Story] = Ordering.by[Story, Int](_.group)
 
-  def unboosted(n: Int): Story = Story(n, isBoosted = false)
+  def unboosted(n: Int): Story = Story(n)
 
   private[slices] def segmentByGroup(stories: Seq[Story]): Map[Int, Seq[Story]] = {
     stories.foldLeft(Map.empty[Int, Seq[Story]]) { (acc, story) =>
@@ -30,7 +29,6 @@ object Story {
     Story(
       /** Stories that are not assigned to a group are treated as standard (0) items */
       Try(faciaContent.card.group.toInt).getOrElse(0),
-      faciaContent.display.isBoosted,
     )
   }
 }

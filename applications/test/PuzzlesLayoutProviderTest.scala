@@ -10,7 +10,7 @@ import model.dotcomrendering.{
   PuzzlesSupportingContent,
 }
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{verifyNoInteractions, when}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -59,6 +59,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       "Crosswords",
       "Word games",
       "Logic puzzles",
+      "Trivia & quizzes",
     )
     layout.containers.filter(_.variant.contains("ad")).map(_.adSlot) shouldBe Seq(
       Some("inline1"),
@@ -119,6 +120,32 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     allItems(layout).map(_.id).distinct should have size allItems(layout).size
   }
 
+  it should "provide trivia hub cards with uploaded artwork and archive links" in {
+    val layout = Await.result(productionProvider().getLayout(), 5.seconds)
+    val trivia = layout.containers.find(_.id == "trivia-and-quizzes").get
+    val cards = trivia.content.items.flatten
+
+    trivia.title shouldBe "Trivia & quizzes"
+    cards.map(_.title) shouldBe Seq("Film reveal", "On the ball")
+    cards.map(_.`type`) shouldBe Seq("film-reveal", "on-the-ball")
+    all(cards.map(_.cadence)) shouldBe Some("Daily")
+    all(cards.map(_.set)) shouldBe "all"
+    all(cards.map(_.cardVariant)) shouldBe "primary"
+    all(cards.map(_.variant)) shouldBe Some("iframe-page")
+    all(cards.map(_.date)) shouldBe Some("2026-09-07")
+    cards.map(_.slug) shouldBe Seq(Some("trivia-and-quizzes/film-reveal"), Some("trivia-and-quizzes/on-the-ball"))
+    cards.flatMap(_.url) shouldBe empty
+    cards.flatMap(_.image) shouldBe Seq(
+      "https://i.guim.co.uk/img/uploads/2026/10/28/film-reveal-standard.png?width=440&dpr=2&s=none",
+      "https://i.guim.co.uk/img/uploads/2026/10/28/on-the-ball-standard.png?width=440&dpr=2&s=none",
+    )
+    cards.flatMap(_.imageAlt) shouldBe Seq("Film reveal illustration", "On the ball illustration")
+    trivia.content.archiveChoices.toSeq.flatten.flatMap(_.url) shouldBe Seq(
+      "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=film-reveal",
+      "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=on-the-ball",
+    )
+  }
+
   it should "select the configured featured puzzles for each London weekday" in {
     val expectedByDate = Seq(
       "2026-09-07T12:00:00Z" -> Seq("Quick crossword", "Easy sudoku"),
@@ -151,7 +178,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     val items = allItems(Await.result(productionProvider().getLayout(), 5.seconds))
     val iframeItems = items.filter(_.variant.contains("iframe-page"))
 
-    iframeItems.map(_.`type`).toSet shouldBe Set("sudoku", "word-wheel", "wordiply")
+    iframeItems.map(_.`type`).toSet shouldBe Set("sudoku", "word-wheel", "wordiply", "film-reveal", "on-the-ball")
     all(iframeItems.map(_.date)) shouldBe Some("2026-09-07")
   }
 
@@ -325,6 +352,31 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
     Await.result(provider.getLayout(), 5.seconds) shouldBe PuzzlesLayout(Seq.empty)
     stream.wasClosed shouldBe true
+  }
+
+  it should "resolve game sponsorship from configuration without fetching hub content" in {
+    val sponsor = Json.obj(
+      "name" -> "Game sponsor",
+      "label" -> "Supported by",
+      "sponsorUri" -> "https://example.com",
+      "logo" -> Json.obj("src" -> "https://example.com/logo.png", "aspectRatio" -> 2.0),
+    )
+    val json = Json.obj(
+      "containers" -> Json.arr(),
+      "sponsorship" -> Json.obj("AU" -> (sponsor + ("name" -> Json.toJson("Hub sponsor")))),
+      "gameSponsorship" -> Json.obj("word-games" -> Json.obj("AU" -> sponsor)),
+    )
+    val stream = new CloseTrackingInputStream(Json.stringify(json))
+    val api = mock[PuzzlesArchiveApi]
+    val newsletters = mock[NewsletterSignupAgent]
+    val provider = new LocalJsonPuzzlesLayoutProvider(environmentReturning(Some(stream)), api, newsletters)
+
+    val commercialProperties = Await.result(provider.getGameCommercialProperties("word-games"), 5.seconds)
+
+    commercialProperties.keySet shouldBe Set("AU")
+    commercialProperties("AU").branding.map(_.sponsorName) shouldBe Some("Hub sponsor")
+    stream.wasClosed shouldBe true
+    verifyNoInteractions(api, newsletters)
   }
 
   it should "fail clearly and close the stream when the blueprint is invalid" in {

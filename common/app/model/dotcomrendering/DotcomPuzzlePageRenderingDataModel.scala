@@ -1,10 +1,17 @@
 package model.dotcomrendering
 
 import common.{CanonicalLink, Edition}
+import common.commercial.EditionCommercialProperties
 import model.Page
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
+
+case class PuzzleProgressIdentity(puzzleId: String, puzzleType: String, publishDate: String)
+
+object PuzzleProgressIdentity {
+  implicit val writes: OWrites[PuzzleProgressIdentity] = Json.writes[PuzzleProgressIdentity]
+}
 
 /** Per-instance data for a single Puzzle Page. Puzzle Page is scoped to iframe-based puzzles only (see
   * PuzzlesPageController) - there is no crossword (or other component-rendered) case, so this type carries no
@@ -32,6 +39,7 @@ case class PuzzlePageInstance(
     puzzlesSupporting: Option[PuzzleGameSupporting] = None,
     /** The dated provider URL returned by the Puzzles API. */
     gameUrl: Option[String] = None,
+    progressIdentity: Option[PuzzleProgressIdentity] = None,
 )
 
 object PuzzlePageInstance {
@@ -59,6 +67,7 @@ case class DotcomPuzzlePageRenderingDataModel(
       * gap this field closes, coordinated with that DCR-side change.
       */
     isAdFreeUser: Boolean,
+    commercialProperties: Map[String, EditionCommercialProperties] = Map.empty,
 )
 
 object DotcomPuzzlePageRenderingDataModel {

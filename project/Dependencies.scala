@@ -4,9 +4,9 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "10.0.0"
-  val awsVersion = "2.54.12"
-  val capiVersion = "50.0.0"
-  val faciaVersion = "44.0.0"
+  val awsVersion = "2.54.20"
+  val capiVersion = "51.0.0"
+  val faciaVersion = "47.0.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -33,7 +33,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "52.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "53.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -79,7 +79,7 @@ object Dependencies {
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.37"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.38"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion

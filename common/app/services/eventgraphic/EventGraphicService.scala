@@ -35,6 +35,10 @@ object EventGraphicSource {
       fullUrl = new URI(s"$host/views/elections/us-general-2024/congress-fronts-tracker/all/v1"),
       graphicKind = GraphicKind.ElectionTracker,
     ),
+    "election-tracker/us-general-2026/congress" -> EventGraphicSource(
+      fullUrl = new URI(s"$host/views/elections/us-general-2026/congress-fronts-tracker/all/v1"),
+      graphicKind = GraphicKind.ElectionTracker,
+    ),
   )
 
   def isSupported(id: String): Boolean = sources.contains(id)

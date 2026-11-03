@@ -67,9 +67,6 @@ object FooterLinks {
   def tipUsOff(edition: String): FooterLink = {
     FooterLink("Tip us off", "https://www.theguardian.com/tips", s"$edition : footer : tips")
   }
-  def searchJobs(edition: String): FooterLink = {
-    FooterLink("Search jobs", "https://jobs.theguardian.com", s"$edition : footer : jobs")
-  }
 
   def socialLinks(edition: String): Iterable[FooterLink] = {
     /*
@@ -213,7 +210,6 @@ object FooterLinks {
   val ukListThree = List(
     FooterLink("Advertise with us", "https://advertising.theguardian.com", s"$UK : footer : advertise with us"),
     FooterLink("Guardian Labs", "/guardian-labs", s"$UK : footer : guardian labs"),
-    searchJobs(UK),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", s"$UK : footer : patrons"),
     workForUs(UK),
     accessibilitySettings,
@@ -226,7 +222,6 @@ object FooterLinks {
       s"$US : footer : advertise with us",
     ),
     FooterLink("Guardian Labs", "/guardian-labs-us", s"$US : footer : guardian labs"),
-    searchJobs(US),
     workForUs(US),
     accessibilitySettings,
   )
@@ -249,7 +244,6 @@ object FooterLinks {
         "https://advertising.theguardian.com",
         s"$edition : footer : advertise with us",
       ),
-      FooterLink("Search UK jobs", "https://jobs.theguardian.com", s"$edition : footer : jobs"),
       FooterLink("Tips", "https://www.theguardian.com/tips", s"$edition : footer : tips"),
       accessibilitySettings,
       workForUs(edition),

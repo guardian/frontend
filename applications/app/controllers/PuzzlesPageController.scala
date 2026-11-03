@@ -1,5 +1,6 @@
 package controllers
 
+import ab.PuzzlesHubV2Experiment
 import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -7,6 +8,7 @@ import model.dotcomrendering.{
   DotcomPuzzlePageRenderingDataModel,
   DotcomPuzzlesPageRenderingDataModel,
   PuzzlePageInstance,
+  PuzzleProgressIdentity,
 }
 import model.{ApplicationContext, CacheTime, Cached, Cors, NoCache, TinyResponse}
 import play.api.libs.ws.WSClient
@@ -45,6 +47,30 @@ class PuzzlesPageController(
   private def tagPage(implicit request: RequestHeader): Future[Result] =
     indexController.renderItem(PuzzlesPageController.HubTagPath)
 
+  private def hubLayout(layout: model.dotcomrendering.PuzzlesLayout)(implicit
+      request: RequestHeader,
+  ): model.dotcomrendering.PuzzlesLayout = {
+    def isV2Game(item: model.dotcomrendering.PuzzleItem): Boolean =
+      item.`type` == "film-reveal" || item.`type` == "on-the-ball"
+
+    def filterContainers(
+        containers: Seq[model.dotcomrendering.PuzzleContainer],
+    ): Seq[model.dotcomrendering.PuzzleContainer] =
+      containers.filterNot(_.id == "trivia-and-quizzes").map { container =>
+        container.copy(content =
+          container.content.copy(
+            items = container.content.items.map(_.filterNot(isV2Game)),
+            nestedContainers = filterContainers(container.content.nestedContainers),
+            archive = container.content.archive.filterNot(isV2Game),
+            archiveChoices = container.content.archiveChoices.map(_.filterNot(isV2Game)).filter(_.nonEmpty),
+          ),
+        )
+      }
+
+    if (PuzzlesHubV2Experiment.isEnabled) layout
+    else layout.copy(containers = filterContainers(layout.containers))
+  }
+
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) tagPage
@@ -54,7 +80,7 @@ class PuzzlesPageController(
             val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
             puzzlesLayoutProvider.getLayout().flatMap { layout =>
-              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, hubLayout(layout), request)
               remoteRenderer.getPuzzlesPage(
                 wsClient,
                 DotcomPuzzlesPageRenderingDataModel.toJson(renderingData),
@@ -74,7 +100,7 @@ class PuzzlesPageController(
             val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
             puzzlesLayoutProvider.getLayout().map { layout =>
-              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
+              val renderingData = DotcomPuzzlesPageRenderingDataModel(page, hubLayout(layout), request)
               common
                 .renderJson(DotcomPuzzlesPageRenderingDataModel.toJson(renderingData), page)
                 .as("application/json")
@@ -104,13 +130,18 @@ class PuzzlesPageController(
 
   def archiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] = puzzlesDataOptions()
 
+  def triviaArchiveDataOptions(puzzle: String, year: Int, month: Int): Action[AnyContent] =
+    archiveDataOptions(puzzle, year, month)
+
   def renderCrosswordsArchive(): Action[AnyContent] = renderArchive("crosswords")
   def renderWordGamesArchive(): Action[AnyContent] = renderArchive("word-games")
   def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
+  def renderTriviaAndQuizzesArchive(): Action[AnyContent] = renderArchive(PuzzlesPageController.TriviaAndQuizzesGroup)
 
   private def renderArchive(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubAccess.isAvailable || request.getRequestFormat != HtmlFormat) notFound
+      if (!PuzzlesHubAccess.isAvailable || !archiveEnabled(category) || request.getRequestFormat != HtmlFormat)
+        notFound
       else
         buildArchive(category)
           .flatMap { case (layout, archive) =>
@@ -120,6 +151,9 @@ class PuzzlesPageController(
           }
           .recoverWith { case _: NoSuchElementException => notFound }
     }
+
+  private def archiveEnabled(category: String)(implicit request: RequestHeader): Boolean =
+    category != PuzzlesPageController.TriviaAndQuizzesGroup || PuzzlesHubV2Experiment.isEnabled
 
   def archiveData(category: String): Action[AnyContent] =
     Action.async { implicit request =>
@@ -178,7 +212,10 @@ class PuzzlesPageController(
     val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
     val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
 
-    puzzlesLayoutProvider.getLayout().flatMap { layout =>
+    puzzlesLayoutProvider.getLayout().flatMap { fullLayout =>
+      // The uncached AJAX host does not receive the page's experiment cookie.
+      // Trivia HTML access is gated before reaching this shared data builder.
+      val layout = if (category == PuzzlesPageController.TriviaAndQuizzesGroup) fullLayout else hubLayout(fullLayout)
       PuzzlesArchiveBuilder.select(
         layout,
         category,
@@ -197,6 +234,7 @@ class PuzzlesPageController(
               PuzzlesArchiveBuilder.relatedPuzzleKey(selection),
               today.toString,
               PuzzleRecommendations.apiLookup(puzzlesArchiveApi),
+              includeV2Games = PuzzlesHubV2Experiment.isEnabled,
             )
             .flatMap { moreFrom =>
               val calendarItems = puzzlesArchiveApi.get(startDate, endDate, selection.apiType, authorization)
@@ -239,7 +277,12 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
-        renderPuzzlePageContent(s"sudoku-$variant", PuzzlesPageController.sudokuTitle(variant), date)
+        renderPuzzlePageContent(
+          PuzzlesPageController.LogicPuzzlesGroup,
+          s"sudoku-$variant",
+          PuzzlesPageController.sudokuTitle(variant),
+          date,
+        )
       else notFound
     }
 
@@ -247,7 +290,12 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
-        renderPuzzlePageContentJson(s"sudoku-$variant", PuzzlesPageController.sudokuTitle(variant), date)
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.LogicPuzzlesGroup,
+          s"sudoku-$variant",
+          PuzzlesPageController.sudokuTitle(variant),
+          date,
+        )
       else notFound
     }
 
@@ -262,13 +310,25 @@ class PuzzlesPageController(
   def renderWordWheel(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) notFound
-      else renderPuzzlePageContent(PuzzlesPageController.WordWheelSlug, "Word wheel", date)
+      else
+        renderPuzzlePageContent(
+          PuzzlesPageController.WordGamesGroup,
+          PuzzlesPageController.WordWheelSlug,
+          "Word wheel",
+          date,
+        )
     }
 
   def renderWordWheelJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) notFound
-      else renderPuzzlePageContentJson(PuzzlesPageController.WordWheelSlug, "Word wheel", date)
+      else
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.WordGamesGroup,
+          PuzzlesPageController.WordWheelSlug,
+          "Word wheel",
+          date,
+        )
     }
 
   def redirectWordWheelArchive(): Action[AnyContent] =
@@ -280,13 +340,25 @@ class PuzzlesPageController(
   def renderWordiply(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) notFound
-      else renderPuzzlePageContent(PuzzlesPageController.WordiplySlug, "Wordiply", date)
+      else
+        renderPuzzlePageContent(
+          PuzzlesPageController.WordGamesGroup,
+          PuzzlesPageController.WordiplySlug,
+          "Wordiply",
+          date,
+        )
     }
 
   def renderWordiplyJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubAccess.isAvailable) notFound
-      else renderPuzzlePageContentJson(PuzzlesPageController.WordiplySlug, "Wordiply", date)
+      else
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.WordGamesGroup,
+          PuzzlesPageController.WordiplySlug,
+          "Wordiply",
+          date,
+        )
     }
 
   def redirectWordiplyArchive(): Action[AnyContent] =
@@ -295,32 +367,90 @@ class PuzzlesPageController(
       else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordiplySlug)
     }
 
-  /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. The archive page itself doesn't exist yet
-    * (a V1 feature), so this will 404 downstream until it's built - that's an accepted, explicitly confirmed
-    * limitation. A temporary (not permanent) redirect is used deliberately, so browsers/caches don't lock in a redirect
-    * target that doesn't exist yet.
-    */
+  def renderFilmReveal(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContent(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.FilmRevealSlug,
+          "Film reveal",
+          date,
+        )
+    }
+
+  def renderFilmRevealJson(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.FilmRevealSlug,
+          "Film reveal",
+          date,
+        )
+    }
+
+  def redirectFilmRevealArchive(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else redirectToArchive(PuzzlesPageController.TriviaAndQuizzesGroup, PuzzlesPageController.FilmRevealSlug)
+    }
+
+  def renderOnTheBall(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContent(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.OnTheBallSlug,
+          "On the ball",
+          date,
+        )
+    }
+
+  def renderOnTheBallJson(date: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else
+        renderPuzzlePageContentJson(
+          PuzzlesPageController.TriviaAndQuizzesGroup,
+          PuzzlesPageController.OnTheBallSlug,
+          "On the ball",
+          date,
+        )
+    }
+
+  def redirectOnTheBallArchive(): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (!PuzzlesHubV2Experiment.isEnabled) notFound
+      else redirectToArchive(PuzzlesPageController.TriviaAndQuizzesGroup, PuzzlesPageController.OnTheBallSlug)
+    }
+
+  /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. */
   private def redirectToArchive(group: String, slug: String)(implicit request: RequestHeader): Future[Result] =
     Future.successful(
       Redirect(s"/puzzles-and-games/$group/archive", Map("puzzle" -> Seq(slug)), status = FOUND),
     )
 
   private def renderPuzzlePageContent(
+      group: String,
       slug: String,
       webTitle: String,
       date: String,
   )(implicit request: RequestHeader): Future[Result] = {
-    withPuzzlePageData(slug, webTitle, date) { dataModel =>
+    withPuzzlePageData(group, slug, webTitle, date) { dataModel =>
       remoteRenderer.getPuzzlePage(wsClient, DotcomPuzzlePageRenderingDataModel.toJson(dataModel))
     }
   }
 
   private def renderPuzzlePageContentJson(
+      group: String,
       slug: String,
       webTitle: String,
       date: String,
   )(implicit request: RequestHeader): Future[Result] =
-    withPuzzlePageData(slug, webTitle, date) { dataModel =>
+    withPuzzlePageData(group, slug, webTitle, date) { dataModel =>
       Future.successful(
         Cached(CacheTime.NotFound)(
           Cached.WithoutRevalidationResult(
@@ -330,7 +460,7 @@ class PuzzlesPageController(
       )
     }
 
-  private def withPuzzlePageData(slug: String, webTitle: String, date: String)(
+  private def withPuzzlePageData(group: String, slug: String, webTitle: String, date: String)(
       render: DotcomPuzzlePageRenderingDataModel => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     val selection = for {
@@ -346,17 +476,29 @@ class PuzzlesPageController(
           .flatMap {
             case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) =>
               PuzzleRecommendations
-                .resolve(slug, currentId = None, date, PuzzleRecommendations.apiLookup(puzzlesArchiveApi))
+                .resolve(
+                  slug,
+                  currentId = None,
+                  date,
+                  PuzzleRecommendations.apiLookup(puzzlesArchiveApi),
+                  includeV2Games = PuzzlesHubV2Experiment.isEnabled,
+                )
                 .flatMap { recommendations =>
                   val page = StaticPages.dcrSimplePuzzlePage(request.path, webTitle)
                   val instance = PuzzlePageInstance(
                     title = webTitle,
                     puzzleDate = Some(date),
                     gameUrl = game.gameUrl,
+                    progressIdentity = Some(PuzzleProgressIdentity(game.puzzleId, game.puzzleType, game.publishDate)),
                     moreFromPuzzlesAndGames = recommendations,
                     puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = PuzzlesNewsletters.GameLinks),
                   )
-                  render(DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request))
+                  puzzlesLayoutProvider.getGameCommercialProperties(group).flatMap { commercialProperties =>
+                    render(
+                      DotcomPuzzlePageRenderingDataModel(page, slug, webTitle, instance, request)
+                        .copy(commercialProperties = commercialProperties),
+                    )
+                  }
                 }
             case _ => notFound
           }
@@ -378,6 +520,8 @@ object PuzzlesPageController {
     "sudoku-killer" -> "SUDOKU_KILLER",
     "word-wheel" -> "WORDWHEEL",
     "wordiply" -> "WORDIPLY",
+    "film-reveal" -> "FILMREVEAL",
+    "on-the-ball" -> "ONTHEBALL",
   )
 
   val ProgressPuzzleTypes: Seq[String] = Seq(
@@ -400,6 +544,7 @@ object PuzzlesPageController {
 
   val LogicPuzzlesGroup = "logic-puzzles"
   val WordGamesGroup = "word-games"
+  val TriviaAndQuizzesGroup = "trivia-and-quizzes"
 
   /** Accepted sudoku variants for the `/puzzles-and-games/logic-puzzles/sudoku-:variant/:date` route. Play's route
     * regex (`$variant<easy|medium|hard|killer>`) already constrains this at the HTTP layer, but this is re-checked here
@@ -417,4 +562,6 @@ object PuzzlesPageController {
 
   val WordWheelSlug = "word-wheel"
   val WordiplySlug = "wordiply"
+  val FilmRevealSlug = "film-reveal"
+  val OnTheBallSlug = "on-the-ball"
 }
