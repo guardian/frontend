@@ -26,6 +26,8 @@ object PressedDisplaySettings {
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
       showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
       showLivePlayable = FaciaContentUtils.showLivePlayable(content),
+      showMiniNav = false,
+      miniNavData = None,
     )
   }
 }
