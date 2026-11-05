@@ -454,6 +454,9 @@ importers:
       tcp-ping:
         specifier: ^0.1.1
         version: 0.1.1
+      terser-webpack-plugin:
+        specifier: ^5.4.0
+        version: 5.6.1(csso@4.2.0)(postcss@8.5.32)(uglify-js@3.19.3)(webpack@5.112.2)
       ts-jest:
         specifier: 29.1.2
         version: 29.1.2(@babel/core@7.29.7(supports-color@8.1.1))(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(jest@29.7.0(@types/node@26.6.6)(babel-plugin-macros@3.1.0)(supports-color@8.1.1))(typescript@5.3.3)
@@ -4385,6 +4388,49 @@ packages:
 
   tcp-ping@0.1.1:
     resolution: {integrity: sha512-7Ed10Ds0hYnF+O1lfiZ2iSZ1bCAj+96Madctebmq7Y1ALPWlBY4YI8C6pCL+UTlshFY5YogixKLpgDP/4BlHrw==}
+
+  terser-webpack-plugin@5.6.1:
+    resolution: {integrity: sha512-201R5j+sJpK8nFWwKVyNfZot8FaJbLZDq5evriVzbV1wDtSXDjRUDRfJzHpAaxFDMEhsZL1QkeqM61wgsS3KaQ==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      '@minify-html/node': '*'
+      '@swc/core': '*'
+      '@swc/css': '*'
+      '@swc/html': '*'
+      clean-css: '*'
+      cssnano: '*'
+      csso: '*'
+      esbuild: '*'
+      html-minifier-terser: '*'
+      lightningcss: '*'
+      postcss: '*'
+      uglify-js: '*'
+      webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@minify-html/node':
+        optional: true
+      '@swc/core':
+        optional: true
+      '@swc/css':
+        optional: true
+      '@swc/html':
+        optional: true
+      clean-css:
+        optional: true
+      cssnano:
+        optional: true
+      csso:
+        optional: true
+      esbuild:
+        optional: true
+      html-minifier-terser:
+        optional: true
+      lightningcss:
+        optional: true
+      postcss:
+        optional: true
+      uglify-js:
+        optional: true
 
   terser@5.51.2:
     resolution: {integrity: sha512-bWnjSNscmuI+GJze6ZupnHP8G/cTcsJF+bXCeQknk2SHQsgbNJnLrqiH9jZ2W4STPVXH2mDKKRX3iwPhc9Cn/Q==}
@@ -9201,6 +9247,18 @@ snapshots:
   tapable@2.3.3: {}
 
   tcp-ping@0.1.1: {}
+
+  terser-webpack-plugin@5.6.1(csso@4.2.0)(postcss@8.5.32)(uglify-js@3.19.3)(webpack@5.112.2):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.31
+      jest-worker: 27.5.1
+      schema-utils: 4.8.2(webpack@5.112.2)
+      terser: 5.51.2
+      webpack: 5.112.2(csso@4.2.0)(postcss@8.5.32)(svgo@2.8.4)(uglify-js@3.19.3)(webpack-cli@5.1.4)
+    optionalDependencies:
+      csso: 4.2.0
+      postcss: 8.5.32
+      uglify-js: 3.19.3
 
   terser@5.51.2:
     dependencies:
