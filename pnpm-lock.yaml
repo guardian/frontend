@@ -479,8 +479,8 @@ importers:
         specifier: guardian/videojs-embed#v0.3.3
         version: https://codeload.github.com/guardian/videojs-embed/tar.gz/8b56cc35e641dc3c3d34430f0e783fabeebcadae
       videojs-ima:
-        specifier: 1.0.0
-        version: 1.0.0
+        specifier: 1.0.1
+        version: 1.0.1
       videojs-persistvolume:
         specifier: guardian/videojs-persistvolume#0.1.4
         version: https://codeload.github.com/guardian/videojs-persistvolume/tar.gz/31ac2b0771b12d91b91af835958ba77eb6638533
@@ -4539,8 +4539,8 @@ packages:
   videojs-ie8@1.1.2:
     resolution: {integrity: sha512-0Zb2T4MLkpfZbeGMK/Z93b8Lrepr+rLFoHgQV1CoDeFqXvH7b+Vsd/VHoILGxQrgCSHFQ7mAODR6oyMjuiD4/g==}
 
-  videojs-ima@1.0.0:
-    resolution: {integrity: sha512-az9ysCysTwn1dGaSrdo5dLeGzqNFCAHVPbvzGQ3vglHrQGmsVlWwuhV1MeysZ47fQcYFeXzcMeSGRvbOU9A1rw==}
+  videojs-ima@1.0.1:
+    resolution: {integrity: sha512-G8ke2amnNyoHqJC/iql2bkb3EnaLYxcQ5lHaUTJuXLNOrSrzWHyyNs8I24nVLqbWT1MmeMolhhRumw10MNSrzg==}
     engines: {node: '>=0.8.0'}
 
   videojs-persistvolume@https://codeload.github.com/guardian/videojs-persistvolume/tar.gz/31ac2b0771b12d91b91af835958ba77eb6638533:
@@ -9344,7 +9344,7 @@ snapshots:
     dependencies:
       es5-shim: 4.6.7
 
-  videojs-ima@1.0.0:
+  videojs-ima@1.0.1:
     dependencies:
       video.js: 5.20.5
       videojs-contrib-ads: 5.1.0
