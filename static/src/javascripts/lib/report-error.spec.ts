@@ -13,11 +13,11 @@ jest.mock('raven-js', () => ({
 
 describe('report-error', () => {
 	beforeEach(() => {
-		jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+		jest.spyOn(Math, 'random').mockReturnValue(0.5);
 	});
 
 	afterEach(() => {
-		jest.spyOn(global.Math, 'random').mockRestore();
+		jest.spyOn(Math, 'random').mockRestore();
 		jest.resetAllMocks();
 	});
 
