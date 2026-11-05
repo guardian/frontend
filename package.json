@@ -173,7 +173,7 @@
 			"url": "http://testurl.theguardian.com"
 		},
 		"transformIgnorePatterns": [
-			"/node_modules/(?!(@guardian|lodash-es|preact)/)"
+			"/node_modules/(?!\\.pnpm/|(@guardian|lodash-es|preact)/)"
 		]
 	},
 	"scripts": {
