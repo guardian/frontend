@@ -684,7 +684,7 @@ trait FeatureSwitches {
     sellByDate = never,
     safeState = Off,
     exposeClientSide = true,
-    highImpact = false,
+    highImpact = true,
   )
 
   val EditorialArticleABTests = Switch(
@@ -696,7 +696,7 @@ trait FeatureSwitches {
     sellByDate = never,
     safeState = Off,
     exposeClientSide = true,
-    highImpact = false,
+    highImpact = true,
   )
 
   val AffiliateProductLivePricing = Switch(
