@@ -44,10 +44,6 @@ POST        /page/clear                                                         
 GET         /ajax/clear                                                                             controllers.cache.PageDecacheController.renderAjaxDecache()
 POST        /ajax/clear                                                                             controllers.cache.PageDecacheController.decacheAjax()
 
-# Interactive Pressing
-POST        /interactive-librarian/live-presser/*path                                               controllers.admin.InteractiveLibrarianController.liveContentsPress(path: String)
-POST        /interactive-librarian/read-clean-write/*path                                           controllers.admin.InteractiveLibrarianController.readCleanWrite(path: String)
-
 # Articles / Interactives Pressing
 GET         /press/content                                                                          controllers.admin.InteractiveLibrarianController.pressForm()
 POST        /press/content/*path                                                                    controllers.admin.InteractiveLibrarianController.press(path: String)
