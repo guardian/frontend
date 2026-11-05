@@ -113,7 +113,7 @@
 		"video.js": "^5.19.0",
 		"videojs-contrib-ads": "5.1.0",
 		"videojs-embed": "guardian/videojs-embed#v0.3.3",
-		"videojs-ima": "1.0.0",
+		"videojs-ima": "1.0.1",
 		"videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
 		"videojs-playlist": "guardian/videojs-playlist#0.1.4",
 		"web-vitals": "3.5.1",
