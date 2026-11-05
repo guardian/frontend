@@ -18,6 +18,6 @@ jobs:
         - uses: actions/setup-node@v7
           with:
             node-version-file: '.nvmrc'
-            cache: yarn
+            cache: pnpm
 
         - run: make validate
