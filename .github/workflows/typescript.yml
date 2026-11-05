@@ -19,10 +19,10 @@ jobs:
             - uses: actions/setup-node@v7
               with:
                 node-version-file: '.nvmrc'
-                cache: pnpm
+                cache: "pnpm"
 
             - name: Install
-              run: pnpm
+              run: pnpm install
 
             - name: Check typescript
               run: pnpm tsc
