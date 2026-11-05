@@ -25,7 +25,7 @@ const task = {
 										batchedFiles.map((filePath) =>
 											execa
 												.shell(
-													`git show HEAD:${filePath} | yarn stylelint --max-warnings 0 '${filePath}'`,
+													`git show HEAD:${filePath} | pnpm stylelint --max-warnings 0 '${filePath}'`,
 												)
 												.catch((e) => {
 													errors.push(e);
