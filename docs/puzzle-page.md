@@ -57,15 +57,16 @@ cached HTML never contains another reader's provider identity.
 
 After hydration, signed-in readers request
 `GET /puzzles-and-games/game/{slug}/{date}.json` with their Identity access token
-in `Authorization: Bearer ...` on the page's own origin. Frontend forwards that header and its server-side
+in `Authorization: Bearer ...` via DCR's configured `ajaxUrl`. Frontend forwards that header and its server-side
 API key to `GET /game`. The browser receives the API's game data with
 `Cache-Control: no-store`; the endpoint also supports CORS preflights.
 DCR waits for this response before loading the iframe and preserves its `uid`.
 Signed-out readers use the anonymous URL already supplied in the page.
 
-The web router already forwards `/puzzles-and-games/` to applications. DCR uses a
-relative URL rather than `ajaxUrl`, so this flow needs no change to platform or
-the AJAX router. Deploy the frontend endpoint before the DCR consumer. Responses
+The AJAX router in `platform/router/files/router.conf` must forward the game JSON
+path, including OPTIONS preflights, to applications before the generic JSON rules.
+API errors retain their CORS and cache headers. Deploy the router rule and the
+frontend endpoint before the DCR consumer. Responses
 use frontend's standard `NoCache` headers (`private, no-store, no-cache`).
 
 Missing games or absent game URLs return 404. Upstream failures and invalid responses
