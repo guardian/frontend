@@ -1,1 +1,8 @@
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  core-js: false
 blockExoticSubdeps: true
+minimumReleaseAge: 1440 # 1 day minimum package version age
+minimumReleaseAgeExclude:
+  - '@guardian/*'
