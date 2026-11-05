@@ -12,6 +12,7 @@ GET        /dcar-assets/rendered-items-assets                                   
 
 GET        /sitemaps/news.xml                                                   controllers.SiteMapController.renderNewsSiteMap()
 GET        /sitemaps/video.xml                                                  controllers.SiteMapController.renderVideoSiteMap()
+GET        /sitemaps/puzzles-and-games.xml                                      controllers.SiteMapController.renderPuzzlesSiteMap()
 
 GET        /email-newsletters.json                                              controllers.SignupPageController.renderNewsletters()
 GET        /email-newsletters                                                   controllers.SignupPageController.renderNewsletters()
