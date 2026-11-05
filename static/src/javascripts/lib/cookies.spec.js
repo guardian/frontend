@@ -13,8 +13,8 @@ const { isValidCookieValue } = _;
 jest.mock('lib/raven');
 
 // Mock the Date constructor to always return the beginning of time
-const OriginalDate = global.Date;
-global.Date = jest.fn(() => new OriginalDate(0));
+const OriginalDate = Date;
+Date = jest.fn(() => new OriginalDate(0));
 
 describe('Cookies', () => {
 	let cookieValue = '';
@@ -123,6 +123,6 @@ describe('Cookies', () => {
 });
 
 afterAll(() => {
-	global.Date = OriginalDate;
+	Date = OriginalDate;
 	expect(new Date().toString()).not.toMatch(new RegExp('Thu Jan 01 1970'));
 });
