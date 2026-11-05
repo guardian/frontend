@@ -11,7 +11,7 @@ const markup = `
 `;
 
 const fakeNowEpoch = Date.parse('2012-08-13T12:00:00+01:00');
-const OriginalDate = global.Date;
+const OriginalDate = Date;
 
 beforeEach(() => {
     if (document.body) {
@@ -19,14 +19,14 @@ beforeEach(() => {
     }
 
     // This is a *partial* implementation of Date.
-    global.Date = jest.fn(dateString => {
+    Date = jest.fn(dateString => {
         if (dateString !== undefined) {
             return new OriginalDate(dateString);
         }
         return new Date(Number(fakeNowEpoch));
     });
-    global.Date.now = jest.fn(() => new OriginalDate(fakeNowEpoch));
-    global.Date.parse = jest.fn(dateString => OriginalDate.parse(dateString));
+    Date.now = jest.fn(() => new OriginalDate(fakeNowEpoch));
+    Date.parse = jest.fn(dateString => OriginalDate.parse(dateString));
 });
 
 afterEach(() => {
@@ -34,7 +34,7 @@ afterEach(() => {
         document.body.innerHTML = '';
     }
 
-    global.Date = OriginalDate;
+    Date = OriginalDate;
 });
 
 const datesToTest = {
