@@ -25,7 +25,9 @@ describe('checkBrazeDependecies', () => {
 		// we encounter a failure in our list of checks we don't need to wait on
 		// subsequent operations to complete which is why there might be unsettled
 		// promises.
-		const flushPromises = new Promise(setImmediate);
+		const flushPromises = new Promise<void>((resolve) => {
+			setTimeout(resolve, 0);
+		});
 		return flushPromises;
 	});
 
