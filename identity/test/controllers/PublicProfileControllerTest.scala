@@ -102,9 +102,8 @@ class PublicProfileControllerTest
     "with invalid user Id" - {
       val result = controller.renderProfileFromId("notAUser", "discussions")(request)
 
-      "then the status should be 200 with no comments found" in {
-        status(result) should be(200)
-        contentAsString(result) should include("No comments found for user")
+      "then the status should be 404" in {
+        status(result) should be(404)
       }
     }
   }
