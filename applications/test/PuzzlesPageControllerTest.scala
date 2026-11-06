@@ -1008,7 +1008,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .redirectSudokuArchive("easy")(request("/puzzles-and-games/logic-puzzles/sudoku-easy"))
 
     status(result) should be(FOUND)
-    redirectLocation(result) should be(Some("/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy"))
+    redirectLocation(result) should be(Some("/puzzles-and-games/logic-puzzles/sudoku-easy/archive"))
     verifyNoInteractions(renderer)
   }
 
@@ -1074,7 +1074,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .redirectWordWheelArchive()(request("/puzzles-and-games/word-games/word-wheel"))
 
     status(result) should be(FOUND)
-    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/archive?puzzle=word-wheel"))
+    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/word-wheel/archive"))
     verifyNoInteractions(renderer)
   }
 
@@ -1170,7 +1170,7 @@ import scala.concurrent.{ExecutionContext, Future}
         request(path, v2Participations),
       )
       status(result) shouldBe FOUND
-      redirectLocation(result) shouldBe Some(s"/puzzles-and-games/trivia-and-quizzes/archive?puzzle=$slug")
+      redirectLocation(result) shouldBe Some(s"/puzzles-and-games/trivia-and-quizzes/$slug/archive")
       verifyNoInteractions(api)
     }
 
@@ -1293,7 +1293,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .redirectWordiplyArchive()(request("/puzzles-and-games/word-games/wordiply"))
 
     status(result) should be(FOUND)
-    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/archive?puzzle=wordiply"))
+    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/wordiply/archive"))
     verifyNoInteractions(renderer)
   }
 
