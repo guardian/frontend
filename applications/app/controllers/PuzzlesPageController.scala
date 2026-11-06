@@ -1,7 +1,7 @@
 package controllers
 
-import ab.{PuzzlesHubV1Experiment, PuzzlesHubV2Experiment}
-import common.ImplicitControllerExecutionContext
+import ab.PuzzlesHubV2Experiment
+import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
 import model.dotcomrendering.{
@@ -41,8 +41,8 @@ class PuzzlesPageController(
       Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
     )
 
-  /** Readers outside the `puzzles-new-hub-v1` variant get the existing `/puzzles-and-games` tag page, as if the hub did
-    * not exist, rather than a 404.
+  /** Readers outside the editions the hub is available in (see `PuzzlesHubAccess`) get the existing
+    * `/puzzles-and-games` tag page, as if the hub did not exist, rather than a 404.
     */
   private def tagPage(implicit request: RequestHeader): Future[Result] =
     indexController.renderItem(PuzzlesPageController.HubTagPath)
@@ -73,7 +73,7 @@ class PuzzlesPageController(
 
   def renderPuzzles(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) tagPage
+      if (!PuzzlesHubAccess.isAvailable) tagPage
       else
         request.getRequestFormat match {
           case HtmlFormat =>
@@ -93,7 +93,7 @@ class PuzzlesPageController(
 
   def renderPuzzlesJson(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) tagPage
+      if (!PuzzlesHubAccess.isAvailable) tagPage
       else
         request.getRequestFormat match {
           case JsonFormat =>
@@ -140,7 +140,7 @@ class PuzzlesPageController(
 
   private def renderArchive(category: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled || !archiveEnabled(category) || request.getRequestFormat != HtmlFormat)
+      if (!PuzzlesHubAccess.isAvailable || !archiveEnabled(category) || request.getRequestFormat != HtmlFormat)
         notFound
       else
         buildArchive(category)
@@ -275,7 +275,7 @@ class PuzzlesPageController(
   /** Iframe puzzle pages resolve their slug and URL date through GET /game. Crosswords retain their own routes. */
   def renderSudoku(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
         renderPuzzlePageContent(
           PuzzlesPageController.LogicPuzzlesGroup,
@@ -288,7 +288,7 @@ class PuzzlesPageController(
 
   def renderSudokuJson(variant: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
         renderPuzzlePageContentJson(
           PuzzlesPageController.LogicPuzzlesGroup,
@@ -301,7 +301,7 @@ class PuzzlesPageController(
 
   def redirectSudokuArchive(variant: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else if (PuzzlesPageController.SudokuVariants.contains(variant))
         redirectToArchive(PuzzlesPageController.LogicPuzzlesGroup, s"sudoku-$variant")
       else notFound
@@ -309,7 +309,7 @@ class PuzzlesPageController(
 
   def renderWordWheel(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else
         renderPuzzlePageContent(
           PuzzlesPageController.WordGamesGroup,
@@ -321,7 +321,7 @@ class PuzzlesPageController(
 
   def renderWordWheelJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else
         renderPuzzlePageContentJson(
           PuzzlesPageController.WordGamesGroup,
@@ -333,13 +333,13 @@ class PuzzlesPageController(
 
   def redirectWordWheelArchive(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordWheelSlug)
     }
 
   def renderWordiply(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else
         renderPuzzlePageContent(
           PuzzlesPageController.WordGamesGroup,
@@ -351,7 +351,7 @@ class PuzzlesPageController(
 
   def renderWordiplyJson(date: String): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else
         renderPuzzlePageContentJson(
           PuzzlesPageController.WordGamesGroup,
@@ -363,7 +363,7 @@ class PuzzlesPageController(
 
   def redirectWordiplyArchive(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubV1Experiment.isEnabled) notFound
+      if (!PuzzlesHubAccess.isAvailable) notFound
       else redirectToArchive(PuzzlesPageController.WordGamesGroup, PuzzlesPageController.WordiplySlug)
     }
 

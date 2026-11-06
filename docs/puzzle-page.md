@@ -110,20 +110,21 @@ up CAPI to construct crossword destinations. Other puzzle card destinations are 
     GET /puzzles-and-games/word-games/wordiply             -> PuzzlesPageController.redirectWordiplyArchive
     ```
 
-### Access gate: reuses the existing Puzzles Hub AB test
+### Access gate: reuses the Puzzles Hub edition check
 
 All Puzzle Page actions (dated render actions and archive redirects alike) are gated behind
-`ab.PuzzlesHubV1Experiment` ("puzzles-new-hub-v1"), the same server-side AB test used by this
-controller's `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the
-request carries the `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant` header (via this repo's normal server-side AB test
-framework, `common/app/ab/ABTests.scala`).
+`common.PuzzlesHubAccess.isAvailable`, the same edition check used by this controller's
+`renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the request's edition is one of
+`PuzzlesHubAccess.Editions` (currently the International edition only), or the app runs in local development.
+To roll the hub out to another edition, add it to `PuzzlesHubAccess.Editions` and to `PUZZLES_HUB_EDITIONS` in
+dotcom-rendering (`src/lib/puzzlesHubAccess.ts`), which applies the same rule again before rendering.
 
 Film reveal, On the ball and the Trivia & quizzes hub container and archive additionally
-require the existing cumulative `ab.PuzzlesHubV2Experiment`: both
-`puzzles-new-hub-v1:variant` and `puzzles-new-hub-v2:variant`. This covers dated HTML/JSON,
+require the cumulative `ab.PuzzlesHubV2Experiment`: the request's edition must be one of
+`PuzzlesHubAccess.Editions` and it must carry `puzzles-new-hub-v2:variant`. This covers dated HTML/JSON,
 bare redirects and trivia archive HTML; denied page requests never call the game/archive
 backends. Filtering covers featured/nested cards and existing archive choices before
-archive selection. Recommendations omit these games without cumulative v2 participation.
+archive selection. Recommendations omit these games without v2 participation.
 
 All archive JSON endpoints and their CORS preflights remain ungated and uncached,
 including trivia. DCR fetches these through `config.page.ajaxUrl` to avoid the page-host
@@ -131,7 +132,7 @@ CDN cache when refreshing a reader's progress; that host does not receive the pa
 experiment cookie. The trivia data builder therefore selects from the complete trivia
 layout, while existing categories keep their V2 filtering. Reader-specific progress is
 still resolved from the Authorization header, never from an experiment cookie.
-Both experiment helpers preserve the local development bypass.
+Both the edition check and the experiment helper preserve the local development bypass.
 
 ### The date path segment
 
@@ -251,10 +252,13 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-Outside local development, use
-`X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant` for trivia.
-V1 alone enables existing sudoku and word-game pages. Scope browser header rules to localhost
-to avoid CORS failures on third-party resources; frontend and DCR apply their gates independently.
+**The International edition is required** (see "Access gate" above), except in local development where the gate is
+bypassed. Outside it, every URL below 404s. Set the `X-Gu-Edition: INT` header via a browser extension
+(e.g. ModHeader) or `curl -H "X-Gu-Edition: INT" ...`.
+
+Outside local development, trivia additionally needs `X-GU-Server-AB-Tests: puzzles-new-hub-v2:variant`.
+Scope browser header rules to localhost to avoid CORS failures on third-party resources; frontend and DCR apply
+their gates independently.
 
 The `.json` route variant returns the exact JSON payload this repo would send to DCR, without
 needing DCR itself to be reachable.

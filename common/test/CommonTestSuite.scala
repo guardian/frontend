@@ -1,6 +1,7 @@
 package test
 
-import ab.{ABTestsTest, PuzzlesHubV1ExperimentTest, PuzzlesHubV2ExperimentTest}
+import ab.{ABTestsTest, PuzzlesHubV2ExperimentTest}
+import common.PuzzlesHubAccessTest
 import conf.CachedHealthCheckTest
 import conf.audio.FlagshipFrontContainerSpec
 import http.ABTestingFilterTest
@@ -12,7 +13,7 @@ import renderers.DotcomRenderingServiceTest
 class CommonTestSuite
     extends Suites(
       new ABTestsTest,
-      new PuzzlesHubV1ExperimentTest,
+      new PuzzlesHubAccessTest,
       new PuzzlesHubV2ExperimentTest,
       new ABTestingFilterTest,
       new CachedHealthCheckTest,
