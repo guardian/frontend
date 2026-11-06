@@ -4,7 +4,7 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "10.0.0"
-  val awsVersion = "2.54.20"
+  val awsVersion = "2.57.5"
   val capiVersion = "51.0.0"
   val faciaVersion = "47.1.0"
   val dispatchVersion = "0.13.1"
@@ -125,7 +125,8 @@ object Dependencies {
   val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
   val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
 
-  val circeParser = "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
+  val circeParser =
+    "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
   val jackson =
     Seq(
       jacksonCore,
