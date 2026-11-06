@@ -595,7 +595,7 @@ describe('getting the days since last contribution', () => {
 	});
 
 	it('returns the difference in days between the last contribution date and now if the last contribution date is set', () => {
-		global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
+		Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(getDaysSinceLastOneOffContribution()).toBe(5);
 	});
@@ -616,19 +616,19 @@ describe('isRecentOneOffContributor', () => {
 	});
 
 	it('returns true if there are 5 days between the last contribution date and now', () => {
-		global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
+		Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(isRecentOneOffContributor()).toBe(true);
 	});
 
 	it('returns true if there are 0 days between the last contribution date and now', () => {
-		global.Date.now = jest.fn(() => Date.parse('2018-08-01T13:00:30'));
+		Date.now = jest.fn(() => Date.parse('2018-08-01T13:00:30'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(isRecentOneOffContributor()).toBe(true);
 	});
 
 	it('returns false if the one-off contribution was more than 3 months ago', () => {
-		global.Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
+		Date.now = jest.fn(() => Date.parse('2019-08-01T13:00:30'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(isRecentOneOffContributor()).toBe(false);
 	});
@@ -649,13 +649,13 @@ describe('isPostAskPauseOneOffContributor', () => {
 	});
 
 	it('returns false if there are 5 days between the last contribution date and now', () => {
-		global.Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
+		Date.now = jest.fn(() => Date.parse('2018-08-07T10:50:34'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(isPostAskPauseOneOffContributor()).toBe(false);
 	});
 
 	it('returns true if the one-off contribution was more than 3 months ago', () => {
-		global.Date.now = jest.fn(() => Date.parse('2019-02-01T13:00:30'));
+		Date.now = jest.fn(() => Date.parse('2019-02-01T13:00:30'));
 		setSupportFrontendOneOffContributionCookie(contributionDateTimeEpoch);
 		expect(isPostAskPauseOneOffContributor()).toBe(true);
 	});

@@ -6,7 +6,7 @@
 
 # Install all 3rd party dependencies.
 install: check-node-env
-	@yarn install
+	@pnpm install
 	@./tools/sync-githooks.js
 
 # Remove all 3rd party dependencies.
@@ -59,13 +59,13 @@ test: install
 
 # Run the modern JS test suite in watch mode.
 test-watch: install
-	@yarn test -- --watch --coverage
+	@pnpm test -- --watch --coverage
 
 # Validate all assets.
 validate: install
 	@./tools/task-runner/runner.mjs validate/index.mjs --verbose
-	@yarn prettier dev --check
-	@yarn prettier */test/resources/*.json --check
+	@pnpm prettier dev --check
+	@pnpm prettier */test/resources/*.json --check
 
 # Validate all SCSS.
 validate-sass: install # PRIVATE

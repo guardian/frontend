@@ -38,20 +38,20 @@ const checkNodeEnv = async () => {
 	await checkVersion('node', nvmrcVersion);
 	logSuccess(`Node ${nvmrcVersion}`);
 
-	// check yarn
-	childProcess.exec('yarn --version', async (e, version) => {
-		const foundYarnVersion = version.trim();
-		const enginesYarnVersion = require('../package.json').engines.yarn;
+	// check pnpm
+	childProcess.exec('pnpm --version', async (e, version) => {
+		const foundPnpmVersion = version.trim();
+		const enginesPnpmVersion = require('../package.json').engines.pnpm;
 
-		if (foundYarnVersion) {
-			await checkVersion('yarn', enginesYarnVersion);
-			logSuccess(`Yarn ${foundYarnVersion}`);
+		if (foundPnpmVersion) {
+			await checkVersion('pnpm', enginesPnpmVersion);
+			logSuccess(`pnpm ${foundPnpmVersion}`);
 		} else {
-			// else install yarn with npm (mainly for TeamCity)
-			logFail(`Yarn not found!`);
-			console.log(`Installing yarn ${enginesYarnVersion} via npm`);
+			// else install pnpm with npm (mainly for TeamCity)
+			logFail(`pnpm not found!`);
+			console.log(`Installing pnpm ${enginesPnpmVersion} via npm`);
 			childProcess
-				.spawn('npm', ['i', '-g', `yarn@${enginesYarnVersion}`], {
+				.spawn('npm', ['i', '-g', `pnpm@${enginesPnpmVersion}`], {
 					stdio: 'inherit',
 				})
 				.on('close', (code) => {
