@@ -138,12 +138,16 @@ class PuzzlesPageController(
   def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
   def renderTriviaAndQuizzesArchive(): Action[AnyContent] = renderArchive(PuzzlesPageController.TriviaAndQuizzesGroup)
 
-  private def renderArchive(category: String): Action[AnyContent] =
+  // The selected puzzle lives in the path rather than a query parameter, which Fastly strips in CODE/PROD.
+  def renderArchiveForPuzzle(category: String, puzzle: String): Action[AnyContent] =
+    renderArchive(category, Some(puzzle))
+
+  private def renderArchive(category: String, puzzle: Option[String] = None): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubV1Experiment.isEnabled || !archiveEnabled(category) || request.getRequestFormat != HtmlFormat)
         notFound
       else
-        buildArchive(category)
+        buildArchive(category, puzzle)
           .flatMap { case (layout, archive) =>
             val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
             val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
@@ -430,7 +434,7 @@ class PuzzlesPageController(
   /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. */
   private def redirectToArchive(group: String, slug: String)(implicit request: RequestHeader): Future[Result] =
     Future.successful(
-      Redirect(s"/puzzles-and-games/$group/archive", Map("puzzle" -> Seq(slug)), status = FOUND),
+      Redirect(s"/puzzles-and-games/$group/$slug/archive", FOUND),
     )
 
   private def renderPuzzlePageContent(
