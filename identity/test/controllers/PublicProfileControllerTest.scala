@@ -28,7 +28,7 @@ class PublicProfileControllerTest
   val idRequestParser = mock[IdRequestParser]
   val idRequest = mock[IdentityRequest]
 
-  val userId: Long = 123
+  val userId: String = "123"
   val discussionProfile = DiscussionProfile(userId, "John Smith")
   val vanityUrl: String = "bobski"
   val user = User(

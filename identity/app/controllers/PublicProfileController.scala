@@ -26,16 +26,27 @@ class PublicProfileController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] =
+  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = {
+    if (vanityUrl.contains("script")) {
+      Future.successful(NotFound)
+    }
+
     findProfileDataAndRender(
       "/user/" + vanityUrl,
       activityType,
       // IDAPI no longer supports lookup by Vanity URL. We return not found profile pages instead
       Future.successful(Left(List(Error("Not Found", "Not Found", 404)))),
     )
+  }
 
-  def renderProfileFromId(id: Long, activityType: String): Action[AnyContent] = {
-    findProfileDataAndRender("/user/id/" + id, activityType, identityApiClient.user(id.toString))
+  def renderProfileFromId(id: String, activityType: String): Action[AnyContent] = {
+    if (id.toLongOption.isEmpty) {
+      Action.async {
+        Future.successful(NotFound)
+      }
+    } else {
+      findProfileDataAndRender("/user/id/" + id, activityType, identityApiClient.user(id))
+    }
   }
 
   def findProfileDataAndRender(
