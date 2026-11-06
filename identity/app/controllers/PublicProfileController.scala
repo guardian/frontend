@@ -34,8 +34,9 @@ class PublicProfileController(
       Future.successful(Left(List(Error("Not Found", "Not Found", 404)))),
     )
 
-  def renderProfileFromId(id: String, activityType: String): Action[AnyContent] =
-    findProfileDataAndRender("/user/id/" + id, activityType, identityApiClient.user(id))
+  def renderProfileFromId(id: Long, activityType: String): Action[AnyContent] = {
+    findProfileDataAndRender("/user/id/" + id, activityType, identityApiClient.user(id.toString))
+  }
 
   def findProfileDataAndRender(
       url: String,

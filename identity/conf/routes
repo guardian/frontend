@@ -11,8 +11,8 @@ POST        /complete-registration                  controllers.EmailVerificatio
 ########################################################################################################################
 # Discussion
 ########################################################################################################################
-GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
-GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
+GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: Long, activityType = "discussions")
+GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: Long, activityType: String)
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
 GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
 
