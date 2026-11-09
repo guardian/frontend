@@ -8,6 +8,7 @@ import controllers.{
   PuzzlesGameApi,
   PuzzlesLayoutProvider,
   PuzzlesNewsletters,
+  PuzzlesAccessPolicy,
   PuzzlesPageController,
   PuzzlesProgressApi,
 }
@@ -1043,6 +1044,21 @@ import scala.concurrent.{ExecutionContext, Future}
 
     status(result) should be(NOT_FOUND)
     verifyNoInteractions(renderer)
+  }
+
+  "the puzzle page JSON" should "flag puzzles older than the free window as requiring a subscription, and leave free ones unflagged" in {
+    val today = PuzzlesAccessPolicy.londonToday()
+    def requiresSubscription(date: LocalDate): Option[Boolean] = {
+      val result = controller(successfulProvider, mock[DotcomRenderingService])
+        .renderSudokuJson("easy", date.toString)(
+          request(s"/puzzles-and-games/logic-puzzles/sudoku-easy/$date.json"),
+        )
+      (Json.parse(contentAsString(result)) \ "instance" \ "requiresSubscription").asOpt[Boolean]
+    }
+
+    requiresSubscription(today) should be(None)
+    requiresSubscription(today.minusDays(7)) should be(None)
+    requiresSubscription(today.minusDays(8)) should be(Some(true))
   }
 
   "renderWordWheelJson" should "return the equivalent rendering data as JSON, including the given puzzleDate" in {

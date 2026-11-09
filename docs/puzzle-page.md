@@ -298,6 +298,7 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 | `puzzleDate` | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context. |
 | `gameUrl` | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
 | `progressIdentity` | object, optional | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL. |
+| `requiresSubscription` | boolean, optional | `true` when the puzzle is older than the free window (today back to 7 days ago, Europe/London; see `PuzzlesAccessPolicy`). Absent means free. Depends only on the puzzle date, never on the reader, so it is safe in the cached HTML. |
 | `moreFromPuzzlesAndGames` | array | Best-effort related puzzle cards; may be empty. |
 | `puzzlesSupporting` | object, optional | Useful links and an optional live newsletter. |
 
@@ -309,3 +310,17 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 -   **Deeper technical open items (AmuseLabs archive URLs, the user-id/postMessage mechanism, etc.)
     are tracked on the DCR side**, in that repo's own equivalent consolidated Puzzle Page doc, not
     duplicated here - check the `dotcom-rendering` repo for the current location of that document.
+
+## Premium puzzles access
+
+Puzzles older than 7 days (Europe/London) need a Supporter Plus or Digital Pack subscription. The rule lives in
+`PuzzlesAccessPolicy` and is exposed to DCR as `instance.requiresSubscription`.
+
+Whether a reader may play is answered by `GET /puzzles-and-games/access?puzzleId=<id>` (`PuzzlesAccessController`),
+which follows the same pattern as the progress endpoints: `NoCache`, CORS, and the reader's own `Authorization` header
+forwarded to the Puzzles API, which verifies it and works out the subscription. It answers `{ "hasAccess": boolean }`.
+A request without `Authorization`, or with a malformed `puzzleId`, is refused here without calling the Puzzles API.
+
+The upstream call (`GET /access?puzzleId=` on the Puzzles API, `PuzzlesAccessApiClient`) is the proposed contract and is
+still to be agreed with the Puzzles API team. Until it exists, the endpoint answers 502, which DCR treats as "could not
+find out".
