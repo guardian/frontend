@@ -112,6 +112,11 @@ $ make install compile
 
 The frontend application should now be ready to run.
 
+pnpm uses a hoisted dependency layout, configured in
+[pnpm-workspace.yaml](../../pnpm-workspace.yaml), to support Webpack's
+`resolve.symlinks: false` setting for locally linked packages. Keep these
+settings aligned so Webpack can resolve package dependencies in clean installs.
+
 ## Running frontend
 
 Note: frontend is used to generate JSON that is passed to dotcom-rendering for generating web content. We will show you how to run frontend, and how to run [dotcom-rendering](https://github.com/guardian/dotcom-rendering) alongside it. This will help you to build a mental model of the relationship between the systems.

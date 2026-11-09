@@ -1,3 +1,4 @@
+nodeLinker: hoisted
 allowBuilds:
   core-js: true
 blockExoticSubdeps: true
