@@ -27,6 +27,9 @@ trait Http extends GuLogging {
         case 404 =>
           val errorMessage = onError(response)
           throw NotFoundException(errorMessage)
+        case 400 =>
+          val errorMessage = onError(response)
+          throw NotFoundException(errorMessage)
         case otherStatus =>
           val errorMessage = onError(response)
           log.error(errorMessage)
