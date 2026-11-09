@@ -316,11 +316,9 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 Puzzles older than 7 days (Europe/London) need a Supporter Plus or Digital Pack subscription. The rule lives in
 `PuzzlesAccessPolicy` and is exposed to DCR as `instance.requiresSubscription`.
 
-Whether a reader may play is answered by `GET /puzzles-and-games/access?puzzleId=<id>` (`PuzzlesAccessController`),
-which follows the same pattern as the progress endpoints: `NoCache`, CORS, and the reader's own `Authorization` header
-forwarded to the Puzzles API, which verifies it and works out the subscription. It answers `{ "hasAccess": boolean }`.
-A request without `Authorization`, or with a malformed `puzzleId`, is refused here without calling the Puzzles API.
+Whether a reader may play will be answered by `GET /puzzles-and-games/access?puzzleId=<id>`
+(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints, answering
+`{ "hasAccess": boolean }` once the Puzzles API has an access endpoint to forward the reader's `Authorization` header to.
 
-The upstream call (`GET /access?puzzleId=` on the Puzzles API, `PuzzlesAccessApiClient`) is the proposed contract and is
-still to be agreed with the Puzzles API team. Until it exists, the endpoint answers 502, which DCR treats as "could not
-find out".
+Until then the endpoint always answers 503 and does not call the Puzzles API. DCR treats any non-2xx answer as "could
+not find out" and falls back to what it knows about the reader.
