@@ -75,6 +75,7 @@ module.exports = {
             "react-dom": "preact/compat",
         },
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
+        symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
         modules: [
