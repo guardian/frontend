@@ -20,6 +20,7 @@ class PuzzlesAccessController(val controllerComponents: ControllerComponents)
 
   def access(puzzleId: String): Action[AnyContent] =
     Action { implicit request =>
+      // This is where the Puzzles API should be invoked to validate the access.
       Cors(NoCache(ServiceUnavailable(Json.obj("message" -> "Puzzle access check is not available yet"))))
     }
 
