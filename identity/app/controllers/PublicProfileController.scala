@@ -3,7 +3,6 @@ package controllers
 import clients.DiscussionProfile
 import com.gu.identity.model.User
 import common.ImplicitControllerExecutionContext
-import idapiclient.responses.Error
 import idapiclient.{IdApiClient, Response}
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, IdentityPage}
@@ -26,19 +25,6 @@ class PublicProfileController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = {
-    if (vanityUrl.contains("script")) {
-      Future.successful(NotFound)
-    }
-
-    findProfileDataAndRender(
-      "/user/" + vanityUrl,
-      activityType,
-      // IDAPI no longer supports lookup by Vanity URL. We return not found profile pages instead
-      Future.successful(Left(List(Error("Not Found", "Not Found", 404)))),
-    )
-  }
-
   def renderProfileFromId(id: String, activityType: String): Action[AnyContent] = {
     if (id.toLongOption.isEmpty) {
       Action.async {
@@ -49,7 +35,7 @@ class PublicProfileController(
     }
   }
 
-  def findProfileDataAndRender(
+  private def findProfileDataAndRender(
       url: String,
       activityType: String,
       futureUser: => Future[Response[User]],
