@@ -59,7 +59,7 @@ object Dependencies {
   val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
   val paClient = "com.gu" %% "pa-client" % "7.0.18"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "22.0.0"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "23.0.0"
   val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
@@ -125,7 +125,8 @@ object Dependencies {
   val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
   val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
 
-  val circeParser = "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
+  val circeParser =
+    "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
   val jackson =
     Seq(
       jacksonCore,
