@@ -1,6 +1,6 @@
 package http
 
-import ab.{ABTests, PuzzlesHubV1Experiment}
+import ab.ABTests
 import conf.switches.Switches.EnableNewServerSideABTestsHeader
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
@@ -38,24 +38,24 @@ import scala.concurrent.{ExecutionContext, Future}
     }
   }
 
-  "ABTestingFilter" should "make the Fastly puzzles participation available to the shared helper" in {
+  "ABTestingFilter" should "make the Fastly participation available to the shared helper" in {
     EnableNewServerSideABTestsHeader.switchOn()
-    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub-v1:variant")
-    var puzzlesHubEnabled: Boolean = false
+    val request = FakeRequest().withHeaders(abTestHeader -> "example-test:variant")
+    var inVariant: Boolean = false
 
     val result = new ABTestingFilter().apply { filteredRequest: RequestHeader =>
-      puzzlesHubEnabled = PuzzlesHubV1Experiment.isEnabled(filteredRequest)
+      inVariant = ABTests.isUserInTestGroup("example-test", "variant")(filteredRequest)
       Future.successful(Results.Ok)
     }(request).futureValue
 
-    puzzlesHubEnabled should be(true)
-    result.header.headers.get(abTestHeader) should contain("puzzles-new-hub-v1:variant")
+    inVariant should be(true)
+    result.header.headers.get(abTestHeader) should contain("example-test:variant")
     result.header.headers.get("Vary") should contain(abTestHeader)
   }
 
   it should "preserve unrelated experiment participations" in {
     EnableNewServerSideABTestsHeader.switchOn()
-    val request = FakeRequest().withHeaders(abTestHeader -> "another-test:control,puzzles-new-hub-v1:variant")
+    val request = FakeRequest().withHeaders(abTestHeader -> "another-test:control,example-test:variant")
     var observedParticipations = Map.empty[String, String]
 
     new ABTestingFilter().apply { filteredRequest: RequestHeader =>
@@ -65,39 +65,39 @@ import scala.concurrent.{ExecutionContext, Future}
 
     observedParticipations should contain theSameElementsAs Map(
       "another-test" -> "control",
-      "puzzles-new-hub-v1" -> "variant",
+      "example-test" -> "variant",
     )
   }
 
   it should "make a Fastly control participation available as experiment-off" in {
     EnableNewServerSideABTestsHeader.switchOn()
-    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub-v1:control")
+    val request = FakeRequest().withHeaders(abTestHeader -> "example-test:control")
     var observedParticipations = Map.empty[String, String]
-    var puzzlesHubEnabled: Boolean = true
+    var inVariant: Boolean = true
 
     new ABTestingFilter().apply { filteredRequest: RequestHeader =>
       observedParticipations = ABTests.getParticipations(filteredRequest)
-      puzzlesHubEnabled = PuzzlesHubV1Experiment.isEnabled(filteredRequest)
+      inVariant = ABTests.isUserInTestGroup("example-test", "variant")(filteredRequest)
       Future.successful(Results.Ok)
     }(request).futureValue
 
-    puzzlesHubEnabled should be(false)
+    inVariant should be(false)
     observedParticipations should contain theSameElementsAs Map(
-      "puzzles-new-hub-v1" -> "control",
+      "example-test" -> "control",
     )
   }
 
   it should "leave the request undecorated when the infrastructure switch is off" in {
     EnableNewServerSideABTestsHeader.switchOff()
-    val request = FakeRequest().withHeaders(abTestHeader -> "puzzles-new-hub-v1:variant")
-    var puzzlesHubEnabled: Boolean = true
+    val request = FakeRequest().withHeaders(abTestHeader -> "example-test:variant")
+    var inVariant: Boolean = true
 
     val result = new ABTestingFilter().apply { filteredRequest: RequestHeader =>
-      puzzlesHubEnabled = PuzzlesHubV1Experiment.isEnabled(filteredRequest)
+      inVariant = ABTests.isUserInTestGroup("example-test", "variant")(filteredRequest)
       Future.successful(Results.Ok)
     }(request).futureValue
 
-    puzzlesHubEnabled should be(false)
+    inVariant should be(false)
     result.header.headers should not contain abTestHeader
     result.header.headers should not contain "Vary"
   }
