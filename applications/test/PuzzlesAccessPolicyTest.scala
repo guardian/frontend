@@ -15,12 +15,15 @@ import java.time.LocalDate
     PuzzlesAccessPolicy.requiresSubscription(today, today) should be(false)
   }
 
-  it should "keep puzzles up to seven days old free" in {
+  it should "keep the last seven days, counting today, free" in {
     PuzzlesAccessPolicy.requiresSubscription(today.minusDays(1), today) should be(false)
-    PuzzlesAccessPolicy.requiresSubscription(today.minusDays(7), today) should be(false)
+    // 3 November is the oldest free puzzle on 9 November
+    PuzzlesAccessPolicy.requiresSubscription(today.minusDays(6), today) should be(false)
   }
 
-  it should "require a subscription from eight days old" in {
+  it should "require a subscription from the eighth day, counting today" in {
+    // 2 November is already premium on 9 November
+    PuzzlesAccessPolicy.requiresSubscription(today.minusDays(7), today) should be(true)
     PuzzlesAccessPolicy.requiresSubscription(today.minusDays(8), today) should be(true)
     PuzzlesAccessPolicy.requiresSubscription(today.minusYears(2), today) should be(true)
   }

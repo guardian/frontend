@@ -298,7 +298,7 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 | `puzzleDate` | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context. |
 | `gameUrl` | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
 | `progressIdentity` | object, optional | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL. |
-| `requiresSubscription` | boolean, optional | `true` when the puzzle is older than the free window (today back to 7 days ago, Europe/London; see `PuzzlesAccessPolicy`). Absent means free. Depends only on the puzzle date, never on the reader, so it is safe in the cached HTML. |
+| `requiresSubscription` | boolean, optional | `true` when the puzzle is older than the free window (the last 7 days counting today are free, Europe/London; see `PuzzlesAccessPolicy`). Absent means free. Depends only on the puzzle date, never on the reader, so it is safe in the cached HTML. |
 | `moreFromPuzzlesAndGames` | array | Best-effort related puzzle cards; may be empty. |
 | `puzzlesSupporting` | object, optional | Useful links and an optional live newsletter. |
 
@@ -313,7 +313,7 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 
 ## Premium puzzles access
 
-Puzzles older than 7 days (Europe/London) need a Supporter Plus or Digital Pack subscription. The rule lives in
+Puzzles outside the last 7 days, counting today (Europe/London), need a Supporter Plus or Digital Pack subscription. The rule lives in
 `PuzzlesAccessPolicy` and is exposed to DCR as `instance.requiresSubscription`.
 
 Whether a reader may play will be answered by `GET /puzzles-and-games/access?puzzleId=<id>`

@@ -1057,8 +1057,8 @@ import scala.concurrent.{ExecutionContext, Future}
     }
 
     requiresSubscription(today) should be(None)
-    requiresSubscription(today.minusDays(7)) should be(None)
-    requiresSubscription(today.minusDays(8)) should be(Some(true))
+    requiresSubscription(today.minusDays(6)) should be(None)
+    requiresSubscription(today.minusDays(7)) should be(Some(true))
   }
 
   "renderWordWheelJson" should "return the equivalent rendering data as JSON, including the given puzzleDate" in {
