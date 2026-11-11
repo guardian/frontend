@@ -542,6 +542,32 @@ import scala.concurrent.{ExecutionContext, Future}
     (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe layout.copy(containers = Seq(crosswords))
   }
 
+  "Archive pages with the puzzle in the path" should "render the puzzle named in the path" in {
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+
+    val result = controller(archiveProvider, renderer).renderArchiveForPuzzle("crosswords", "mini")(
+      request("/puzzles-and-games/crosswords/mini/archive"),
+    )
+
+    status(result) shouldBe OK
+    val payload = ArgumentCaptor.forClass(classOf[JsValue])
+    verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+    (payload.getValue \ "archive" \ "selectedPuzzle" \ "id").as[String] shouldBe "archive-mini"
+  }
+
+  it should "return 404 instead of the first puzzle when the segment is unknown" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(archiveProvider, renderer).renderArchiveForPuzzle("crosswords", "unknown")(
+      request("/puzzles-and-games/crosswords/unknown/archive"),
+    )
+
+    status(result) shouldBe NOT_FOUND
+    verifyNoInteractions(renderer)
+  }
+
   "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
     val progressApi = mock[PuzzlesProgressApi]
     val item = PuzzlesApiItem(

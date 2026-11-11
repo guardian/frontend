@@ -1,20 +1,65 @@
 package test
 
 import ab.ABTests
-import controllers.SiteMapController
+import controllers.{PuzzlesLayoutProvider, SiteMapController}
 import jobs.SiteMapJob
-import org.mockito.Mockito.verifyNoInteractions
+import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
+import org.mockito.ArgumentMatchers.any
+import org.mockito.Mockito.{verifyNoInteractions, when}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.mvc.{AnyContent, Request}
 import play.api.test.Helpers._
 
+import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.XML
 
 class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with MockitoSugar {
   private val job = mock[SiteMapJob]
-  private val controller = new SiteMapController(job, stubControllerComponents())
+  private val layoutProvider = mock[PuzzlesLayoutProvider]
+  when(layoutProvider.getLayout()(any[ExecutionContext])).thenReturn(
+    Future.successful(
+      PuzzlesLayout(
+        Seq(
+          PuzzleContainer(
+            "crosswords",
+            "Crosswords",
+            content = PuzzleContent(
+              Nil,
+              Nil,
+              archiveChoices = Some(
+                Seq(
+                  PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive"),
+                  PuzzleItem("archive-mini", "Mini", "crossword", "mini", "archive"),
+                ),
+              ),
+            ),
+          ),
+          PuzzleContainer(
+            "trivia-and-quizzes",
+            "Trivia & quizzes",
+            content = PuzzleContent(
+              Seq(
+                Seq(
+                  PuzzleItem(
+                    "film-reveal",
+                    "Film reveal",
+                    "film-reveal",
+                    "all",
+                    "primary",
+                    slug = Some("trivia-and-quizzes/film-reveal"),
+                  ),
+                ),
+              ),
+              Nil,
+            ),
+          ),
+        ),
+      ),
+    ),
+  )
+  private val controller = new SiteMapController(job, layoutProvider, stubControllerComponents())
   private val abTestHeader = "X-GU-Server-AB-Tests"
 
   private def request(participation: String): Request[AnyContent] = {
@@ -22,7 +67,7 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     raw.withAttrs(ABTests.decorateRequest(abTestHeader)(raw).attrs)
   }
 
-  "Puzzles sitemap" should "serve only the canonical hub and four archive URLs to the experiment variant" in {
+  "Puzzles sitemap" should "serve the canonical hub and archive URLs to the experiment variant" in {
     val result = controller.renderPuzzlesSiteMap()(request("puzzles-new-hub-v1:variant"))
 
     status(result) shouldBe OK
@@ -31,7 +76,7 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     val xml = XML.loadString(contentAsString(result))
     xml.label shouldBe "urlset"
     xml.namespace shouldBe "http://www.sitemaps.org/schemas/sitemap/0.9"
-    (xml \ "url" \ "loc").map(_.text) should contain theSameElementsAs Seq(
+    (xml \ "url" \ "loc").map(_.text) should contain allElementsOf Seq(
       "https://www.theguardian.com/puzzles-and-games",
       "https://www.theguardian.com/puzzles-and-games/crosswords/archive",
       "https://www.theguardian.com/puzzles-and-games/logic-puzzles/archive",
@@ -39,6 +84,22 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
       "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive",
     )
     verifyNoInteractions(job)
+  }
+
+  it should "list each puzzle's own archive page, and trivia only when hub v2 is enabled" in {
+    def locs(participation: String): Seq[String] =
+      (XML.loadString(contentAsString(controller.renderPuzzlesSiteMap()(request(participation)))) \ "url" \ "loc")
+        .map(_.text)
+
+    val crosswordPuzzles = Seq(
+      "https://www.theguardian.com/puzzles-and-games/crosswords/quick/archive",
+      "https://www.theguardian.com/puzzles-and-games/crosswords/mini/archive",
+    )
+    val trivia = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/film-reveal/archive"
+
+    locs("puzzles-new-hub-v1:variant") should contain allElementsOf crosswordPuzzles
+    locs("puzzles-new-hub-v1:variant") should not contain trivia
+    locs("puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant") should contain(trivia)
   }
 
   it should "support cache revalidation for the enabled variant" in {

@@ -12,8 +12,8 @@ object PuzzlesSiteMap {
   )
 
   // Canonical production URLs, independent of the request's host or experiment cookies.
-  val xml: Elem =
+  def xml(puzzleArchivePaths: Seq[String]): Elem =
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-      {paths.map(path => <url><loc>{s"https://www.theguardian.com$path"}</loc></url>)}
+      {(paths ++ puzzleArchivePaths).distinct.map(path => <url><loc>{s"https://www.theguardian.com$path"}</loc></url>)}
     </urlset>
 }

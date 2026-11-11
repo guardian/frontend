@@ -149,9 +149,13 @@ class PuzzlesPageController(
       else
         buildArchive(category, puzzle)
           .flatMap { case (layout, archive) =>
-            val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
-            val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
-            remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+            // The path names a specific puzzle, so an unknown one is a 404 rather than the category's first puzzle.
+            if (puzzle.exists(value => !PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))) notFound
+            else {
+              val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
+              val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
+              remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+            }
           }
           .recoverWith { case _: NoSuchElementException => notFound }
     }
