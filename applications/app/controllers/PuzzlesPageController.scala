@@ -224,11 +224,7 @@ class PuzzlesPageController(
       // The uncached AJAX host does not receive the page's experiment cookie.
       // Trivia HTML access is gated before reaching this shared data builder.
       val layout = if (category == PuzzlesPageController.TriviaAndQuizzesGroup) fullLayout else hubLayout(fullLayout)
-      PuzzlesArchiveBuilder.select(
-        layout,
-        category,
-        puzzle.orElse(request.getQueryString("puzzle")),
-      ) match {
+      PuzzlesArchiveBuilder.select(layout, category, puzzle) match {
         case None =>
           Future.failed(
             new NoSuchElementException(

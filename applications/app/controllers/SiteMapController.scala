@@ -24,7 +24,8 @@ class SiteMapController(
       if (!PuzzlesHubV1Experiment.isEnabled) Future.successful(NoCache(NotFound))
       else
         puzzlesLayoutProvider.getLayout().map { layout =>
-          val archivePaths = PuzzlesArchiveBuilder.archivePaths(layout, includeTrivia = PuzzlesHubV2Experiment.isEnabled)
+          val archivePaths =
+            PuzzlesArchiveBuilder.archivePaths(layout, includeTrivia = PuzzlesHubV2Experiment.isEnabled)
           val sitemap = PuzzlesSiteMap.xml(archivePaths)
           Cached(60) {
             RevalidatableResult(Ok(sitemap).as("text/xml; charset=utf-8"), sitemap)

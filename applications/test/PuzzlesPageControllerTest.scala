@@ -754,13 +754,6 @@ import scala.concurrent.{ExecutionContext, Future}
       (contentAsJson(data) \ "items" \ 0 \ "gameStatus").as[String] shouldBe "completed"
       verify(archiveApi, times(2))
         .get(any[LocalDate], any[LocalDate], eqTo(apiType), eqTo(Some("Bearer access-token")))(any[ExecutionContext])
-
-      val legacyData = c.archiveData("trivia-and-quizzes")(
-        request(s"$path?puzzle=$slug&year=2020&month=9", participations = ""),
-      )
-      status(legacyData) shouldBe OK
-      header("Cache-Control", legacyData) should contain("private, no-store, no-cache")
-      (contentAsJson(legacyData) \ "selectedPuzzle" \ "puzzleType").as[String] shouldBe apiType
     }
 
     "Trivia archive access" should s"allow $slug HTML and calendar data with both variants" in {
@@ -782,8 +775,8 @@ import scala.concurrent.{ExecutionContext, Future}
         .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
       val c = controller(provider, renderer)
       val path = "/puzzles-and-games/trivia-and-quizzes"
-      val html = c.renderTriviaAndQuizzesArchive()(
-        request(s"$path/archive?puzzle=$slug", v2Participations),
+      val html = c.renderArchiveForPuzzle("trivia-and-quizzes", slug)(
+        request(s"$path/$slug/archive", v2Participations),
       )
       status(html) shouldBe OK
       val payload = ArgumentCaptor.forClass(classOf[JsValue])
