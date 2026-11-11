@@ -313,12 +313,28 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 
 ## Premium puzzles access
 
-Puzzles outside the last 7 days, counting today (Europe/London), need a Supporter Plus or Digital Pack subscription. The rule lives in
-`PuzzlesAccessPolicy` and is exposed to DCR as `instance.requiresSubscription`.
+Puzzles outside the last 7 days, counting today (Europe/London), need a Supporter Plus or Digital Pack subscription.
+The Puzzles API owns that rule and is the authority. `PuzzlesAccessPolicy` repeats it only to give DCR a hint,
+`instance.requiresSubscription`, in the cached page HTML (it is the same for every reader, so it can say that a puzzle
+is premium, never who may play it). The hint lets free puzzles and signed out readers resolve with no request at all.
+It must match the Puzzles API's `PUZZLE_FREE_WINDOW_DAYS` (7 by default): `PuzzlesAccessPolicyTest` and the Puzzles API
+tests check the same boundary (6 days ago is free, 7 days ago is premium).
 
-Whether a reader may play will be answered by `GET /puzzles-and-games/access?puzzleId=<id>`
-(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints, answering
-`{ "hasAccess": boolean }` once the Puzzles API has an access endpoint to forward the reader's `Authorization` header to.
+Whether a reader may play is answered by `GET /puzzles-and-games/access?puzzleId=<id>&date=<YYYY-MM-DD>`
+(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints. The browser sends the reader's own
+`Authorization` header. The controller:
 
-Until then the endpoint always answers 503 and does not call the Puzzles API. DCR treats any non-2xx answer as "could
-not find out" and falls back to what it knows about the reader.
+-   answers 401 if there is no `Authorization` header, and 400 if the id is not `^[\w-]{1,256}$` or the date is not a
+    calendar day as `YYYY-MM-DD`, without calling anything (the id goes into a URL path, so nothing else may reach it);
+-   otherwise forwards the header, with the API key, to the Puzzles API
+    (`GET /v1/game/{puzzleId}/access/{date}`, see `PuzzlesAccessApiClient`, 2 second timeout) and answers
+    `{ "hasAccess": boolean }`;
+-   answers 503 for **everything else**: a 401, 403 or 404 from the Puzzles API, a 5xx, a timeout, an invalid body. A
+    failure to find out is never reported as "denied".
+
+DCR treats any non-2xx answer as "could not find out" and falls back to what it knows about the reader. The date is
+only used by the Puzzles API to find the puzzle from its id, and the decision is made from the puzzle's own publish
+date, so a wrong date is a 404 (so a 503 here) and never a free puzzle.
+
+The response is never cached (`NoCache`), and the Puzzles API requires `Authorization` for this endpoint, so nothing
+here relies on any caching behaviour, including Fastly's, for correctness.

@@ -4,13 +4,16 @@ import java.time.{LocalDate, ZoneId}
 
 /** Decides which puzzles are free and which are premium.
   *
-  * The last [[FreeWindowDays]] days, counting today, are free for everyone: with today being the 9th, the 3rd to the 9th
-  * are free. Older ones ("premium puzzles") need a
-  * Supporter Plus or Digital Pack subscription.
+  * The last [[FreeWindowDays]] days, counting today, are free for everyone: with today being the 9th, the 3rd to the
+  * 9th are free. Older ones ("premium puzzles") need a Supporter Plus or Digital Pack subscription.
   *
   * The rule lives here, on the server, and never in the browser: a browser would use the reader's own clock, so
   * changing the computer's date would unlock every puzzle. "Today" is always the date in Europe/London, for every
   * reader, like the rest of the Puzzles code.
+  *
+  * This is only a hint for the cached page, so free puzzles and signed out readers need no request. The Puzzles API
+  * owns the rule and decides (see [[PuzzlesAccessController]]): keep [[FreeWindowDays]] equal to its
+  * `PUZZLE_FREE_WINDOW_DAYS`: both test the same boundary (6 days ago is free, 7 days ago is premium).
   */
 object PuzzlesAccessPolicy {
 
