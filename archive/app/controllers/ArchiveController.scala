@@ -10,6 +10,9 @@ import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import pagepresser.SimpleHtmlCleaner
 import play.api.libs.ws.WSClient
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
@@ -169,8 +172,10 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
     case ArchiveRedirect(_, archivePath) => {
       val response = S3Archive.get(archivePath) match {
         case Some(content) =>
+          val parsedDoc = Jsoup.parse(content)
+          val doc: Document = SimpleHtmlCleaner.clean(parsedDoc, convertToHttps = true)
           logDebugWithRequestId(s"Archive $redirectHttpStatus, redirect to $archivePath")
-          Ok(content).as("text/html")
+          Ok(doc.toString).as("text/html")
         case None =>
           logDebugWithRequestId(s"Archive 404, not found at $archivePath")
           NotFound
