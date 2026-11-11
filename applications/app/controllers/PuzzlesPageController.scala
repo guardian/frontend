@@ -152,7 +152,13 @@ class PuzzlesPageController(
             // The path names a specific puzzle, so an unknown one is a 404 rather than the category's first puzzle.
             if (puzzle.exists(value => !PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))) notFound
             else {
-              val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
+              // A puzzle's own archive page is titled after that puzzle, not after its category.
+              val (title, description) =
+                if (puzzle.isDefined)
+                  archive.selectedPuzzle.title ->
+                    s"Play the full ${archive.selectedPuzzle.title} archive from the Guardian. Track your progress of what you've played and started."
+                else archive.title -> archive.description
+              val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, title, description)
               val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
               remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
             }
@@ -162,15 +168,6 @@ class PuzzlesPageController(
 
   private def archiveEnabled(category: String)(implicit request: RequestHeader): Boolean =
     category != PuzzlesPageController.TriviaAndQuizzesGroup || PuzzlesHubV2Experiment.isEnabled
-
-  def archiveData(category: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      buildArchive(category, authorization = request.headers.get("Authorization"))
-        .map { case (_, archive) =>
-          NoCache(Ok(Json.toJson(archive)))
-        }
-        .recoverWith { case _: NoSuchElementException => notFound }
-    }
 
   // Fastly strips unrecognised query parameters. Calendar requests must carry
   // their selection in the path so that CODE/PROD receive the requested month.

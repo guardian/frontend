@@ -555,6 +555,10 @@ import scala.concurrent.{ExecutionContext, Future}
     val payload = ArgumentCaptor.forClass(classOf[JsValue])
     verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
     (payload.getValue \ "archive" \ "selectedPuzzle" \ "id").as[String] shouldBe "archive-mini"
+    (payload.getValue \ "archive" \ "selectedPuzzle" \ "path").as[String] shouldBe
+      "/puzzles-and-games/crosswords/mini/archive"
+    (payload.getValue \ "webTitle").as[String] should include("archive - puzzles & games")
+    (payload.getValue \ "webTitle").as[String] should not include "Crosswords archive"
   }
 
   it should "return 404 instead of the first puzzle when the segment is unknown" in {
@@ -820,14 +824,12 @@ import scala.concurrent.{ExecutionContext, Future}
       )
       val c = controller(provider, mock[DotcomRenderingService])
       val path = s"/puzzles-and-games/$category/archive-data"
-      val data = c.archiveData(category)(request(path, participations = ""))
-      status(data) shouldBe OK
-      (contentAsJson(data) \ "puzzles").as[Seq[JsValue]].map(value => (value \ "id").as[String]) shouldBe
-        Seq(if (category == "crosswords") choice.id else item.id)
       val calendar = c.archiveDataForMonth(category, item.id, 2020, 9)(
         request(s"$path/${item.id}/2020/9", participations = ""),
       )
       status(calendar) shouldBe OK
+      (contentAsJson(calendar) \ "puzzles").as[Seq[JsValue]].map(value => (value \ "id").as[String]) shouldBe
+        Seq(if (category == "crosswords") choice.id else item.id)
       (contentAsJson(calendar) \ "selectedPuzzle" \ "puzzleType").as[String] should not be "FILMREVEAL"
     }
   }

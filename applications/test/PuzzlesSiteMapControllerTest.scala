@@ -81,8 +81,9 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
       "https://www.theguardian.com/puzzles-and-games/crosswords/archive",
       "https://www.theguardian.com/puzzles-and-games/logic-puzzles/archive",
       "https://www.theguardian.com/puzzles-and-games/word-games/archive",
-      "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive",
     )
+    (xml \ "url" \ "loc").map(_.text) should not contain
+      "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive"
     verifyNoInteractions(job)
   }
 
@@ -97,7 +98,11 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     )
     val trivia = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/film-reveal/archive"
 
+    val triviaCategory = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive"
+
     locs("puzzles-new-hub-v1:variant") should contain allElementsOf crosswordPuzzles
+    locs("puzzles-new-hub-v1:variant") should not contain triviaCategory
+    locs("puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant") should contain(triviaCategory)
     locs("puzzles-new-hub-v1:variant") should not contain trivia
     locs("puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant") should contain(trivia)
   }
