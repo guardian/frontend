@@ -9,6 +9,12 @@ object SimpleHtmlCleaner extends HtmlCleaner {
     document.getElementById("interactive-content") == null
   }
 
+  def cleanArchive(document: Document): Document = {
+    removeScripts(document)
+    removeByTagName(document, "noscript")
+    secureDocument(document)
+    document
+  }
   override def clean(document: Document, convertToHttps: Boolean): Document = {
     universalClean(document)
     removeScripts(document)
