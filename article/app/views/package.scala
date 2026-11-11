@@ -79,7 +79,7 @@ object BodyProcessor {
       MinuteCleaner(article),
       GarnettQuoteCleaner,
       AffiliateLinksCleaner(
-        pageUrl = request.uri,
+        pageId = article.content.metadata.id,
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         tags = article.content.tags.tags.map(_.id),
         isUSProductionOffice = article.content.isUSProductionOffice,

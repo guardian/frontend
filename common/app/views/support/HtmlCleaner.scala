@@ -861,7 +861,7 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 }
 
 case class AffiliateLinksCleaner(
-    pageUrl: String,
+    pageId: String,
     showAffiliateLinks: Option[Boolean],
     appendDisclaimer: Option[Boolean] = None,
     tags: List[String],
@@ -880,7 +880,7 @@ case class AffiliateLinksCleaner(
       )
     ) {
       val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
-      AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, skimlinksId, abTests)
+      AffiliateLinksCleaner.replaceLinksInHtml(document, pageId, skimlinksId, abTests)
     } else document
   }
 }
@@ -892,13 +892,13 @@ object AffiliateLinksCleaner {
 
   def replaceLinksInHtml(
       html: Document,
-      pageUrl: String,
+      pageId: String,
       skimlinksId: String,
       abTests: Map[String, String],
   ): Document = {
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
     linksToReplace.foreach { el =>
-      el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId, abTests))
+      el.attr("href", linkToSkimLink(el.attr("href"), pageId, skimlinksId, abTests))
         .attr("rel", "sponsored noreferrer noopener")
     }
     html
@@ -906,7 +906,7 @@ object AffiliateLinksCleaner {
 
   def replaceUrlInLink(
       url: Option[String],
-      pageUrl: String,
+      pageId: String,
       addAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
       abTests: Map[String, String],
@@ -915,7 +915,7 @@ object AffiliateLinksCleaner {
     httpsUrl match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
         val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
-        Some(linkToSkimLink(link, pageUrl, skimlinksId, abTests))
+        Some(linkToSkimLink(link, pageId, skimlinksId, abTests))
       case _ => httpsUrl
     }
   }
@@ -925,13 +925,13 @@ object AffiliateLinksCleaner {
   def isAffiliatable(element: Element): Boolean =
     element.tagName == "a" && SkimLinksCache.isSkimLink(element.attr("href"))
 
-  def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String, abTests: Map[String, String]): String = {
+  def linkToSkimLink(link: String, pageId: String, skimlinksId: String, abTests: Map[String, String]): String = {
     val urlEncodedLink = URLEncode(ensureHttps(link))
     val xcustParam = if (abTests.nonEmpty) {
       val xcust = URLEncode("abTestParticipations" + abTests.map { case (k, v) => s"|$k:$v" }.mkString)
       s"&xcust=$xcust"
     } else ""
-    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl$xcustParam"
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageId$xcustParam"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {
