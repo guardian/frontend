@@ -178,7 +178,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
           Ok(doc.toString).as("text/html")
         case None =>
           logDebugWithRequestId(s"Archive 404, not found at $archivePath")
-          NotFound
+          NotFound(views.html.notFound())
       }
       WithoutRevalidationResult(response)
     }
