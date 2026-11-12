@@ -8,7 +8,7 @@ class AffiliateLinksCleanerTest extends AnyFlatSpec with Matchers {
 
   "linkToSkimLink" should "correctly convert a link to a skimlink" in {
     val link = "https://www.piratendating.nl/"
-    val pageId = "/guardian-pirates/soulmates"
+    val pageId = "guardian-pirates/soulmates"
     linkToSkimLink(link, pageId, "123", Map.empty) should equal(
       s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
     )
