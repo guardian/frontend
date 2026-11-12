@@ -23,10 +23,26 @@ import scala.util.{Failure, Success}
 class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
   private val subnavConfigBox = Box[Option[CustomSubnavConfig]](None)
   private val publicationStatus: PublicationStatus = if (appIdentity.name == "preview") Draft else Live
+  private val editorUrl = """https?://[^/]+/v2/subnavs/([^/?#]+)/?(?:[?#].*)?""".r
 
   def isLoaded(): Boolean = subnavConfigBox.get().isDefined
 
   def getSubnavConfig(): Option[CustomSubnavConfig] = subnavConfigBox.get()
+
+  private def findSubnav(status: PublicationStatus)(matches: CustomSubnav => Boolean): Option[CustomSubnav] =
+    getSubnavConfig().flatMap { config =>
+      val draft = if (status == Draft) config.draft else Nil
+      (draft ++ config.live).find(matches)
+    }
+
+  def getSubnavById(id: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] =
+    findSubnav(status)(_.id == id)
+
+  def getSubnavByUrl(subnavUrl: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] =
+    subnavUrl match {
+      case editorUrl(id) => getSubnavById(id, status)
+      case url           => findSubnav(status)(_.header.dotcomPath.contains(url))
+    }
 
   /** Look up the custom subnav targeted at the given front, if any. */
   def getSubnavForFront(frontId: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
