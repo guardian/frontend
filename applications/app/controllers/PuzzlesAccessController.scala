@@ -16,6 +16,9 @@ import scala.util.Try
   * This only checks the shape of the request, adds the API key (in [[PuzzlesAccessApi]]) and relays the question to the
   * Puzzles API, which owns the rule and decides. It deliberately does not verify the token itself.
   *
+  * The puzzle id and its date are path parameters, not a query string: query parameters are stripped by the CDN in CODE
+  * and PROD (see the puzzles archive data routes), and nothing here may depend on how the CDN treats a request.
+  *
   * The answer is `{ "hasAccess": boolean }` and nothing else. Anything that stops the Puzzles API giving a valid answer
   * is a 503, never "denied": the browser treats any non-2xx answer as "could not find out" and falls back to what it
   * knows about the reader, so a failure on our side can never lock a subscriber out or unlock everything.
@@ -59,7 +62,8 @@ class PuzzlesAccessController(
       }
     }
 
-  def options(): Action[AnyContent] = Action { implicit request =>
+  /** Answers the CORS preflight. The path parameters are only there because the route has them. */
+  def options(puzzleId: String, date: String): Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("GET, OPTIONS"))
   }
 }

@@ -35,7 +35,7 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   private def readerRequest(authorization: String = "Bearer reader-token") =
-    FakeRequest("GET", s"/puzzles-and-games/access?puzzleId=$puzzleId&date=$date")
+    FakeRequest("GET", s"/puzzles-and-games/access/$puzzleId/$date")
       .withHeaders(AUTHORIZATION -> authorization)
 
   private def hasAccess(result: Future[Result]): Boolean =
@@ -164,6 +164,7 @@ import scala.concurrent.{ExecutionContext, Future}
   "options" should "answer the preflight for GET" in {
     val (_, controller) = answering(Future.successful(PuzzleAccess(isPremium = false, hasAccess = true)))
 
-    status(controller.options()(FakeRequest("OPTIONS", "/puzzles-and-games/access"))) should be(NO_CONTENT)
+    status(controller.options(puzzleId, date)(FakeRequest("OPTIONS", s"/puzzles-and-games/access/$puzzleId/$date")))
+      .should(be(NO_CONTENT))
   }
 }

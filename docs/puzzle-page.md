@@ -320,9 +320,10 @@ is premium, never who may play it). The hint lets free puzzles and signed out re
 It must match the Puzzles API's `PUZZLE_FREE_WINDOW_DAYS` (7 by default): `PuzzlesAccessPolicyTest` and the Puzzles API
 tests check the same boundary (6 days ago is free, 7 days ago is premium).
 
-Whether a reader may play is answered by `GET /puzzles-and-games/access?puzzleId=<id>&date=<YYYY-MM-DD>`
-(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints. The browser sends the reader's own
-`Authorization` header. The controller:
+Whether a reader may play is answered by `GET /puzzles-and-games/access/<id>/<YYYY-MM-DD>`
+(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints. The id and the date are path
+parameters, not a query string, because query parameters are stripped by the CDN in CODE and PROD. The browser sends
+the reader's own `Authorization` header. The controller:
 
 -   answers 401 if there is no `Authorization` header, and 400 if the id is not `^[\w-]{1,256}$` or the date is not a
     calendar day as `YYYY-MM-DD`, without calling anything (the id goes into a URL path, so nothing else may reach it);
