@@ -931,7 +931,7 @@ object AffiliateLinksCleaner {
       val xcust = URLEncode("abTestParticipations" + abTests.map { case (k, v) => s"|$k:$v" }.mkString)
       s"&xcust=$xcust"
     } else ""
-    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageId$xcustParam"
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=${host.stripSuffix("/")}/${pageId.stripPrefix("/")}$xcustParam"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {
