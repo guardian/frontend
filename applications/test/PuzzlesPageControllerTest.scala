@@ -542,6 +542,36 @@ import scala.concurrent.{ExecutionContext, Future}
     (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe layout.copy(containers = Seq(crosswords))
   }
 
+  "Archive pages with the puzzle in the path" should "render the puzzle named in the path" in {
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+
+    val result = controller(archiveProvider, renderer).renderArchiveForPuzzle("crosswords", "mini")(
+      request("/puzzles-and-games/crosswords/mini/archive"),
+    )
+
+    status(result) shouldBe OK
+    val payload = ArgumentCaptor.forClass(classOf[JsValue])
+    verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+    (payload.getValue \ "archive" \ "selectedPuzzle" \ "id").as[String] shouldBe "archive-mini"
+    (payload.getValue \ "archive" \ "selectedPuzzle" \ "path").as[String] shouldBe
+      "/puzzles-and-games/crosswords/mini/archive"
+    (payload.getValue \ "webTitle").as[String] should include("archive - puzzles & games")
+    (payload.getValue \ "webTitle").as[String] should not include "Crosswords archive"
+  }
+
+  it should "return 404 instead of the first puzzle when the segment is unknown" in {
+    val renderer = mock[DotcomRenderingService]
+
+    val result = controller(archiveProvider, renderer).renderArchiveForPuzzle("crosswords", "unknown")(
+      request("/puzzles-and-games/crosswords/unknown/archive"),
+    )
+
+    status(result) shouldBe NOT_FOUND
+    verifyNoInteractions(renderer)
+  }
+
   "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
     val progressApi = mock[PuzzlesProgressApi]
     val item = PuzzlesApiItem(
@@ -728,13 +758,6 @@ import scala.concurrent.{ExecutionContext, Future}
       (contentAsJson(data) \ "items" \ 0 \ "gameStatus").as[String] shouldBe "completed"
       verify(archiveApi, times(2))
         .get(any[LocalDate], any[LocalDate], eqTo(apiType), eqTo(Some("Bearer access-token")))(any[ExecutionContext])
-
-      val legacyData = c.archiveData("trivia-and-quizzes")(
-        request(s"$path?puzzle=$slug&year=2020&month=9", participations = ""),
-      )
-      status(legacyData) shouldBe OK
-      header("Cache-Control", legacyData) should contain("private, no-store, no-cache")
-      (contentAsJson(legacyData) \ "selectedPuzzle" \ "puzzleType").as[String] shouldBe apiType
     }
 
     "Trivia archive access" should s"allow $slug HTML and calendar data with both variants" in {
@@ -756,8 +779,8 @@ import scala.concurrent.{ExecutionContext, Future}
         .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
       val c = controller(provider, renderer)
       val path = "/puzzles-and-games/trivia-and-quizzes"
-      val html = c.renderTriviaAndQuizzesArchive()(
-        request(s"$path/archive?puzzle=$slug", v2Participations),
+      val html = c.renderArchiveForPuzzle("trivia-and-quizzes", slug)(
+        request(s"$path/$slug/archive", v2Participations),
       )
       status(html) shouldBe OK
       val payload = ArgumentCaptor.forClass(classOf[JsValue])
@@ -801,14 +824,12 @@ import scala.concurrent.{ExecutionContext, Future}
       )
       val c = controller(provider, mock[DotcomRenderingService])
       val path = s"/puzzles-and-games/$category/archive-data"
-      val data = c.archiveData(category)(request(path, participations = ""))
-      status(data) shouldBe OK
-      (contentAsJson(data) \ "puzzles").as[Seq[JsValue]].map(value => (value \ "id").as[String]) shouldBe
-        Seq(if (category == "crosswords") choice.id else item.id)
       val calendar = c.archiveDataForMonth(category, item.id, 2020, 9)(
         request(s"$path/${item.id}/2020/9", participations = ""),
       )
       status(calendar) shouldBe OK
+      (contentAsJson(calendar) \ "puzzles").as[Seq[JsValue]].map(value => (value \ "id").as[String]) shouldBe
+        Seq(if (category == "crosswords") choice.id else item.id)
       (contentAsJson(calendar) \ "selectedPuzzle" \ "puzzleType").as[String] should not be "FILMREVEAL"
     }
   }
@@ -1008,7 +1029,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .redirectSudokuArchive("easy")(request("/puzzles-and-games/logic-puzzles/sudoku-easy"))
 
     status(result) should be(FOUND)
-    redirectLocation(result) should be(Some("/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy"))
+    redirectLocation(result) should be(Some("/puzzles-and-games/logic-puzzles/sudoku-easy/archive"))
     verifyNoInteractions(renderer)
   }
 
@@ -1074,7 +1095,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .redirectWordWheelArchive()(request("/puzzles-and-games/word-games/word-wheel"))
 
     status(result) should be(FOUND)
-    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/archive?puzzle=word-wheel"))
+    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/word-wheel/archive"))
     verifyNoInteractions(renderer)
   }
 
@@ -1170,7 +1191,7 @@ import scala.concurrent.{ExecutionContext, Future}
         request(path, v2Participations),
       )
       status(result) shouldBe FOUND
-      redirectLocation(result) shouldBe Some(s"/puzzles-and-games/trivia-and-quizzes/archive?puzzle=$slug")
+      redirectLocation(result) shouldBe Some(s"/puzzles-and-games/trivia-and-quizzes/$slug/archive")
       verifyNoInteractions(api)
     }
 
@@ -1293,7 +1314,7 @@ import scala.concurrent.{ExecutionContext, Future}
       .redirectWordiplyArchive()(request("/puzzles-and-games/word-games/wordiply"))
 
     status(result) should be(FOUND)
-    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/archive?puzzle=wordiply"))
+    redirectLocation(result) should be(Some("/puzzles-and-games/word-games/wordiply/archive"))
     verifyNoInteractions(renderer)
   }
 

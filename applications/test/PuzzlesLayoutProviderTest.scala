@@ -91,24 +91,24 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     crosswords.content.archiveChoices.toSeq.flatten.map(_.title) shouldBe
       crosswords.content.items.flatten.map(_.title).filterNot(_ == "Genius")
     crosswords.content.archiveChoices.toSeq.flatten.map(_.url) shouldBe Seq(
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quick"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-mini"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-cryptic"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-weekend"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quick-cryptic"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-quiptic"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-prize"),
-      Some("/puzzles-and-games/crosswords/archive?puzzle=archive-sunday-quick"),
+      Some("/puzzles-and-games/crosswords/quick/archive"),
+      Some("/puzzles-and-games/crosswords/mini/archive"),
+      Some("/puzzles-and-games/crosswords/cryptic/archive"),
+      Some("/puzzles-and-games/crosswords/weekend/archive"),
+      Some("/puzzles-and-games/crosswords/quick-cryptic/archive"),
+      Some("/puzzles-and-games/crosswords/quiptic/archive"),
+      Some("/puzzles-and-games/crosswords/prize/archive"),
+      Some("/puzzles-and-games/crosswords/sunday-quick/archive"),
     )
     layout.containers.find(_.id == "word-games").flatMap(_.content.archiveChoices).map(_.flatMap(_.url)) shouldBe
-      Some(Seq("/puzzles-and-games/word-games/archive?puzzle=word-wheel-daily"))
+      Some(Seq("/puzzles-and-games/word-games/word-wheel/archive"))
     layout.containers.find(_.id == "logic-puzzles").flatMap(_.content.archiveChoices).map(_.flatMap(_.url)) shouldBe
       Some(
         Seq(
-          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy",
-          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-medium",
-          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-hard",
-          "/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-killer",
+          "/puzzles-and-games/logic-puzzles/sudoku-easy/archive",
+          "/puzzles-and-games/logic-puzzles/sudoku-medium/archive",
+          "/puzzles-and-games/logic-puzzles/sudoku-hard/archive",
+          "/puzzles-and-games/logic-puzzles/sudoku-killer/archive",
         ),
       )
     layout.containers
@@ -141,8 +141,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     )
     cards.flatMap(_.imageAlt) shouldBe Seq("Film reveal illustration", "On the ball illustration")
     trivia.content.archiveChoices.toSeq.flatten.flatMap(_.url) shouldBe Seq(
-      "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=film-reveal",
-      "/puzzles-and-games/trivia-and-quizzes/archive?puzzle=on-the-ball",
+      "/puzzles-and-games/trivia-and-quizzes/film-reveal/archive",
+      "/puzzles-and-games/trivia-and-quizzes/on-the-ball/archive",
     )
   }
 
