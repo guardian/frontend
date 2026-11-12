@@ -21,7 +21,7 @@ private[pageElements] trait GalleryCaptionHtmlCleaner {
 object TextCleaner {
 
   def affiliateLinks(
-      pageUrl: String,
+      pageId: String,
       addAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
       abTests: Map[String, String],
@@ -31,7 +31,7 @@ object TextCleaner {
     if (addAffiliateLinks) {
       val skimlinksId =
         if (isUSProductionOffice) affiliateLinksConfig.skimlinksUSId else affiliateLinksConfig.skimlinksDefaultId
-      rewriteAffiliateLinks(html, pageUrl, skimlinksId, abTests)
+      rewriteAffiliateLinks(html, pageId, skimlinksId, abTests)
     } else {
       html
     }
@@ -42,7 +42,7 @@ object TextCleaner {
     */
   def rewriteAffiliateLinks(
       html: String,
-      pageUrl: String,
+      pageId: String,
       skimlinksId: String,
       abTests: Map[String, String],
   ): String = {
@@ -50,13 +50,13 @@ object TextCleaner {
     if (AffiliateLinksCleaner.getAffiliateableLinks(doc).isEmpty) {
       html
     } else {
-      AffiliateLinksCleaner.replaceLinksInHtml(doc, pageUrl, skimlinksId, abTests).body().html()
+      AffiliateLinksCleaner.replaceLinksInHtml(doc, pageId, skimlinksId, abTests).body().html()
     }
   }
 
   def cleanGalleryCaption(
       caption: String,
-      pageUrl: String,
+      pageId: String,
       shouldAddAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
       abTests: Map[String, String],
@@ -65,7 +65,7 @@ object TextCleaner {
     val cleaners = List(
       GalleryCaptionCleaner,
       GalleryAffiliateLinksCleaner(
-        pageUrl,
+        pageId,
         shouldAddAffiliateLinks,
         isUSProductionOffice,
         abTests,

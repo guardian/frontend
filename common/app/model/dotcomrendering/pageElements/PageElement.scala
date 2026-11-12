@@ -1212,7 +1212,7 @@ object PageElement extends GuLogging {
         List(
           ImageBlockElement(
             ImageMedia(imageAssets.toSeq),
-            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests),
+            imageDataFor(element, isGallery, pageId, addAffiliateLinks, isUSProductionOffice, abTests),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
             imageSources,
@@ -2355,7 +2355,7 @@ object PageElement extends GuLogging {
   private def imageDataFor(
       element: ApiBlockElement,
       isGallery: Boolean,
-      pageUrl: String,
+      pageId: String,
       addAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
       abTests: Map[String, String],
@@ -2366,9 +2366,9 @@ object PageElement extends GuLogging {
         "alt" -> d.alt,
         "caption" -> {
           if (isGallery) {
-            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests))
+            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageId, addAffiliateLinks, isUSProductionOffice, abTests))
           } else {
-            d.caption.map(TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isUSProductionOffice, abTests))
+            d.caption.map(TextCleaner.affiliateLinks(pageId, addAffiliateLinks, isUSProductionOffice, abTests))
           }
         },
         "credit" -> d.credit,
