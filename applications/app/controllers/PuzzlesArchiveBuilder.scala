@@ -70,6 +70,15 @@ object PuzzlesArchiveBuilder {
       )
       .distinct
 
+  /** The path of the archive page for the puzzle with this `set` in `category`, if it has one. */
+  def archivePathFor(layout: PuzzlesLayout, category: String, set: String): Option[String] =
+    layout.containers
+      .find(_.id == category)
+      .toSeq
+      .flatMap(archiveItems)
+      .flatMap(toPuzzle(category, _))
+      .collectFirst { case (puzzle, _) if puzzle.set == set => puzzle.path }
+
   def select(layout: PuzzlesLayout, category: String, selected: Option[String]): Option[Selection] = {
     val container = layout.containers.find(_.id == category)
     val candidates = container.toSeq.flatMap(archiveItems).flatMap(toPuzzle(category, _))

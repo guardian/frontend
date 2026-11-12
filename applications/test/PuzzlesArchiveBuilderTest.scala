@@ -63,6 +63,14 @@ import play.api.libs.json.Json
     selection.apiType should be("SUDOKU_EASY")
   }
 
+  it should "find the archive path of a crossword type, and none for a type without an archive page" in {
+    PuzzlesArchiveBuilder.archivePathFor(layout, "crosswords", "mini") should be(
+      Some("/puzzles-and-games/crosswords/mini/archive"),
+    )
+    PuzzlesArchiveBuilder.archivePathFor(layout, "crosswords", "genius") should be(None)
+    PuzzlesArchiveBuilder.archivePathFor(layout, "unknown-category", "mini") should be(None)
+  }
+
   it should "use the documented archive titles and meta descriptions" in {
     val expected = Seq(
       "crosswords" -> (
