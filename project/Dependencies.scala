@@ -58,9 +58,9 @@ object Dependencies {
   val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
   val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val paClient = "com.gu" %% "pa-client" % "7.0.18"
+  val paClient = "com.gu" %% "pa-client" % "7.0.19"
   val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "23.0.1"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "8.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
