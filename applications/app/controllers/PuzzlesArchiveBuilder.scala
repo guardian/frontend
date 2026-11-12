@@ -47,20 +47,43 @@ object PuzzlesArchiveBuilder {
     if (container.id == "crosswords") container.content.archiveChoices.getOrElse(Nil)
     else items(container)
 
-  private def toPuzzle(item: PuzzleItem): Option[(PuzzlesArchivePuzzle, String)] =
+  private def toPuzzle(category: String, item: PuzzleItem): Option[(PuzzlesArchivePuzzle, String)] =
     apiTypes.get((item.`type`, item.set)).map { apiType =>
-      PuzzlesArchivePuzzle(item.id, item.title, apiType, item.slug, item.set) -> apiType
+      val segment = item.slug.flatMap(_.split('/').lastOption).getOrElse(item.set)
+      val path = s"/puzzles-and-games/$category/$segment/archive"
+      PuzzlesArchivePuzzle(item.id, item.title, apiType, item.slug, item.set, path) -> apiType
     }
+
+  private val archiveCategories = Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes")
+
+  /** Whether `value`, from the query string or the path, identifies `puzzle`. */
+  def matches(puzzle: PuzzlesArchivePuzzle, value: String): Boolean =
+    puzzle.id == value || puzzle.set == value || puzzle.slug.exists(_.split('/').lastOption.contains(value))
+
+  /** The path of every puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
+  def archivePaths(layout: PuzzlesLayout, includeTrivia: Boolean): Seq[String] =
+    layout.containers
+      .filter(container => archiveCategories.contains(container.id))
+      .filter(container => includeTrivia || container.id != "trivia-and-quizzes")
+      .flatMap(container =>
+        archiveItems(container).flatMap(toPuzzle(container.id, _)).map { case (puzzle, _) => puzzle.path },
+      )
+      .distinct
+
+  /** The path of the archive page for the puzzle with this `set` in `category`, if it has one. */
+  def archivePathFor(layout: PuzzlesLayout, category: String, set: String): Option[String] =
+    layout.containers
+      .find(_.id == category)
+      .toSeq
+      .flatMap(archiveItems)
+      .flatMap(toPuzzle(category, _))
+      .collectFirst { case (puzzle, _) if puzzle.set == set => puzzle.path }
 
   def select(layout: PuzzlesLayout, category: String, selected: Option[String]): Option[Selection] = {
     val container = layout.containers.find(_.id == category)
-    val candidates = container.toSeq.flatMap(archiveItems).flatMap(toPuzzle)
+    val candidates = container.toSeq.flatMap(archiveItems).flatMap(toPuzzle(category, _))
     val chosen = selected
-      .flatMap(value =>
-        candidates.find { case (puzzle, _) =>
-          puzzle.id == value || puzzle.set == value || puzzle.slug.exists(_.split('/').lastOption.contains(value))
-        },
-      )
+      .flatMap(value => candidates.find { case (puzzle, _) => matches(puzzle, value) })
       .orElse(candidates.headOption)
 
     chosen.map { case (puzzle, apiType) =>

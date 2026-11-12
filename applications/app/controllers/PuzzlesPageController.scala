@@ -138,31 +138,36 @@ class PuzzlesPageController(
   def renderLogicPuzzlesArchive(): Action[AnyContent] = renderArchive("logic-puzzles")
   def renderTriviaAndQuizzesArchive(): Action[AnyContent] = renderArchive(PuzzlesPageController.TriviaAndQuizzesGroup)
 
-  private def renderArchive(category: String): Action[AnyContent] =
+  // The selected puzzle lives in the path rather than a query parameter, which Fastly strips in CODE/PROD.
+  def renderArchiveForPuzzle(category: String, puzzle: String): Action[AnyContent] =
+    renderArchive(category, Some(puzzle))
+
+  private def renderArchive(category: String, puzzle: Option[String] = None): Action[AnyContent] =
     Action.async { implicit request =>
       if (!PuzzlesHubV1Experiment.isEnabled || !archiveEnabled(category) || request.getRequestFormat != HtmlFormat)
         notFound
       else
-        buildArchive(category)
+        buildArchive(category, puzzle)
           .flatMap { case (layout, archive) =>
-            val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, archive.title, archive.description)
-            val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
-            remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+            // The path names a specific puzzle, so an unknown one is a 404 rather than the category's first puzzle.
+            if (puzzle.exists(value => !PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))) notFound
+            else {
+              // A puzzle's own archive page is titled after that puzzle, not after its category.
+              val (title, description) =
+                if (puzzle.isDefined)
+                  archive.selectedPuzzle.title ->
+                    s"Play the full ${archive.selectedPuzzle.title} archive from the Guardian. Track your progress of what you've played and started."
+                else archive.title -> archive.description
+              val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, title, description)
+              val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
+              remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+            }
           }
           .recoverWith { case _: NoSuchElementException => notFound }
     }
 
   private def archiveEnabled(category: String)(implicit request: RequestHeader): Boolean =
     category != PuzzlesPageController.TriviaAndQuizzesGroup || PuzzlesHubV2Experiment.isEnabled
-
-  def archiveData(category: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      buildArchive(category, authorization = request.headers.get("Authorization"))
-        .map { case (_, archive) =>
-          NoCache(Ok(Json.toJson(archive)))
-        }
-        .recoverWith { case _: NoSuchElementException => notFound }
-    }
 
   // Fastly strips unrecognised query parameters. Calendar requests must carry
   // their selection in the path so that CODE/PROD receive the requested month.
@@ -216,11 +221,7 @@ class PuzzlesPageController(
       // The uncached AJAX host does not receive the page's experiment cookie.
       // Trivia HTML access is gated before reaching this shared data builder.
       val layout = if (category == PuzzlesPageController.TriviaAndQuizzesGroup) fullLayout else hubLayout(fullLayout)
-      PuzzlesArchiveBuilder.select(
-        layout,
-        category,
-        puzzle.orElse(request.getQueryString("puzzle")),
-      ) match {
+      PuzzlesArchiveBuilder.select(layout, category, puzzle) match {
         case None =>
           Future.failed(
             new NoSuchElementException(
@@ -430,7 +431,7 @@ class PuzzlesPageController(
   /** Temporary (302) redirect to `group`'s archive page, filtered to `slug`. */
   private def redirectToArchive(group: String, slug: String)(implicit request: RequestHeader): Future[Result] =
     Future.successful(
-      Redirect(s"/puzzles-and-games/$group/archive", Map("puzzle" -> Seq(slug)), status = FOUND),
+      Redirect(s"/puzzles-and-games/$group/$slug/archive", FOUND),
     )
 
   private def renderPuzzlePageContent(
