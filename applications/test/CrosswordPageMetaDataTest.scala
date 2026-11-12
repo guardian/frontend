@@ -1,6 +1,6 @@
 package test
 
-import controllers.{CrosswordPageController, PuzzlesNewsletters}
+import controllers.{CrosswordPageController, PuzzlesLayoutProvider, PuzzlesNewsletters}
 import metadata.MetaDataMatcher
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -26,6 +26,7 @@ import scala.concurrent.ExecutionContext
       play.api.test.Helpers.stubControllerComponents(),
       wsClient,
       new PuzzlesNewsletters(new NewsletterSignupAgent(NewsletterApi(wsClient)(ExecutionContext.global))),
+      org.mockito.Mockito.mock(classOf[PuzzlesLayoutProvider]),
     )
 
   it should "not include the ios deep link" in {
