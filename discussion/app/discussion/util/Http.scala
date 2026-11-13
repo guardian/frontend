@@ -28,8 +28,17 @@ trait Http extends GuLogging {
           val errorMessage = onError(response)
           throw NotFoundException(errorMessage)
         case 400 =>
+          val isInvalidPageNumber =
+            (response.json \ "errorCode")
+              .asOpt[String]
+              .contains("INVALID_PAGE_NUMBER")
           val errorMessage = onError(response)
-          throw NotFoundException(errorMessage)
+          if (isInvalidPageNumber) {
+            throw NotFoundException(errorMessage)
+          } else {
+            log.error(errorMessage)
+            throw OtherException(errorMessage)
+          }
         case otherStatus =>
           val errorMessage = onError(response)
           log.error(errorMessage)
