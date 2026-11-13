@@ -22,7 +22,52 @@ case class DotcomPuzzlesPageRenderingDataModel(
     isAdFreeUser: Boolean,
     canonicalUrl: String,
     layout: PuzzlesLayout,
+    archive: Option[PuzzlesArchive] = None,
 )
+
+case class PuzzlesArchivePuzzle(
+    id: String,
+    title: String,
+    puzzleType: String,
+    slug: Option[String],
+    set: String,
+    /** Path of this puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
+    path: String,
+)
+
+object PuzzlesArchivePuzzle {
+  implicit val writes: OWrites[PuzzlesArchivePuzzle] = Json.writes[PuzzlesArchivePuzzle]
+}
+
+case class PuzzlesArchiveItem(
+    puzzleType: String,
+    date: String,
+    progress: Int,
+    setterName: Option[String],
+    url: String,
+    gameStatus: Option[String] = None,
+)
+
+object PuzzlesArchiveItem {
+  implicit val writes: OWrites[PuzzlesArchiveItem] = Json.writes[PuzzlesArchiveItem]
+}
+
+case class PuzzlesArchive(
+    category: String,
+    title: String,
+    description: String,
+    selectedPuzzle: PuzzlesArchivePuzzle,
+    puzzles: Seq[PuzzlesArchivePuzzle],
+    year: Int,
+    month: Int,
+    items: Seq[PuzzlesArchiveItem],
+    hasError: Boolean,
+    moreFrom: Seq[PuzzleItem],
+    recentItems: Seq[PuzzlesArchiveItem] = Nil,
+)
+object PuzzlesArchive {
+  implicit val writes: OWrites[PuzzlesArchive] = Json.writes[PuzzlesArchive]
+}
 
 object DotcomPuzzlesPageRenderingDataModel {
   implicit val writes: OWrites[DotcomPuzzlesPageRenderingDataModel] =
@@ -34,9 +79,6 @@ object DotcomPuzzlesPageRenderingDataModel {
       request: RequestHeader,
   ): DotcomPuzzlesPageRenderingDataModel = {
     val edition = Edition.edition(request)
-    val commercialProperties = page.metadata.commercial
-      .map(_.perEdition.map { case (key, value) => key.id -> value })
-      .getOrElse(Map.empty)
 
     DotcomPuzzlesPageRenderingDataModel(
       id = page.metadata.id,
@@ -48,12 +90,26 @@ object DotcomPuzzlesPageRenderingDataModel {
       config = DotcomRenderingConfig(page, request, isPreview = false),
       nav = Nav(page, edition, request, customSubnav = None),
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
-      commercialProperties = commercialProperties,
+      commercialProperties = pageCommercialProperties(page) ++ layout.commercialProperties,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       layout = layout,
+      archive = None,
     )
   }
+
+  def archive(
+      page: SimplePage,
+      layout: PuzzlesLayout,
+      archive: PuzzlesArchive,
+      request: RequestHeader,
+  ): DotcomPuzzlesPageRenderingDataModel =
+    apply(page, layout, request).copy(archive = Some(archive), commercialProperties = pageCommercialProperties(page))
+
+  private def pageCommercialProperties(page: SimplePage): Map[String, EditionCommercialProperties] =
+    page.metadata.commercial
+      .map(_.perEdition.map { case (key, value) => key.id -> value })
+      .getOrElse(Map.empty)
 
   def toJson(model: DotcomPuzzlesPageRenderingDataModel): JsValue =
     DotcomRenderingUtils.withoutNull(Json.toJson(model))

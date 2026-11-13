@@ -24,7 +24,10 @@ import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
+import services.articleabtest.ArticleAbTestLifecycle
+import services.eventgraphic.EventGraphicService
 import services.ophan.SurgingContentAgentLifecycle
+import services.zug.{ZugClient, ZugClientImpl}
 import common.dfp.DfpAgentLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
@@ -71,6 +74,8 @@ trait AppComponents
   override lazy val newsletterApi = wire[NewsletterApi]
   override lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   override lazy val mostViewedAgent = wire[MostViewedAgent]
+  lazy val zugClient: ZugClient = wire[ZugClientImpl]
+  lazy val eventGraphicService: EventGraphicService = wire[EventGraphicService]
 
   override lazy val optionalDevContext = new OptionalDevContext(devContext)
   override lazy val sourceMapper = devContext.map(_.sourceMapper)
@@ -82,6 +87,7 @@ trait AppComponents
   override def lifecycleComponents: List[LifecycleComponent] =
     List(
       wire[AdminLifecycle],
+      wire[ArticleAbTestLifecycle],
       wire[OnwardJourneyLifecycle],
       wire[ConfigAgentLifecycle],
       wire[SubnavAgentLifecycle],
@@ -97,6 +103,7 @@ trait AppComponents
       wire[MostViewedLifecycle],
       wire[SkimLinksCacheLifeCycle],
       wire[DfpAgentLifecycle],
+      wire[AffiliateProductPriceCacheLifeCycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

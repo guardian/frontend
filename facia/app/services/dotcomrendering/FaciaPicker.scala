@@ -24,7 +24,6 @@ object FrontChecks {
       "nav/media-list",
       "news/most-popular",
       "scrollable/highlights",
-      "flexible/special",
       "flexible/general",
       "scrollable/small",
       "scrollable/medium",

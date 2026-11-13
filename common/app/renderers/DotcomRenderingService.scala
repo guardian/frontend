@@ -1,6 +1,5 @@
 package renderers
 
-import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import com.gu.contentapi.client.model.v1.{Block, Blocks}
 import com.gu.facia.client.models.CustomSubnav
 import common.LoggingField.LogField
@@ -28,13 +27,14 @@ import model.{
   RelatedContentItem,
   SimplePage,
 }
+import org.apache.pekko.actor.{ActorSystem => PekkoActorSystem}
 import play.api.libs.json.{JsObject, JsValue}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Results.{InternalServerError, NotFound}
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import services.NewsletterData
 import services.newsletters.model.{NewsletterLayout, NewsletterResponseV2}
-import services.{IndexPage, NewsletterData}
 
 import java.lang.System.currentTimeMillis
 import java.net.ConnectException
@@ -161,7 +161,9 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
           Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
             .withHeaders("X-GU-Dotcomponents" -> "true")
         case _ =>
-          log.error(s"Request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}")
+          logErrorWithRequestId(
+            s"Request to DCR failed: status ${response.status}, path: ${request.path}, body: ${response.body}",
+          )
           NoCache(
             InternalServerError("Remote renderer error (500)")
               .withHeaders("X-GU-Dotcomponents" -> "true"),
@@ -346,15 +348,8 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getTagPage(
       ws: WSClient,
-      page: IndexPage,
-      pageType: PageType,
+      dataModel: DotcomTagPagesRenderingDataModel,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomTagPagesRenderingDataModel(
-      page,
-      request,
-      pageType,
-    )
-
     val json = DotcomTagPagesRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.tagPageBaseURL + "/TagPage", CacheTime.Facia)
   }
@@ -503,8 +498,20 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       ws: WSClient,
       crosswordPage: CrosswordPageWithContent,
       pageType: PageType,
+      moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
+      puzzlesSupporting: Option[PuzzleGameSupporting] = None,
+      puzzleArchivePath: Option[String] = None,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingDataModel.forCrossword(crosswordPage, request, pageType, None)
+    val dataModel =
+      DotcomRenderingDataModel.forCrossword(
+        crosswordPage,
+        request,
+        pageType,
+        None,
+        moreFromPuzzlesAndGames,
+        puzzlesSupporting,
+        puzzleArchivePath,
+      )
     val json = DotcomRenderingDataModel.toJson(dataModel)
     post(ws, json, Configuration.rendering.articleBaseURL + "/Article", CacheTime.Crosswords)
   }
@@ -514,6 +521,12 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       json: JsValue,
   )(implicit request: RequestHeader): Future[Result] =
     post(ws, json, Configuration.rendering.articleBaseURL + "/PuzzlesPage", CacheTime.Default)
+
+  def getPuzzlePage(
+      ws: WSClient,
+      json: JsValue,
+  )(implicit request: RequestHeader): Future[Result] =
+    post(ws, json, Configuration.rendering.articleBaseURL + "/PuzzlePage", CacheTime.Default)
 
   def getEditionsCrossword(
       ws: WSClient,
@@ -562,13 +575,19 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
 
   def getAppsComponent(
       ws: WSClient,
-      path: String,
+      json: JsValue,
+      path: Option[String],
+      cacheTime: CacheTime,
   )(implicit request: RequestHeader): Future[Result] = {
+    val endpoint = path match {
+      case Some(p) => Configuration.rendering.articleBaseURL + s"/AppsComponent/$p"
+      case None    => Configuration.rendering.articleBaseURL + s"/AppsComponent"
+    }
     post(
       ws,
-      JsObject.empty, // The component endpoint currently takes no config in the payload
-      Configuration.rendering.articleBaseURL + s"/AppsComponent/$path",
-      CacheTime.Component,
+      json,
+      endpoint,
+      cacheTime,
     )
   }
 

@@ -1,0 +1,143 @@
+@()(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@admin_main("Crest Uploader", isAuthed = true) {
+    <h2>Upload Football Crests</h2>
+    <br>
+    <ul>
+        <li>
+            Ensure filenames are in the format PA_ID.png e.g. 64426.png
+        </li>
+        <li>
+            You can upload multiple crests at the same time.
+        </li>
+        <li>
+            If a crest with the same PA id already exists it will be overwritten.
+        </li>
+        <li>
+            If a crest has been overwritten it may be necessary to <a href="/images/clear">purge it from the cache</a>.
+        </li>
+    </ul>
+    <br>
+    <div class="form-horizontal redirect-form">
+        <div class="form-group">
+            <label for="contentUrl" class="control-label col-sm-1">Crest(s):</label>
+            <div class="col-sm-6">
+                <input type="file" class="form-control" id="crestInput" multiple accept="image/png" required />
+                <p id="filenameErrorMessage" style="color: red" hidden>
+                    <span class="label label-danger">Error</span> Filename must be in the format PA_ID.png e.g. 64426.png
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls col-sm-offset-1 col-sm-11">
+                <input class="btn btn-default" id="uploadBtn" type="button" value="Upload"/>
+            </div>
+        </div>
+        <div class="col-sm-offset-1" id="progressContainer"></div>
+    </div>
+    <br>
+    <h2>Search Football Crests</h2>
+    <br>
+    <ul>
+        <li>
+            Search for a specific PA id e.g. 1006 (Arsenal)
+        </li>
+    </ul>
+    <br>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label for="paIdInput" class="control-label col-sm-1">PA ID:</label>
+            <div class="col-sm-6">
+                <input type="number" class="form-control" id="paIdInput" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="controls col-sm-offset-1 col-sm-11" >
+                <input class="btn btn-default" id="searchBtn" type="button" value="Search" />
+            </div>
+        </div>
+        <img  class="col-sm-offset-1" id="crestContainer" alt="crest" width="128" hidden />
+    </div>
+    <br>
+    <script>
+        const searchBtn = document.getElementById('searchBtn');
+        const crestContainer = document.getElementById('crestContainer');
+        const paIdInput = document.getElementById('paIdInput')
+
+        searchBtn.addEventListener('click', async () => {
+            const paId = paIdInput.value;
+            const response = await fetch("/admin/football/crests/" + paId);
+            const responseJson = await response.json();
+            crestContainer.src = responseJson.url;
+            crestContainer.removeAttribute('hidden');
+        });
+
+        const filenameErrorMessage = document.getElementById('filenameErrorMessage');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const progressContainer = document.getElementById('progressContainer');
+        const crestInput = document.getElementById('crestInput');
+
+        uploadBtn.addEventListener('click', async () => {
+            filenameErrorMessage.setAttribute('hidden', 'true'); // reset error message
+            const crests = crestInput.files;
+
+            if (crests.length === 0) return;
+
+            uploadBtn.disabled = true; // prevent new uploads
+            progressContainer.innerHTML = ''; // remove old progress messages
+
+            const uploadPromises = Array.from(crests).map(crest => uploadSingleCrest(crest));
+
+            try {
+                await Promise.all(uploadPromises);
+                console.log("All files uploaded successfully!");
+            } catch (error) {
+                console.error("One or more uploads failed: ", error);
+            } finally {
+                crestInput.value = null; // reset file input
+                uploadBtn.disabled = false; // allow more uploads
+            }
+        });
+
+        function createProgressRowAndStatus(filename) {
+            const row = document.createElement('div');
+            row.style.margin = '8px 0';
+
+            const label = document.createElement('span');
+            label.textContent = `${filename}`;
+
+            const statusText = document.createElement('span');
+            statusText.textContent = '';
+
+            row.appendChild(label);
+            row.appendChild(statusText);
+            return [row, statusText];
+        }
+
+        async function uploadSingleCrest(file) {
+            const [progressRow, statusText] = createProgressRowAndStatus(file.name);
+            progressContainer.appendChild(progressRow);
+
+            const paID = file.name.split('.')[0];
+            if (isNaN(paID)) {
+                filenameErrorMessage.removeAttribute('hidden');
+                statusText.textContent = ' - Filename Error';
+                return;
+            }
+
+            statusText.textContent = ' - Uploading';
+
+            const formData = new FormData();
+            formData.append('crest', file);
+
+            const response = await fetch('/admin/football/crests/upload', {method: 'POST', body: formData});
+
+            if (!response.ok) {
+                statusText.textContent = ' - Upload Failed';
+                throw new Error(`Error for ${file.name}`);
+            }
+
+            statusText.textContent = ' - Complete';
+        }
+    </script>
+}

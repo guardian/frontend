@@ -84,8 +84,16 @@ class DevParametersHttpRequestHandler(
     "multiSticky", // enable multiple sticky ads in the right column, for the purpose of qualitative testing
   )
 
+  val puzzlesArchiveParams = Seq(
+    "category",
+    "puzzle",
+    "year",
+    "month",
+  )
+
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
-  val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
+  val allowedParams =
+    CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ puzzlesArchiveParams ++ playBugs
 
   override def routeRequest(request: RequestHeader): Option[Handler] = {
 

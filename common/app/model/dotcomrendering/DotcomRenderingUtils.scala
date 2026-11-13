@@ -207,6 +207,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
       request: RequestHeader,
       article: ContentType,
       affiliateLinks: Boolean,
+      isLivePricingEnabled: Boolean,
       isMainBlock: Boolean,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
@@ -220,6 +221,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
         PageElement.make(
           element = el,
           addAffiliateLinks = affiliateLinks,
+          isLivePricingEnabled,
           pageUrl = request.uri,
           atoms = atoms,
           isMainBlock,

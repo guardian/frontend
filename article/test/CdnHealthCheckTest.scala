@@ -6,6 +6,7 @@ import play.api.test.Helpers._
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
+import services.{MockArticleAbTestAgent}
 
 @DoNotDiscover class CdnHealthCheckTest
     extends AnyFlatSpec
@@ -19,9 +20,10 @@ import org.scalatest.matchers.should.Matchers
 
   "CDN health check" should "mimic the instance health check" in {
     val testPort: Int = port
-    val controller = new HealthCheck(wsClient, play.api.test.Helpers.stubControllerComponents()) {
-      override val port = testPort
-    }
+    val controller =
+      new HealthCheck(wsClient, play.api.test.Helpers.stubControllerComponents(), new MockArticleAbTestAgent()) {
+        override val port = testPort
+      }
 
     // Cache internal healthCheck results before to test endpoints
     whenReady(controller.runChecks()) { _ =>

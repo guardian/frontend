@@ -129,11 +129,6 @@ If yes the Archive app returns this old static content or redirect, otherwise a 
 
 [All supported routes](https://github.com/guardian/frontend/blob/main/archive/conf/routes)
 
-# Diagnostics
-Diagnostics app is used internally to gather data and analytics from the Guardian frontend client side.
-
-[All supported routes](https://github.com/guardian/frontend/blob/main/diagnostics/conf/routes)
-
 # Preview
 Preview is a standalone version of the guardian website (ie: an aggregation of all the other apps) used in the editorial tool to preview draft article before they are live.
 It allows us to have a fully functional version of the website without the overhead of maintaining an entire new stack.

@@ -3,10 +3,10 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "4.31"
-  val awsVersion = "2.49.6"
-  val capiVersion = "49.0.0"
-  val faciaVersion = "39.0.0"
+  val identityLibVersion = "10.0.0"
+  val awsVersion = "2.57.5"
+  val capiVersion = "51.0.0"
+  val faciaVersion = "47.2.2"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -33,7 +33,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.22.0"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.30"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "50.0.0"
+  val contentApiModelsJson = "com.gu" %% "content-api-models-json" % "53.0.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play30" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
 
@@ -54,12 +54,13 @@ object Dependencies {
   val mockWs = "de.leanovate.play-mockws" %% "play-mockws" % "2.6.2" % Test
   val jodaTime = "joda-time" % "joda-time" % "2.14.3"
   val jodaConvert = "org.joda" % "joda-convert" % "2.2.3"
-  val jSoup = "org.jsoup" % "jsoup" % "1.18.3"
-  val json4s = "org.json4s" %% "json4s-native" % "4.0.7"
+  val jSoup = "org.jsoup" % "jsoup" % "1.23.2"
+  val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
+  val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val paClient = "com.gu" %% "pa-client" % "7.0.18"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "19.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
+  val paClient = "com.gu" %% "pa-client" % "7.0.19"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "23.0.1"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "8.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
@@ -72,19 +73,20 @@ object Dependencies {
   val scalaTestPlusMockito = "org.scalatestplus" %% "mockito-5-18" % "3.2.19.0" % Test
   val mockito = "org.mockito" % "mockito-core" % "5.23.0" % Test // ensure this matches scalatest + mockito
   val scalaTestPlusScalacheck = "org.scalatestplus" %% "scalacheck-1-17" % "3.2.18.0" % Test
-  val scalaUri = "io.lemonlabs" %% "scala-uri" % "4.0.3"
+  val sttp = "com.softwaremill.sttp.client4" %% "core" % "4.0.26"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "4.8.1"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "2.0.18"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
-  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.37"
+  val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "9.0.38"
   val pekkoVersion = "1.4.0"
   val pekkoActor = "org.apache.pekko" %% "pekko-actor" % pekkoVersion
   val pekkoStream = "org.apache.pekko" %% "pekko-stream" % pekkoVersion
   val pekkoSlf4j = "org.apache.pekko" %% "pekko-slf4j" % pekkoVersion
   val pekkoSerializationJackson = "org.apache.pekko" %% "pekko-serialization-jackson" % pekkoVersion
   val pekkoActorTyped = "org.apache.pekko" %% "pekko-actor-typed" % pekkoVersion
+  val lz4Java = "at.yawk.lz4" % "lz4-java" % "1.11.4"
 
   val logstash = ("net.logstash.logback" % "logstash-logback-encoder" % "8.0")
     .excludeAll(ExclusionRule("com.fasterxml.jackson.core")) // Avoid conflicts with Play's Jackson dependency
@@ -92,7 +94,7 @@ object Dependencies {
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.8"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.10"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
@@ -111,8 +113,8 @@ object Dependencies {
     The versions are currently set as they are because of:
     https://github.com/orgs/playframework/discussions/11222
    */
-  val jacksonVersion = "2.21.4"
-  val jacksonDatabindVersion = "2.21.4"
+  val jacksonVersion = "2.21.7"
+  val jacksonDatabindVersion = "2.21.7"
   val jacksonAnnotationsVersion = "2.21"
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonAnnotationsVersion
@@ -123,6 +125,8 @@ object Dependencies {
   val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
   val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
 
+  val circeParser =
+    "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
   val jackson =
     Seq(
       jacksonCore,

@@ -11,6 +11,7 @@ case class MediaSelect(
     showMainVideo: Boolean,
     imageSlideshowReplace: Boolean,
     videoReplace: Boolean,
+    multimediaSlideshowReplace: Boolean = false,
 )
 
 final case class PressedProperties(
@@ -54,6 +55,7 @@ object PressedProperties {
           showMainVideo = contentProperties.showMainVideo,
           imageSlideshowReplace = contentProperties.imageSlideshowReplace,
           videoReplace = contentProperties.videoReplace,
+          multimediaSlideshowReplace = contentProperties.multimediaSlideshowReplace,
         ),
       ),
       showKickerTag = contentProperties.showKickerTag,
@@ -94,6 +96,7 @@ object PressedProperties {
       case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.properties
       case linkSnap: fapi.LinkSnap                                 => linkSnap.properties
       case latestSnap: fapi.LatestSnap                             => latestSnap.properties
+      case eventGraphic: fapi.EventGraphic                         => eventGraphic.properties
     }
   }
 }

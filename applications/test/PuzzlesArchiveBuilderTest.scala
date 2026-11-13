@@ -1,0 +1,216 @@
+package test
+
+import controllers.{PuzzlesApiItem, PuzzlesApiResponse, PuzzlesArchiveBuilder}
+import model.dotcomrendering.{PuzzleContainer, PuzzleContent, PuzzleItem, PuzzlesLayout}
+import org.scalatest.DoNotDiscover
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+import play.api.libs.json.Json
+
+@DoNotDiscover class PuzzlesArchiveBuilderTest extends AnyFlatSpec with Matchers {
+  private val quick = PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive")
+  private val mini = PuzzleItem("archive-mini", "Mini", "crossword", "mini", "archive")
+  private val weekend = PuzzleItem("archive-weekend", "Weekend", "crossword", "weekend", "archive")
+  private val sudoku = PuzzleItem(
+    "sudoku-easy",
+    "Easy sudoku",
+    "sudoku",
+    "easy",
+    "primary",
+    slug = Some("logic-puzzles/sudoku-easy"),
+  )
+  private val wordWheel = PuzzleItem(
+    "word-wheel",
+    "Word wheel",
+    "word-wheel",
+    "all",
+    "primary",
+    slug = Some("word-games/word-wheel"),
+  )
+  private val wordiply = PuzzleItem(
+    "wordiply",
+    "Wordiply",
+    "wordiply",
+    "all",
+    "primary",
+    slug = Some("word-games/wordiply"),
+  )
+  private val trivia = Seq("film-reveal" -> "Film reveal", "on-the-ball" -> "On the ball").map { case (slug, title) =>
+    PuzzleItem(slug, title, slug, "all", "primary", slug = Some(s"trivia-and-quizzes/$slug"))
+  }
+  private val layout = PuzzlesLayout(
+    Seq(
+      PuzzleContainer(
+        "crosswords",
+        "Crosswords",
+        Some("standard"),
+        PuzzleContent(Nil, Nil, archiveChoices = Some(Seq(quick, mini, weekend))),
+      ),
+      PuzzleContainer("logic-puzzles", "Logic puzzles", Some("standard"), PuzzleContent(Seq(Seq(sudoku)), Nil)),
+      PuzzleContainer("trivia-and-quizzes", "Trivia & quizzes", Some("standard"), PuzzleContent(Seq(trivia), Nil)),
+      PuzzleContainer(
+        "word-games",
+        "Word games",
+        Some("standard"),
+        PuzzleContent(Seq(Seq(wordWheel, wordiply)), Nil),
+      ),
+    ),
+  )
+
+  "PuzzlesArchiveBuilder" should "derive the category and puzzle selection from the layout" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    selection.category should be("logic-puzzles")
+    selection.apiType should be("SUDOKU_EASY")
+  }
+
+  it should "find the archive path of a crossword type, and none for a type without an archive page" in {
+    PuzzlesArchiveBuilder.archivePathFor(layout, "crosswords", "mini") should be(
+      Some("/puzzles-and-games/crosswords/mini/archive"),
+    )
+    PuzzlesArchiveBuilder.archivePathFor(layout, "crosswords", "genius") should be(None)
+    PuzzlesArchiveBuilder.archivePathFor(layout, "unknown-category", "mini") should be(None)
+  }
+
+  it should "use the documented archive titles and meta descriptions" in {
+    val expected = Seq(
+      "crosswords" -> (
+        "Crosswords",
+        "Play the full archive of crosswords from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "word-games" -> (
+        "Word games",
+        "Play the full archive of word games from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "logic-puzzles" -> (
+        "Logic puzzles",
+        "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started.",
+      ),
+      "trivia-and-quizzes" -> (
+        "Trivia & quizzes",
+        "Play the full archive of trivia and quizzes from the Guardian. Track your progress of what you've played and started.",
+      ),
+    )
+
+    expected.foreach { case (category, (title, description)) =>
+      val selection = PuzzlesArchiveBuilder.select(layout, category, None).get
+      selection.title should be(title)
+      selection.description should be(description)
+    }
+  }
+
+  it should "select MovieGrid API types and build dated trivia links without manufacturing played states" in {
+    Seq("film-reveal" -> "FILMREVEAL", "on-the-ball" -> "ONTHEBALL").foreach { case (slug, apiType) =>
+      val selection = PuzzlesArchiveBuilder.select(layout, "trivia-and-quizzes", Some(slug)).get
+      selection.title shouldBe "Trivia & quizzes"
+      selection.apiType shouldBe apiType
+      selection.puzzles.map(_.id) shouldBe Seq("film-reveal", "on-the-ball")
+      PuzzlesArchiveBuilder.relatedPuzzleKey(selection) shouldBe slug
+      val item = PuzzlesApiItem("opaque", apiType, "2026-09-02T00:00:00Z", 0, None, None)
+      val archive = PuzzlesArchiveBuilder.build(selection, 2026, 9, Seq(item), false, Nil)
+      archive.items.map(_.url) shouldBe Seq(s"/puzzles-and-games/trivia-and-quizzes/$slug/2026-09-02")
+      archive.items.map(_.gameStatus) shouldBe Seq(None)
+      archive.recentItems.map(_.gameStatus) shouldBe Seq(None)
+    }
+  }
+
+  it should "use an archive item's exact date in its puzzle page destination" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", None).get
+    val destination = PuzzlesArchiveBuilder.destination(
+      selection,
+      PuzzlesApiItem("guardian-sudoku-20260902", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None),
+    )
+    destination should be("/puzzles-and-games/logic-puzzles/sudoku-easy/2026-09-02")
+  }
+
+  it should "use API crossword destinations without rebuilding them" in {
+    val miniSelection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("mini")).get
+    val weekendSelection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("weekend")).get
+
+    PuzzlesArchiveBuilder.destination(
+      miniSelection,
+      PuzzlesApiItem(
+        "287",
+        "CROSSWORD_MINI",
+        "2026-09-30T00:00:00Z",
+        0,
+        None,
+        Some("/crosswords/mini-crossword/287"),
+      ),
+    ) should be("/crosswords/mini-crossword/287")
+    PuzzlesArchiveBuilder.destination(
+      weekendSelection,
+      PuzzlesApiItem(
+        "820",
+        "CROSSWORD_WEEKEND",
+        "2026-09-30T00:00:00Z",
+        0,
+        None,
+        Some("/crosswords/weekend-crossword/820"),
+      ),
+    ) should be("/crosswords/weekend-crossword/820")
+  }
+
+  it should "omit crossword items without API destinations from calendar and recent cards" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "crosswords", Some("quick")).get
+    val missing = PuzzlesApiItem("123", "CROSSWORD_QUICK", "2026-09-02", 0, None, None)
+    val valid = missing.copy(gameUrl = Some("https://www.theguardian.com/crosswords/quick/456"))
+    val archive = PuzzlesArchiveBuilder.build(selection, 2026, 9, Seq(missing, valid), false, Nil)
+    archive.items.map(_.url) shouldBe Seq(valid.gameUrl.get)
+    archive.recentItems.map(_.url) shouldBe Seq(valid.gameUrl.get)
+  }
+
+  it should "carry the API game status to the archive items" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    val archive = PuzzlesArchiveBuilder.build(
+      selection,
+      2026,
+      9,
+      Seq(
+        PuzzlesApiItem("a", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 10, None, None, Some("completed")),
+        PuzzlesApiItem("b", "SUDOKU_EASY", "2026-09-03T00:00:00Z", 100, None, None),
+      ),
+      hasError = false,
+      moreFrom = Nil,
+    )
+
+    archive.items.map(_.gameStatus) should be(Seq(Some("completed"), None))
+    archive.recentItems.map(_.gameStatus) should be(Seq(None, Some("completed")))
+    (Json.toJson(archive) \ "items" \ 1 \ "gameStatus").toOption should be(None)
+  }
+
+  it should "exclude puzzles without an archive from the archive selector" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "word-games", None).get
+
+    selection.puzzles.map(_.id) should be(Seq("word-wheel"))
+  }
+
+  it should "look up recommendations by the selected puzzle" in {
+    val sudoku = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    PuzzlesArchiveBuilder.relatedPuzzleKey(sudoku) should be("sudoku-easy")
+
+    val crosswords = PuzzlesArchiveBuilder.select(layout, "crosswords", None).get
+    PuzzlesArchiveBuilder.relatedPuzzleKey(crosswords) should be(crosswords.puzzle.set)
+  }
+
+  it should "parse the archive API envelope" in {
+    Json
+      .parse(
+        """{"results":[{"puzzleId":"42","puzzleType":"CROSSWORD_QUICK","publishDate":"2026-09-02T00:00:00Z","gameStatus":"completed","progress":100,"lastUpdated":null,"gameUrl":"https://www.theguardian.com/crosswords/quick/42"}]}""",
+      )
+      .as[PuzzlesApiResponse] should be(
+      PuzzlesApiResponse(
+        Seq(
+          PuzzlesApiItem(
+            "42",
+            "CROSSWORD_QUICK",
+            "2026-09-02T00:00:00Z",
+            100,
+            None,
+            Some("https://www.theguardian.com/crosswords/quick/42"),
+            Some("completed"),
+          ),
+        ),
+      ),
+    )
+  }
+}

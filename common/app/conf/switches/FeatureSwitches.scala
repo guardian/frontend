@@ -7,17 +7,6 @@ import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
-  val ContentPresser = Switch(
-    SwitchGroup.Feature,
-    "content-presser",
-    "Enables routes for pressing and cleaning articles and interactives.",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-    highImpact = false,
-  )
-
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -684,6 +673,32 @@ trait FeatureSwitches {
     sellByDate = never,
     safeState = Off,
     exposeClientSide = true,
-    highImpact = false,
+    highImpact = true,
+  )
+
+  val EditorialArticleABTests = Switch(
+    group = SwitchGroup.Feature,
+    name = "editorial-article-ab-tests",
+    description = "Enables editorial article A/B tests to run",
+    owners =
+      Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk"), Owner.withEmail("a.b.test.mission@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = true,
+  )
+
+  val AffiliateProductLivePricing = Switch(
+    group = SwitchGroup.Feature,
+    name = "affiliate-product-live-pricing",
+    description =
+      "Enable live pricing in affiliate product buttons and product cards. If off, the latest affiliate pricing will not be added to content by frontend apps. If on, the latest price from third parties will be added if available",
+    owners = Seq(Owner.withEmail("thefilter.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false,
+    highImpact = true,
+    impactShortMessage = Some("Required for 'The Filter' live pricing"),
+    impactFullMessage = Some("Warning: Disabling this switch will prevent us from showing live pricing in The Filter"),
   )
 }

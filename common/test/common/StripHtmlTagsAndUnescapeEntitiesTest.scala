@@ -23,7 +23,7 @@ class StripHtmlTagsAndUnescapeEntitiesTest extends AnyFlatSpec with Matchers {
       "<a href=\"https://www.facebook.com/pages/Jacob-Everett/295006103859003\">Jacob Everett </a> has a simple idea, but one that he carries out beautifully: the head of a famous person imposed on shoulders made from a map of the area they are associated with. This one of Groucho Marx and a map of New York from 1939 is available to buy at <a href=\"http://www.jacobeverett.com/\">jacobeverett.com</a>. Recommended by Guardian reader <a href=\"http://discussion.guardian.co.uk/comment-permalink/23575543\">Adamki</a>.",
     )
     html should equal(
-      "Jacob Everett  has a simple idea, but one that he carries out beautifully: the head of a famous person imposed on shoulders made from a map of the area they are associated with. This one of Groucho Marx and a map of New York from 1939 is available to buy at jacobeverett.com. Recommended by Guardian reader Adamki.",
+      "Jacob Everett has a simple idea, but one that he carries out beautifully: the head of a famous person imposed on shoulders made from a map of the area they are associated with. This one of Groucho Marx and a map of New York from 1939 is available to buy at jacobeverett.com. Recommended by Guardian reader Adamki.",
     )
   }
 

@@ -911,10 +911,10 @@ object AffiliateLinksCleaner {
       isUSProductionOffice: Boolean,
       abTests: Map[String, String],
   ): Option[String] = {
-    val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
     val httpsUrl = url.map(ensureHttps)
     httpsUrl match {
       case Some(link) if addAffiliateLinks && SkimLinksCache.isSkimLink(link) =>
+        val skimlinksId = if (isUSProductionOffice) skimlinksUSId else skimlinksDefaultId
         Some(linkToSkimLink(link, pageUrl, skimlinksId, abTests))
       case _ => httpsUrl
     }

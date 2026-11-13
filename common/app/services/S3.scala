@@ -6,6 +6,7 @@ import conf.Configuration
 import model.PressedPageType
 import org.joda.time.DateTime
 import services.S3.logS3ExceptionWithDevHint
+import software.amazon.awssdk.core.async.{AsyncRequestBody, AsyncResponseTransformer}
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL.{PRIVATE, PUBLIC_READ}
 import software.amazon.awssdk.services.s3.model._
@@ -17,7 +18,9 @@ import java.nio.charset.StandardCharsets.UTF_8
 import java.time.Duration.ofMinutes
 import java.time.Instant
 import java.util.zip.GZIPOutputStream
+import scala.concurrent.Future
 import scala.io.{Codec, Source}
+import scala.jdk.FutureConverters._
 
 trait S3 extends GuLogging {
 
@@ -118,6 +121,7 @@ trait S3 extends GuLogging {
 
     client.putObject(request, RequestBody.fromString(value, UTF_8))
   }
+
 }
 
 object S3 extends S3 {
@@ -141,6 +145,7 @@ object S3FrontsApi extends S3 {
 
   def putLiveFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit =
     putFapiPressedJson("live", path, json, pressedType.suffix)
+
   def putDraftFapiPressedJson(path: String, json: String, pressedType: PressedPageType): Unit =
     putFapiPressedJson("draft", path, json, pressedType.suffix)
 }
@@ -158,4 +163,40 @@ object S3ArchiveOriginals extends S3 {
 object S3Skimlinks extends S3 {
   override lazy val bucket: String =
     Configuration.affiliateLinks.bucket.getOrElse(Configuration.aws.frontendStoreBucket)
+}
+
+object S3SportsAssets extends S3 {
+  override lazy val bucket: String =
+    "aws-frontend-sport"
+
+  def putObjectAsync(key: String, file: File, contentType: String): Future[PutObjectResponse] = {
+    val asyncClient = AWSv2.S3Async
+
+    val request = PutObjectRequest
+      .builder()
+      .bucket(bucket)
+      .key(key)
+      .acl(PUBLIC_READ)
+      .cacheControl("no-cache,no-store")
+      .contentType(contentType)
+      .build()
+
+    // putObject (async) returns a java.util.concurrent.CompletableFuture which needs
+    // to be converted to a Scala Future
+    asyncClient.putObject(request, AsyncRequestBody.fromFile(file)).asScala
+  }
+}
+
+object S3Storylines extends S3 {
+
+  def getAsync(key: String) = {
+    val asyncClient = AWSv2.S3Async
+
+    val request = GetObjectRequest
+      .builder()
+      .bucket(bucket)
+      .key(key)
+      .build()
+    asyncClient.getObject(request, AsyncResponseTransformer.toBytes[GetObjectResponse]()).asScala
+  }
 }

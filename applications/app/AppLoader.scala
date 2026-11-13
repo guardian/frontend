@@ -21,7 +21,10 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services._
 import router.Routes
+import services.articleabtest.ArticleAbTestLifecycle
+import services.eventgraphic.EventGraphicService
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent, NewsletterSignupLifecycle}
+import services.zug.{ZugClient, ZugClientImpl}
 
 import scala.concurrent.ExecutionContext
 
@@ -42,6 +45,7 @@ trait ApplicationsServices {
   lazy val newsletterApi = wire[NewsletterApi]
   lazy val newsletterSignupAgent = wire[NewsletterSignupAgent]
   lazy val subnavAgent = wire[SubnavAgent]
+  lazy val articleAbTestAgent = wire[ArticleAbTestAgent]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
@@ -50,8 +54,11 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
   lazy val healthCheck = wire[HealthCheck]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val signupPageController = wire[SignupPageController]
+  lazy val zugClient: ZugClient = wire[ZugClientImpl]
+  lazy val eventGraphicService = wire[EventGraphicService]
 
   override lazy val lifecycleComponents = List(
+    wire[ArticleAbTestLifecycle],
     wire[ConfigAgentLifecycle],
     wire[SubnavAgentLifecycle],
     wire[CloudWatchMetricsLifecycle],
@@ -65,6 +72,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[TargetingLifecycle],
     wire[SkimLinksCacheLifeCycle],
     wire[NewsletterSignupLifecycle],
+    wire[AffiliateProductPriceCacheLifeCycle],
   )
 
   lazy val router: Router = wire[Routes]

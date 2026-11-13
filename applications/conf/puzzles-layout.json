@@ -1,335 +1,495 @@
 {
-	"filters": [
-		{
-			"id": "crosswords",
-			"title": "Crosswords",
-			"backgroundColour": "#FCE1CE"
-		},
-		{
-			"id": "logic",
-			"title": "Sudoku",
-			"backgroundColour": "#CDECFB"
-		},
-		{
-			"id": "word-games",
-			"title": "Word games",
-			"backgroundColour": "#F9D4E8"
-		},
-		{
-			"id": "trivia-quizzes",
-			"title": "Trivia",
-			"backgroundColour": "#D5F3F2"
-		}
-	],
 	"containers": [
 		{
-			"title": "Today’s featured puzzles",
+			"id": "featured-puzzles",
+			"title": "Featured today",
 			"variant": "featured",
+			"enabled": true,
 			"content": {
-				"items": [
-					[
-						{
-							"title": "On the ball",
-							"type": "on-the-ball",
-							"set": "all",
-							"slug": "on-the-ball",
-							"url": "https://sportsreveal.io/guardian",
-							"variant": "iframe-page",
-							"backgroundColour": "#D5F3F2",
-							"filterId": "trivia-quizzes"
-						},
-						{
-							"title": "Film reveal",
-							"type": "film-reveal",
-							"set": "all",
-							"slug": "film-reveal",
-							"url": "https://moviegrid.io/guardian",
-							"variant": "iframe-page",
-							"backgroundColour": "#EAD8B9",
-							"filterId": "trivia-quizzes"
-						}
-					]
-				],
+				"items": [],
 				"nestedContainers": []
 			}
 		},
 		{
+			"id": "crosswords",
 			"title": "Crosswords",
-			"filterId": "crosswords",
+			"variant": "standard",
 			"content": {
 				"items": [
 					[
 						{
-							"title": "Mini",
-							"type": "crossword",
-							"set": "mini",
-							"backgroundColour": "#FCE1CE"
-						},
-						{
+							"id": "crossword-quick",
 							"title": "Quick",
 							"type": "crossword",
 							"set": "quick",
+							"cardVariant": "primary",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
+							"id": "crossword-mini",
+							"title": "Mini",
+							"type": "crossword",
+							"set": "mini",
+							"cardVariant": "primary",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-MINI.png?width=440&dpr=2&s=none",
+							"imageAlt": "Mini crossword illustration",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"id": "crossword-cryptic",
 							"title": "Cryptic",
 							"type": "crossword",
 							"set": "cryptic",
+							"cardVariant": "primary",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Cryptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"title": "Quick cryptic",
+							"id": "crossword-weekend",
+							"title": "Weekend",
 							"type": "crossword",
-							"set": "quick-cryptic",
+							"set": "weekend",
+							"cardVariant": "primary",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENERAL-KNOWLEDGE.png?width=440&dpr=2&s=none",
+							"imageAlt": "General knowledge crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						}
 					],
 					[
 						{
+							"id": "crossword-quick-cryptic",
+							"title": "Quick cryptic",
+							"type": "crossword",
+							"set": "quick-cryptic",
+							"cardVariant": "compact",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUICK-CRYPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quick cryptic crossword illustration",
+							"backgroundColour": "#FCE1CE"
+						},
+						{
+							"id": "crossword-quiptic",
 							"title": "Quiptic",
 							"type": "crossword",
 							"set": "quiptic",
+							"cardVariant": "compact",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-QUIPTIC.png?width=440&dpr=2&s=none",
+							"imageAlt": "Quiptic crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
+							"id": "crossword-prize",
 							"title": "Prize",
 							"type": "crossword",
 							"set": "prize",
+							"cardVariant": "compact",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-PRIZE.png?width=440&dpr=2&s=none",
+							"imageAlt": "Prize crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
-							"title": "Weekend",
-							"type": "crossword",
-							"set": "weekend",
-							"backgroundColour": "#FCE1CE"
-						},
-						{
+							"id": "crossword-sunday-quick",
 							"title": "Sunday quick",
 							"type": "crossword",
 							"set": "sunday-quick",
+							"cardVariant": "compact",
 							"backgroundColour": "#FCE1CE"
 						},
 						{
+							"id": "crossword-genius",
 							"title": "Genius",
 							"type": "crossword",
 							"set": "genius",
+							"cardVariant": "compact",
+							"cadence": "Monthly",
+							"image": "https://i.guim.co.uk/img/uploads/2026/09/15/crossword-GENIUS.png?width=440&dpr=2&s=none",
+							"imageAlt": "Genius crossword illustration",
 							"backgroundColour": "#FCE1CE"
 						}
 					]
 				],
 				"nestedContainers": [],
-				"archive": {
-					"title": "Crossword archive",
-					"type": "crossword",
-					"set": "all",
-					"url": "/puzzles/crosswords/archive",
-					"backgroundColour": "#FCE1CE"
-				}
+				"archiveChoices": [
+					{
+						"id": "archive-quick",
+						"title": "Quick",
+						"type": "crossword",
+						"set": "quick",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/quick/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-mini",
+						"title": "Mini",
+						"type": "crossword",
+						"set": "mini",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/mini/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-cryptic",
+						"title": "Cryptic",
+						"type": "crossword",
+						"set": "cryptic",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/cryptic/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-weekend",
+						"title": "Weekend",
+						"type": "crossword",
+						"set": "weekend",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/weekend/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-quick-cryptic",
+						"title": "Quick cryptic",
+						"type": "crossword",
+						"set": "quick-cryptic",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/quick-cryptic/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-quiptic",
+						"title": "Quiptic",
+						"type": "crossword",
+						"set": "quiptic",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/quiptic/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-prize",
+						"title": "Prize",
+						"type": "crossword",
+						"set": "prize",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/prize/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sunday-quick",
+						"title": "Sunday quick",
+						"type": "crossword",
+						"set": "sunday-quick",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/sunday-quick/archive",
+						"variant": "archive-page"
+					}
+				]
 			}
 		},
 		{
+			"id": "crosswords-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline1",
+			"content": { "items": [], "nestedContainers": [] }
+		},
+		{
+			"id": "word-games",
 			"title": "Word games",
-			"filterId": "word-games",
+			"variant": "standard",
 			"content": {
 				"items": [],
 				"nestedContainers": [
 					{
+						"id": "word-wheel",
 						"title": "Word wheel",
 						"desktopSpan": 6,
 						"content": {
 							"items": [
 								[
 									{
+										"id": "word-wheel-daily",
 										"title": "Word wheel",
 										"type": "word-wheel",
 										"set": "all",
-										"slug": "word-wheel",
+										"cardVariant": "primary",
+										"slug": "word-games/word-wheel",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORD-WHEEL.png?width=440&dpr=2&s=none",
+										"imageAlt": "Word wheel illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#F9D4E8"
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Word wheel archive",
-								"type": "word-wheel",
-								"set": "all",
-								"slug": "word-wheel",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-word-wheel&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#F9D4E8"
-							}
+							"nestedContainers": []
 						}
 					},
 					{
+						"id": "wordiply",
 						"title": "Wordiply",
 						"desktopSpan": 6,
 						"content": {
 							"items": [
 								[
 									{
+										"id": "wordiply-daily",
 										"title": "Wordiply",
 										"type": "wordiply",
 										"set": "all",
-										"slug": "wordiply",
+										"cardVariant": "primary",
+										"slug": "word-games/wordiply",
 										"url": "https://www.wordiply.com/",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/word-games-WORDIPLY.png?width=440&dpr=2&s=none",
+										"imageAlt": "Wordiply illustration",
 										"variant": "iframe-page",
 										"backgroundColour": "#F8D0C9"
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Wordiply archive",
-								"type": "wordiply",
-								"set": "all",
-								"slug": "wordiply",
-								"url": "https://www.wordiply.com/",
-								"variant": "archive-page",
-								"backgroundColour": "#F8D0C9"
-							}
+							"nestedContainers": []
 						}
+					}
+				],
+				"archiveChoices": [
+					{
+						"id": "archive-word-games",
+						"title": "Word wheel",
+						"type": "word-wheel",
+						"set": "all",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/word-games/word-wheel/archive",
+						"variant": "archive-page"
 					}
 				]
 			}
 		},
 		{
+			"id": "logic-puzzles",
 			"title": "Logic puzzles",
-			"filterId": "logic",
+			"variant": "standard",
 			"content": {
 				"items": [],
 				"nestedContainers": [
 					{
+						"id": "sudoku",
 						"title": "Sudoku",
 						"desktopSpan": 12,
 						"content": {
 							"items": [
 								[
 									{
-										"title": "Sudoku easy",
+										"id": "sudoku-easy",
+										"title": "Easy sudoku",
 										"type": "sudoku",
 										"set": "easy",
-										"slug": "sudoku-easy",
+										"cardVariant": "primary",
+										"slug": "logic-puzzles/sudoku-easy",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-EASY.png?width=440&dpr=2&s=none",
+										"imageAlt": "Easy sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
 									},
 									{
-										"title": "Sudoku medium",
+										"id": "sudoku-medium",
+										"title": "Medium sudoku",
 										"type": "sudoku",
 										"set": "medium",
-										"slug": "sudoku-medium",
+										"cardVariant": "primary",
+										"slug": "logic-puzzles/sudoku-medium",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-medium&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-MEDIUM.png?width=440&dpr=2&s=none",
+										"imageAlt": "Medium sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
 									},
 									{
-										"title": "Sudoku hard",
+										"id": "sudoku-hard",
+										"title": "Hard sudoku",
 										"type": "sudoku",
 										"set": "hard",
-										"slug": "sudoku-hard",
+										"cardVariant": "primary",
+										"slug": "logic-puzzles/sudoku-hard",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-hard&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-HARD.png?width=440&dpr=2&s=none",
+										"imageAlt": "Hard sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
 									},
 									{
-										"title": "Sudoku killer",
+										"id": "sudoku-killer",
+										"title": "Killer sudoku",
 										"type": "sudoku",
 										"set": "killer",
-										"slug": "sudoku-killer",
+										"cardVariant": "primary",
+										"slug": "logic-puzzles/sudoku-killer",
 										"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-killer-sudoku-medium&embed=1&idx=1",
+										"image": "https://i.guim.co.uk/img/uploads/2026/09/15/logic-puzzles-SUDOKU-KILLER.png?width=440&dpr=2&s=none",
+										"imageAlt": "Killer sudoku illustration",
 										"index": 1,
 										"variant": "iframe-page",
 										"backgroundColour": "#CDECFB"
 									}
 								]
 							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Logic archive",
-								"type": "sudoku",
-								"set": "all",
-								"slug": "sudoku-easy",
-								"url": "https://tg.amuselabs.com/guardian/date-picker?set=guardian-sudoku-easy&set=guardian-sudoku-medium&set=guardian-sudoku-hard&set=guardian-killer-sudoku-medium&embed=1",
-								"variant": "archive-page",
-								"backgroundColour": "#CDECFB"
-							}
+							"nestedContainers": []
 						}
+					}
+				],
+				"archiveChoices": [
+					{
+						"id": "archive-sudoku-easy",
+						"title": "Easy sudoku",
+						"type": "sudoku",
+						"set": "easy",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/sudoku-easy/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sudoku-medium",
+						"title": "Medium sudoku",
+						"type": "sudoku",
+						"set": "medium",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/sudoku-medium/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sudoku-hard",
+						"title": "Hard sudoku",
+						"type": "sudoku",
+						"set": "hard",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/sudoku-hard/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-sudoku-killer",
+						"title": "Killer sudoku",
+						"type": "sudoku",
+						"set": "killer",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/logic-puzzles/sudoku-killer/archive",
+						"variant": "archive-page"
 					}
 				]
 			}
 		},
 		{
-			"title": "Trivia",
-			"filterId": "trivia-quizzes",
+			"id": "trivia-and-quizzes",
+			"title": "Trivia & quizzes",
+			"variant": "standard",
 			"content": {
-				"items": [],
-				"nestedContainers": [
-					{
-						"title": "On the ball",
-						"desktopSpan": 6,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "On the ball",
-										"type": "on-the-ball",
-										"set": "all",
-										"slug": "on-the-ball",
-										"url": "https://sportsreveal.io/guardian",
-										"variant": "iframe-page",
-										"backgroundColour": "#D5F3F2"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "On the ball archive",
-								"type": "on-the-ball",
-								"set": "all",
-								"slug": "on-the-ball",
-								"url": "https://sportsreveal.io/guardian",
-								"variant": "archive-page",
-								"backgroundColour": "#D5F3F2"
-							}
+				"items": [
+					[
+						{
+							"id": "film-reveal",
+							"title": "Film reveal",
+							"type": "film-reveal",
+							"set": "all",
+							"cardVariant": "primary",
+							"cadence": "Daily",
+							"slug": "trivia-and-quizzes/film-reveal",
+							"variant": "iframe-page",
+							"image": "https://i.guim.co.uk/img/uploads/2026/10/28/film-reveal-standard.png?width=440&dpr=2&s=none",
+							"imageAlt": "Film reveal illustration",
+							"backgroundColour": "#F3FBFB"
+						},
+						{
+							"id": "on-the-ball",
+							"title": "On the ball",
+							"type": "on-the-ball",
+							"set": "all",
+							"cardVariant": "primary",
+							"cadence": "Daily",
+							"slug": "trivia-and-quizzes/on-the-ball",
+							"variant": "iframe-page",
+							"image": "https://i.guim.co.uk/img/uploads/2026/10/28/on-the-ball-standard.png?width=440&dpr=2&s=none",
+							"imageAlt": "On the ball illustration",
+							"backgroundColour": "#F3FBFB"
 						}
+					]
+				],
+				"nestedContainers": [],
+				"archiveChoices": [
+					{
+						"id": "archive-film-reveal",
+						"title": "Film reveal",
+						"type": "film-reveal",
+						"set": "all",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/trivia-and-quizzes/film-reveal/archive",
+						"variant": "archive-page"
 					},
 					{
-						"title": "Film reveal",
-						"desktopSpan": 6,
-						"content": {
-							"items": [
-								[
-									{
-										"title": "Film reveal",
-										"type": "film-reveal",
-										"set": "all",
-										"slug": "film-reveal",
-										"url": "https://moviegrid.io/guardian",
-										"variant": "iframe-page",
-										"backgroundColour": "#EAD8B9"
-									}
-								]
-							],
-							"nestedContainers": [],
-							"archive": {
-								"title": "Film reveal archive",
-								"type": "film-reveal",
-								"set": "all",
-								"slug": "film-reveal",
-								"url": "https://moviegrid.io/guardian",
-								"variant": "archive-page",
-								"backgroundColour": "#EAD8B9"
-							}
-						}
+						"id": "archive-on-the-ball",
+						"title": "On the ball",
+						"type": "on-the-ball",
+						"set": "all",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/trivia-and-quizzes/on-the-ball/archive",
+						"variant": "archive-page"
 					}
 				]
 			}
+		},
+		{
+			"id": "puzzles-supporting",
+			"title": "",
+			"variant": "supporting",
+			"adSlot": "mostpop",
+			"content": { "items": [], "nestedContainers": [] },
+			"supporting": {
+				"usefulLinksTitle": "Useful links",
+				"usefulLinks": [
+					{
+						"title": "Support the Guardian",
+						"url": "https://support.theguardian.com?utm_medium=ACQUISITIONS_EDITORIAL_LINK&utm_campaign=puzzles_games&utm_content=puzzles_hub&utm_term=puzzles_hub&utm_source=GUARDIAN_WEB"
+					},
+					{
+						"title": "Help centre",
+						"url": "https://help.theguardian.com"
+					}
+				],
+				"newsletterIdentityName": "cluesletter",
+				"popularTitle": "Most popular puzzles",
+				"popularGroups": [
+					{
+						"title": "Most played",
+						"itemIds": [
+							"crossword-quick",
+							"word-wheel-daily",
+							"crossword-mini",
+							"sudoku-medium",
+							"crossword-cryptic"
+						]
+					},
+					{
+						"title": "Most comments",
+						"itemIds": [
+							"crossword-cryptic",
+							"crossword-quick",
+							"crossword-prize",
+							"crossword-genius",
+							"crossword-weekend"
+						]
+					}
+				]
+			}
+		},
+		{
+			"id": "bottom-ad",
+			"title": "",
+			"variant": "ad",
+			"adSlot": "inline2",
+			"content": { "items": [], "nestedContainers": [] }
 		}
 	]
 }

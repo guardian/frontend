@@ -29,5 +29,7 @@ object SupportedUrl {
           .map(content => s"/${content.metadata.id}")
           .orElse(latestSnap.properties.href)
           .getOrElse(s"/${latestSnap.card.id}")
+      case eventGraphic: EventGraphic =>
+        eventGraphic.properties.href.getOrElse(eventGraphic.card.id) // TODO: Is this correct? What url do we need here?
     }
 }

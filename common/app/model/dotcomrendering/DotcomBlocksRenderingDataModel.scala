@@ -2,11 +2,11 @@ package model.dotcomrendering
 
 import com.gu.commercial.display.AdTargetParamValue
 import com.gu.contentapi.client.model.v1.{Block => APIBlock}
-import common.Edition
+import common.{Edition, Environment}
 import common.commercial.EditionAdTargeting.adTargetParamValueWrites
 import conf.Configuration
 import model.dotcomrendering.pageElements.PageElement
-import model.{ContentFormat, ContentPage}
+import model.{AffiliateProductLivePricing, ContentFormat, ContentPage}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.CamelCase
@@ -30,6 +30,7 @@ case class DotcomBlocksRenderingDataModel(
     adUnit: String,
     switches: Map[String, Boolean],
     serverSideABTests: Map[String, String],
+    stage: String,
 )
 
 object DotcomBlocksRenderingDataModel {
@@ -52,6 +53,7 @@ object DotcomBlocksRenderingDataModel {
         "adUnit" -> model.adUnit,
         "switches" -> model.switches,
         "serverSideABTests" -> model.serverSideABTests,
+        "stage" -> model.stage,
       )
 
       ElementsEnhancer.enhanceBlocks(obj)
@@ -70,6 +72,7 @@ object DotcomBlocksRenderingDataModel {
   ): DotcomBlocksRenderingDataModel = {
     val content = page.item
     val shouldAddAffiliateLinks = DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks)
+    val isLivePricingEnabled = AffiliateProductLivePricing.isEnabledForPage(content.fields.livePricingEnabled)
     val contentDateTimes = DotcomRenderingUtils.contentDateTimes(content)
 
     val edition = Edition(request)
@@ -85,6 +88,7 @@ object DotcomBlocksRenderingDataModel {
           block,
           page,
           shouldAddAffiliateLinks,
+          isLivePricingEnabled,
           request,
           isMainBlock = false,
           calloutsUrl,
@@ -115,6 +119,7 @@ object DotcomBlocksRenderingDataModel {
       adUnit = content.metadata.adUnitSuffix,
       switches = switches,
       serverSideABTests = ABTests.getParticipations(request),
+      stage = Environment.stage,
     )
   }
 }

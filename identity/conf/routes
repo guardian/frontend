@@ -13,8 +13,6 @@ POST        /complete-registration                  controllers.EmailVerificatio
 ########################################################################################################################
 GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
-GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
-GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
 
 ########################################################################################################################
 # Formstack
@@ -22,13 +20,6 @@ GET         /user/:vanityUrl/:activityType          controllers.PublicProfileCon
 GET         /form/complete                          controllers.FormstackController.complete
 GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String)
 GET         /form/embed/:formReference              controllers.FormstackController.formstackFormEmbed(formReference: String)
-
-########################################################################################################################
-# Consents journey
-########################################################################################################################
-GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
-POST        /complete-consents                      controllers.editprofile.EditProfileController.completeConsents
-GET         /complete-consents                      controllers.editprofile.EditProfileController.displayConsentComplete
 
 ########################################################################################################################
 # Old routes

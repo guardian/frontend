@@ -31,16 +31,7 @@ trait AdminControllers {
     oauthCallbackPath = routes.GuardianAuthWithExemptions.oauthCallback.path,
     AWSv2.S3Sync,
     system = "frontend-admin",
-    extraDoNotAuthenticatePathPrefixes = Seq(
-      // Date: 06 July 2021
-      // Author: Pascal
-      // Added as part of posing the ground for the interactive migration.
-      // It should be removed when the Interactives migration is complete, meaning when we no longer need the routes
-      // POST /interactive-librarian/live-presser/*path
-      // POST /interactive-librarian/read-clean-write/*path
-      // in [admin].
-      "/interactive-librarian/",
-    ),
+    extraDoNotAuthenticatePathPrefixes = Seq(),
     requiredEditorialPermissionName = "admin_tool_access",
   )
 
@@ -65,4 +56,5 @@ trait AdminControllers {
   lazy val tablesController = wire[TablesController]
   lazy val frontsController = wire[FrontsController]
   lazy val adsDotTextController = wire[AdsDotTextEditController]
+  lazy val crestsController = wire[CrestsController]
 }

@@ -23,10 +23,26 @@ import scala.util.{Failure, Success}
 class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
   private val subnavConfigBox = Box[Option[CustomSubnavConfig]](None)
   private val publicationStatus: PublicationStatus = if (appIdentity.name == "preview") Draft else Live
+  private val editorUrl = """https?://[^/]+/v2/subnavs/([^/?#]+)/?(?:[?#].*)?""".r
 
   def isLoaded(): Boolean = subnavConfigBox.get().isDefined
 
   def getSubnavConfig(): Option[CustomSubnavConfig] = subnavConfigBox.get()
+
+  private def findSubnav(status: PublicationStatus)(matches: CustomSubnav => Boolean): Option[CustomSubnav] =
+    getSubnavConfig().flatMap { config =>
+      val draft = if (status == Draft) config.draft else Nil
+      (draft ++ config.live).find(matches)
+    }
+
+  def getSubnavById(id: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] =
+    findSubnav(status)(_.id == id)
+
+  def getSubnavByUrl(subnavUrl: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] =
+    subnavUrl match {
+      case editorUrl(id) => getSubnavById(id, status)
+      case url           => findSubnav(status)(_.header.dotcomPath.contains(url))
+    }
 
   /** Look up the custom subnav targeted at the given front, if any. */
   def getSubnavForFront(frontId: String, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
@@ -39,14 +55,19 @@ class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
     getSubnavConfig().flatMap { config =>
       def subnavMatchesSpecificArticle(subnav: CustomSubnav): Boolean =
         subnav.pages.exists(p => p.path == content.metadata.id && p.`type` == Article)
-      def subnavMatchesOneOfTheArticleTag(subnav: CustomSubnav): Boolean =
-        subnav.pages.exists(p => p.`type` == HasTag && content.tags.tags.exists(_.id == p.path))
+      def subnavMatchesTag(subnav: CustomSubnav, tagId: String): Boolean =
+        subnav.pages.exists(p => p.`type` == HasTag && p.path == tagId)
 
       val draft = if (status == Draft) config.draft else Nil
-      val all = draft ++ config.live
-      all.find { subnav =>
-        subnavMatchesSpecificArticle(subnav) || subnavMatchesOneOfTheArticleTag(subnav)
-      }
+      val all = config.live ++ draft
+
+      // Subnav config is stored oldest to newest, so we use .findLast to make sure we return the freshest match possible
+      all
+        .findLast(subnavMatchesSpecificArticle)
+        .orElse {
+          // Match against the content's tags in priority order (first to last)
+          content.tags.tags.view.flatMap(tag => all.findLast(subnavMatchesTag(_, tag.id))).headOption
+        }
     }
   }
 

@@ -2,15 +2,17 @@ package model.pressed
 
 import com.gu.facia.api.utils.{BoostLevel, FaciaContentUtils}
 import com.gu.facia.api.{models => fapi}
+import com.gu.facia.client.models.CustomSubnav
 
 final case class PressedDisplaySettings(
-    isBoosted: Boolean,
     boostLevel: Option[BoostLevel],
     isImmersive: Option[Boolean],
     showBoostedHeadline: Boolean,
     showQuotedHeadline: Boolean,
     imageHide: Boolean,
     showLivePlayable: Boolean,
+    showMiniNav: Boolean = false,
+    miniNavData: Option[CustomSubnav] = None,
 )
 
 object PressedDisplaySettings {
@@ -19,12 +21,13 @@ object PressedDisplaySettings {
     val contentProperties = PressedProperties.getProperties(content)
     PressedDisplaySettings(
       imageHide = shouldSuppressImages || contentProperties.imageHide,
-      isBoosted = FaciaContentUtils.isBoosted(content),
       boostLevel = Some(FaciaContentUtils.boostLevel(content)),
       isImmersive = Some(FaciaContentUtils.isImmersive(content)),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
       showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
       showLivePlayable = FaciaContentUtils.showLivePlayable(content),
+      showMiniNav = false,
+      miniNavData = None,
     )
   }
 }

@@ -44,10 +44,6 @@ POST        /page/clear                                                         
 GET         /ajax/clear                                                                             controllers.cache.PageDecacheController.renderAjaxDecache()
 POST        /ajax/clear                                                                             controllers.cache.PageDecacheController.decacheAjax()
 
-# Interactive Pressing
-POST        /interactive-librarian/live-presser/*path                                               controllers.admin.InteractiveLibrarianController.liveContentsPress(path: String)
-POST        /interactive-librarian/read-clean-write/*path                                           controllers.admin.InteractiveLibrarianController.readCleanWrite(path: String)
-
 # Articles / Interactives Pressing
 GET         /press/content                                                                          controllers.admin.InteractiveLibrarianController.pressForm()
 POST        /press/content/*path                                                                    controllers.admin.InteractiveLibrarianController.press(path: String)
@@ -124,6 +120,9 @@ POST        /admin/football/fronts/matches/redirect                             
 GET         /admin/football/fronts/matches/:competitionId                                           controllers.admin.FrontsController.chooseMatchForComp(competitionId)
 GET         /admin/football/fronts/matches/:competitionId/:teamId                                   controllers.admin.FrontsController.chooseMatchForCompAndTeam(competitionId, teamId)
 GET         /admin/football/fronts/matches/:competitionId/:team1Id/:team2Id                         controllers.admin.FrontsController.chooseMatchForCompAndTeams(competitionId, team1Id, team2Id)
-GET         /admin/football/fronts/match/:matchId                                                   controllers.admin.FrontsController.bigMatchSpecial(matchId)
 
 GET         /admin/football/api/squad/:teamId                                                       controllers.admin.PlayerController.squad(teamId: String)
+
+GET         /admin/football/crests                                                                  controllers.admin.CrestsController.index
+GET         /admin/football/crests/:teamId                                                          controllers.admin.CrestsController.getCrest(teamId)
+POST        /admin/football/crests/upload                                                           controllers.admin.CrestsController.upload

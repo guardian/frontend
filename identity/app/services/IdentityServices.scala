@@ -1,5 +1,6 @@
 package services
 
+import cats.effect.unsafe.implicits.global
 import java.util.concurrent.{Executors, ThreadPoolExecutor}
 import clients.DiscussionClient
 import com.gu.identity.auth.{IdapiAuthConfig, IdapiAuthService}
@@ -38,11 +39,10 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
 
     IdapiAuthService.unsafeInit(
       IdapiAuthConfig(Uri.unsafeFromString(identityConfiguration.apiRoot), identityConfiguration.apiClientToken),
-    )(ec)
+    )(ec, cats.effect.unsafe.implicits.global)
   }
   lazy val identityCookieService: IdentityCookieService =
     IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
-  lazy val authenticationService = wire[AuthenticationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]
   lazy val mdapiService = wire[MembersDataApiService]

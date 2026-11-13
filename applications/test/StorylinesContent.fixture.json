@@ -1,0 +1,476 @@
+{
+	"created": "2026-10-15T15:36:20.730Z",
+	"tag": "music/country",
+	"storylines": [
+		{
+			"title": "Dolly Parton's death and legacy",
+			"content": [
+				{
+					"category": "Key Stories",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2026/sep/25/dolly-parton-day-declared",
+							"headline": "Dolly Parton Day declared in various cities and states across the US on 9/25",
+							"byline": "Marina Dunbar",
+							"publicationTime": "2026-09-25T17:54:01Z",
+							"image": {
+								"src": "https://media.guim.co.uk/f68a1d1f29eec7b2628518e2587a59294b5d262d/0_0_7861_5241/master/7861.jpg",
+								"altText": "Two women take a selfie in front of a sign that says '9 to 5'",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Late Queen of Country and philanthropist celebrated with parades, karaoke and live music across the country",
+							"summary": "Late Queen of Country and philanthropist celebrated with parades, karaoke and live music across the country"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2026/sep/23/dolly-parton-estate-in-feud-with-nephew-over-alleged-warfare-threats",
+							"headline": "Dolly Parton estate in feud with nephew over alleged ‘warfare’ threats",
+							"byline": "Ben Beaumont-Thomas",
+							"publicationTime": "2026-09-23T10:08:29Z",
+							"image": {
+								"src": "https://media.guim.co.uk/fc289c258eadbad95d77a0ab2f37b1b7dcedaa40/0_0_2399_1920/master/2399.jpg",
+								"altText": "Dolly Parton sings into a headset microphone, gesturing with both hands raised on stage",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Star’s estate granted restraining order against Bryan Seaver, who publicly announced Parton’s death, over alleged intimidation that he denies",
+							"summary": "Star’s estate granted restraining order against Bryan Seaver, who publicly announced Parton’s death, over alleged intimidation that he denies"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2026/aug/31/dolly-parton-funeral",
+							"headline": "Dolly Parton laid to rest in private Nashville funeral",
+							"byline": "Owen Myers",
+							"publicationTime": "2026-08-31T16:17:24Z",
+							"image": {
+								"src": "https://media.guim.co.uk/9547ddc0f13679976b782fbe97aff6ca29555627/293_0_2915_2333/master/2915.jpg",
+								"altText": "Woman on red carpet ",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "The queen of country was interred next to her late husband in an intimate ceremony attended by close family",
+							"summary": "The queen of country was interred next to her late husband in an intimate ceremony attended by close family"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2026/aug/25/dolly-parton-country-singer-dead",
+							"headline": "Dolly Parton, country star, actor and philanthropist, dies aged 80 after cancer diagnosis",
+							"byline": "Ben Beaumont-Thomas",
+							"publicationTime": "2026-08-25T17:59:40Z",
+							"image": {
+								"src": "https://media.guim.co.uk/db513fae83c84853e4a9af6ea9929e2ba4c00afa/0_392_3000_1799/master/3000.jpg",
+								"altText": "Woman in light yellow dress sitting in green field against rock with guitar on lap.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Songwriter of I Will Always Love You, Jolene and 9 to 5 invested millions in child literacy, Covid-19 vaccine development and other causes",
+							"summary": "Songwriter of I Will Always Love You, Jolene and 9 to 5 invested millions in child literacy, Covid-19 vaccine development and other causes"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2025/sep/29/dolly-parton-postpones-las-vegas-residency-citing-health-challenges",
+							"headline": "Dolly Parton postpones Las Vegas residency, citing ‘health challenges’",
+							"byline": "Ben Beaumont-Thomas",
+							"publicationTime": "2025-09-29T08:37:11Z",
+							"image": {
+								"src": "https://media.guim.co.uk/22f3ec61ea0dffd4cd0e18ae8b61d99a3da67b84/628_0_3725_2980/master/3725.jpg",
+								"altText": "Dolly Parton pictured in 2022.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Country music superstar was due to play six-concert run at Caesars Palace in December",
+							"summary": "Country music superstar was due to play six-concert run at Caesars Palace in December"
+						}
+					]
+				},
+				{
+					"category": "Opinions",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2026/aug/26/dolly-parton-lgbtq-fans",
+							"headline": "‘Find out who you are, and do it on purpose’: unabashedly herself, Dolly Parton was an icon to LGBTQ fans",
+							"byline": "Joe Stone",
+							"publicationTime": "2026-08-26T13:40:06Z",
+							"image": {
+								"src": "https://uploads.guim.co.uk/2022/11/05/Joe_Stone.jpg",
+								"altText": "Joe Stone",
+								"isAvatar": true,
+								"mediaData": null
+							},
+							"standfirst": "Parton’s gift lay in uniting everyone from God-fearing country fans to queer devotees. The way she saw me when I met her made me feel like a flower turning towards the sun",
+							"summary": "Parton’s gift lay in uniting everyone from God-fearing country fans to queer devotees. The way she saw me when I met her made me feel like a flower turning towards the sun"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2026/aug/25/dolly-parton-country-music-career",
+							"headline": "Dolly Parton’s peerless career turned country music cliches inside out ",
+							"byline": "Alexis Petridis",
+							"publicationTime": "2026-08-25T18:07:47Z",
+							"image": {
+								"src": "https://uploads.guim.co.uk/2018/01/31/Alexis-Petridis.jpg",
+								"altText": "Alexis Petridis",
+								"isAvatar": true,
+								"mediaData": null
+							},
+							"standfirst": "Beneath the wig and rhinestones, Parton was the genius behind strings of classic songs from Jolene to I Will Always Love You that continue to inspire new artists",
+							"summary": "Beneath the wig and rhinestones, Parton was the genius behind strings of classic songs from Jolene to I Will Always Love You that continue to inspire new artists"
+						}
+					]
+				},
+				{
+					"category": "Deep Reads",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2026/aug/26/9-to-5-she-was-full-on-round-the-clock-dolly-parton-celebrated-by-kd-lang-peggy-seeger-annie-lennox-and-more",
+							"headline": "‘9 to 5? She was full-on round the clock!’ Dolly Parton celebrated by kd lang, Peggy Seeger, Annie Lennox and more",
+							"byline": "As told to Dave Simpson and Owen Myers",
+							"publicationTime": "2026-08-26T16:46:45Z",
+							"image": {
+								"src": "https://media.guim.co.uk/86aec2ba140c6c9aa9fa6970a124ce1c16171b7f/0_0_3247_2598/master/3247.jpg",
+								"altText": "A black-and-white photograph of Dolly Parton taken in August 1978",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Musicians and performers pay tribute to the country legend who managed to be a generational talent, a formidable entrepreneur, a dedicated philanthropist and a truly kind person",
+							"summary": "Musicians and performers pay tribute to the country legend who managed to be a generational talent, a formidable entrepreneur, a dedicated philanthropist and a truly kind person"
+						}
+					]
+				},
+				{
+					"category": "Find multimedia",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/news/audio/2026/aug/26/dolly-parton-why-the-world-loved-the-queen-of-country-the-latest",
+							"headline": "Dolly Parton: why the queen of country was so beloved – The Latest",
+							"byline": "Presented by Lucy Houghwith Jenny Stevens; produced by Rosie Peters-McDonald and Bryony Moore; senior producer Ryan Ramgobin; executive producer Zoe Hitch",
+							"publicationTime": "2026-08-26T16:46:22Z",
+							"image": {
+								"src": "https://media.guim.co.uk/419dcde587a81fef910d18913b2b3cab5f025172/0_0_3000_2400/500.jpg",
+								"altText": "Dolly Parton",
+								"isAvatar": false,
+								"mediaData": {
+									"type": "Audio",
+									"duration": "14:33"
+								}
+							},
+							"standfirst": "Tributes have poured in for Dolly Parton, the pioneering country music singer, songwriter and actor who has died aged 80. Lucy Hough speaks to Guardian deputy features editor Jenny Stevens",
+							"summary": "Tributes have poured in for Dolly Parton, the pioneering country music singer, songwriter and actor who has died aged 80. Lucy Hough speaks to Guardian deputy features editor Jenny Stevens"
+						},
+						{
+							"url": "https://www.theguardian.com/music/gallery/2026/aug/25/dolly-parton-life-in-pictures",
+							"headline": "Dolly Parton – a life in pictures",
+							"byline": null,
+							"publicationTime": "2026-08-25T18:10:12Z",
+							"image": {
+								"src": "https://media.guim.co.uk/89536575f52a7c6d8ad49a4ab41809c64f68d37d/0_183_3618_2171/master/3618.jpg",
+								"altText": "Dolly Parton performs live at the Paramount Theatre in 1977 in Oakland, California.",
+								"isAvatar": false,
+								"mediaData": {
+									"type": "Gallery",
+									"count": "50"
+								}
+							},
+							"standfirst": "The country music star, actor and philanthropist’s long and varied career spanned decades",
+							"summary": "The country music star, actor and philanthropist’s long and varied career spanned decades"
+						}
+					]
+				},
+				{
+					"category": "Profiles and Interviews",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2024/oct/31/dolly-parton-reader-interview",
+							"headline": "Dolly Parton: ‘I was sorry when Dolly the sheep died – though I don’t want to be cloned’",
+							"byline": "As told to Rich Pelley",
+							"publicationTime": "2024-10-31T15:00:21Z",
+							"image": {
+								"src": "https://media.guim.co.uk/9bd19048f486f8c7d882b3cc7348c9c86e179e27/0_216_3000_1845/master/3000.jpg",
+								"altText": "Dolly in starry vest, bikini top, white hotpants",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "As she launches a new LP and her own wine, the country legend answers your questions on her tough childhood, how she recorded Jolene, and why she’ll never retire",
+							"summary": "As she launches a new LP and her own wine, the country legend answers your questions on her tough childhood, how she recorded Jolene, and why she’ll never retire"
+						}
+					]
+				}
+			],
+			"description": "The country star's withdrawal from performing over health problems, her death aged 80 in August 2026, and the tributes and disputes that followed."
+		},
+		{
+			"title": "Country music's crossover boom and UK fanbase",
+			"content": [
+				{
+					"category": "Key Stories",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2026/sep/22/choosin-texas-ella-langley-billboard-mariah-carey",
+							"headline": "Choosin’ Texas unseats All I Want for Christmas as longest-running No 1 song on Billboard Hot 100",
+							"byline": "Maya Yang",
+							"publicationTime": "2026-09-22T19:45:14Z",
+							"image": {
+								"src": "https://media.guim.co.uk/514b5c1e0b26f45e0e2df70ab458b34969d93f04/133_0_4669_3735/master/4669.jpg",
+								"altText": "a singer stands on stage with her arms outstretched",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Ella Langley’s record-breaking song has spent 23 weeks at the top, surpassing Mariah Carey’s holiday anthem",
+							"summary": "Ella Langley’s record-breaking song has spent 23 weeks at the top, surpassing Mariah Carey’s holiday anthem"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2026/jun/26/how-country-music-is-taking-over-the-uk-state-fayre",
+							"headline": "Grab your Stetsons! How country music is taking over the UK",
+							"byline": "Katie Hawthorne",
+							"publicationTime": "2026-06-26T14:38:42Z",
+							"image": {
+								"src": "https://media.guim.co.uk/adbd3b6ff6d68a5b18df0e5438101854516ffcd6/386_0_1600_1280/master/1600.jpg",
+								"altText": "Two people in cowboy hats raise their arms at a country music event, viewed from behind",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "With country music festival attendances soaring and US artists selling out tours, are British and Irish audiences ready for “the full Southern experience”?",
+							"summary": "With country music festival attendances soaring and US artists selling out tours, are British and Irish audiences ready for “the full Southern experience”?"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2026/mar/11/gen-z-women-country-music",
+							"headline": "How gen Z women are conquering country music: ‘Fans are speaking louder than gatekeepers’",
+							"byline": "Will Groff",
+							"publicationTime": "2026-03-11T09:04:07Z",
+							"image": {
+								"src": "https://media.guim.co.uk/d1f0762f01a6f22960448848e468fe8e17ec123e/312_0_1501_1202/master/1501.jpg",
+								"altText": "Woman in white dress in front of flowers",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "This month, Ella Langley and Megan Moroney became the first pair of women in country music to top both the US albums and singles charts",
+							"summary": "This month, Ella Langley and Megan Moroney became the first pair of women in country music to top both the US albums and singles charts"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2025/jul/21/100-years-of-the-grand-ole-opry-country-music-greatest-institution-royal-albert-hall",
+							"headline": "Urban cowboys, harmonica wizards and queer trailblazers: 100 years of the Grand Ole Opry, country music’s greatest institution",
+							"byline": "Jewly Hight",
+							"publicationTime": "2025-07-21T13:46:53Z",
+							"image": {
+								"src": "https://media.guim.co.uk/a11169aa075752068482854700b508f559d9dfaa/0_334_5547_4437/master/5547.jpg",
+								"altText": "Dolly Parton pictured on the Grand Ole Opry in 1996.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "It started out as promo for an insurance company and ended up powering an entire industry. As the Opry strikes out for London, can it stay relevant for another century?",
+							"summary": "It started out as promo for an insurance company and ended up powering an entire industry. As the Opry strikes out for London, can it stay relevant for another century?"
+						},
+						{
+							"url": "https://www.theguardian.com/music/article/2024/may/24/ten-gallon-hits-why-country-is-the-biggest-pop-music-craze-of-2024",
+							"headline": "Ten-gallon hits! Why country is the biggest pop music craze of 2024",
+							"byline": "Alexis Petridis",
+							"publicationTime": "2024-05-24T04:00:08Z",
+							"image": {
+								"src": "https://media.guim.co.uk/b495a7bfb11be4b5dc926f3d99ac0bfb0b3f2204/562_0_1406_1406/master/1406.jpg",
+								"altText": "Beyoncé, Shaboozey, Post Malone and Dasha",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Beyoncé and Dua Lipa have swapped mirrorballs for rhinestones, while new stars such as Shaboozey and Dasha are making hay with uptempo hoedowns. Even the UK is enjoying its first rodeo – but can it last?",
+							"summary": "Beyoncé and Dua Lipa have swapped mirrorballs for rhinestones, while new stars such as Shaboozey and Dasha are making hay with uptempo hoedowns. Even the UK is enjoying its first rodeo – but can it last?"
+						}
+					]
+				},
+				{
+					"category": "Opinions",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/commentisfree/2025/mar/20/country-music-is-cool-now-even-the-pop-girlies-are-leaning-into-it-ive-finally-been-vindicated",
+							"headline": "Country music is cool now – even the pop girlies are leaning into it. I’ve finally been vindicated",
+							"byline": "Rebecca Shaw",
+							"publicationTime": "2025-03-20T14:00:26Z",
+							"image": {
+								"src": "https://uploads.guim.co.uk/2025/09/19/Rebecca_Shaw.jpg",
+								"altText": "Rebecca Shaw",
+								"isAvatar": true,
+								"mediaData": null
+							},
+							"standfirst": "Cowboy hats and flannels are no longer just the realm of country music – or lesbians",
+							"summary": "Cowboy hats and flannels are no longer just the realm of country music – or lesbians"
+						}
+					]
+				},
+				{
+					"category": "Deep Reads",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2026/jan/22/trump-ice-immigration-country-music",
+							"headline": "Zach Bryan’s anti-ICE song drew ire from Trump officials. Is country music waking up?",
+							"byline": "Justin Kirkland",
+							"publicationTime": "2026-01-22T16:00:29Z",
+							"image": {
+								"src": "https://media.guim.co.uk/05b901e5c9146a6dfd92ddca4e6d02926bf77d35/0_0_5568_3712/master/5568.jpg",
+								"altText": "A man performs guitar on stage",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Emerging stars are starting to critique Trump’s immigration crackdown – defying the genre’s legacy of conservatism",
+							"summary": "Emerging stars are starting to critique Trump’s immigration crackdown – defying the genre’s legacy of conservatism"
+						}
+					]
+				},
+				{
+					"category": "Find multimedia",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/artanddesign/gallery/2026/aug/29/stetsons-waterproofs-long-road-country-music-festival",
+							"headline": "Stetsons and waterproofs at a very English country music festival ",
+							"byline": "Orlando Gili ",
+							"publicationTime": "2026-08-29T18:34:48Z",
+							"image": {
+								"src": "https://media.guim.co.uk/1f08b2d708b164bccd9c76ce012720e92e273d10/78_0_2344_1875/master/2344.jpg",
+								"altText": "Izzy in her bespoke cowgirl outfit and boot earrings. The Long Road Festival\nA Festival of Country, Americana and Roots\nStanford Hall, Leicestershire\n27 - 30 August 2026",
+								"isAvatar": false,
+								"mediaData": {
+									"type": "Gallery",
+									"count": "17"
+								}
+							},
+							"standfirst": "Country music fans use The Long Road festival in Leicestershire to mark the passing of Dolly Parton",
+							"summary": "Country music fans use The Long Road festival in Leicestershire to mark the passing of Dolly Parton"
+						}
+					]
+				},
+				{
+					"category": "Profiles and Interviews",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2024/apr/17/country-star-lainey-wilson-long-road-to-the-grammys-uk-tour",
+							"headline": "Country star Lainey Wilson on her long road to Grammy glory: ‘Maybe I wasn’t as crazy as people thought!’",
+							"byline": "Chris Godfrey",
+							"publicationTime": "2024-04-17T11:30:07Z",
+							"image": {
+								"src": "https://media.guim.co.uk/cba77e17f4f5dcd7520bf3889c02fcb25a57bad8/0_898_4371_2622/master/4371.jpg",
+								"altText": "‘An overnight sensation 11 years in the making’ … Lainey Wilson at the 2024 CMT music awards.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "After slogging through poverty, indifference and Hannah Montana impersonations, the US singer is an award-winning sensation and selling out a UK tour. She explains why her genre is going mainstream like never before",
+							"summary": "After slogging through poverty, indifference and Hannah Montana impersonations, the US singer is an award-winning sensation and selling out a UK tour. She explains why her genre is going mainstream like never before"
+						}
+					]
+				}
+			],
+			"description": "How country became a mainstream pop force on both sides of the Atlantic, led by chart-topping new stars and sold-out British shows."
+		},
+		{
+			"title": "Beyoncé, Cowboy Carter and country music's colour line",
+			"content": [
+				{
+					"category": "Key Stories",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2025/apr/29/beyonce-cowboy-carter-tour-concert-review",
+							"headline": "Beyoncé review – ever-evolving star kicks off electrifying Cowboy Carter tour",
+							"byline": "Bryan Armen Graham",
+							"publicationTime": "2025-04-29T13:46:16Z",
+							"image": {
+								"src": "https://media.guim.co.uk/377ae41a7f7b9a372d9d1cc1c469f56464d9712c/0_189_4800_2880/master/4800.jpg",
+								"altText": "Beyoncé performing on stage",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "The singer delivers a rousing, seven-act spectacle as she performs many of her country songs on stage for the first time while also harking back to her previous dance-leaning era",
+							"summary": "The singer delivers a rousing, seven-act spectacle as she performs many of her country songs on stage for the first time while also harking back to her previous dance-leaning era"
+						},
+						{
+							"url": "https://www.theguardian.com/music/article/2024/sep/10/beyonce-cma-cowboy-carter-snubbed-2024-country-music-awards",
+							"headline": "Beyoncé’s Cowboy Carter snubbed at Country Music Awards",
+							"byline": "Sian Cain and agencies",
+							"publicationTime": "2024-09-10T01:02:21Z",
+							"image": {
+								"src": "https://media.guim.co.uk/b819c31d5e8bdf0c1887e2e20f5057f4f0fcbd6c/181_26_2257_1354/master/2257.jpg",
+								"altText": "Beyonce',Stevie WonderFILE - Beyonce, left, accepts the Innovator Award during the iHeartRadio Music Awards, April 1, 2024, at the Dolby Theatre in Los Angeles. (AP Photo/Chris Pizzello, file)",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Voters for the CMAs have ignored the superstar singer's album, instead showering Morgan Wallen with seven nominations",
+							"summary": "Voters for the CMAs have ignored the superstar singer's album, instead showering Morgan Wallen with seven nominations"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2024/mar/28/beyonce-cowboy-carter-review-from-hoedown-to-full-blown-genre-throwdown",
+							"headline": "Beyoncé: Cowboy Carter review – from hoedown to full-blown genre throwdown",
+							"byline": "Alexis Petridis",
+							"publicationTime": "2024-03-28T20:08:56Z",
+							"image": {
+								"src": "https://media.guim.co.uk/52f45b934d1c4e2191c98f4c38db7c1e3bf58f2a/0_0_2100_2100/master/2100.jpg",
+								"altText": "The artwork for Cowboy Carter.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "The musician’s eighth album straddles the Beatles, the Beach Boys, the blues – and Becky with the Good Hair via Dolly Parton’s Jolene",
+							"summary": "The musician’s eighth album straddles the Beatles, the Beach Boys, the blues – and Becky with the Good Hair via Dolly Parton’s Jolene"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2024/feb/21/beyonce-texas-hold-em-number-one-billboard-country-songs-chart-first-black-woman",
+							"headline": "Beyoncé becomes first Black woman to top Billboard’s Country songs chart with Texas Hold ‘Em",
+							"byline": "Michael Sun",
+							"publicationTime": "2024-02-21T01:44:33Z",
+							"image": {
+								"src": "https://media.guim.co.uk/33d37831c47a3a260bd94a0a0eedd3ffa97145d4/0_248_2813_1960/master/2813.jpg",
+								"altText": "In four days after release, Beyoncé’s latest song, Texas Hold ‘Em, was streamed 19.2m times and downloaded 39,000 times in the US.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Beyoncé is also the first woman to top both the Hot Country Songs and Hot R&amp;B/Hip-Hip Songs charts since the lists began in 1958",
+							"summary": "Beyoncé is also the first woman to top both the Hot Country Songs and Hot R&amp;B/Hip-Hip Songs charts since the lists began in 1958"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2024/feb/16/beyonce-song-texas-hold-em-radio-play-kykc-oklahoma",
+							"headline": "New Beyoncé song Texas Hold ’Em gets country music radio airplay after online campaign",
+							"byline": "Michael Sun",
+							"publicationTime": "2024-02-16T04:52:50Z",
+							"image": {
+								"src": "https://media.guim.co.uk/c5d10aa5fe86bd14c2bdcf8a9cea5be4be7166a0/0_0_4200_2800/master/4200.jpg",
+								"altText": "Beyoncé in New York",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "Oklahoma’s KYKC initially refused to play the song, but later added it to its rotation after saying it had not been aware of the star’s new single",
+							"summary": "Oklahoma’s KYKC initially refused to play the song, but later added it to its rotation after saying it had not been aware of the star’s new single"
+						}
+					]
+				},
+				{
+					"category": "Opinions",
+					"articles": [
+						{
+							"url": "https://www.theguardian.com/music/2024/apr/02/beyonce-version-of-country-cowboy-carter-yasmin-williams",
+							"headline": "Beyoncé’s country album drowns out the Black music history it claims to celebrate",
+							"byline": "Yasmin Williams",
+							"publicationTime": "2024-04-02T11:52:42Z",
+							"image": {
+								"src": "https://uploads.guim.co.uk/2024/04/02/Yasmin_Williams.jpg",
+								"altText": "Yasmin Williams",
+								"isAvatar": true,
+								"mediaData": null
+							},
+							"standfirst": "For all her declarations of being authentically country, Cowboy Carter arrives on the back of booming business for the genre and is all about the star, not the roots music supposedly at the project’s heart",
+							"summary": "For all her declarations of being authentically country, Cowboy Carter arrives on the back of booming business for the genre and is all about the star, not the roots music supposedly at the project’s heart"
+						},
+						{
+							"url": "https://www.theguardian.com/music/2024/feb/27/black-artistry-is-woven-into-the-fabric-of-country-music-it-belongs-to-everyone-beyonce-texas-hold-em-rhiannon-giddens",
+							"headline": "Black artistry is woven into the fabric of country music. It belongs to everyone",
+							"byline": "Rhiannon Giddens",
+							"publicationTime": "2024-02-27T14:00:05Z",
+							"image": {
+								"src": "https://media.guim.co.uk/eca9be1a454db3596c99193fb11481621991d862/0_335_3600_2160/master/3600.jpg",
+								"altText": "Beyoncé in cover artwork for her song 16 Carriages.",
+								"isAvatar": false,
+								"mediaData": null
+							},
+							"standfirst": "With Beyoncé becoming the first Black woman to top the US country charts, musician Rhiannon Giddens, who plays banjo and viola on Texas Hold ’Em, explains how capitalism and racism warped the genre",
+							"summary": "With Beyoncé becoming the first Black woman to top the US country charts, musician Rhiannon Giddens, who plays banjo and viola on Texas Hold ’Em, explains how capitalism and racism warped the genre"
+						}
+					]
+				}
+			],
+			"description": "Beyoncé's move into country music, from radio resistance and chart records to the album, awards snubs and stadium tour."
+		}
+	],
+	"earliestArticleTime": "2024-01-20T15:00:01Z",
+	"latestArticleTime": "2026-10-13T19:05:18Z",
+	"resultSetId": null,
+	"status": null,
+	"errors": []
+}

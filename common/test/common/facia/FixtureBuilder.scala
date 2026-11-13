@@ -55,6 +55,7 @@ object FixtureBuilder {
           showMainVideo = false,
           imageSlideshowReplace = false,
           videoReplace = false,
+          multimediaSlideshowReplace = false,
         ),
       ),
       showKickerTag = false,
@@ -116,13 +117,14 @@ object FixtureBuilder {
 
   def mkDisplay(): PressedDisplaySettings =
     PressedDisplaySettings(
-      isBoosted = false,
       boostLevel = Some(BoostLevel.Default),
       isImmersive = Some(false),
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       imageHide = false,
       showLivePlayable = false,
+      showMiniNav = false,
+      miniNavData = None,
     )
 
   def mkPressedCuratedContent(id: Int, kicker: Option[ItemKicker] = None): PressedContent = {
@@ -138,6 +140,7 @@ object FixtureBuilder {
       cardStyle = DefaultCardstyle,
       format = ContentFormat.defaultContentFormat,
       mediaAtom = None,
+      multimediaSlideshow = None,
     )
   }
 

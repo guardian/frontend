@@ -12,6 +12,7 @@ import common.dfp._
 import common.{ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
+import model.AffiliateProductLivePricing
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -75,6 +76,7 @@ object Fields {
       lang = apiContent.fields.flatMap(_.lang),
       showAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks),
       showTableOfContents = apiContent.fields.flatMap(_.showTableOfContents),
+      livePricingEnabled = apiContent.fields.flatMap(_.livePricingEnabled),
     )
   }
 
@@ -113,6 +115,7 @@ final case class Fields(
     lang: Option[String],
     showAffiliateLinks: Option[Boolean],
     showTableOfContents: Option[Boolean],
+    livePricingEnabled: Option[Boolean] = None,
 ) {
 
   lazy val shortUrlId = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
@@ -157,6 +160,7 @@ object MetaData {
       commercial: Option[CommercialProperties] = None,
       isFoundation: Boolean = false,
       firstPublicationDate: Option[DateTime] = None,
+      cacheTime: Option[CacheTime] = None,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -187,6 +191,7 @@ object MetaData {
       commercial = commercial,
       isFoundation = isFoundation,
       firstPublicationDate = firstPublicationDate,
+      cacheTime = cacheTime.getOrElse(CacheTime.Default),
     )
   }
 
@@ -212,6 +217,7 @@ object MetaData {
       contentType = DotcomContentType(apiContent),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
+        else if (AffiliateProductLivePricing.isEnabledForPage(fields.livePricingEnabled)) CacheTime.LivePricing
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 24.hours) CacheTime.LastDayUpdated
         else CacheTime.NotRecentlyUpdated
@@ -271,6 +277,7 @@ object ContentFormat {
       case "InteractiveDesign"         => InteractiveDesign
       case "PhotoEssayDesign"          => PhotoEssayDesign
       case "ObituaryDesign"            => ObituaryDesign
+      case "WeekendEssayDesign"        => WeekendEssayDesign
       case _                           => ArticleDesign
     }
 

@@ -210,27 +210,6 @@ class FrontsController(
       } yield Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
     }
 
-  def bigMatchSpecial(matchId: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      for {
-        matchInfo <- client.matchInfo(matchId)
-        trailText = {
-          matchInfo.competition.fold("")(c => s"${c.name}, ") + matchInfo.venue.fold("")(c =>
-            s"${c.name}, ",
-          ) + matchInfo.date.format(DateTimeFormatter.ofPattern("HH:mm"))
-        }
-        snapFields = SnapFields(
-          SNAP_TYPE,
-          SNAP_CSS,
-          s"$host/football/api/big-match-special/$matchId.json",
-          s"${Configuration.site.host}/football/match-redirect/$matchId",
-          s"${matchInfo.homeTeam.name} v ${matchInfo.awayTeam.name}",
-          trailText,
-        )
-        previewContent <- previewFrontsComponent(snapFields)
-      } yield previewContent
-    }
-
   private def getCompetition(competitionId: String): FutureOpt[Season] = {
     FutureOpt {
       for {
