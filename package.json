@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"engines": {
-		"yarn": ">=1.22.19"
+		"pnpm": ">=12.14.0"
 	},
 	"files": [
 		"static/src/**/*"
@@ -110,10 +110,11 @@
 		"tslib": "2.6.2",
 		"typescript": "5.3.3",
 		"uglify-js": "^3.19.2",
-		"video.js": "~5.3",
-		"videojs-contrib-ads": "3.1.3",
+		"terser-webpack-plugin": "^5.4.0",
+		"video.js": "^5.19.0",
+		"videojs-contrib-ads": "5.1.0",
 		"videojs-embed": "guardian/videojs-embed#v0.3.3",
-		"videojs-ima": "googleads/videojs-ima#0.3.0",
+		"videojs-ima": "1.0.1",
 		"videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
 		"videojs-playlist": "guardian/videojs-playlist#0.1.4",
 		"web-vitals": "3.5.1",
@@ -173,14 +174,14 @@
 			"url": "http://testurl.theguardian.com"
 		},
 		"transformIgnorePatterns": [
-			"/node_modules/(?!(@guardian|lodash-es|preact)/)"
+			"/node_modules/(?!\\.pnpm/|(@guardian|lodash-es|preact)/)"
 		]
 	},
 	"scripts": {
 		"test": "jest"
 	},
 	"prettier": "@guardian/prettier",
-	"packageManager": "yarn@4.1.1",
+	"packageManager": "pnpm@12.14.0",
 	"resolutions": {
 		"micromatch": "4.0.8",
 		"unset-value": "^2.0.1"

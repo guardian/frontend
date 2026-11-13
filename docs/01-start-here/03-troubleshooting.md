@@ -66,7 +66,7 @@ If it is owned by root, then take ownership of it
 
 Run `make reinstall` to resolve.
 
-### Accidentally ran `npm install` or `yarn install`
+### Accidentally ran `pnpm install`
 
 Run `make reinstall` to resolve.
 

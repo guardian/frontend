@@ -1,0 +1,7 @@
+nodeLinker: hoisted
+allowBuilds:
+  core-js: true
+blockExoticSubdeps: true
+minimumReleaseAge: 2880 # 2 days minimum package version age
+minimumReleaseAgeExclude:
+  - '@guardian/*'
