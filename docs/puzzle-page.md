@@ -306,11 +306,14 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 
 `instance` fields (`PuzzlePageInstance`):
 
-| `puzzleDate` | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context. |
-| `gameUrl` | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
-| `progressIdentity` | object, optional | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL. |
-| `moreFromPuzzlesAndGames` | array | Best-effort related puzzle cards; may be empty. |
-| `puzzlesSupporting` | object, optional | Useful links and an optional live newsletter. |
+| Field                     | Type             | Meaning                                                                                                                          |
+| ------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `title`                   | string           | Display title for the instance (e.g. `"Sudoku (easy)"`).                                                                         |
+| `puzzleDate`              | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context.                                                    |
+| `gameUrl`                 | string, optional | Dated provider URL from the Puzzles API; required by the current page builder.                                                   |
+| `progressIdentity`        | object, optional | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL. |
+| `moreFromPuzzlesAndGames` | array            | Best-effort related puzzle cards; may be empty.                                                                                  |
+| `puzzlesSupporting`       | object, optional | Useful links and an optional live newsletter.                                                                                    |
 
 ## Open questions / known limitations
 
