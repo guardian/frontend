@@ -24,7 +24,6 @@ import org.mockito.ArgumentCaptor
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{times, verify, verifyNoInteractions, when}
 import org.scalatest.DoNotDiscover
-import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatestplus.mockito.MockitoSugar
@@ -44,7 +43,6 @@ import scala.concurrent.{ExecutionContext, Future}
     extends AnyFlatSpec
     with Matchers
     with MockitoSugar
-    with ScalaFutures
     with WithTestApplicationContext {
 
   private val layout = PuzzlesLayout(
@@ -402,7 +400,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
     val result = controller(provider, mock[DotcomRenderingService]).renderPuzzles()(request("/puzzles-and-games"))
 
-    result.failed.futureValue should be(failure)
+    await(result.failed) should be(failure)
   }
 
   it should "propagate DCR renderer failures" in {
@@ -413,7 +411,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
     val result = controller(successfulProvider, renderer).renderPuzzles()(request("/puzzles-and-games"))
 
-    result.failed.futureValue should be(failure)
+    await(result.failed) should be(failure)
   }
 
   "renderPuzzlesJson" should "return the equivalent rendering data as JSON" in {
@@ -1162,7 +1160,7 @@ import scala.concurrent.{ExecutionContext, Future}
       val api = mock[PuzzlesGameApi]
       val gameUrl = s"https://provider.example/play?opaque=$slug&date=$date&token=api-value"
       val publishDate = s"${date}T00:00:00Z"
-      when(api.get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext]))
+      when(api.get(eqTo(puzzleType), eqTo(LocalDate.parse(date)), eqTo(None))(any[ExecutionContext]))
         .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, publishDate, 0, None, Some(gameUrl)))))
       val provider = successfulProvider
       val result = jsonAction(controller(provider, mock[DotcomRenderingService], gameApi = api), date)(
@@ -1182,7 +1180,7 @@ import scala.concurrent.{ExecutionContext, Future}
       (json \ "instance" \ "progress").toOption shouldBe None
       (json \ "instance" \ "moreFromPuzzlesAndGames").as[Seq[PuzzleItem]].map(_.id) shouldBe
         Seq(slug, if (slug == "film-reveal") "on-the-ball" else "film-reveal", "crossword-quick")
-      verify(api).get(eqTo(puzzleType), eqTo(LocalDate.parse(date)))(any[ExecutionContext])
+      verify(api).get(eqTo(puzzleType), eqTo(LocalDate.parse(date)), eqTo(None))(any[ExecutionContext])
       verify(provider).getGameCommercialProperties(eqTo("trivia-and-quizzes"))(any[ExecutionContext])
     }
 
@@ -1221,7 +1219,7 @@ import scala.concurrent.{ExecutionContext, Future}
     it should "return 404 without a usable API game URL, never falling back to a vendor URL" in {
       Seq(None, Some(""), Some("  ")).foreach { url =>
         val api = mock[PuzzlesGameApi]
-        when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+        when(api.get(any[String], any[LocalDate], any[Option[String]])(any[ExecutionContext]))
           .thenReturn(Future.successful(Some(PuzzlesApiItem("opaque", puzzleType, date, 0, None, url))))
         val renderer = mock[DotcomRenderingService]
         status(
@@ -1242,7 +1240,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
     it should "return an uncached 502 when the API fails" in {
       val api = mock[PuzzlesGameApi]
-      when(api.get(any[String], any[LocalDate])(any[ExecutionContext]))
+      when(api.get(any[String], any[LocalDate], any[Option[String]])(any[ExecutionContext]))
         .thenReturn(Future.failed(new RuntimeException("private upstream detail")))
       val result = jsonAction(controller(successfulProvider, mock[DotcomRenderingService], gameApi = api), date)(
         request(s"$path/$date.json", v2Participations),
