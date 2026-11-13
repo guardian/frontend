@@ -1417,6 +1417,8 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       showQuotedHeadline = false,
       showLivePlayable = false,
       imageHide = false,
+      showMiniNav = false,
+      miniNavData = None,
     )
 
     CuratedContent(

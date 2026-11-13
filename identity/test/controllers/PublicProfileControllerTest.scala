@@ -30,7 +30,7 @@ class PublicProfileControllerTest
 
   val userId: String = "123"
   val discussionProfile = DiscussionProfile(userId, "John Smith")
-  val vanityUrl: String = "bobski"
+
   val user = User(
     "test@example.com",
     userId,
@@ -102,34 +102,8 @@ class PublicProfileControllerTest
     "with invalid user Id" - {
       val result = controller.renderProfileFromId("notAUser", "discussions")(request)
 
-      "then the status should be 200 with no comments found" in {
-        status(result) should be(200)
-        contentAsString(result) should include("No comments found for user")
-      }
-    }
-  }
-
-  "Given renderProfileFromVanityUrl is called" - Fake {
-    when(discussionApi.findDiscussionUserFilterCommented(userId)) thenReturn Future.successful(Some(discussionProfile))
-
-    "with valid user Id who has commented" - {
-      val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
-
-      "then should return status 200" in {
-        status(result) should be(200)
-      }
-
-      "then rendered profile should display no comments found since vanity URLs are no longer supported in IDAPI" in {
-        contentAsString(result) should include("No comments found for user")
-      }
-    }
-
-    "with invalid user Id" - {
-      val result = controller.renderProfileFromVanityUrl("notAUser", "discussions")(request)
-
-      "then the status should be 200 with no comments found" in {
-        status(result) should be(200)
-        contentAsString(result) should include("No comments found for user")
+      "then the status should be 404" in {
+        status(result) should be(404)
       }
     }
   }

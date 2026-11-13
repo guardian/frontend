@@ -1,7 +1,6 @@
 package controllers.admin
 
 import common.{PekkoAsync, GuLogging, ImplicitControllerExecutionContext}
-import conf.switches.Switches.ContentPresser
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -42,27 +41,4 @@ class InteractiveLibrarianController(
         }
       }
     }
-
-  def liveContentsPress(path: String): Action[AnyContent] = {
-    Action.async { implicit request =>
-      if (ContentPresser.isSwitchedOn) {
-        InteractiveLibrarian.pressLiveContents(wsClient, path).map { message =>
-          Ok(message)
-        }
-      } else {
-        Future.successful(NotFound)
-      }
-    }
-  }
-
-  def readCleanWrite(path: String): Action[AnyContent] = {
-    Action.async { implicit request =>
-      if (ContentPresser.isSwitchedOn) {
-        val status = InteractiveLibrarian.readCleanWrite(path)
-        Future.successful(Ok(status.toString()))
-      } else {
-        Future.successful(NotFound)
-      }
-    }
-  }
 }

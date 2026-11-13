@@ -7,6 +7,12 @@ import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
 
+case class PuzzleProgressIdentity(puzzleId: String, puzzleType: String, publishDate: String)
+
+object PuzzleProgressIdentity {
+  implicit val writes: OWrites[PuzzleProgressIdentity] = Json.writes[PuzzleProgressIdentity]
+}
+
 /** Per-instance data for a single Puzzle Page. Puzzle Page is scoped to iframe-based puzzles only (see
   * PuzzlesPageController) - there is no crossword (or other component-rendered) case, so this type carries no
   * crossword-specific fields. (A set of crossword-flavoured fields - `puzzleType`/`setterName`/`date`/
@@ -33,6 +39,7 @@ case class PuzzlePageInstance(
     puzzlesSupporting: Option[PuzzleGameSupporting] = None,
     /** The dated provider URL returned by the Puzzles API. */
     gameUrl: Option[String] = None,
+    progressIdentity: Option[PuzzleProgressIdentity] = None,
 )
 
 object PuzzlePageInstance {

@@ -7,17 +7,6 @@ import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
-  val ContentPresser = Switch(
-    SwitchGroup.Feature,
-    "content-presser",
-    "Enables routes for pressing and cleaning articles and interactives.",
-    owners = Seq(Owner.withName("unknown")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false,
-    highImpact = false,
-  )
-
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",
@@ -684,7 +673,19 @@ trait FeatureSwitches {
     sellByDate = never,
     safeState = Off,
     exposeClientSide = true,
-    highImpact = false,
+    highImpact = true,
+  )
+
+  val EditorialArticleABTests = Switch(
+    group = SwitchGroup.Feature,
+    name = "editorial-article-ab-tests",
+    description = "Enables editorial article A/B tests to run",
+    owners =
+      Seq(Owner.withEmail("fronts.and.curation@guardian.co.uk"), Owner.withEmail("a.b.test.mission@guardian.co.uk")),
+    sellByDate = never,
+    safeState = Off,
+    exposeClientSide = true,
+    highImpact = true,
   )
 
   val AffiliateProductLivePricing = Switch(

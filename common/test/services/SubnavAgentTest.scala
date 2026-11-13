@@ -4,7 +4,7 @@ import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent, Tag => ApiTag}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import com.gu.facia.api.models.PublicationStatus.{Draft, Live}
-import com.gu.facia.client.models.TargetedPageType.{Article, HasTag}
+import com.gu.facia.client.models.TargetedPageType.{Article, Front, HasTag}
 import com.gu.facia.client.models.{
   CustomSubnav,
   CustomSubnavConfig,
@@ -21,10 +21,10 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite {
 
-  private def subnav(id: String, pages: List[TargetedPage]): CustomSubnav =
+  private def subnav(id: String, pages: List[TargetedPage], url: Option[String] = None): CustomSubnav =
     CustomSubnav(
       id = id,
-      header = CustomSubnavHeader(headerText = "subnav 1", dotcomPath = None, copy = "copy"),
+      header = CustomSubnavHeader(headerText = "subnav 1", dotcomPath = url, copy = "copy"),
       format = CustomSubnavFormat.Large,
       links = Nil,
       pages = pages,
@@ -61,10 +61,114 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
     Content.make(apiContent)
   }
 
-  private def agentWith(config: CustomSubnavConfig): SubnavAgent =
-    new SubnavAgent(ApplicationIdentity("test")) {
+  private def agentWith(
+      config: CustomSubnavConfig,
+      appIdentity: ApplicationIdentity = ApplicationIdentity("test"),
+  ): SubnavAgent =
+    new SubnavAgent(appIdentity) {
       override def getSubnavConfig(): Option[CustomSubnavConfig] = Some(config)
     }
+
+  "getSubnavByUrl" should "return None when the config has not loaded" in {
+    new SubnavAgent(ApplicationIdentity("test")).getSubnavByUrl("/missing") shouldBe None
+  }
+
+  it should "use live data by default and draft data in preview" in {
+    val live = subnav("live", Nil, Some("/sport"))
+    val draft = subnav("draft", Nil, Some("/sport"))
+    val config = CustomSubnavConfig(live = List(live), draft = List(draft))
+
+    agentWith(config).getSubnavByUrl("/sport") shouldBe Some(live)
+    agentWith(config).getSubnavByUrl("/sport", Draft) shouldBe Some(draft)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavByUrl("/sport") shouldBe Some(draft)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavByUrl("/sport", Live) shouldBe Some(live)
+    agentWith(config).getSubnavByUrl("/missing") shouldBe None
+  }
+
+  it should "use the same publication precedence as front mapping" in {
+    val live = subnav("live", List(TargetedPage(Front, "sport")), Some("/sport"))
+    val draft = live.copy(id = "draft")
+    val configs = List(
+      CustomSubnavConfig(live = Nil, draft = Nil),
+      CustomSubnavConfig(live = List(live), draft = Nil),
+      CustomSubnavConfig(live = Nil, draft = List(draft)),
+      CustomSubnavConfig(live = List(live), draft = List(draft)),
+      CustomSubnavConfig(
+        live = List(live, live.copy(id = "later-live")),
+        draft = List(draft, draft.copy(id = "later-draft")),
+      ),
+    )
+
+    for {
+      config <- configs
+      status <- List(Live, Draft)
+    } {
+      val agent = agentWith(config)
+      agent.getSubnavByUrl("/sport", status) shouldBe agent.getSubnavForFront("sport", status)
+    }
+  }
+
+  it should "match the header URL independently of targeted pages" in {
+    val matching = subnav("matching", Nil, Some("/sport"))
+    val noUrl = subnav("no-url", List(TargetedPage(Front, "sport")))
+    val agent = agentWith(CustomSubnavConfig(live = List(noUrl, matching), draft = Nil))
+
+    agent.getSubnavByUrl("/sport") shouldBe Some(matching)
+    agent.getSubnavByUrl("/missing") shouldBe None
+    agent.getSubnavForFront("sport") shouldBe Some(noUrl)
+  }
+
+  it should "resolve editor URLs by subnav ID with draft precedence" in {
+    val live = subnav("4c1bf2d9-ee4f-4d4c-829a-9bcc2c25b9fb", Nil)
+    val draft = live.copy(updatedBy = "draft editor")
+    val agent = agentWith(CustomSubnavConfig(live = List(live), draft = List(draft)))
+    val url = s"https://fronts.local.dev-gutools.co.uk/v2/subnavs/${live.id}"
+
+    agent.getSubnavByUrl(url) shouldBe Some(live)
+    agent.getSubnavByUrl(s"$url/?x=1", Draft) shouldBe Some(draft)
+    agent.getSubnavByUrl(s"$url#section") shouldBe Some(live)
+    agent.getSubnavByUrl("https://fronts.local.dev-gutools.co.uk/v2/subnavs/missing") shouldBe None
+  }
+
+  "getSubnavById" should "return None when the config has not loaded" in {
+    new SubnavAgent(ApplicationIdentity("test")).getSubnavById("missing") shouldBe None
+  }
+
+  it should "use live data by default and draft data in preview, falling back to live" in {
+    val live = subnav("nav", Nil)
+    val draft = live.copy(updatedBy = "draft editor")
+    val config = CustomSubnavConfig(live = List(live), draft = List(draft))
+
+    agentWith(config).getSubnavById(live.id) shouldBe Some(live)
+    agentWith(config).getSubnavById(live.id, Draft) shouldBe Some(draft)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavById(live.id) shouldBe Some(draft)
+    agentWith(config, ApplicationIdentity("preview")).getSubnavById(live.id, Live) shouldBe Some(live)
+    agentWith(config.copy(draft = Nil)).getSubnavById(live.id, Draft) shouldBe Some(live)
+    agentWith(config.copy(live = Nil)).getSubnavById(live.id, Live) shouldBe None
+    agentWith(config).getSubnavById("missing") shouldBe None
+  }
+
+  "getSubnavForFront" should "preserve the client library's front mapping for both publication statuses" in {
+    val live = subnav("live", List(TargetedPage(Front, "sport")))
+    val draft = live.copy(id = "draft")
+    val wrongType = subnav("article", List(articlePage("sport")))
+    val configs = List(
+      CustomSubnavConfig(live = Nil, draft = Nil),
+      CustomSubnavConfig(live = List(live), draft = Nil),
+      CustomSubnavConfig(live = Nil, draft = List(draft)),
+      CustomSubnavConfig(live = List(live), draft = List(draft)),
+      CustomSubnavConfig(live = List(wrongType, live, live.copy(id = "later")), draft = Nil),
+    )
+
+    for {
+      config <- configs
+      status <- List(Live, Draft)
+      frontId <- List("sport", "missing")
+    } {
+      agentWith(config).getSubnavForFront(frontId, status) shouldBe
+        com.gu.facia.api.CustomSubnavService.getSubnavForFront(config, frontId, status)
+    }
+  }
 
   "getSubnavForContent" should "return None when there is no config" in {
     val agent = new SubnavAgent(ApplicationIdentity("test")) {

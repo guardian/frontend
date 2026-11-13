@@ -12,7 +12,7 @@ addSbtPlugin("org.playframework" % "sbt-plugin" % "3.0.11")
 addSbtPlugin("com.github.sbt" % "sbt-native-packager" % "1.11.7")
 
 // Used to build the shaded, self-contained template-tracker JVM agent jar
-addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.4.2")
+addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "2.5.0")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.6.4")
 
@@ -24,4 +24,4 @@ addDependencyTreePlugin
 
 addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.13.2")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.7")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalafix" % "0.14.9")
