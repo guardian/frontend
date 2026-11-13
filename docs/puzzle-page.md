@@ -298,6 +298,7 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 | `puzzleDate` | string, optional | ISO date from the URL. DCR displays it and forwards it to the iframe context. |
 | `gameUrl` | string, optional | Dated provider URL from the Puzzles API; required by the current page builder. |
 | `progressIdentity` | object, optional | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL. |
+| `requiresSubscription` | boolean, optional | `true` when the puzzle is older than the free window (the last 7 days counting today are free, Europe/London; see `PuzzlesAccessPolicy`). Absent means free. Depends only on the puzzle date, never on the reader, so it is safe in the cached HTML. |
 | `moreFromPuzzlesAndGames` | array | Best-effort related puzzle cards; may be empty. |
 | `puzzlesSupporting` | object, optional | Useful links and an optional live newsletter. |
 
@@ -309,3 +310,32 @@ This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 -   **Deeper technical open items (AmuseLabs archive URLs, the user-id/postMessage mechanism, etc.)
     are tracked on the DCR side**, in that repo's own equivalent consolidated Puzzle Page doc, not
     duplicated here - check the `dotcom-rendering` repo for the current location of that document.
+
+## Premium puzzles access
+
+Puzzles outside the last 7 days, counting today (Europe/London), need a Supporter Plus or Digital Pack subscription.
+The Puzzles API owns that rule and is the authority. `PuzzlesAccessPolicy` repeats it only to give DCR a hint,
+`instance.requiresSubscription`, in the cached page HTML (it is the same for every reader, so it can say that a puzzle
+is premium, never who may play it). The hint lets free puzzles and signed out readers resolve with no request at all.
+It must match the Puzzles API's `PUZZLE_FREE_WINDOW_DAYS` (7 by default): `PuzzlesAccessPolicyTest` and the Puzzles API
+tests check the same boundary (6 days ago is free, 7 days ago is premium).
+
+Whether a reader may play is answered by `GET /puzzles-and-games/access/<id>/<YYYY-MM-DD>`
+(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints. The id and the date are path
+parameters, not a query string, because query parameters are stripped by the CDN in CODE and PROD. The browser sends
+the reader's own `Authorization` header. The controller:
+
+-   answers 401 if there is no `Authorization` header, and 400 if the id is not `^[\w-]{1,256}$` or the date is not a
+    calendar day as `YYYY-MM-DD`, without calling anything (the id goes into a URL path, so nothing else may reach it);
+-   otherwise forwards the header, with the API key, to the Puzzles API
+    (`GET /v1/game/{puzzleId}/access/{date}`, see `PuzzlesAccessApiClient`, 2 second timeout) and answers
+    `{ "hasAccess": boolean }`;
+-   answers 503 for **everything else**: a 401, 403 or 404 from the Puzzles API, a 5xx, a timeout, an invalid body. A
+    failure to find out is never reported as "denied".
+
+DCR treats any non-2xx answer as "could not find out" and falls back to what it knows about the reader. The date is
+only used by the Puzzles API to find the puzzle from its id, and the decision is made from the puzzle's own publish
+date, so a wrong date is a 404 (so a 503 here) and never a free puzzle.
+
+The response is never cached (`NoCache`), and the Puzzles API requires `Authorization` for this endpoint, so nothing
+here relies on any caching behaviour, including Fastly's, for correctness.

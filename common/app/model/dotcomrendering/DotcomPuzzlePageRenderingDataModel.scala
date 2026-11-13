@@ -40,6 +40,12 @@ case class PuzzlePageInstance(
     /** The dated provider URL returned by the Puzzles API. */
     gameUrl: Option[String] = None,
     progressIdentity: Option[PuzzleProgressIdentity] = None,
+    /** `Some(true)` when the puzzle is older than the free window (see `PuzzlesAccessPolicy`) and so needs a Supporter
+      * Plus or Digital Pack subscription to play. Absent means free. It depends only on the puzzle date, never on the
+      * reader, so it is safe in the cached, shared page HTML; whether the reader has access is answered separately by
+      * the uncached `GET /puzzles-and-games/access` endpoint.
+      */
+    requiresSubscription: Option[Boolean] = None,
 )
 
 object PuzzlePageInstance {

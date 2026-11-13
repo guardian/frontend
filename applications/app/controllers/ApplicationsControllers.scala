@@ -33,6 +33,8 @@ trait ApplicationsControllers {
   lazy val puzzlesGameApi: PuzzlesGameApi = new PuzzlesGameApiClient(wsClient)
   lazy val puzzlesProgressApi: PuzzlesProgressApi = new PuzzlesProgressApiClient(wsClient)
   lazy val puzzlesProgressController = wire[PuzzlesProgressController]
+  lazy val puzzlesAccessApi: PuzzlesAccessApi = new PuzzlesAccessApiClient(wsClient)
+  lazy val puzzlesAccessController = wire[PuzzlesAccessController]
   lazy val siteMapController = wire[SiteMapController]
   lazy val dCARAssetsController = wire[DCARAssetsController]
   lazy val crosswordPageController = wire[CrosswordPageController]

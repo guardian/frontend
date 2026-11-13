@@ -491,6 +491,7 @@ class PuzzlesPageController(
                     puzzleDate = Some(date),
                     gameUrl = game.gameUrl,
                     progressIdentity = Some(PuzzleProgressIdentity(game.puzzleId, game.puzzleType, game.publishDate)),
+                    requiresSubscription = Option.when(PuzzlesAccessPolicy.requiresSubscription(parsedDate))(true),
                     moreFromPuzzlesAndGames = recommendations,
                     puzzlesSupporting = puzzlesNewsletters.forGame(usefulLinks = PuzzlesNewsletters.GameLinks),
                   )
