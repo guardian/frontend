@@ -1085,6 +1085,7 @@ object PageElement extends GuLogging {
       addAffiliateLinks: Boolean,
       isLivePricingEnabled: Boolean,
       pageUrl: String,
+      pageId: String,
       atoms: Iterable[Atom],
       isMainBlock: Boolean,
       isImmersive: Boolean,
@@ -1119,7 +1120,7 @@ object PageElement extends GuLogging {
     element.`type` match {
       case Text =>
         val textCleaners =
-          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isUSProductionOffice, abTests) _ andThen
+          TextCleaner.affiliateLinks(pageId, addAffiliateLinks, isUSProductionOffice, abTests) _ andThen
             TextCleaner.sanitiseLinks(edition)
 
         for {
@@ -1211,7 +1212,7 @@ object PageElement extends GuLogging {
         List(
           ImageBlockElement(
             ImageMedia(imageAssets.toSeq),
-            imageDataFor(element, isGallery, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests),
+            imageDataFor(element, isGallery, pageId, addAffiliateLinks, isUSProductionOffice, abTests),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
             imageSources,
@@ -1611,7 +1612,7 @@ object PageElement extends GuLogging {
         element.linkTypeData.map { d =>
           val linkType = d.linkType.getOrElse(LinkType.ProductButton)
           LinkBlockElement(
-            AffiliateLinksCleaner.replaceUrlInLink(d.url, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests),
+            AffiliateLinksCleaner.replaceUrlInLink(d.url, pageId, addAffiliateLinks, isUSProductionOffice, abTests),
             d.label,
             d.linkType.getOrElse(LinkType.ProductButton),
             d.priority,
@@ -1707,6 +1708,7 @@ object PageElement extends GuLogging {
                 addAffiliateLinks,
                 isLivePricingEnabled,
                 pageUrl,
+                pageId,
                 atoms,
                 isImmersive,
                 campaigns,
@@ -1730,6 +1732,7 @@ object PageElement extends GuLogging {
               addAffiliateLinks,
               isLivePricingEnabled,
               pageUrl,
+              pageId,
               atoms,
               isImmersive,
               campaigns,
@@ -1750,6 +1753,7 @@ object PageElement extends GuLogging {
             addAffiliateLinks,
             isLivePricingEnabled,
             pageUrl,
+            pageId,
             atoms,
             isImmersive,
             campaigns,
@@ -1805,6 +1809,7 @@ object PageElement extends GuLogging {
       addAffiliateLinks: Boolean,
       isLivePricingEnabled: Boolean,
       pageUrl: String,
+      pageId: String,
       atoms: Iterable[Atom],
       isImmersive: Boolean,
       campaigns: Option[JsValue],
@@ -1831,6 +1836,7 @@ object PageElement extends GuLogging {
                   addAffiliateLinks,
                   isLivePricingEnabled,
                   pageUrl,
+                  pageId,
                   atoms,
                   isMainBlock = true,
                   isImmersive,
@@ -1851,6 +1857,7 @@ object PageElement extends GuLogging {
                 addAffiliateLinks,
                 isLivePricingEnabled,
                 pageUrl,
+                pageId,
                 atoms,
                 isMainBlock = false,
                 isImmersive,
@@ -1874,6 +1881,7 @@ object PageElement extends GuLogging {
       addAffiliateLinks: Boolean,
       isLivePricingEnabled: Boolean,
       pageUrl: String,
+      pageId: String,
       atoms: Iterable[Atom],
       isImmersive: Boolean,
       campaigns: Option[JsValue],
@@ -1892,6 +1900,7 @@ object PageElement extends GuLogging {
           addAffiliateLinks,
           isLivePricingEnabled,
           pageUrl,
+          pageId,
           atoms,
           isMainBlock = false,
           isImmersive,
@@ -1919,6 +1928,7 @@ object PageElement extends GuLogging {
       addAffiliateLinks: Boolean,
       isLivePricingEnabled: Boolean,
       pageUrl: String,
+      pageId: String,
       atoms: Iterable[Atom],
       isImmersive: Boolean,
       campaigns: Option[JsValue],
@@ -1940,7 +1950,7 @@ object PageElement extends GuLogging {
       for {
         // URL must exist and be non-empty
         url <- AffiliateLinksCleaner
-          .replaceUrlInLink(cta.url, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests)
+          .replaceUrlInLink(cta.url, pageId, addAffiliateLinks, isUSProductionOffice, abTests)
           .filter(_.nonEmpty)
 
         // Must have either non-empty text, or both non-empty price & retailer
@@ -1996,6 +2006,7 @@ object PageElement extends GuLogging {
             addAffiliateLinks,
             isLivePricingEnabled,
             pageUrl,
+            pageId,
             atoms,
             isMainBlock = false,
             isImmersive,
@@ -2344,7 +2355,7 @@ object PageElement extends GuLogging {
   private def imageDataFor(
       element: ApiBlockElement,
       isGallery: Boolean,
-      pageUrl: String,
+      pageId: String,
       addAffiliateLinks: Boolean,
       isUSProductionOffice: Boolean,
       abTests: Map[String, String],
@@ -2355,9 +2366,9 @@ object PageElement extends GuLogging {
         "alt" -> d.alt,
         "caption" -> {
           if (isGallery) {
-            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageUrl, addAffiliateLinks, isUSProductionOffice, abTests))
+            d.caption.map(TextCleaner.cleanGalleryCaption(_, pageId, addAffiliateLinks, isUSProductionOffice, abTests))
           } else {
-            d.caption.map(TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks, isUSProductionOffice, abTests))
+            d.caption.map(TextCleaner.affiliateLinks(pageId, addAffiliateLinks, isUSProductionOffice, abTests))
           }
         },
         "credit" -> d.credit,

@@ -40,7 +40,7 @@ object GalleryCaptionCleaners {
     val cleaners = List(
       GalleryCaptionCleaner,
       AffiliateLinksCleaner(
-        request.uri,
+        page.gallery.content.metadata.id,
         page.gallery.content.fields.showAffiliateLinks,
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
