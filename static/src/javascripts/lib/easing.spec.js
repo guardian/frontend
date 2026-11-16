@@ -33,19 +33,19 @@ describe('easing', () => {
     });
 
     test('createEasing()', () => {
-        const OriginalDate = Date;
+        const OriginalDate = global.Date;
         const ELAPSED = chance.integer({ min: 0, max: 100 });
         const DURATION = chance.integer({ min: ELAPSED, max: 300 });
-        Date = jest.fn(() => new OriginalDate(0));
+        global.Date = jest.fn(() => new OriginalDate(0));
 
         const ease = createEasing('linear', DURATION);
         expect(ease()).toBe(0);
 
-        Date = jest.fn(
+        global.Date = jest.fn(
             () => new OriginalDate((1970, 1, 1, 0, 0, 0, ELAPSED))
         );
         expect(ease()).toBeCloseTo(ELAPSED / DURATION);
 
-        Date = OriginalDate;
+        global.Date = OriginalDate;
     });
 });
