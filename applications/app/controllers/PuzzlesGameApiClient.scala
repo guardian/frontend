@@ -9,21 +9,26 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 trait PuzzlesGameApi {
-  def get(puzzleType: String, date: LocalDate)(implicit
+  def get(puzzleType: String, date: LocalDate, authorization: Option[String] = None)(implicit
       executionContext: ExecutionContext,
   ): Future[Option[PuzzlesApiItem]]
 }
 
-/** Public page data is fetched anonymously; DCR adds the reader's identity after hydration. */
+case class PuzzlesGameApiError(status: Int) extends RuntimeException(s"Puzzles game returned HTTP $status")
+
+/** Page rendering uses anonymous data; browser lookups forward the reader's token to the Puzzles API. */
 class PuzzlesGameApiClient(wsClient: WSClient) extends PuzzlesGameApi with GuLogging {
-  override def get(puzzleType: String, date: LocalDate)(implicit
+  override def get(puzzleType: String, date: LocalDate, authorization: Option[String])(implicit
       executionContext: ExecutionContext,
   ): Future[Option[PuzzlesApiItem]] = {
     val url = s"${Configuration.puzzlesApi.baseUrl.stripSuffix("/")}/game"
     errorLoggingF(s"Puzzles game request failed: puzzleType=$puzzleType, date=$date") {
       wsClient
         .url(url)
-        .withHttpHeaders("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json")
+        .withHttpHeaders(
+          (Seq("X-Api-Key" -> Configuration.puzzlesApi.apiKey, "Accept" -> "application/json") ++
+            authorization.map("Authorization" -> _)): _*,
+        )
         .withQueryStringParameters("puzzleType" -> puzzleType, "date" -> date.toString)
         .withRequestTimeout(3.seconds)
         .get()
@@ -40,7 +45,7 @@ class PuzzlesGameApiClient(wsClient: WSClient) extends PuzzlesGameApi with GuLog
                       Future.successful(Some(item))
                     else Future.failed(new IllegalArgumentException("Puzzles game response does not match the request")),
                 )
-            case status => Future.failed(new RuntimeException(s"Puzzles game returned HTTP $status"))
+            case status => Future.failed(PuzzlesGameApiError(status))
           }
         }
     }
