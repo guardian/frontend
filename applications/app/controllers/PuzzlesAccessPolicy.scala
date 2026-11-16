@@ -1,6 +1,6 @@
 package controllers
 
-import java.time.{LocalDate, ZoneId}
+import java.time.{Instant, LocalDate, ZoneId, ZoneOffset}
 
 /** Decides which puzzles are free and which are premium.
   *
@@ -27,4 +27,13 @@ object PuzzlesAccessPolicy {
   /** `true` when `puzzleDate` is older than the free window. Today's date and future dates are free. */
   def requiresSubscription(puzzleDate: LocalDate, today: LocalDate = londonToday()): Boolean =
     puzzleDate.isBefore(today.minusDays(FreeWindowDays.toLong - 1))
+
+  /** Same rule for a puzzle dated by epoch milliseconds, read as a UTC date (the date a crossword carries). An
+    * unreadable date is never premium, so the page keeps working as before.
+    */
+  def requiresSubscriptionAt(epochMillis: Long, today: LocalDate = londonToday()): Boolean =
+    scala.util
+      .Try(Instant.ofEpochMilli(epochMillis).atZone(ZoneOffset.UTC).toLocalDate)
+      .toOption
+      .exists(requiresSubscription(_, today))
 }
