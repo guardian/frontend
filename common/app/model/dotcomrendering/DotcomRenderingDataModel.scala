@@ -116,6 +116,7 @@ case class DotcomRenderingDataModel(
     moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
     puzzlesSupporting: Option[PuzzleGameSupporting],
     puzzleArchivePath: Option[String],
+    crosswordRequiresSubscription: Option[Boolean],
 )
 
 object DotcomRenderingDataModel {
@@ -199,6 +200,7 @@ object DotcomRenderingDataModel {
         "moreFromPuzzlesAndGames" -> model.moreFromPuzzlesAndGames,
         "puzzlesSupporting" -> model.puzzlesSupporting,
         "puzzleArchivePath" -> model.puzzleArchivePath,
+        "crosswordRequiresSubscription" -> model.crosswordRequiresSubscription,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -361,6 +363,7 @@ object DotcomRenderingDataModel {
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
       puzzlesSupporting: Option[PuzzleGameSupporting] = None,
       puzzleArchivePath: Option[String] = None,
+      crosswordRequiresSubscription: Option[Boolean] = None,
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -380,6 +383,7 @@ object DotcomRenderingDataModel {
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
       puzzlesSupporting = puzzlesSupporting,
       puzzleArchivePath = puzzleArchivePath,
+      crosswordRequiresSubscription = crosswordRequiresSubscription,
     )
   }
 
@@ -483,6 +487,7 @@ object DotcomRenderingDataModel {
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
       puzzlesSupporting: Option[PuzzleGameSupporting] = None,
       puzzleArchivePath: Option[String] = None,
+      crosswordRequiresSubscription: Option[Boolean] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -718,6 +723,7 @@ object DotcomRenderingDataModel {
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
       puzzlesSupporting = puzzlesSupporting,
       puzzleArchivePath = puzzleArchivePath,
+      crosswordRequiresSubscription = crosswordRequiresSubscription,
     )
   }
 }

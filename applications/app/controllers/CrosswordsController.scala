@@ -1,6 +1,6 @@
 package controllers
 
-import ab.PuzzlesHubV1Experiment
+import ab.{PuzzlesHubV1Experiment, PuzzlesHubV3Experiment}
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -95,6 +95,18 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         }
     else Future.successful(None)
 
+  /** `Some(true)` when this crossword is older than the free window and the request is in the puzzles hub v3
+    * experiment, `None` otherwise, so every other crossword is sent exactly as before. The date is the UTC date of the
+    * crossword, the same one the progress identity uses. Only a hint for the cached page: the Puzzles API decides (see
+    * [[PuzzlesAccessPolicy]]).
+    */
+  def crosswordRequiresSubscription(
+      crossword: CrosswordData,
+  )(implicit request: RequestHeader): Option[Boolean] =
+    Option.when(
+      PuzzlesHubV3Experiment.isEnabled && PuzzlesAccessPolicy.requiresSubscriptionAt(crossword.date.getMillis),
+    )(true)
+
   def withCrossword(crosswordType: String, id: Int)(
       f: (Crossword, ApiContent) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
@@ -137,6 +149,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
             recommendations,
             puzzlesSupporting,
             archivePath,
+            crosswordRequiresSubscription(page.crossword),
           )
         } yield result
       else
@@ -180,7 +193,16 @@ class CrosswordPageController(
           recommendations <- moreFromPuzzlesAndGames(crosswordPage.crossword)
           archivePath <- puzzleArchivePath(crosswordPage.crossword)
         } yield common
-          .renderJson(getDCRJson(crosswordPage, pageType, recommendations, archivePath), crosswordPage)
+          .renderJson(
+            getDCRJson(
+              crosswordPage,
+              pageType,
+              recommendations,
+              archivePath,
+              crosswordRequiresSubscription(crosswordPage.crossword),
+            ),
+            crosswordPage,
+          )
           .as("application/json")
       }
     }
@@ -190,6 +212,7 @@ class CrosswordPageController(
       pageType: PageType,
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
       puzzleArchivePath: Option[String],
+      requiresSubscription: Option[Boolean],
   )(implicit
       request: RequestHeader,
   ): JsValue =
@@ -202,6 +225,7 @@ class CrosswordPageController(
         moreFromPuzzlesAndGames,
         puzzlesSupporting,
         puzzleArchivePath,
+        requiresSubscription,
       ),
     )
 
