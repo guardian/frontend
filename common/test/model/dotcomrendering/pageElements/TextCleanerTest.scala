@@ -215,15 +215,15 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
   "rewriteAffiliateLinks" should "rewrite affiliateable links in an image caption to skimlinks" in {
     SkimLinksCache.setDomains(Set("amazon.co.uk"))
     try {
-      val pageUrl = "/money/2025/nov/19/test-article"
+      val pageId = "/money/2025/nov/19/test-article"
       val productUrl = "https://www.amazon.co.uk/product/123"
       val caption = s"""Photo of <a href="$productUrl">the thing</a>. Photograph: Someone"""
 
-      val got = TextCleaner.rewriteAffiliateLinks(caption, pageUrl, "123", Map.empty)
+      val got = TextCleaner.rewriteAffiliateLinks(caption, pageId, "123", Map.empty)
 
       // Jsoup serialises '&' in attribute values as '&amp;'
       val expectedHref =
-        AffiliateLinksCleaner.linkToSkimLink(productUrl, pageUrl, "123", Map.empty).replace("&", "&amp;")
+        AffiliateLinksCleaner.linkToSkimLink(productUrl, pageId, "123", Map.empty).replace("&", "&amp;")
       got should include("https://go.skimresources.com/")
       got should include(s"""href="$expectedHref"""")
       got should include("""rel="sponsored noreferrer noopener"""")
