@@ -1,7 +1,7 @@
 package controllers
 
-import ab.{PuzzlesHubV1Experiment, PuzzlesHubV2Experiment}
-import common.ImplicitControllerExecutionContext
+import ab.PuzzlesHubV2Experiment
+import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import jobs.SiteMapJob
 import model.{Cached, NoCache}
 import model.Cached.RevalidatableResult
@@ -20,8 +20,7 @@ class SiteMapController(
 
   def renderPuzzlesSiteMap(): Action[AnyContent] =
     Action.async { implicit request =>
-      // Follow the page rollout until sitemap publication moves to International Edition availability.
-      if (!PuzzlesHubV1Experiment.isEnabled) Future.successful(NoCache(NotFound))
+      if (!PuzzlesHubAccess.isAvailable) Future.successful(NoCache(NotFound))
       else
         puzzlesLayoutProvider.getLayout().map { layout =>
           val includeTrivia = PuzzlesHubV2Experiment.isEnabled

@@ -3,8 +3,9 @@ package ab
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
-/** The v3 rollout (premium puzzles access control) is cumulative: readers must also be in the v1 and v2 variants.
-  * Mirrors dotcom-rendering's `isPuzzlesHubV3Enabled`.
+/** The v3 rollout (premium puzzles access control) is cumulative: the hub must be available for the reader's edition
+  * and the reader must also be in the v2 variant (see [[PuzzlesHubV2Experiment]]). Mirrors dotcom-rendering's
+  * `isPuzzlesHubV3Enabled`.
   */
 object PuzzlesHubV3Experiment {
   val TestName = "puzzles-new-hub-v3"

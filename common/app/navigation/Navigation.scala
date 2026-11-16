@@ -1,8 +1,7 @@
 package navigation
 
 import _root_.model.{NavItem, Page, Tags}
-import ab.PuzzlesHubV1Experiment
-import common.{Edition, editions}
+import common.{Edition, PuzzlesHubAccess, editions}
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json.{Json, Writes, _}
 import play.api.mvc.RequestHeader
@@ -79,7 +78,7 @@ object NavMenu {
   )
 
   def apply(page: Page, edition: Edition, request: RequestHeader): NavMenu = {
-    val usePuzzlesNavigation = PuzzlesHubV1Experiment.isEnabled(request)
+    val usePuzzlesNavigation = PuzzlesHubAccess.isAvailable(request)
     val root = navRoot(edition, usePuzzlesNavigation)
     val currentUrl = getSectionOrPageUrl(page, edition)
     val currentNavLink =

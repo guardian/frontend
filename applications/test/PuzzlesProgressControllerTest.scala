@@ -1,6 +1,5 @@
 package test
 
-import ab.ABTests
 import controllers.{PuzzlesProgressApi, PuzzlesProgressApiResponse, PuzzlesProgressController}
 import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{verify, verifyNoInteractions, when}
@@ -38,13 +37,12 @@ import scala.concurrent.{ExecutionContext, Future}
   private def request(
       body: JsValue,
       authorization: Option[String] = Some("Bearer reader-token"),
-      participations: String = "puzzles-new-hub:variant,puzzles-new-hub-v1:variant",
+      edition: String = "INT",
   ): Request[JsValue] = {
     val base = FakeRequest("POST", "/puzzles-and-games/progress/save")
-      .withHeaders("X-GU-Server-AB-Tests" -> participations)
+      .withHeaders("X-Gu-Edition" -> edition)
     val withAuth = authorization.fold(base)(value => base.withHeaders(AUTHORIZATION -> value))
-    val decorated = ABTests.decorateRequest("X-GU-Server-AB-Tests")(withAuth)
-    withAuth.withAttrs(decorated.attrs).withBody(body)
+    withAuth.withBody(body)
   }
 
   private def apiReturning(status: Int, body: Option[JsValue] = None): PuzzlesProgressApi = {
@@ -83,10 +81,10 @@ import scala.concurrent.{ExecutionContext, Future}
     verifyNoInteractions(api)
   }
 
-  it should "not be available outside the puzzles hub v1 experiment" in {
+  it should "not be available outside the International edition" in {
     val api = mock[PuzzlesProgressApi]
 
-    val result = controller(api).save()(request(Json.arr(update), participations = "puzzles-new-hub:control"))
+    val result = controller(api).save()(request(Json.arr(update), edition = "UK"))
 
     status(result) should be(404)
     verifyNoInteractions(api)

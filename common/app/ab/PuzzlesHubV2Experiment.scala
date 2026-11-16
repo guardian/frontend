@@ -1,9 +1,10 @@
 package ab
 
+import common.{Edition, PuzzlesHubAccess}
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
-/** The existing v2 rollout is cumulative: readers must also be in the v1 variant. */
+/** The v2 rollout is cumulative: the hub must also be available for the reader's edition. */
 object PuzzlesHubV2Experiment {
   val TestName = "puzzles-new-hub-v2"
   val VariantGroup = "variant"
@@ -12,6 +13,6 @@ object PuzzlesHubV2Experiment {
     isEnabled(Configuration.environment.isDev)
 
   private[ab] def isEnabled(isDevelopment: Boolean)(implicit request: RequestHeader): Boolean =
-    isDevelopment || (PuzzlesHubV1Experiment.isEnabled(isDevelopment = false) &&
+    isDevelopment || (PuzzlesHubAccess.Editions.contains(Edition(request)) &&
       ABTests.isUserInTestGroup(TestName, VariantGroup))
 }

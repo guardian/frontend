@@ -7,26 +7,25 @@ import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 
 @DoNotDiscover class PuzzlesHubV3ExperimentTest extends AnyFlatSpec with Matchers {
-  private def requestWithParticipation(participations: String): RequestHeader = {
-    val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations)
+  private def requestWithParticipation(participations: String, edition: String): RequestHeader = {
+    val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations, "X-Gu-Edition" -> edition)
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
   Seq(
-    "" -> false,
-    "puzzles-new-hub-v3:variant" -> false,
-    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant" -> false,
-    "puzzles-new-hub-v1:variant,puzzles-new-hub-v3:variant" -> false,
-    "puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant" -> false,
-    "puzzles-new-hub-v1:control,puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant" -> false,
-    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant" -> false,
-    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant,puzzles-new-hub-v3:control" -> false,
-    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown" -> false,
-    "another-test:variant" -> false,
-    "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant" -> true,
-  ).foreach { case (participations, expected) =>
-    "PuzzlesHubV3Experiment" should s"require all three variants outside development for '$participations'" in {
-      implicit val request: RequestHeader = requestWithParticipation(participations)
+    ("", "INT", false),
+    ("puzzles-new-hub-v3:variant", "INT", false),
+    ("puzzles-new-hub-v2:variant", "INT", false),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "UK", false),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "US", false),
+    ("puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant", "INT", false),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:control", "INT", false),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown", "INT", false),
+    ("another-test:variant", "INT", false),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "INT", true),
+  ).foreach { case (participations, edition, expected) =>
+    "PuzzlesHubV3Experiment" should s"require the International edition and the v2 and v3 variants outside development for '$participations' in $edition" in {
+      implicit val request: RequestHeader = requestWithParticipation(participations, edition)
       PuzzlesHubV3Experiment.isEnabled(isDevelopment = false) shouldBe expected
       PuzzlesHubV3Experiment.isEnabled shouldBe expected
     }
@@ -34,7 +33,8 @@ import play.api.test.FakeRequest
 
   it should "not trust an undecorated header" in {
     implicit val request: RequestHeader = FakeRequest().withHeaders(
-      "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant",
+      "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant",
+      "X-Gu-Edition" -> "INT",
     )
     PuzzlesHubV3Experiment.isEnabled(isDevelopment = false) shouldBe false
   }

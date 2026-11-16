@@ -62,13 +62,14 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
   private val controller = new SiteMapController(job, layoutProvider, stubControllerComponents())
   private val abTestHeader = "X-GU-Server-AB-Tests"
 
-  private def request(participation: String): Request[AnyContent] = {
-    val raw = TestRequest("/sitemaps/puzzles-and-games.xml").withHeaders(abTestHeader -> participation)
+  private def request(participation: String = "", edition: String = "INT"): Request[AnyContent] = {
+    val raw = TestRequest("/sitemaps/puzzles-and-games.xml")
+      .withHeaders(abTestHeader -> participation, "X-Gu-Edition" -> edition)
     raw.withAttrs(ABTests.decorateRequest(abTestHeader)(raw).attrs)
   }
 
-  "Puzzles sitemap" should "serve the canonical hub and archive URLs to the experiment variant" in {
-    val result = controller.renderPuzzlesSiteMap()(request("puzzles-new-hub-v1:variant"))
+  "Puzzles sitemap" should "serve the canonical hub and archive URLs in the editions the hub is available in" in {
+    val result = controller.renderPuzzlesSiteMap()(request())
 
     status(result) shouldBe OK
     contentType(result) shouldBe Some("text/xml")
@@ -100,15 +101,15 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
 
     val triviaCategory = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive"
 
-    locs("puzzles-new-hub-v1:variant") should contain allElementsOf crosswordPuzzles
-    locs("puzzles-new-hub-v1:variant") should not contain triviaCategory
-    locs("puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant") should contain(triviaCategory)
-    locs("puzzles-new-hub-v1:variant") should not contain trivia
-    locs("puzzles-new-hub-v1:variant,puzzles-new-hub-v2:variant") should contain(trivia)
+    locs("") should contain allElementsOf crosswordPuzzles
+    locs("") should not contain triviaCategory
+    locs("puzzles-new-hub-v2:variant") should contain(triviaCategory)
+    locs("") should not contain trivia
+    locs("puzzles-new-hub-v2:variant") should contain(trivia)
   }
 
-  it should "support cache revalidation for the enabled variant" in {
-    val enabled = request("puzzles-new-hub-v1:variant")
+  it should "support cache revalidation where the hub is available" in {
+    val enabled = request()
     val first = controller.renderPuzzlesSiteMap()(enabled)
     val etag = header(ETAG, first).get
     header(CACHE_CONTROL, first).get should include("max-age=60")
@@ -118,14 +119,12 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
   }
 
   Seq(
-    "control" -> "puzzles-new-hub-v1:control",
-    "absent" -> "",
-    "unknown group" -> "puzzles-new-hub-v1:unknown",
-    "v2 only" -> "puzzles-new-hub-v2:variant",
-  ).foreach { case (name, participation) =>
-    it should s"return an uncached 404 for $name participation, even with a matching ETag" in {
-      val etag = header(ETAG, controller.renderPuzzlesSiteMap()(request("puzzles-new-hub-v1:variant"))).get
-      val disabled = request(participation)
+    "UK edition" -> request(edition = "UK"),
+    "AU edition" -> request(edition = "AU"),
+    "v2 participation outside the hub editions" -> request("puzzles-new-hub-v2:variant", edition = "UK"),
+  ).foreach { case (name, disabled) =>
+    it should s"return an uncached 404 for the $name, even with a matching ETag" in {
+      val etag = header(ETAG, controller.renderPuzzlesSiteMap()(request())).get
       val result = controller.renderPuzzlesSiteMap()(disabled.withHeaders(disabled.headers.add(IF_NONE_MATCH -> etag)))
 
       status(result) shouldBe NOT_FOUND

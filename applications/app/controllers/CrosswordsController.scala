@@ -1,6 +1,6 @@
 package controllers
 
-import ab.{PuzzlesHubV1Experiment, PuzzlesHubV3Experiment}
+import ab.PuzzlesHubV3Experiment
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -8,7 +8,7 @@ import com.gu.contentapi.client.model.v1.{
   Content => ApiContent,
   Section => ApiSection,
 }
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.{ContentApiError, SearchQuery}
 import crosswords.{
@@ -53,7 +53,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def noResults()(implicit request: RequestHeader): Result
 
   def puzzlesSupporting(implicit request: RequestHeader): Option[PuzzleGameSupporting] =
-    if (PuzzlesHubV1Experiment.isEnabled) puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
+    if (PuzzlesHubAccess.isAvailable) puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
     else None
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
@@ -62,13 +62,13 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
     )
   }
 
-  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests in the puzzles hub
-    * v1 experiment, otherwise `None` so the page renders exactly as before.
+  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests where the puzzles
+    * hub is available (see `PuzzlesHubAccess`), otherwise `None` so the page renders exactly as before.
     */
   def moreFromPuzzlesAndGames(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[Seq[PuzzleItem]]] =
-    if (PuzzlesHubV1Experiment.isEnabled)
+    if (PuzzlesHubAccess.isAvailable)
       PuzzleRecommendations
         .resolve(
           crossword.crosswordType,
@@ -79,13 +79,13 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         .map(Some(_))
     else Future.successful(None)
 
-  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up for requests in the
-    * puzzles hub v1 experiment, and `None` for crossword types that have no archive page.
+  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up when the puzzles
+    * hub is available (see `PuzzlesHubAccess`), and `None` for crossword types that have no archive page.
     */
   def puzzleArchivePath(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[String]] =
-    if (PuzzlesHubV1Experiment.isEnabled)
+    if (PuzzlesHubAccess.isAvailable)
       puzzlesLayoutProvider
         .getStaticLayout()
         .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
