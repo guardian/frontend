@@ -1,6 +1,6 @@
 package test
 
-import ab.{ABTestsTest, PuzzlesHubV1ExperimentTest, PuzzlesHubV2ExperimentTest}
+import ab.{ABTestsTest, PuzzlesHubV1ExperimentTest, PuzzlesHubV2ExperimentTest, PuzzlesHubV3ExperimentTest}
 import conf.CachedHealthCheckTest
 import conf.audio.FlagshipFrontContainerSpec
 import http.ABTestingFilterTest
@@ -14,6 +14,7 @@ class CommonTestSuite
       new ABTestsTest,
       new PuzzlesHubV1ExperimentTest,
       new PuzzlesHubV2ExperimentTest,
+      new PuzzlesHubV3ExperimentTest,
       new ABTestingFilterTest,
       new CachedHealthCheckTest,
       new NavigationTest,

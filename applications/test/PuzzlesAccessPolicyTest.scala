@@ -31,4 +31,15 @@ import java.time.LocalDate
   it should "keep future puzzles free" in {
     PuzzlesAccessPolicy.requiresSubscription(today.plusDays(1), today) should be(false)
   }
+
+  "requiresSubscriptionAt" should "read the epoch milliseconds as a UTC date" in {
+    def millis(date: LocalDate) = date.atStartOfDay(java.time.ZoneOffset.UTC).toInstant.toEpochMilli
+    PuzzlesAccessPolicy.requiresSubscriptionAt(millis(today.minusDays(6)), today) should be(false)
+    PuzzlesAccessPolicy.requiresSubscriptionAt(millis(today.minusDays(7)), today) should be(true)
+    PuzzlesAccessPolicy.requiresSubscriptionAt(millis(today.plusDays(1)), today) should be(false)
+  }
+
+  it should "treat a date it cannot read as free" in {
+    PuzzlesAccessPolicy.requiresSubscriptionAt(Long.MaxValue, today) should be(false)
+  }
 }
