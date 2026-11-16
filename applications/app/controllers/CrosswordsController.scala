@@ -78,8 +78,8 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         .map(Some(_))
     else Future.successful(None)
 
-  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up when the puzzles hub
-    * is available (see `PuzzlesHubAccess`), and `None` for crossword types that have no archive page.
+  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up when the puzzles
+    * hub is available (see `PuzzlesHubAccess`), and `None` for crossword types that have no archive page.
     */
   def puzzleArchivePath(
       crossword: CrosswordData,
