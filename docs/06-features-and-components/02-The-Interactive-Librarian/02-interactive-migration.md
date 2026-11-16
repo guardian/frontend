@@ -46,13 +46,6 @@ The result of pressing is both the ‘original’ copy of the interactive as wel
 
 **How do we press?**
 
-We have 2 options, we can press a batch of interactives using scripts or we can press a single interactive using the frontend admin tool.
-
-For pressing a batch of interactives this is controlled using command line scripts. An example of these scripts is included in the frontend docs. The batch pressing process is separated into a couple of independent steps:
-1. Querying the content API, or via some other means, to determine the list of interactive URLs to press
-2. For every URL make a request to /interactive-librarian/live-presser/{path}
-3. For every successfully pressed article make a request to /interactive-librarian/read-clean-write/{path}
-
 To press a single interactive we can use the frontend admin tool. On the admin tool, select the new option ‘Press an article / interactive’, enter the full URL, click ‘Press’ and wait for the response. If there’s an error in the response it’ll need to be reported to the dotcom team.
 
 **How do we know a page is pressed?**

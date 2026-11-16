@@ -1,6 +1,6 @@
 package test
 
-import controllers.{CrosswordPageController, PuzzlesNewsletters}
+import controllers.{CrosswordPageController, PuzzlesLayoutProvider, PuzzlesNewsletters}
 import model.{CrosswordData, Entry}
 import org.joda.time.DateTime
 import org.scalatest._
@@ -31,6 +31,7 @@ import scala.concurrent.ExecutionContext
         play.api.test.Helpers.stubControllerComponents(),
         wsClient,
         new PuzzlesNewsletters(new NewsletterSignupAgent(NewsletterApi(wsClient)(ExecutionContext.global))),
+        org.mockito.Mockito.mock(classOf[PuzzlesLayoutProvider]),
       )
 
     "fromCrossword should normalize separators for grouped entries" in {

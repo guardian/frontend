@@ -14,35 +14,6 @@ object MetaDataMatcher extends Matchers {
   lazy val appId = "409128287"
   val iosDomain = "ios-app://"
 
-  def ensureOrganisation(result: Future[Result]): Unit = {
-    status(result) should be(200)
-    val stringResult = contentAsString(result)
-    val body = Jsoup.parseBodyFragment(stringResult)
-
-    val script = body.getElementsByAttributeValue("data-schema", "Organization")
-    script.size() should be(1)
-
-    val organisation: JsValue = Json.parse(script.first().html())
-    (organisation \ "name").as[String] should be("The Guardian")
-    (organisation \ "logo").as[Logo].url should include("TheGuardian_AMP.png")
-
-    val socialNetworks = (organisation \ "sameAs").as[List[String]]
-
-    socialNetworks.size should be(4)
-  }
-
-  def ensureWebPage(result: Future[Result], articleUrl: String): Unit = {
-    val body = Jsoup.parseBodyFragment(contentAsString(result))
-    status(result) should be(200)
-
-    val script = body.getElementsByAttributeValue("data-schema", "WebPage")
-    script.size() should be(1)
-
-    val appIndexer: JsValue = Json.parse(script.first().html())
-
-    (appIndexer \ "potentialAction" \ "target").as[String] should include(articleUrl)
-  }
-
   def ensureDeepLink(result: Future[Result]): Unit = {
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)

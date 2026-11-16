@@ -31,6 +31,8 @@ case class PuzzlesArchivePuzzle(
     puzzleType: String,
     slug: Option[String],
     set: String,
+    /** Path of this puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
+    path: String,
 )
 
 object PuzzlesArchivePuzzle {

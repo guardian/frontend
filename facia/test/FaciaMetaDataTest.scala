@@ -56,37 +56,4 @@ import scala.concurrent.duration._
   )
   val frontPath = "music"
 
-  it should "Include organisation metadata" in {
-    val result = faciaController.renderFront(frontPath)(TestRequest())
-    MetaDataMatcher.ensureOrganisation(result)
-  }
-
-  it should "Include webpage metadata" in {
-    val result = faciaController.renderFront(frontPath)(TestRequest(s"$frontPath?dcr=false"))
-    MetaDataMatcher.ensureWebPage(result, frontPath)
-  }
-
-  it should "Include item list metadata" in {
-    val result = faciaController.renderFront(frontPath)(TestRequest(s"$frontPath?dcr=false"))
-    val body = Jsoup.parseBodyFragment(contentAsString(result))
-    status(result) should be(200)
-
-    val script = body.getElementsByAttributeValue("data-schema", "ItemList")
-    script.size() should be(1)
-
-    val itemList: JsValue = Json.parse(script.first().html())
-
-    val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(6)
-
-    val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    println(topContainer)
-    topContainer.size should be(7)
-
-    (topContainer(0) \ "url").as[JsString].value should be(
-      s"${Configuration.site.host}/music/2021/mar/09/a-century-of-music-by-british-women-review-international-womens-day-concert",
-    )
-
-  }
-
 }

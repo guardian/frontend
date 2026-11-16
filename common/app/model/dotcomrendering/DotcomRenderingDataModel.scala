@@ -115,6 +115,7 @@ case class DotcomRenderingDataModel(
     crossword: Option[CrosswordData],
     moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
     puzzlesSupporting: Option[PuzzleGameSupporting],
+    puzzleArchivePath: Option[String],
 )
 
 object DotcomRenderingDataModel {
@@ -197,6 +198,7 @@ object DotcomRenderingDataModel {
         "crossword" -> model.crossword,
         "moreFromPuzzlesAndGames" -> model.moreFromPuzzlesAndGames,
         "puzzlesSupporting" -> model.puzzlesSupporting,
+        "puzzleArchivePath" -> model.puzzleArchivePath,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -358,6 +360,7 @@ object DotcomRenderingDataModel {
       customSubnav: Option[CustomSubnav],
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
       puzzlesSupporting: Option[PuzzleGameSupporting] = None,
+      puzzleArchivePath: Option[String] = None,
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -376,6 +379,7 @@ object DotcomRenderingDataModel {
       customSubnav = customSubnav,
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
       puzzlesSupporting = puzzlesSupporting,
+      puzzleArchivePath = puzzleArchivePath,
     )
   }
 
@@ -478,6 +482,7 @@ object DotcomRenderingDataModel {
       customSubnav: Option[CustomSubnav],
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
       puzzlesSupporting: Option[PuzzleGameSupporting] = None,
+      puzzleArchivePath: Option[String] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -712,6 +717,7 @@ object DotcomRenderingDataModel {
       crossword = crossword,
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
       puzzlesSupporting = puzzlesSupporting,
+      puzzleArchivePath = puzzleArchivePath,
     )
   }
 }

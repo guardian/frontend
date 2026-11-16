@@ -19,6 +19,11 @@ trait PuzzlesLayoutProvider {
   def getGameCommercialProperties(group: String)(implicit
       executionContext: ExecutionContext,
   ): Future[Map[String, EditionCommercialProperties]] = getLayout().map(_.gameCommercialProperties(group))
+
+  /** The layout without the per-request enrichment from the Puzzles API, for callers that only need its static
+    * structure (such as which puzzles have an archive page).
+    */
+  def getStaticLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] = getLayout()
 }
 
 class LocalJsonPuzzlesLayoutProvider(
@@ -35,6 +40,9 @@ class LocalJsonPuzzlesLayoutProvider(
   override def getGameCommercialProperties(group: String)(implicit
       executionContext: ExecutionContext,
   ): Future[Map[String, EditionCommercialProperties]] = Future(blocking(loadLayout().gameCommercialProperties(group)))
+
+  override def getStaticLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
+    Future(blocking(loadLayout()))
 
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     Future(blocking(loadLayout())).flatMap { baseLayout =>

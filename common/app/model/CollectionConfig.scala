@@ -31,8 +31,7 @@ object CollectionConfig {
 
   def make(config: fapi.CollectionConfig): CollectionConfig = {
 
-    val betaCollections = List(
-      "flexible/special",
+    val collectionsWithLevels = List(
       "flexible/general",
       "scrollable/highlights",
       "scrollable/small",
@@ -43,10 +42,10 @@ object CollectionConfig {
     )
 
     /** Collection level is a concept that allows the platforms to style containers differently based on their "level".
-      * Beta collections are "Secondary" if tagged as such or "Primary" otherwise. Legacy containers have no container
-      * level set.
+      * Collections are "Secondary" if tagged as such or "Primary" otherwise. Only a subset of containers can have
+      * levels.
       */
-    val collectionLevel: Option[String] = if (betaCollections.contains(config.collectionType)) {
+    val collectionLevel: Option[String] = if (collectionsWithLevels.contains(config.collectionType)) {
       config.metadata.getOrElse(List.empty).find(_ == Secondary) match {
         case Some(_) => Some("Secondary")
         case None    => Some("Primary")

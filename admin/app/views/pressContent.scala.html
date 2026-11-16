@@ -1,5 +1,4 @@
 @(bucket: String = "aws-frontend-archive")(implicit request: RequestHeader, context: model.ApplicationContext)
-@import conf.switches.Switches.ContentPresser
 
 @admin_main("Content Presser (archiver)", isAuthed = true) {
     <h2>Press (archive) an article / interactive page</h2>
@@ -28,13 +27,7 @@
         </div>
         <div class="form-group">
             <div class="controls col-sm-offset-1 col-sm-11">
-                @if(ContentPresser.isSwitchedOn) {
-                    <input class="btn btn-default" id="contentUrlBtn" type="button" value="Press"/>
-                } else {
-                    <div class="col-sm-6">
-                        This feature is currently switched off (use the switchboard to re-enable it)
-                    </div>
-                }
+                <input class="btn btn-default" id="contentUrlBtn" type="button" value="Press"/>
             </div>
         </div>
     </div>

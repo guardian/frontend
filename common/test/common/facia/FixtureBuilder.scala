@@ -123,6 +123,8 @@ object FixtureBuilder {
       showQuotedHeadline = false,
       imageHide = false,
       showLivePlayable = false,
+      showMiniNav = false,
+      miniNavData = None,
     )
 
   def mkPressedCuratedContent(id: Int, kicker: Option[ItemKicker] = None): PressedContent = {

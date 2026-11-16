@@ -35,6 +35,14 @@ import org.scalatest.matchers.should.Matchers
     )
   }
 
+  it should "keep the selected archive puzzle in the path when the CDN strips query parameters" in {
+    Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes").foreach { category =>
+      controllers.routes.PuzzlesPageController.renderArchiveForPuzzle(category, "test-puzzle").url should be(
+        s"/puzzles-and-games/$category/test-puzzle/archive",
+      )
+    }
+  }
+
   it should "keep archive data selections in the path when the CDN strips query parameters" in {
     Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes").foreach { category =>
       controllers.routes.PuzzlesPageController.archiveDataForMonth(category, "test-puzzle", 2020, 8).url should be(

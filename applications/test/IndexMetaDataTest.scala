@@ -34,16 +34,6 @@ import play.api.test.Helpers._
     mock[WSClient],
   )
 
-  it should "Include organisation metadata" in {
-    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
-    MetaDataMatcher.ensureOrganisation(result)
-  }
-
-  it should "Include webpage metadata" in {
-    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
-    MetaDataMatcher.ensureWebPage(result, articleUrl)
-  }
-
   it should "Include app deep link" in {
     val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
     MetaDataMatcher.ensureDeepLink(result)
@@ -57,19 +47,5 @@ import play.api.test.Helpers._
   it should "not include webpage metadata on the crossword index" in {
     val result = indexController.render(crosswordsUrl)(TestRequest(s"$crosswordsUrl?dcr=false"))
     MetaDataMatcher.ensureNoIosUrl(result)
-  }
-
-  it should "Include item list metadata" in {
-    val result = indexController.render(articleUrl)(TestRequest(s"$articleUrl?dcr=false"))
-    val body = Jsoup.parseBodyFragment(contentAsString(result))
-    status(result) should be(200)
-
-    val script = body.getElementsByAttributeValue("data-schema", "ItemList")
-    script.size() should be(1)
-
-    val itemList: JsValue = Json.parse(script.first().html())
-
-    (itemList \ "itemListElement").as[JsArray].value.size should be(20)
-
   }
 }

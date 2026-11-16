@@ -38,11 +38,13 @@ import services.{IndexPage, IndexPageItem}
 import scala.collection.immutable
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.control.NonFatal
 
 trait CrosswordController extends BaseController with GuLogging with ImplicitControllerExecutionContext {
 
   def contentApiClient: ContentApiClient
   def puzzlesNewsletters: PuzzlesNewsletters
+  def puzzlesLayoutProvider: PuzzlesLayoutProvider
 
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val wsClient: WSClient
@@ -74,6 +76,22 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
           PuzzleRecommendations.capiLookup(contentApiClient),
         )
         .map(Some(_))
+    else Future.successful(None)
+
+  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up when the puzzles hub
+    * is available (see `PuzzlesHubAccess`), and `None` for crossword types that have no archive page.
+    */
+  def puzzleArchivePath(
+      crossword: CrosswordData,
+  )(implicit request: RequestHeader): Future[Option[String]] =
+    if (PuzzlesHubAccess.isAvailable)
+      puzzlesLayoutProvider
+        .getStaticLayout()
+        .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
+        .recover { case NonFatal(error) =>
+          log.warn(s"Could not look up the archive page of ${crossword.crosswordType}", error)
+          None
+        }
     else Future.successful(None)
 
   def withCrossword(crosswordType: String, id: Int)(
@@ -108,15 +126,18 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       )
 
       if (CrosswordsPicker.getTier(page) == RemoteRender)
-        moreFromPuzzlesAndGames(page.crossword).flatMap { recommendations =>
-          remoteRenderer.getCrossword(
+        for {
+          recommendations <- moreFromPuzzlesAndGames(page.crossword)
+          archivePath <- puzzleArchivePath(page.crossword)
+          result <- remoteRenderer.getCrossword(
             wsClient,
             page,
             PageType(page, request, context),
             recommendations,
             puzzlesSupporting,
+            archivePath,
           )
-        }
+        } yield result
       else
         Future.successful(
           Cached(CacheTime.Crosswords)(
@@ -134,6 +155,7 @@ class CrosswordPageController(
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
     val puzzlesNewsletters: PuzzlesNewsletters,
+    val puzzlesLayoutProvider: PuzzlesLayoutProvider,
 )(implicit
     context: ApplicationContext,
 ) extends CrosswordController {
@@ -153,11 +175,12 @@ class CrosswordPageController(
         val crosswordPage = new CrosswordPageWithContent(crosswordContent)
 
         val pageType = PageType(crosswordPage, request, context)
-        moreFromPuzzlesAndGames(crosswordPage.crossword).map { recommendations =>
-          common
-            .renderJson(getDCRJson(crosswordPage, pageType, recommendations), crosswordPage)
-            .as("application/json")
-        }
+        for {
+          recommendations <- moreFromPuzzlesAndGames(crosswordPage.crossword)
+          archivePath <- puzzleArchivePath(crosswordPage.crossword)
+        } yield common
+          .renderJson(getDCRJson(crosswordPage, pageType, recommendations, archivePath), crosswordPage)
+          .as("application/json")
       }
     }
   }
@@ -165,6 +188,7 @@ class CrosswordPageController(
       crosswordPage: CrosswordPageWithContent,
       pageType: PageType,
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
+      puzzleArchivePath: Option[String],
   )(implicit
       request: RequestHeader,
   ): JsValue =
@@ -176,6 +200,7 @@ class CrosswordPageController(
         None,
         moreFromPuzzlesAndGames,
         puzzlesSupporting,
+        puzzleArchivePath,
       ),
     )
 
@@ -252,6 +277,7 @@ class CrosswordSearchController(
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
     val puzzlesNewsletters: PuzzlesNewsletters,
+    val puzzlesLayoutProvider: PuzzlesLayoutProvider,
 )(implicit context: ApplicationContext)
     extends CrosswordController {
   val searchForm = Form(

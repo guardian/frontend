@@ -4,9 +4,9 @@ import sbt._
 
 object Dependencies {
   val identityLibVersion = "10.0.0"
-  val awsVersion = "2.54.20"
+  val awsVersion = "2.57.5"
   val capiVersion = "51.0.0"
-  val faciaVersion = "47.0.0"
+  val faciaVersion = "47.2.2"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -58,9 +58,9 @@ object Dependencies {
   val json4s = "io.github.json4s" %% "json4s-native" % "4.1.1"
   val json4sJackson = "io.github.json4s" %% "json4s-jackson" % "4.1.1"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.6.7" % "provided"
-  val paClient = "com.gu" %% "pa-client" % "7.0.18"
-  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "22.0.0"
-  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "6.0.3"
+  val paClient = "com.gu" %% "pa-client" % "7.0.19"
+  val panDomainAuth = "com.gu" %% "pan-domain-auth-play_3-0" % "23.0.1"
+  val editorialPermissions = "com.gu" %% "editorial-permissions-client" % "8.0.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.5.2"
   val redisClient = "net.debasishg" %% "redisclient" % "3.42"
   val rome = "rome" % "rome" % romeVersion
@@ -94,7 +94,7 @@ object Dependencies {
   val targetingClient = "com.gu.targeting-client" %% "client-play-json-v30" % "1.2.0"
   val scanamo = "org.scanamo" %% "scanamo" % "7.0.0"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.9.8"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.6"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.2.10"
   val playJson = "org.playframework" %% "play-json" % playJsonVersion
   val playJsonJoda = "org.playframework" %% "play-json-joda" % playJsonVersion
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.16"
@@ -125,7 +125,8 @@ object Dependencies {
   val jackModule = "com.fasterxml.jackson.module" %% "jackson-module-scala" % jacksonVersion
   val jacksonDatabind = "com.fasterxml.jackson.core" % "jackson-databind" % jacksonDatabindVersion
 
-  val circeParser = "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
+  val circeParser =
+    "io.circe" %% "circe-parser" % "0.14.16" // TODO: Transitive dependency of content-api-models-json, this evicts an older version temporarily
   val jackson =
     Seq(
       jacksonCore,

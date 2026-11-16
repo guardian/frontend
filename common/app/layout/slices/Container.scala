@@ -25,7 +25,6 @@ object Container extends GuLogging {
       ("nav/list", NavList),
       ("nav/media-list", NavMediaList),
       ("news/most-popular", MostPopular),
-      ("flexible/special", Flexible(FlexibleSpecial)),
       ("flexible/general", Flexible(FlexibleGeneral)),
     ) ++ FixedContainers.all.mapV(Fixed.apply) ++ EmailLayouts.all.mapV(Email.apply) ++ ScrollableContainers.all.mapV(
       Scrollable.apply,

@@ -121,10 +121,6 @@
 @* https://dev.twitter.com/web/overview/privacy *@
 <meta name="twitter:dnt" content="on">
 
-@page.metadata.openGraphImages.map{ case (imageUrl) =>
-    <meta property="og:image" content="@Html(imageUrl)" />
-}
-
 @Configuration.facebook.pages.authorisedIdsForLinkEdits.map { id =>
     <meta property="fb:pages" content="@id" />
 }
@@ -141,12 +137,6 @@
 *@
 @if(context.environment.mode == Dev) {
     @Configuration.javascript.pageData.get("guardian.page.iphoneDebugger").map{ scriptUrl => <script src="@scriptUrl"></script> }
-}
-
-@page.metadata.linkedData.map { linkedData =>
-    <script data-schema="@{linkedData.`@type`}" type="application/ld+json">
-        @Html(LinkedData.toJson(linkedData))
-    </script>
 }
 
 @*
