@@ -17,6 +17,8 @@ GET        /puzzles-and-games.json                                              
 GET        /puzzles-and-games                                                                                                              controllers.PuzzlesPageController.renderPuzzles()
 GET        /puzzles-and-games/progress                                                                                                     controllers.PuzzlesPageController.puzzlesProgress()
 OPTIONS    /puzzles-and-games/progress                                                                                                     controllers.PuzzlesPageController.puzzlesDataOptions()
+GET        /puzzles-and-games/access/:puzzleId/:date                                                                                       controllers.PuzzlesAccessController.access(puzzleId: String, date: String)
+OPTIONS    /puzzles-and-games/access/:puzzleId/:date                                                                                       controllers.PuzzlesAccessController.options(puzzleId: String, date: String)
 GET        /puzzles-and-games/crosswords/archive                                                                                           controllers.PuzzlesPageController.renderCrosswordsArchive()
 GET        /puzzles-and-games/crosswords/:puzzle/archive                                                                                   controllers.PuzzlesPageController.renderArchiveForPuzzle(category = "crosswords", puzzle: String)
 GET        /puzzles-and-games/word-games/archive                                                                                           controllers.PuzzlesPageController.renderWordGamesArchive()
