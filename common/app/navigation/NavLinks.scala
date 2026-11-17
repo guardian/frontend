@@ -657,8 +657,8 @@ object NavLinks {
     newsletters,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Aus"),
+    puzzlesAndGames,
     legacyCrosswords,
-    legacyWordiply,
     corrections,
     tips,
   )
