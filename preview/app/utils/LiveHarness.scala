@@ -85,7 +85,7 @@ object LiveHarness {
         .getOrElse(emptyAtoms)
         .copy(interactives =
           existingInteractives.filterNot(existingInteractive =>
-            harnessInteractiveIds.exists(harnessId => existingInteractive.id.startsWith(harnessId)),
+            harnessInteractiveIds.exists(harnessId => hasHarnessIdPrefix(existingInteractive.id, harnessId)),
           ) ++ harnessInteractives,
         )
       updater.update(page, content.copy(atoms = Some(updatedAtoms)))
@@ -162,8 +162,15 @@ object LiveHarness {
 
     // Insert each harness atom at its requested visual position
     val withAtoms = harnessAtoms.foldLeft(visualUnits) { (units, harnessAtom) =>
-      val insertAt = (harnessAtom.position.getOrElse(1) - 1).max(0).min(units.length)
-      val (before, after) = units.splitAt(insertAt)
+      val withoutDuplicateAtoms = units.filterNot {
+        case Right(el) if el.`type` == ElementType.Contentatom =>
+          el.contentAtomTypeData.exists(data =>
+            data.atomType == "interactive" && hasHarnessIdPrefix(data.atomId, harnessAtom.id),
+          )
+        case _ => false
+      }
+      val insertAt = (harnessAtom.position.getOrElse(1) - 1).max(0).min(withoutDuplicateAtoms.length)
+      val (before, after) = withoutDuplicateAtoms.splitAt(insertAt)
       before ::: List(Right(harnessAtom.blockElement)) ::: after
     }
 
@@ -183,4 +190,7 @@ object LiveHarness {
 
     repacked.toIndexedSeq
   }
+
+  private def hasHarnessIdPrefix(existingAtomId: String, harnessAtomId: String): Boolean =
+    existingAtomId.contains(harnessAtomId)
 }

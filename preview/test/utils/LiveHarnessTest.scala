@@ -1,6 +1,12 @@
 package utils
 
-import com.gu.contentapi.client.model.v1.{BlockElement, Blocks, ElementType, TextElementFields}
+import com.gu.contentapi.client.model.v1.{
+  BlockElement,
+  Blocks,
+  ContentAtomElementFields,
+  ElementType,
+  TextElementFields,
+}
 import contentapi.FixtureTemplates
 import model.content.{Atoms, InteractiveAtom}
 import model.meta.BlocksOn
@@ -93,7 +99,7 @@ class LiveHarnessTest extends AnyFlatSpec with Matchers {
     updated.page.item.content.atoms.get.interactives shouldEqual Seq(harnessInteractive.atom)
   }
 
-  it should "replace existing interactives when their ids start with the harness interactive id" in {
+  it should "replace existing interactives when their ids contain the harness interactive id" in {
     implicit val updater: LiveHarness.PageUpdater[SimpleContentPage] =
       (page, newContent) => page.copy(content = GenericContent(newContent))
 
@@ -119,7 +125,7 @@ class LiveHarnessTest extends AnyFlatSpec with Matchers {
     )
 
     val harnessInteractive = LiveHarnessInteractiveAtom(
-      id = "/interactive/shared-atom",
+      id = "shared-atom",
       title = "Harness replacement",
       css = "",
       html = "<div>Harness</div>",
@@ -169,6 +175,34 @@ class LiveHarnessTest extends AnyFlatSpec with Matchers {
         `type` = ElementType.Text,
         textTypeData = Some(TextElementFields(html = Some("<p>Second</p>\n<h2>A heading</h2>"))),
       ),
+    )
+  }
+
+  it should "remove existing duplicate interactive atoms before inserting harness atoms" in {
+    val harnessAtom = LiveHarnessInteractiveAtom(
+      id = "my-atom",
+      title = "Harness replacement",
+      css = "",
+      html = "<div>Harness</div>",
+      js = "",
+      weighting = "showcase",
+    )
+    val existingDuplicateAtomElement = BlockElement(
+      `type` = ElementType.Contentatom,
+      assets = Seq.empty,
+      contentAtomTypeData = Some(
+        ContentAtomElementFields(
+          atomId = "/interactive/my-atom/default",
+          atomType = "interactive",
+          role = Some("inline"),
+          isMandatory = None,
+          customData = None,
+        ),
+      ),
+    )
+
+    LiveHarness.insertAtomsAtNthPoints(Seq(existingDuplicateAtomElement), Seq(harnessAtom)) shouldEqual IndexedSeq(
+      harnessAtom.blockElement,
     )
   }
 
