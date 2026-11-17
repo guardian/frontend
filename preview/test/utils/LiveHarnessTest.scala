@@ -59,6 +59,89 @@ class LiveHarnessTest extends AnyFlatSpec with Matchers {
     updated.page.item.content.atoms.get.interactives shouldEqual Seq(existingInteractive, harnessInteractive.atom)
   }
 
+  it should "replace an existing interactive when a harness interactive has the same id" in {
+    implicit val updater: LiveHarness.PageUpdater[SimpleContentPage] =
+      (page, newContent) => page.copy(content = GenericContent(newContent))
+
+    val existingInteractive = InteractiveAtom(
+      id = "/interactive/shared-atom",
+      `type` = "interactive",
+      title = "Existing atom",
+      css = "body { background: red; }",
+      html = "<div>Existing</div>",
+      mainJS = Some("console.log('existing');"),
+      docData = None,
+      placeholderUrl = None,
+    )
+
+    val harnessInteractive = LiveHarnessInteractiveAtom(
+      id = "/interactive/shared-atom",
+      title = "Harness replacement",
+      css = "body { background: green; }",
+      html = "<div>Harness</div>",
+      js = "console.log('harness');",
+      weighting = "inline",
+    )
+
+    val contentWithExistingInteractive = Content(FixtureTemplates.emptyApiContent).content
+      .copy(atoms = Some(emptyAtoms.copy(interactives = Seq(existingInteractive))))
+    val page = SimpleContentPage(GenericContent(contentWithExistingInteractive))
+    val blocksOn = BlocksOn(page, Blocks(body = None))
+
+    val updated = LiveHarness.inject[SimpleContentPage](Seq(harnessInteractive))(updater)(blocksOn)
+
+    updated.page.item.content.atoms.get.interactives shouldEqual Seq(harnessInteractive.atom)
+  }
+
+  it should "replace existing interactives when their ids start with the harness interactive id" in {
+    implicit val updater: LiveHarness.PageUpdater[SimpleContentPage] =
+      (page, newContent) => page.copy(content = GenericContent(newContent))
+
+    val existingInteractiveWithSuffix = InteractiveAtom(
+      id = "/interactive/shared-atom/default",
+      `type` = "interactive",
+      title = "Existing atom with suffix",
+      css = "",
+      html = "<div>Existing suffix</div>",
+      mainJS = Some("console.log('existing-suffix');"),
+      docData = None,
+      placeholderUrl = None,
+    )
+    val untouchedExistingInteractive = InteractiveAtom(
+      id = "/interactive/other-atom/default",
+      `type` = "interactive",
+      title = "Other existing atom",
+      css = "",
+      html = "<div>Other</div>",
+      mainJS = Some("console.log('other');"),
+      docData = None,
+      placeholderUrl = None,
+    )
+
+    val harnessInteractive = LiveHarnessInteractiveAtom(
+      id = "/interactive/shared-atom",
+      title = "Harness replacement",
+      css = "",
+      html = "<div>Harness</div>",
+      js = "console.log('harness');",
+      weighting = "inline",
+    )
+
+    val contentWithExistingInteractives = Content(FixtureTemplates.emptyApiContent).content
+      .copy(atoms =
+        Some(emptyAtoms.copy(interactives = Seq(existingInteractiveWithSuffix, untouchedExistingInteractive))),
+      )
+    val page = SimpleContentPage(GenericContent(contentWithExistingInteractives))
+    val blocksOn = BlocksOn(page, Blocks(body = None))
+
+    val updated = LiveHarness.inject[SimpleContentPage](Seq(harnessInteractive))(updater)(blocksOn)
+
+    updated.page.item.content.atoms.get.interactives shouldEqual Seq(
+      untouchedExistingInteractive,
+      harnessInteractive.atom,
+    )
+  }
+
   "insertAtomsAtNthPoints" should "place atoms at the appropriate positions in the body" in {
     val elements = Seq(
       BlockElement(

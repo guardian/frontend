@@ -79,9 +79,15 @@ object LiveHarness {
     page => {
       val content = page.item.content
       val harnessInteractives = harnessAtoms.map(_.atom)
+      val harnessInteractiveIds = harnessInteractives.map(_.id).toSet
+      val existingInteractives = content.atoms.getOrElse(emptyAtoms).interactives
       val updatedAtoms = content.atoms
         .getOrElse(emptyAtoms)
-        .copy(interactives = content.atoms.getOrElse(emptyAtoms).interactives ++ harnessInteractives)
+        .copy(interactives =
+          existingInteractives.filterNot(existingInteractive =>
+            harnessInteractiveIds.exists(harnessId => existingInteractive.id.startsWith(harnessId)),
+          ) ++ harnessInteractives,
+        )
       updater.update(page, content.copy(atoms = Some(updatedAtoms)))
     },
     blocks => {
