@@ -49,8 +49,7 @@ class LiveHarnessTest extends AnyFlatSpec with Matchers {
       weighting = "inline",
     )
 
-    val contentWithExistingInteractive = Content(FixtureTemplates.emptyApiContent)
-      .content
+    val contentWithExistingInteractive = Content(FixtureTemplates.emptyApiContent).content
       .copy(atoms = Some(emptyAtoms.copy(interactives = Seq(existingInteractive))))
     val page = SimpleContentPage(GenericContent(contentWithExistingInteractive))
     val blocksOn = BlocksOn(page, Blocks(body = None))
