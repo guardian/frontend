@@ -242,9 +242,9 @@ object NavLinks {
       NavLink("Logic puzzles", "/puzzles-and-games/logic-puzzles/archive"),
     ),
   )
-  val legacyWordiply = NavLink(
-    "Wordiply",
-    "https://www.wordiply.com",
+  val puzzlesAndGames = NavLink(
+    "Puzzles & games",
+    "https://www.theguardian.com/puzzles-and-games",
   )
   val corrections = NavLink("Corrections", "/theguardian/series/corrections-and-clarifications")
   val video = NavLink("Video", "/video")
@@ -683,8 +683,8 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
+    puzzlesAndGames,
     legacyCrosswords,
-    legacyWordiply,
     corrections,
     tips,
   )
@@ -697,8 +697,8 @@ object NavLinks {
     todaysPaper,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"),
+    puzzlesAndGames,
     legacyCrosswords,
-    legacyWordiply,
     corrections,
     tips,
   )
