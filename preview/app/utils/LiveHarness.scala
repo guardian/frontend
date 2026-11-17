@@ -78,10 +78,10 @@ object LiveHarness {
   ): BlocksOn[P] => BlocksOn[P] = _.mapBoth(
     page => {
       val content = page.item.content
-      val interactives = harnessAtoms.map(_.atom)
+      val harnessInteractives = harnessAtoms.map(_.atom)
       val updatedAtoms = content.atoms
         .getOrElse(emptyAtoms)
-        .copy(interactives = interactives)
+        .copy(interactives = content.atoms.getOrElse(emptyAtoms).interactives ++ harnessInteractives)
       updater.update(page, content.copy(atoms = Some(updatedAtoms)))
     },
     blocks => {
