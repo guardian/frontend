@@ -23,8 +23,10 @@ import play.api.test.FakeRequest
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown", "INT", false),
     ("another-test:variant", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "INT", true),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "EUR", true),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "AU", true),
   ).foreach { case (participations, edition, expected) =>
-    "PuzzlesHubV3Experiment" should s"require the International edition and the v2 and v3 variants outside development for '$participations' in $edition" in {
+    "PuzzlesHubV3Experiment" should s"require a hub edition and the v2 and v3 variants outside development for '$participations' in $edition" in {
       implicit val request: RequestHeader = requestWithParticipation(participations, edition)
       PuzzlesHubV3Experiment.isEnabled(isDevelopment = false) shouldBe expected
       PuzzlesHubV3Experiment.isEnabled shouldBe expected

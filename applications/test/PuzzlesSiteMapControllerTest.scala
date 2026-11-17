@@ -120,7 +120,7 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
 
   Seq(
     "UK edition" -> request(edition = "UK"),
-    "AU edition" -> request(edition = "AU"),
+    "US edition" -> request(edition = "US"),
     "v2 participation outside the hub editions" -> request("puzzles-new-hub-v2:variant", edition = "UK"),
   ).foreach { case (name, disabled) =>
     it should s"return an uncached 404 for the $name, even with a matching ETag" in {
