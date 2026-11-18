@@ -236,8 +236,8 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-  private val editionsWithPuzzlesHub = Seq(International, Europe, Au)
-  private val editionsWithoutPuzzlesHub = Seq(Uk, Us)
+  private val editionsWithPuzzlesHub = Seq(International, Europe, Au, Us)
+  private val editionsWithoutPuzzlesHub = Seq(Uk)
 
   "Puzzles navigation" should "list Puzzles & games after Crosswords, in place of Wordiply, in editions with the hub" in {
     editionsWithPuzzlesHub.foreach { edition =>
