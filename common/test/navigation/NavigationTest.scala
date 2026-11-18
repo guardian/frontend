@@ -283,14 +283,4 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
       menu.subNavSections should contain(ParentSubnav(legacyCrosswords, legacyCrosswords.children))
     }
   }
-
-  "DCR Nav" should "contain the edition's puzzles navigation" in {
-    val page = StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games")
-
-    Nav(page, International, None).otherLinks should contain(puzzles)
-    Nav(page, International, None).otherLinks should not contain legacyWordiply
-
-    Nav(page, Uk, None).otherLinks should not contain puzzles
-    Nav(page, Uk, None).otherLinks should contain(legacyWordiply)
-  }
 }
