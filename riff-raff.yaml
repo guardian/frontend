@@ -66,6 +66,7 @@ deployments:
     app: admin
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIAdmin:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -74,6 +75,7 @@ deployments:
     app: discussion
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIDiscussion:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -82,6 +84,7 @@ deployments:
     app: sport
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMISport:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -90,6 +93,7 @@ deployments:
     app: archive
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIArchive:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -98,6 +102,7 @@ deployments:
     app: applications
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIApplications:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -106,6 +111,7 @@ deployments:
     app: rss
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIRss:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -114,6 +120,7 @@ deployments:
     app: onward
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIOnward:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -122,6 +129,7 @@ deployments:
     app: facia
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIFacia:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -130,6 +138,7 @@ deployments:
     app: facia-press
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIFaciapress:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -138,6 +147,7 @@ deployments:
     app: article
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIArticle:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -146,6 +156,7 @@ deployments:
     app: preview
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIPreview:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -154,6 +165,7 @@ deployments:
     app: commercial
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMICommercial:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
@@ -162,6 +174,7 @@ deployments:
     app: identity
     type: ami-cloudformation-parameter
     parameters:
+      amiEncrypted: true
       amiParametersToTags:
         AMIIdentity:
           Recipe: ubuntu-jammy-frontend-base-ARM-java21-cdk-base
