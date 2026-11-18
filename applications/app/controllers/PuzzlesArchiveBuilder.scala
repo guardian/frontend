@@ -130,6 +130,8 @@ object PuzzlesArchiveBuilder {
       item.setterName,
       destination(selection, item),
       item.gameStatus,
+      item.isWithinFreeWindow,
+      item.hasPremiumEntitlement,
     )
 
   def build(

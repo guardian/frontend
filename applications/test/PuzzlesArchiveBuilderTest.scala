@@ -213,4 +213,45 @@ import play.api.libs.json.Json
       ),
     )
   }
+
+  it should "preserve access indicators from the API through calendar and recent-item JSON" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    for {
+      withinWindow <- Seq(true, false)
+      premium <- Seq(true, false)
+    } {
+      val response = Json
+        .obj(
+          "results" -> Json.arr(
+            Json.obj(
+              "puzzleId" -> "a",
+              "puzzleType" -> "SUDOKU_EASY",
+              "publishDate" -> "2026-09-02T00:00:00Z",
+              "progress" -> 0,
+              "isWithinFreeWindow" -> withinWindow,
+              "hasPremiumEntitlement" -> premium,
+            ),
+          ),
+        )
+        .as[PuzzlesApiResponse]
+      val archive = PuzzlesArchiveBuilder.build(selection, 2026, 9, response.results, false, Nil)
+      val json = Json.toJson(archive)
+
+      Seq("items", "recentItems").foreach { field =>
+        (json \ field \ 0 \ "isWithinFreeWindow").as[Boolean] shouldBe withinWindow
+        (json \ field \ 0 \ "hasPremiumEntitlement").as[Boolean] shouldBe premium
+      }
+    }
+  }
+
+  it should "leave access indicators absent when the API does not supply them" in {
+    val selection = PuzzlesArchiveBuilder.select(layout, "logic-puzzles", Some("sudoku-easy")).get
+    val item = PuzzlesApiItem("a", "SUDOKU_EASY", "2026-09-02T00:00:00Z", 0, None, None)
+    val json = Json.toJson(PuzzlesArchiveBuilder.build(selection, 2026, 9, Seq(item), false, Nil))
+
+    Seq("items", "recentItems").foreach { field =>
+      (json \ field \ 0 \ "isWithinFreeWindow").toOption shouldBe None
+      (json \ field \ 0 \ "hasPremiumEntitlement").toOption shouldBe None
+    }
+  }
 }
