@@ -1,6 +1,6 @@
 import bonzo from 'bonzo';
 import qwery from 'qwery';
-import videojs from 'videojs';
+import videojs from 'video.js';
 import 'videojs-embed';
 import $ from 'lib/$';
 import config from 'lib/config';

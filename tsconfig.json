@@ -55,9 +55,6 @@
       ],
       "svgs/*": [
         "./static/src/inline-svgs/*"
-      ],
-      "videojs": [
-        "node_modules/video.js"
       ]
     },
     "resolveJsonModule": true,

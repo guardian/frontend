@@ -1,4 +1,4 @@
-import videojs from 'videojs';
+import videojs from 'video.js';
 import 'videojs-ima';
 import 'videojs-embed';
 import 'videojs-persistvolume';
