@@ -17,7 +17,6 @@ import play.api.test.FakeRequest
     ("puzzles-new-hub-v3:variant", "INT", false),
     ("puzzles-new-hub-v2:variant", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "UK", false),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "US", false),
     ("puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:control", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown", "INT", false),
@@ -25,6 +24,7 @@ import play.api.test.FakeRequest
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "INT", true),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "EUR", true),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "AU", true),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "US", true),
   ).foreach { case (participations, edition, expected) =>
     "PuzzlesHubV3Experiment" should s"require a hub edition and the v2 and v3 variants outside development for '$participations' in $edition" in {
       implicit val request: RequestHeader = requestWithParticipation(participations, edition)

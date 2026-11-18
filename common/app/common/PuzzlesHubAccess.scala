@@ -11,7 +11,7 @@ import play.api.mvc.RequestHeader
   * same rule again before rendering.
   */
 object PuzzlesHubAccess {
-  val Editions: Set[Edition] = Set(editions.International, editions.Europe, editions.Au)
+  val Editions: Set[Edition] = Set(editions.International, editions.Europe, editions.Au, editions.Us)
 
   /** True when the request's edition is one of [[Editions]], or in local development. */
   def isAvailable(implicit request: RequestHeader): Boolean =

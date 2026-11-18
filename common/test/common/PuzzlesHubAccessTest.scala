@@ -11,15 +11,15 @@ import play.api.test.FakeRequest
   private def requestWithEdition(edition: String): RequestHeader =
     FakeRequest().withHeaders("X-Gu-Edition" -> edition)
 
-  "PuzzlesHubAccess.isAvailable" should "return true for the International, Europe and Australia editions" in {
-    Seq("INT", "EUR", "AU").foreach { edition =>
+  "PuzzlesHubAccess.isAvailable" should "return true for the International, Europe, Australia and US editions" in {
+    Seq("INT", "EUR", "AU", "US").foreach { edition =>
       implicit val request: RequestHeader = requestWithEdition(edition)
       PuzzlesHubAccess.isAvailable should be(true)
     }
   }
 
   it should "return false for the other editions" in {
-    Seq("UK", "US").foreach { edition =>
+    Seq("UK").foreach { edition =>
       implicit val request: RequestHeader = requestWithEdition(edition)
       PuzzlesHubAccess.isAvailable should be(false)
     }
@@ -39,7 +39,7 @@ import play.api.test.FakeRequest
     PuzzlesHubAccess.isAvailable(isDevelopment = true, edition = Uk) should be(true)
   }
 
-  it should "only list the International, Europe and Australia editions for now" in {
-    PuzzlesHubAccess.Editions should be(Set(International, Europe, Au))
+  it should "only list the International, Europe, Australia and US editions for now" in {
+    PuzzlesHubAccess.Editions should be(Set(International, Europe, Au, Us))
   }
 }
