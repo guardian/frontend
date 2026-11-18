@@ -177,8 +177,12 @@ class PuzzlesPageController(
       else
         buildArchive(category, puzzle)
           .flatMap { case (layout, archive) =>
+            val unmatched = puzzle.filterNot(value => PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))
             // The path names a specific puzzle, so an unknown one is a 404 rather than the category's first puzzle.
-            if (puzzle.exists(value => !PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))) notFound
+            // A puzzle the layout lists but that has no archive (yet) is sent to its category's archive instead.
+            if (unmatched.exists(value => PuzzlesArchiveBuilder.isKnownPuzzle(layout, category, value)))
+              Future.successful(Redirect(PuzzlesArchiveBuilder.categoryArchivePath(category), FOUND))
+            else if (unmatched.isDefined) notFound
             else {
               // A puzzle's own archive page is titled after that puzzle, not after its category.
               val (title, description) =

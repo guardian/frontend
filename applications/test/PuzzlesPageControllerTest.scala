@@ -568,6 +568,38 @@ import scala.concurrent.{ExecutionContext, Future}
     verifyNoInteractions(renderer)
   }
 
+  it should "redirect a puzzle that is listed but has no archive to its category's archive" in {
+    val wordGames = PuzzleContainer(
+      "word-games",
+      "Word games",
+      content = PuzzleContent(
+        Seq(
+          Seq(
+            PuzzleItem("word-wheel", "Word wheel", "word-wheel", "all", "primary", slug = Some("word-games/word-wheel")),
+            PuzzleItem("wordiply", "Wordiply", "wordiply", "all", "primary", slug = Some("word-games/wordiply")),
+          ),
+        ),
+        Nil,
+      ),
+    )
+    val provider = mock[PuzzlesLayoutProvider]
+    when(provider.getLayout()(any[ExecutionContext]))
+      .thenReturn(Future.successful(layout.copy(containers = Seq(wordGames))))
+    val renderer = mock[DotcomRenderingService]
+
+    val withoutArchive = controller(provider, renderer).renderArchiveForPuzzle("word-games", "wordiply")(
+      request("/puzzles-and-games/word-games/wordiply/archive"),
+    )
+    status(withoutArchive) shouldBe FOUND
+    redirectLocation(withoutArchive) shouldBe Some("/puzzles-and-games/word-games/archive")
+
+    val unknown = controller(provider, renderer).renderArchiveForPuzzle("word-games", "not-a-puzzle")(
+      request("/puzzles-and-games/word-games/not-a-puzzle/archive"),
+    )
+    status(unknown) shouldBe NOT_FOUND
+    verifyNoInteractions(renderer)
+  }
+
   "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
     val progressApi = mock[PuzzlesProgressApi]
     val item = PuzzlesApiItem(
