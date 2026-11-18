@@ -575,7 +575,14 @@ import scala.concurrent.{ExecutionContext, Future}
       content = PuzzleContent(
         Seq(
           Seq(
-            PuzzleItem("word-wheel", "Word wheel", "word-wheel", "all", "primary", slug = Some("word-games/word-wheel")),
+            PuzzleItem(
+              "word-wheel",
+              "Word wheel",
+              "word-wheel",
+              "all",
+              "primary",
+              slug = Some("word-games/word-wheel"),
+            ),
             PuzzleItem("wordiply", "Wordiply", "wordiply", "all", "primary", slug = Some("word-games/wordiply")),
           ),
         ),
