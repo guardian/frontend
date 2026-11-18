@@ -15,14 +15,16 @@ import play.api.test.FakeRequest
   Seq(
     ("", "INT", false),
     ("puzzles-new-hub-v2:variant", "UK", false),
-    ("puzzles-new-hub-v2:variant", "US", false),
     ("puzzles-new-hub-v2:control", "INT", false),
     ("puzzles-new-hub-v2:unknown", "INT", false),
     ("puzzles-new-hub-v2:,puzzles-new-hub-v2:variant:extra", "INT", false),
     ("another-test:variant", "INT", false),
     ("puzzles-new-hub-v2:variant", "INT", true),
+    ("puzzles-new-hub-v2:variant", "EUR", true),
+    ("puzzles-new-hub-v2:variant", "AU", true),
+    ("puzzles-new-hub-v2:variant", "US", true),
   ).foreach { case (participations, edition, expected) =>
-    "PuzzlesHubV2Experiment" should s"require the International edition and the variant outside development for '$participations' in $edition" in {
+    "PuzzlesHubV2Experiment" should s"require a hub edition and the variant outside development for '$participations' in $edition" in {
       implicit val request: RequestHeader = requestWithParticipation(participations, edition)
       PuzzlesHubV2Experiment.isEnabled(isDevelopment = false) shouldBe expected
       PuzzlesHubV2Experiment.isEnabled shouldBe expected

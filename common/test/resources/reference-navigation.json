@@ -1650,9 +1650,28 @@
 				"classList": []
 			},
 			{
-				"title": "Wordiply",
-				"url": "https://www.wordiply.com",
-				"children": [],
+				"title": "Puzzles & games",
+				"url": "/puzzles-and-games",
+				"children": [
+					{
+						"title": "Crosswords",
+						"url": "/puzzles-and-games/crosswords/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Word games",
+						"url": "/puzzles-and-games/word-games/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Logic puzzles",
+						"url": "/puzzles-and-games/logic-puzzles/archive",
+						"children": [],
+						"classList": []
+					}
+				],
 				"classList": []
 			},
 			{
@@ -2349,9 +2368,28 @@
 				"classList": []
 			},
 			{
-				"title": "Wordiply",
-				"url": "https://www.wordiply.com",
-				"children": [],
+				"title": "Puzzles & games",
+				"url": "/puzzles-and-games",
+				"children": [
+					{
+						"title": "Crosswords",
+						"url": "/puzzles-and-games/crosswords/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Word games",
+						"url": "/puzzles-and-games/word-games/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Logic puzzles",
+						"url": "/puzzles-and-games/logic-puzzles/archive",
+						"children": [],
+						"classList": []
+					}
+				],
 				"classList": []
 			},
 			{
@@ -3214,9 +3252,28 @@
 				"classList": []
 			},
 			{
-				"title": "Wordiply",
-				"url": "https://www.wordiply.com",
-				"children": [],
+				"title": "Puzzles & games",
+				"url": "/puzzles-and-games",
+				"children": [
+					{
+						"title": "Crosswords",
+						"url": "/puzzles-and-games/crosswords/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Word games",
+						"url": "/puzzles-and-games/word-games/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Logic puzzles",
+						"url": "/puzzles-and-games/logic-puzzles/archive",
+						"children": [],
+						"classList": []
+					}
+				],
 				"classList": []
 			},
 			{
@@ -4195,9 +4252,28 @@
 				"classList": []
 			},
 			{
-				"title": "Wordiply",
-				"url": "https://www.wordiply.com",
-				"children": [],
+				"title": "Puzzles & games",
+				"url": "/puzzles-and-games",
+				"children": [
+					{
+						"title": "Crosswords",
+						"url": "/puzzles-and-games/crosswords/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Word games",
+						"url": "/puzzles-and-games/word-games/archive",
+						"children": [],
+						"classList": []
+					},
+					{
+						"title": "Logic puzzles",
+						"url": "/puzzles-and-games/logic-puzzles/archive",
+						"children": [],
+						"classList": []
+					}
+				],
 				"classList": []
 			},
 			{

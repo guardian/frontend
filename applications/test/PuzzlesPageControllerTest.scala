@@ -656,9 +656,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
   Seq(
     "UK" -> "UK",
-    "US" -> "US",
-    "AU" -> "AU",
-    "EUR" -> "EUR",
     "unknown edition" -> "not-an-edition",
   ).foreach { case (editionCase, edition) =>
     s"puzzles hub access with the $editionCase edition" should
@@ -1402,9 +1399,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
   Seq(
     "UK" -> "UK",
-    "US" -> "US",
-    "AU" -> "AU",
-    "EUR" -> "EUR",
     "unknown edition" -> "not-an-edition",
   ).foreach { case (editionCase, edition) =>
     s"puzzle page access with the $editionCase edition" should
