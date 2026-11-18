@@ -58,7 +58,7 @@ import staticpages.StaticPages
     val puzzlesNav = (json \ "nav" \ "otherLinks").as[Seq[play.api.libs.json.JsObject]]
     puzzlesNav
       .find(link => (link \ "url").as[String] == "/puzzles-and-games")
-      .map(link => (link \ "title").as[String]) shouldBe None
+      .map(link => (link \ "title").as[String]) shouldBe Some("Puzzles & games")
     (json \ "nav" \ "subNavSections" \ "parent" \ "title").as[String] should be("Puzzles & games")
   }
 
