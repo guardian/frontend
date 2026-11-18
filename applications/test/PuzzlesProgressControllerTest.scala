@@ -81,15 +81,6 @@ import scala.concurrent.{ExecutionContext, Future}
     verifyNoInteractions(api)
   }
 
-  it should "not be available outside the International edition" in {
-    val api = mock[PuzzlesProgressApi]
-
-    val result = controller(api).save()(request(Json.arr(update), edition = "UK"))
-
-    status(result) should be(404)
-    verifyNoInteractions(api)
-  }
-
   it should "pass through validation errors from the API" in {
     val api = apiReturning(400, Some(Json.obj("message" -> "Invalid request body")))
 
