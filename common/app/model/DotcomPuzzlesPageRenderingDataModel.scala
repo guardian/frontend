@@ -88,7 +88,7 @@ object DotcomPuzzlesPageRenderingDataModel {
       webTitle = page.metadata.webTitle,
       description = page.metadata.description,
       config = DotcomRenderingConfig(page, request, isPreview = false),
-      nav = Nav(page, edition, request, customSubnav = None),
+      nav = Nav(page, edition, customSubnav = None),
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
       commercialProperties = pageCommercialProperties(page) ++ layout.commercialProperties,
       isAdFreeUser = views.support.Commercial.isAdFree(request),
