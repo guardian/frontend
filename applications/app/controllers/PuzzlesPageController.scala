@@ -570,6 +570,8 @@ object PuzzlesPageController {
     "SUDOKU_KILLER",
     "WORDWHEEL",
     "WORDIPLY",
+    "FILMREVEAL",
+    "ONTHEBALL",
   )
 
   val LogicPuzzlesGroup = "logic-puzzles"
