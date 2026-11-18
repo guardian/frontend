@@ -93,7 +93,7 @@ object DotcomPuzzlePageRenderingDataModel {
       slug = slug,
       webTitle = webTitle,
       config = DotcomRenderingConfig(page, request, isPreview = false),
-      nav = Nav(page, edition, request, customSubnav = None),
+      nav = Nav(page, edition, customSubnav = None),
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       editionId = edition.id,

@@ -6,7 +6,6 @@ import model.Page
 import navigation.ReaderRevenueSite.{PrintCTA, Support, SupportContribute, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, OWrites, Writes}
-import play.api.mvc.RequestHeader
 
 case class ReaderRevenueLink(
     contribute: String,
@@ -96,8 +95,8 @@ object Nav {
 
   implicit val writes: OWrites[Nav] = Json.writes[Nav]
 
-  def apply(page: Page, edition: Edition, request: RequestHeader, customSubnav: Option[CustomSubnav]): Nav = {
-    val navMenu = NavMenu(page, edition, request)
+  def apply(page: Page, edition: Edition, customSubnav: Option[CustomSubnav]): Nav = {
+    val navMenu = NavMenu(page, edition)
     Nav(
       currentUrl = navMenu.currentUrl,
       pillars = navMenu.pillars,
