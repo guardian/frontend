@@ -11,6 +11,8 @@ case class PuzzlesApiItem(
     gameUrl: Option[String],
     /** The Puzzles API's own state for the reader: `not-started`, `in-progress` or `completed`. */
     gameStatus: Option[String] = None,
+    isWithinFreeWindow: Option[Boolean] = None,
+    hasPremiumEntitlement: Option[Boolean] = None,
 )
 
 object PuzzlesApiItem {
