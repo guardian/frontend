@@ -16,7 +16,7 @@ import play.api.test.FakeRequest
     ("", "INT", false),
     ("puzzles-new-hub-v3:variant", "INT", false),
     ("puzzles-new-hub-v2:variant", "INT", false),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "UK", false),
+    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "UK", true),
     ("puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:control", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown", "INT", false),

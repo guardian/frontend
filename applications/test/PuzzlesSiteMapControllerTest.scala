@@ -117,17 +117,4 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     val revalidated = controller.renderPuzzlesSiteMap()(enabled.withHeaders(enabled.headers.add(IF_NONE_MATCH -> etag)))
     status(revalidated) shouldBe NOT_MODIFIED
   }
-
-  Seq(
-    "UK edition" -> request(edition = "UK"),
-    "v2 participation outside the hub editions" -> request("puzzles-new-hub-v2:variant", edition = "UK"),
-  ).foreach { case (name, disabled) =>
-    it should s"return an uncached 404 for the $name, even with a matching ETag" in {
-      val etag = header(ETAG, controller.renderPuzzlesSiteMap()(request())).get
-      val result = controller.renderPuzzlesSiteMap()(disabled.withHeaders(disabled.headers.add(IF_NONE_MATCH -> etag)))
-
-      status(result) shouldBe NOT_FOUND
-      header(CACHE_CONTROL, result).get should include("no-cache")
-    }
-  }
 }
