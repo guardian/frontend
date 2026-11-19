@@ -1,6 +1,7 @@
 package model.dotcomrendering
 
 import ab.ABTests
+import conf.Configuration
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -53,7 +54,7 @@ import staticpages.StaticPages
     (json \ "nav").toOption should not be empty
     (json \ "pageFooter").toOption should not be empty
     (json \ "commercialProperties").toOption should not be empty
-    (json \ "canonicalUrl").as[String] should endWith("/puzzles-and-games")
+    (json \ "canonicalUrl").as[String] should be(s"${Configuration.site.host}/puzzles-and-games")
     (json \ "layout").as[PuzzlesLayout] should be(layout)
     val puzzlesNav = (json \ "nav" \ "otherLinks").as[Seq[play.api.libs.json.JsObject]]
     puzzlesNav
