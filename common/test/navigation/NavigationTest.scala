@@ -236,8 +236,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-  private val editionsWithPuzzlesHub = Seq(International, Europe, Au, Us)
-  private val editionsWithoutPuzzlesHub = Seq(Uk)
+  private val editionsWithPuzzlesHub = Seq(International, Europe, Au, Us, Uk)
 
   "Puzzles navigation" should "list Puzzles & games after Crosswords, in place of Wordiply, in editions with the hub" in {
     editionsWithPuzzlesHub.foreach { edition =>
@@ -247,16 +246,6 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
       otherLinks should contain(legacyCrosswords)
       otherLinks should not contain legacyWordiply
       otherLinks.indexOf(puzzles) shouldBe otherLinks.indexOf(legacyCrosswords) + 1
-    }
-  }
-
-  it should "keep Wordiply and not list Puzzles & games in editions without the hub" in {
-    editionsWithoutPuzzlesHub.foreach { edition =>
-      val otherLinks = NavMenu(NavigationPage("culture"), edition).otherLinks
-
-      otherLinks should contain(legacyCrosswords)
-      otherLinks should contain(legacyWordiply)
-      otherLinks should not contain puzzles
     }
   }
 

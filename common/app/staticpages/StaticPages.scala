@@ -52,6 +52,7 @@ object StaticPages {
     SimplePage(
       MetaData.make(
         id = id,
+        url = Some(id),
         section = Option(SectionId(value = "puzzles-and-games")),
         webTitle = "Puzzles & games | The Guardian",
         description = Some(
@@ -67,6 +68,7 @@ object StaticPages {
     SimplePage(
       MetaData.make(
         id = id,
+        url = Some(id),
         section = Option(SectionId(value = "puzzles-and-games")),
         webTitle = s"$title archive - puzzles & games | The Guardian",
         description = Some(description),
@@ -84,6 +86,7 @@ object StaticPages {
     SimplePage(
       MetaData.make(
         id = id,
+        url = Some(id),
         section = Option(SectionId(value = "puzzles")),
         webTitle = webTitle,
         description = None,

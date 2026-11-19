@@ -71,6 +71,20 @@ import play.api.libs.json.Json
     PuzzlesArchiveBuilder.archivePathFor(layout, "unknown-category", "mini") should be(None)
   }
 
+  it should "know puzzles the layout lists, with or without an archive, and no others" in {
+    PuzzlesArchiveBuilder.isKnownPuzzle(layout, "word-games", "wordiply") should be(true)
+    PuzzlesArchiveBuilder.isKnownPuzzle(layout, "word-games", "word-wheel") should be(true)
+    PuzzlesArchiveBuilder.isKnownPuzzle(layout, "word-games", "not-a-puzzle") should be(false)
+    PuzzlesArchiveBuilder.isKnownPuzzle(layout, "logic-puzzles", "wordiply") should be(false)
+    PuzzlesArchiveBuilder.isKnownPuzzle(layout, "unknown-category", "wordiply") should be(false)
+  }
+
+  it should "keep puzzles without an archive out of the archive paths" in {
+    PuzzlesArchiveBuilder.archivePaths(layout, includeTrivia = true) should not contain
+      "/puzzles-and-games/word-games/wordiply/archive"
+    PuzzlesArchiveBuilder.categoryArchivePath("word-games") should be("/puzzles-and-games/word-games/archive")
+  }
+
   it should "use the documented archive titles and meta descriptions" in {
     val expected = Seq(
       "crosswords" -> (
