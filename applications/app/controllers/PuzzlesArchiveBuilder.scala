@@ -56,9 +56,26 @@ object PuzzlesArchiveBuilder {
 
   private val archiveCategories = Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes")
 
+  private def matchesValue(id: String, set: String, slug: Option[String], value: String): Boolean =
+    id == value || set == value || slug.exists(_.split('/').lastOption.contains(value))
+
   /** Whether `value`, from the query string or the path, identifies `puzzle`. */
   def matches(puzzle: PuzzlesArchivePuzzle, value: String): Boolean =
-    puzzle.id == value || puzzle.set == value || puzzle.slug.exists(_.split('/').lastOption.contains(value))
+    matchesValue(puzzle.id, puzzle.set, puzzle.slug, value)
+
+  /** The path of the archive page that lists every puzzle in `category`. */
+  def categoryArchivePath(category: String): String = s"/puzzles-and-games/$category/archive"
+
+  /** Whether `value` identifies a puzzle listed in `category`, whether or not that puzzle has an archive. Puzzles
+    * without an archive have no entry in `apiTypes`, so they can be known to the layout yet never appear in an archive
+    * page's choices.
+    */
+  def isKnownPuzzle(layout: PuzzlesLayout, category: String, value: String): Boolean =
+    layout.containers
+      .find(_.id == category)
+      .toSeq
+      .flatMap(items)
+      .exists(item => matchesValue(item.id, item.set, item.slug, value))
 
   /** The path of every puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
   def archivePaths(layout: PuzzlesLayout, includeTrivia: Boolean): Seq[String] =
@@ -130,6 +147,8 @@ object PuzzlesArchiveBuilder {
       item.setterName,
       destination(selection, item),
       item.gameStatus,
+      item.isWithinFreeWindow,
+      item.hasPremiumEntitlement,
     )
 
   def build(

@@ -568,6 +568,45 @@ import scala.concurrent.{ExecutionContext, Future}
     verifyNoInteractions(renderer)
   }
 
+  it should "redirect a puzzle that is listed but has no archive to its category's archive" in {
+    val wordGames = PuzzleContainer(
+      "word-games",
+      "Word games",
+      content = PuzzleContent(
+        Seq(
+          Seq(
+            PuzzleItem(
+              "word-wheel",
+              "Word wheel",
+              "word-wheel",
+              "all",
+              "primary",
+              slug = Some("word-games/word-wheel"),
+            ),
+            PuzzleItem("wordiply", "Wordiply", "wordiply", "all", "primary", slug = Some("word-games/wordiply")),
+          ),
+        ),
+        Nil,
+      ),
+    )
+    val provider = mock[PuzzlesLayoutProvider]
+    when(provider.getLayout()(any[ExecutionContext]))
+      .thenReturn(Future.successful(layout.copy(containers = Seq(wordGames))))
+    val renderer = mock[DotcomRenderingService]
+
+    val withoutArchive = controller(provider, renderer).renderArchiveForPuzzle("word-games", "wordiply")(
+      request("/puzzles-and-games/word-games/wordiply/archive"),
+    )
+    status(withoutArchive) shouldBe FOUND
+    redirectLocation(withoutArchive) shouldBe Some("/puzzles-and-games/word-games/archive")
+
+    val unknown = controller(provider, renderer).renderArchiveForPuzzle("word-games", "not-a-puzzle")(
+      request("/puzzles-and-games/word-games/not-a-puzzle/archive"),
+    )
+    status(unknown) shouldBe NOT_FOUND
+    verifyNoInteractions(renderer)
+  }
+
   "puzzlesProgress" should "return uncached progress and forward an authenticated user's token" in {
     val progressApi = mock[PuzzlesProgressApi]
     val item = PuzzlesApiItem(
@@ -652,31 +691,6 @@ import scala.concurrent.{ExecutionContext, Future}
       .renderPuzzlesJson()(request("/puzzles-and-games.atom"))
 
     status(result) should be(NOT_FOUND)
-  }
-
-  Seq(
-    "UK" -> "UK",
-    "unknown edition" -> "not-an-edition",
-  ).foreach { case (editionCase, edition) =>
-    s"puzzles hub access with the $editionCase edition" should
-      "serve the tag page for HTML and JSON without loading the layout or calling DCR" in {
-        val provider = mock[PuzzlesLayoutProvider]
-        val renderer = mock[DotcomRenderingService]
-        val indexController = mock[IndexController]
-        when(indexController.renderItem(eqTo("puzzles-and-games"))(any[RequestHeader]))
-          .thenReturn(Future.successful(Results.Ok("tag page")))
-        val puzzlesController = controller(provider, renderer, indexController = indexController)
-
-        val htmlResult = puzzlesController.renderPuzzles()(request("/puzzles-and-games", edition))
-        val jsonResult = puzzlesController.renderPuzzlesJson()(request("/puzzles-and-games.json", edition))
-
-        status(htmlResult) should be(OK)
-        contentAsString(htmlResult) should be("tag page")
-        status(jsonResult) should be(OK)
-        contentAsString(jsonResult) should be("tag page")
-        verify(indexController, times(2)).renderItem(eqTo("puzzles-and-games"))(any[RequestHeader])
-        verifyNoInteractions(provider, renderer)
-      }
   }
 
   Seq(
@@ -1049,16 +1063,6 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
   }
 
-  it should "return not found when the experiment is not enabled, without calling DCR" in {
-    val renderer = mock[DotcomRenderingService]
-
-    val result = controller(successfulProvider, renderer)
-      .renderWordWheel("2024-01-15")(request("/puzzles-and-games/word-games/word-wheel/2024-01-15", "UK"))
-
-    status(result) should be(NOT_FOUND)
-    verifyNoInteractions(renderer)
-  }
-
   "the puzzle page JSON" should "flag puzzles older than the free window as requiring a subscription, and leave free ones unflagged" in {
     val today = PuzzlesAccessPolicy.londonToday()
     def requiresSubscription(date: LocalDate): Option[Boolean] = {
@@ -1116,16 +1120,6 @@ import scala.concurrent.{ExecutionContext, Future}
     status(result) should be(OK)
     contentAsString(result) should be("rendered by DCR")
     verify(renderer).getPuzzlePage(any[WSClient], any[JsValue])(any[RequestHeader])
-  }
-
-  it should "return not found when the experiment is not enabled, without calling DCR" in {
-    val renderer = mock[DotcomRenderingService]
-
-    val result = controller(successfulProvider, renderer)
-      .renderWordiply("2024-01-15")(request("/puzzles-and-games/word-games/wordiply/2024-01-15", "UK"))
-
-    status(result) should be(NOT_FOUND)
-    verifyNoInteractions(renderer)
   }
 
   "renderWordiplyJson" should "return the equivalent rendering data as JSON, including the given puzzleDate" in {
@@ -1395,35 +1389,5 @@ import scala.concurrent.{ExecutionContext, Future}
     status(result) should be(FOUND)
     redirectLocation(result) should be(Some("/puzzles-and-games/word-games/wordiply/archive"))
     verifyNoInteractions(renderer)
-  }
-
-  Seq(
-    "UK" -> "UK",
-    "unknown edition" -> "not-an-edition",
-  ).foreach { case (editionCase, edition) =>
-    s"puzzle page access with the $editionCase edition" should
-      "return not found for sudoku, word wheel, and wordiply (both dated and archive-redirect routes) without calling DCR" in {
-        val renderer = mock[DotcomRenderingService]
-        val puzzlesController = controller(successfulProvider, renderer)
-
-        val sudokuResult = puzzlesController.renderSudoku("easy", "2024-01-15")(
-          request("/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15", edition),
-        )
-        val sudokuRedirectResult = puzzlesController.redirectSudokuArchive("easy")(
-          request("/puzzles-and-games/logic-puzzles/sudoku-easy", edition),
-        )
-        val wordWheelResult = puzzlesController.renderWordWheel("2024-01-15")(
-          request("/puzzles-and-games/word-games/word-wheel/2024-01-15", edition),
-        )
-        val wordiplyResult = puzzlesController.renderWordiply("2024-01-15")(
-          request("/puzzles-and-games/word-games/wordiply/2024-01-15", edition),
-        )
-
-        status(sudokuResult) should be(NOT_FOUND)
-        status(sudokuRedirectResult) should be(NOT_FOUND)
-        status(wordWheelResult) should be(NOT_FOUND)
-        status(wordiplyResult) should be(NOT_FOUND)
-        verifyNoInteractions(renderer)
-      }
   }
 }

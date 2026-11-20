@@ -46,6 +46,8 @@ case class PuzzlesArchiveItem(
     setterName: Option[String],
     url: String,
     gameStatus: Option[String] = None,
+    isWithinFreeWindow: Option[Boolean] = None,
+    hasPremiumEntitlement: Option[Boolean] = None,
 )
 
 object PuzzlesArchiveItem {

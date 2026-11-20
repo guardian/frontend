@@ -645,7 +645,7 @@ object NavLinks {
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
     legacyCrosswords,
-    legacyWordiply,
+    puzzles,
     corrections,
     tips,
   )
