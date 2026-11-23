@@ -8,18 +8,14 @@ object PuzzlesSiteMap {
     "/puzzles-and-games/crosswords/archive",
     "/puzzles-and-games/logic-puzzles/archive",
     "/puzzles-and-games/word-games/archive",
+    "/puzzles-and-games/trivia-and-quizzes/archive",
   )
 
-  private val triviaPath = "/puzzles-and-games/trivia-and-quizzes/archive"
-
   // Canonical production URLs, independent of the request's host or experiment cookies.
-  // Trivia & quizzes is only listed once hub v2 is enabled, because the page 404s without it.
-  def xml(puzzleArchivePaths: Seq[String], includeTrivia: Boolean): Elem =
+  def xml(puzzleArchivePaths: Seq[String]): Elem =
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
       {
-      ((paths ++ Option.when(includeTrivia)(triviaPath).toSeq) ++ puzzleArchivePaths).distinct.map(path =>
-        <url><loc>{s"https://www.theguardian.com$path"}</loc></url>,
-      )
+      (paths ++ puzzleArchivePaths).distinct.map(path => <url><loc>{s"https://www.theguardian.com$path"}</loc></url>)
     }
     </urlset>
 }
