@@ -31,9 +31,8 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
       key: String,
       id: Option[String] = None,
       l: CrosswordLookup = lookup,
-      includeV2Games: Boolean = false,
   ): Seq[PuzzleItem] =
-    Await.result(PuzzleRecommendations.resolve(key, id, date, l, today, includeV2Games), 5.seconds)
+    Await.result(PuzzleRecommendations.resolve(key, id, date, l, today), 5.seconds)
 
   private def ids(items: Seq[PuzzleItem]): Seq[String] = items.map(_.id)
 
@@ -187,9 +186,9 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
   }
 
   it should "resolve MovieGrid recommendations to dated public pages, not provider URLs" in {
-    ids(resolve("on-the-ball", includeV2Games = true)) shouldBe Seq("on-the-ball", "film-reveal", "crossword-quick")
-    ids(resolve("film-reveal", includeV2Games = true)) shouldBe Seq("film-reveal", "on-the-ball", "crossword-quick")
-    val cards = resolve("film-reveal", includeV2Games = true).take(2)
+    ids(resolve("on-the-ball")) shouldBe Seq("on-the-ball", "film-reveal", "crossword-quick")
+    ids(resolve("film-reveal")) shouldBe Seq("film-reveal", "on-the-ball", "crossword-quick")
+    val cards = resolve("film-reveal").take(2)
     cards.map(_.url) shouldBe Seq(
       Some("/puzzles-and-games/trivia-and-quizzes/film-reveal/2026-09-23"),
       Some("/puzzles-and-games/trivia-and-quizzes/on-the-ball/2026-09-24"),
@@ -214,20 +213,8 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
   private def resolveArchive(
       key: String,
       l: CrosswordLookup = lookup,
-      includeV2Games: Boolean = false,
   ): Seq[PuzzleItem] =
-    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l, today, includeV2Games), 5.seconds)
-
-  "V1 recommendations" should "omit MovieGrid cards unless explicitly enabled by the request" in {
-    Seq("film-reveal", "on-the-ball").foreach { key =>
-      ids(resolve(key)) shouldBe Seq("crossword-quick")
-      ids(resolveArchive(key)) shouldBe Seq("crossword-quick", "sudoku-medium")
-    }
-    PuzzleRecommendations.Table.keys.filterNot(Set("film-reveal", "on-the-ball")).foreach { key =>
-      resolve(key) shouldBe resolve(key, includeV2Games = true)
-      resolveArchive(key) shouldBe resolveArchive(key, includeV2Games = true)
-    }
-  }
+    Await.result(PuzzleRecommendations.resolveForArchive(key, date, l, today), 5.seconds)
 
   "ArchiveTable" should "have the same 18 rows as the puzzle table, each with 3 slots and never its own puzzle" in {
     PuzzleRecommendations.ArchiveTable.keySet shouldBe PuzzleRecommendations.Table.keySet
@@ -243,12 +230,12 @@ class PuzzleRecommendationsTest extends AnyFlatSpec with Matchers {
     ids(resolveArchive("wordiply")) shouldBe Seq("word-wheel", "crossword-quick", "sudoku-medium")
     ids(resolveArchive("sudoku-easy")) shouldBe Seq("sudoku-medium", "sudoku-hard", "crossword-quick")
     ids(resolveArchive("sudoku-hard")) shouldBe Seq("sudoku-medium", "sudoku-killer", "crossword-quick")
-    ids(resolveArchive("on-the-ball", includeV2Games = true)) shouldBe Seq(
+    ids(resolveArchive("on-the-ball")) shouldBe Seq(
       "film-reveal",
       "crossword-quick",
       "sudoku-medium",
     )
-    ids(resolveArchive("film-reveal", includeV2Games = true)) shouldBe Seq(
+    ids(resolveArchive("film-reveal")) shouldBe Seq(
       "on-the-ball",
       "crossword-quick",
       "sudoku-medium",

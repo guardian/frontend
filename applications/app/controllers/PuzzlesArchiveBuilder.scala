@@ -78,10 +78,9 @@ object PuzzlesArchiveBuilder {
       .exists(item => matchesValue(item.id, item.set, item.slug, value))
 
   /** The path of every puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
-  def archivePaths(layout: PuzzlesLayout, includeTrivia: Boolean): Seq[String] =
+  def archivePaths(layout: PuzzlesLayout): Seq[String] =
     layout.containers
       .filter(container => archiveCategories.contains(container.id))
-      .filter(container => includeTrivia || container.id != "trivia-and-quizzes")
       .flatMap(container =>
         archiveItems(container).flatMap(toPuzzle(container.id, _)).map { case (puzzle, _) => puzzle.path },
       )
