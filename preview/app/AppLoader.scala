@@ -64,6 +64,7 @@ trait PreviewLifecycleComponents
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
       wire[NewsletterSignupLifecycle],
+      wire[services.articleabtest.ArticleAbTestLifecycle],
       wire[AffiliateProductPriceCacheLifeCycle],
     )
 

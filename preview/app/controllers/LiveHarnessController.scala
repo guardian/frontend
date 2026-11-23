@@ -48,6 +48,7 @@ class LiveHarnessController(
       controllerComponents = controllerComponents,
       remoteRenderer = renderingService,
       subnavAgent = subnavAgent,
+      articleAbTestAgent = articleAbTestAgent,
     )
 
   def renderLiveHarness(path: String): Action[JsValue] = Action.async(
@@ -62,7 +63,7 @@ class LiveHarnessController(
             .map(_.`type`)
             .collect {
               case ContentType.Article     => articleController.mapAndRender(path, GenericFallback)(inject(atoms))
-              case ContentType.Interactive => interactiveController.modelAndRenderHtml(response)(inject(atoms))
+              case ContentType.Interactive => interactiveController.mapAndRender(path)(inject(atoms))
             }
             .getOrElse(Future(BadRequest))
         }

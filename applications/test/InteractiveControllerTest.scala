@@ -12,7 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result, Results}
 import play.api.test.Helpers._
-import services.MockSubnavAgent
+import services.{MockArticleAbTestAgent, MockSubnavAgent}
 
 import scala.concurrent.Future
 
@@ -45,6 +45,7 @@ class DCRFake() extends renderers.DotcomRenderingService {
     controllerComponents = play.api.test.Helpers.stubControllerComponents(),
     remoteRenderer = new DCRFake(),
     subnavAgent = new MockSubnavAgent(),
+    articleAbTestAgent = new MockArticleAbTestAgent(),
   )
 
   val getWebWorkerPath = PrivateMethod[String](Symbol("getWebWorkerPath"))

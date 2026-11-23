@@ -7,7 +7,7 @@ import model.ApplicationContext
 import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.SubnavAgent
+import services.{ArticleAbTestAgent, SubnavAgent}
 import services.eventgraphic.EventGraphicService
 import services.newsletters.NewsletterSignupAgent
 
@@ -20,6 +20,7 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   def environment: Environment
   def subnavAgent: SubnavAgent
+  def articleAbTestAgent: ArticleAbTestAgent
   def newsletterSignupAgent: NewsletterSignupAgent
   def eventGraphicService: EventGraphicService
   implicit def appContext: ApplicationContext
