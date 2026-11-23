@@ -222,10 +222,10 @@ importers:
         version: 8.0.0(tslib@2.6.2)(typescript@5.3.3)
       '@guardian/commercial-core':
         specifier: 34.0.0
-        version: 34.0.0(@guardian/consent-manager@2.3.2(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))(@guardian/libs@32.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))
+        version: 34.0.0(@guardian/consent-manager@0.0.0-canary-20261120091528(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))(@guardian/libs@32.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))
       '@guardian/consent-manager':
-        specifier: 2.3.2
-        version: 2.3.2(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)
+        specifier: 0.0.0-canary-20261120091528
+        version: 0.0.0-canary-20261120091528(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)
       '@guardian/core-web-vitals':
         specifier: 6.0.0
         version: 6.0.0(@guardian/libs@32.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))(tslib@2.6.2)(typescript@5.3.3)(web-vitals@3.5.1)
@@ -1462,8 +1462,8 @@ packages:
       '@guardian/consent-manager': ^1.0.0
       '@guardian/libs': ^32.0.0
 
-  '@guardian/consent-manager@2.3.2':
-    resolution: {integrity: sha512-WS5ylmUui0TCC8R4dCBrUgkD+yv8KA9aLdlGwxtGLjuq4gMFjZ00qYOo6ujOqVoAwefssPULCOWhMJT1cBF5qA==}
+  '@guardian/consent-manager@0.0.0-canary-20261120091528':
+    resolution: {integrity: sha512-V6DsELzoqzbKOSJkEsuJf8uEjPQb4nL5dCIGU9HC4LbcpF0oI5xeEZaBVhxBG1bglht+jgAZWcvMFxx75EGxbA==}
     peerDependencies:
       '@guardian/ophan-tracker-js': ^2.2.10
       tslib: ^2.8.1
@@ -6145,12 +6145,12 @@ snapshots:
     optionalDependencies:
       typescript: 5.3.3
 
-  '@guardian/commercial-core@34.0.0(@guardian/consent-manager@2.3.2(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))(@guardian/libs@32.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))':
+  '@guardian/commercial-core@34.0.0(@guardian/consent-manager@0.0.0-canary-20261120091528(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))(@guardian/libs@32.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3))':
     dependencies:
-      '@guardian/consent-manager': 2.3.2(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)
+      '@guardian/consent-manager': 0.0.0-canary-20261120091528(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)
       '@guardian/libs': 32.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)
 
-  '@guardian/consent-manager@2.3.2(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)':
+  '@guardian/consent-manager@0.0.0-canary-20261120091528(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)':
     dependencies:
       '@guardian/libs': 33.0.0(@guardian/ophan-tracker-js@2.8.3)(tslib@2.6.2)(typescript@5.3.3)
       '@guardian/ophan-tracker-js': 2.8.3
