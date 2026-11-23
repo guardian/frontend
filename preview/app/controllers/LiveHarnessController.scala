@@ -49,6 +49,7 @@ class LiveHarnessController(
       remoteRenderer = renderingService,
       subnavAgent = subnavAgent,
       articleAbTestAgent = articleAbTestAgent,
+      newsletterService = newsletterService,
     )
 
   def renderLiveHarness(path: String): Action[JsValue] = Action.async(

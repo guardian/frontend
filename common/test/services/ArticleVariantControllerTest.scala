@@ -60,6 +60,21 @@ abstract class ArticleVariantControllerTest
   private val variantPath = "p/variant"
   private val variantCanonicalPath = "lifeandstyle/2026/nov/23/variant"
   private val defaults = new ApiQueryDefaults {}
+  private val promotedNewsletter = NewsletterData(
+    identityName = "variant-newsletter",
+    name = "Variant newsletter",
+    theme = "features",
+    description = "Variant description",
+    frequency = "Weekly",
+    listId = 1234,
+    group = "Features",
+    successDescription = "You're subscribed!",
+    regionFocus = None,
+    illustrationCard = None,
+    illustrationSquare = None,
+    exampleUrl = None,
+    category = "article-based",
+  )
 
   private def response(id: String, title: String, contentType: String): ItemResponse = ItemResponse(
     status = "ok",
@@ -198,6 +213,26 @@ abstract class ArticleVariantControllerTest
       captured.getAllValues.asScala.map(_.toString).toSeq shouldBe queries
     }
 
+    def verifyNewsletterLookup(expectedId: String): Unit = {
+      val captured = ArgumentCaptor.forClass(classOf[ArticlePage])
+      verify(newsletters).getNewsletterForArticle(captured.capture())
+      captured.getValue.metadata.id shouldBe expectedId
+      captured.getValue.article.content.fields.body shouldBe "<p>Variant B</p>"
+    }
+
+    def renderedNewsletter: Option[NewsletterData] = {
+      val captured = ArgumentCaptor.forClass(classOf[Option[NewsletterData]])
+      verify(renderer).getArticle(
+        any[WSClient],
+        any[BlocksOn[PageWithStoryPackage]],
+        any[PageType],
+        captured.capture(),
+        any[Boolean],
+        any[Option[CustomSubnav]],
+      )(any[RequestHeader])
+      captured.getValue
+    }
+
     def renderedArticle: BlocksOn[PageWithStoryPackage] = {
       val captured = ArgumentCaptor.forClass(classOf[BlocksOn[PageWithStoryPackage]])
       verify(renderer).getArticle(
@@ -250,7 +285,8 @@ abstract class ArticleVariantControllerTest
       content.metadata.contentType shouldBe Some(
         if (variantType == "article") model.DotcomContentType.Article else model.DotcomContentType.Interactive,
       )
-      verifyNoInteractions(f.newsletters)
+      if (variantType == "article") f.verifyNewsletterLookup(variantCanonicalPath)
+      else verifyNoInteractions(f.newsletters)
     }
 
     it should s"apply only the $variantType preview modifier after identity masking" in withEditorialTests {
@@ -285,7 +321,9 @@ abstract class ArticleVariantControllerTest
       (json \ "contentType").as[String].toLowerCase shouldBe variantType
       (json \ "promotedNewsletter").toOption shouldBe None
       f.verifyLookups(variantPath -> true)
-      verifyNoInteractions(f.renderer, f.newsletters)
+      verifyNoInteractions(f.renderer)
+      if (variantType == "article") f.verifyNewsletterLookup(variantCanonicalPath)
+      else verifyNoInteractions(f.newsletters)
     }
   }
 
@@ -339,6 +377,31 @@ abstract class ArticleVariantControllerTest
   Seq("?dcr=false", "?dcr=apps", ".json?dcr=apps", "?format=email").foreach { suffix =>
     it should s"exclude unsupported variant request format '$suffix'" in {
       ArticleVariantRenderer.supportsRequest(request(suffix = suffix)) shouldBe false
+    }
+  }
+
+  Seq(None, Some(promotedNewsletter)).foreach { newsletter =>
+    it should s"pass the variant's promoted newsletter to HTML rendering: ${newsletter.isDefined}" in withEditorialTests {
+      val f = new Fixture(response(variantCanonicalPath, "Variant B", "article"))
+      when(f.newsletters.getNewsletterForArticle(any[ArticlePage])).thenReturn(newsletter)
+      status(f.run()) shouldBe OK
+      f.verifyNewsletterLookup(variantCanonicalPath)
+      f.renderedNewsletter shouldBe newsletter
+      f.renderedArticle.page.metadata.id shouldBe originalPath
+    }
+
+    it should s"serialize the variant's promoted newsletter in JSON: ${newsletter.isDefined}" in withEditorialTests {
+      val f = new Fixture(response(variantCanonicalPath, "Variant B", "article"))
+      when(f.newsletters.getNewsletterForArticle(any[ArticlePage])).thenReturn(newsletter)
+      val result = f.run(request(suffix = ".json?dcr"))
+      status(result) shouldBe OK
+      val json = await(result).body match {
+        case HttpEntity.Strict(data, _) => Json.parse(data.utf8String)
+        case _                          => fail("Expected a strict JSON response")
+      }
+      (json \ "promotedNewsletter").asOpt[NewsletterData] shouldBe newsletter
+      (json \ "pageId").as[String] shouldBe originalPath
+      f.verifyNewsletterLookup(variantCanonicalPath)
     }
   }
 }

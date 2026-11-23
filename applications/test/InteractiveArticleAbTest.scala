@@ -31,6 +31,7 @@ class InteractiveArticleAbTest extends ArticleVariantControllerTest {
       remoteRenderer = renderer,
       subnavAgent = new MockSubnavAgent(),
       articleAbTestAgent = agent,
+      newsletterService = newsletters,
     )
     controller.mapAndRender(path)(interactiveModifier, articleModifier)
   }

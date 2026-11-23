@@ -29,6 +29,7 @@ class ArticleVariantRenderer(
     ws: WSClient,
     remoteRenderer: DotcomRenderingService,
     subnavAgent: SubnavAgent,
+    newsletterService: NewsletterService,
 )(implicit context: ApplicationContext, ec: ExecutionContext)
     extends GuLogging {
 
@@ -50,11 +51,11 @@ class ArticleVariantRenderer(
         case Some(apiContent)
             if apiContent.isArticle && !apiContent.isLiveBlog && !apiContent.isHosted && !apiContent.isSudoku =>
           val article = Article.make(Content.make(apiContent))
-          val page = ArticlePage(
-            article.copy(content = maskContent(article.content, originalPath)),
-            StoryPackages(apiContent.id, response),
-          )
-          renderArticle(articleModifier(BlocksOn(page, blocks))).map(Some(_))
+          val variantPage = ArticlePage(article, StoryPackages(apiContent.id, response))
+          // Legacy signup-page matching needs B's ID, not the public identity of A.
+          val newsletter = newsletterService.getNewsletterForArticle(variantPage)
+          val page = variantPage.copy(article = article.copy(content = maskContent(article.content, originalPath)))
+          renderArticle(articleModifier(BlocksOn(page, blocks)), newsletter).map(Some(_))
         case _ =>
           log.warn(s"Unsupported or missing article A/B variant for $originalPath; rendering the original content")
           Future.successful(None)
@@ -74,19 +75,20 @@ class ArticleVariantRenderer(
     )
   }
 
-  private def renderArticle(pageBlocks: BlocksOn[ArticlePage])(implicit request: RequestHeader): Future[Result] = {
+  private def renderArticle(pageBlocks: BlocksOn[ArticlePage], newsletter: Option[NewsletterData])(implicit
+      request: RequestHeader,
+  ): Future[Result] = {
     val page = pageBlocks.page
     val pageType = PageType(page, request, context)
-    // Promoted newsletters are intentionally omitted for variants for now.
     val subnav = subnavAgent.getSubnavForContent(page.article.content)
     request.getRequestFormat match {
       case JsonFormat =>
-        val data = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, None, subnav)
+        val data = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, newsletter, subnav)
         Future.successful(common.renderJson(DotcomRenderingDataModel.toJson(data), page).as("application/json"))
       case AmpFormat if page.article.content.shouldAmplify =>
-        remoteRenderer.getAMPArticle(ws, pageBlocks, pageType, None)
+        remoteRenderer.getAMPArticle(ws, pageBlocks, pageType, newsletter)
       case _ =>
-        remoteRenderer.getArticle(ws, pageBlocks, pageType, None, customSubnav = subnav)
+        remoteRenderer.getArticle(ws, pageBlocks, pageType, newsletter, customSubnav = subnav)
     }
   }
 

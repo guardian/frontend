@@ -46,6 +46,9 @@ class DCRFake() extends renderers.DotcomRenderingService {
     remoteRenderer = new DCRFake(),
     subnavAgent = new MockSubnavAgent(),
     articleAbTestAgent = new MockArticleAbTestAgent(),
+    newsletterService = new services.NewsletterService(
+      new services.newsletters.NewsletterSignupAgent(new services.newsletters.NewsletterApi(wsClient)),
+    ),
   )
 
   val getWebWorkerPath = PrivateMethod[String](Symbol("getWebWorkerPath"))

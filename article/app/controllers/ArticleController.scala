@@ -39,7 +39,7 @@ class ArticleController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  private val variantRenderer = new ArticleVariantRenderer(ws, remoteRenderer, subnavAgent)
+  private val variantRenderer = new ArticleVariantRenderer(ws, remoteRenderer, subnavAgent, newsletterService)
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 

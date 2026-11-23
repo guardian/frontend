@@ -52,7 +52,10 @@ trait ApplicationsControllers {
   lazy val galleryController = wire[GalleryController]
   lazy val imageContentController = wire[ImageContentController]
   lazy val mediaController = wire[MediaController]
-  lazy val interactiveController = wire[InteractiveController]
+  lazy val interactiveController = {
+    val newsletterService = wire[services.NewsletterService]
+    wire[InteractiveController]
+  }
   lazy val shortUrlsController = wire[ShortUrlsController]
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]

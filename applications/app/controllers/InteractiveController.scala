@@ -26,6 +26,7 @@ import services.{
   CAPILookup,
   SubnavAgent,
   USElection2020AmpPages,
+  NewsletterService,
 }
 
 import scala.concurrent.Future
@@ -38,6 +39,7 @@ class InteractiveController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     subnavAgent: SubnavAgent,
     articleAbTestAgent: ArticleAbTestAgent,
+    newsletterService: NewsletterService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -45,7 +47,7 @@ class InteractiveController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  private val variantRenderer = new ArticleVariantRenderer(wsClient, remoteRenderer, subnavAgent)
+  private val variantRenderer = new ArticleVariantRenderer(wsClient, remoteRenderer, subnavAgent, newsletterService)
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
