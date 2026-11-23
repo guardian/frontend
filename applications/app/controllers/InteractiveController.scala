@@ -3,7 +3,6 @@ package controllers
 import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse}
 import common._
-import conf.Configuration
 import conf.Configuration.interactive.cdnPath
 import conf.switches.Switches
 import conf.switches.Switches.{EditorialABTests, EditorialArticleABTests}
@@ -20,7 +19,14 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{DotcomRendering, InteractivePicker, PressedInteractive}
-import services.{ArticleAbTestAgent, CAPIChannel, CAPILookup, SubnavAgent, USElection2020AmpPages}
+import services.{
+  ArticleAbTestAgent,
+  ArticleVariantRenderer,
+  CAPIChannel,
+  CAPILookup,
+  SubnavAgent,
+  USElection2020AmpPages,
+}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -39,6 +45,7 @@ class InteractiveController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
+  private val variantRenderer = new ArticleVariantRenderer(wsClient, remoteRenderer, subnavAgent)
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -77,7 +84,7 @@ class InteractiveController(
   private def determineArticleABTestPath(path: String)(implicit request: RequestHeader): String = {
     val isArticleABTestingEnabled = EditorialABTests.isSwitchedOn && EditorialArticleABTests.isSwitchedOn
     val isWebUserInVariantBBucket =
-      isArticleABTestingEnabled && !request.isApps && ABTests.isUserInTestGroup(
+      isArticleABTestingEnabled && ArticleVariantRenderer.supportsRequest && ABTests.isUserInTestGroup(
         "fronts-and-curation-editorial-test",
         "b",
       )
@@ -112,24 +119,6 @@ class InteractiveController(
       response,
       skipCanonicalRedirect = skipCanonicalRedirect,
     ).fold(Future.successful, page => render(BlocksOn(page, content.flatMap(_.blocks).getOrElse(Blocks()))))
-  }
-
-  private def maskPathIfVariant(path: String, originalRequestPath: String)(
-      pageBlocks: BlocksOn[InteractivePage],
-  ): BlocksOn[InteractivePage] = {
-    if (path == originalRequestPath) pageBlocks
-    else {
-      val maskedUrl = s"/$originalRequestPath"
-      val interactive = pageBlocks.page.interactive
-      val maskedMetadata = interactive.content.metadata.copy(
-        id = originalRequestPath,
-        url = maskedUrl,
-        webUrl = s"${Configuration.site.host}$maskedUrl",
-        canonicalUrl = Some(s"${Configuration.site.host}$maskedUrl"),
-      )
-      val maskedInteractive = interactive.copy(content = interactive.content.copy(metadata = maskedMetadata))
-      pageBlocks.copy(page = pageBlocks.page.copy(interactive = maskedInteractive))
-    }
   }
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
@@ -175,37 +164,42 @@ class InteractiveController(
 
   def mapAndRender(path: String)(
       modifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
+      articleModifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
   )(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
-    val pathToRender = determineArticleABTestPath(path)
-    val isVariantArticle = path != pathToRender
-    val channelId = if (isVariantArticle) Some(CAPIChannel.Variant) else None
 
     def render(pageBlocks: BlocksOn[InteractivePage]): Future[Result] = {
       val page = pageBlocks.page
-      val tier = InteractivePicker.getRenderingTier(pathToRender)
+      val tier = InteractivePicker.getRenderingTier(path)
       (requestFormat, tier) match {
         case (AppsFormat, DotcomRendering)                                          => renderApps(pageBlocks)
         case (AmpFormat, DotcomRendering) if page.interactive.content.shouldAmplify => renderAmp(pageBlocks)
         case (HtmlFormat | AmpFormat, DotcomRendering)                              => renderHtml(pageBlocks)
         case (JsonFormat, DotcomRendering)                                          => renderJson(pageBlocks)
-        case (HtmlFormat, PressedInteractive)                                       => servePressedPage(pathToRender)
+        case (HtmlFormat, PressedInteractive)                                       => servePressedPage(path)
         case _                                                                      => renderNonDCR(page)
       }
     }
 
+    def renderOriginal(): Future[Result] =
+      lookupItemResponse(path).flatMap(response => modelAndRender(response)(pageBlocks => render(modifier(pageBlocks))))
+
     if (isUSElectionAMP) {
       renderUSElectionAMPPage(path)
     } else {
-      val res = for {
-        resp <- lookupItemResponse(pathToRender, channelId)
-        result <- modelAndRender(resp, skipCanonicalRedirect = isVariantArticle) { pageBlocks =>
-          render(modifier(maskPathIfVariant(pathToRender, path)(pageBlocks)))
+      val pathToRender = determineArticleABTestPath(path)
+      val result =
+        if (pathToRender == path) renderOriginal()
+        else {
+          lookupItemResponse(pathToRender, Some(CAPIChannel.Variant))
+            .flatMap(response => variantRenderer.render(response, path)(articleModifier, modifier))
+            .flatMap {
+              case Some(rendered) => Future.successful(rendered)
+              case None           => renderOriginal()
+            }
         }
-      } yield result
-
-      res.recover(convertApiExceptionsWithoutEither)
+      result.recover(convertApiExceptionsWithoutEither)
     }
   }
 

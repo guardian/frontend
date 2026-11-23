@@ -62,8 +62,16 @@ class LiveHarnessController(
           response.content
             .map(_.`type`)
             .collect {
-              case ContentType.Article     => articleController.mapAndRender(path, GenericFallback)(inject(atoms))
-              case ContentType.Interactive => interactiveController.mapAndRender(path)(inject(atoms))
+              case ContentType.Article =>
+                articleController.mapAndRender(path, GenericFallback)(
+                  modifier = inject[model.ArticlePage](atoms),
+                  interactiveModifier = inject[model.InteractivePage](atoms),
+                )
+              case ContentType.Interactive =>
+                interactiveController.mapAndRender(path)(
+                  modifier = inject[model.InteractivePage](atoms),
+                  articleModifier = inject[model.ArticlePage](atoms),
+                )
             }
             .getOrElse(Future(BadRequest))
         }
