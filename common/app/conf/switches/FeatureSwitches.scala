@@ -657,7 +657,7 @@ trait FeatureSwitches {
     group = SwitchGroup.Feature,
     name = "sign-in-gate",
     description = "Enable sign-in gate on articles",
-    owners = Seq(Owner.withEmail("value.dev@guardian.co.uk"), Owner.withEmail("growth.dev@guardian.co.uk")),
+    owners = Seq(Owner.withEmail("value.dev@guardian.co.uk"), Owner.withEmail("martech.dev@guardian.co.uk")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
