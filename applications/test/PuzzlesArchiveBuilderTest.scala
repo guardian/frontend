@@ -80,7 +80,7 @@ import play.api.libs.json.Json
   }
 
   it should "keep puzzles without an archive out of the archive paths" in {
-    PuzzlesArchiveBuilder.archivePaths(layout, includeTrivia = true) should not contain
+    PuzzlesArchiveBuilder.archivePaths(layout) should not contain
       "/puzzles-and-games/word-games/wordiply/archive"
     PuzzlesArchiveBuilder.categoryArchivePath("word-games") should be("/puzzles-and-games/word-games/archive")
   }

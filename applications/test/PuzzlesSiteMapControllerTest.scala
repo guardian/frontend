@@ -82,13 +82,12 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
       "https://www.theguardian.com/puzzles-and-games/crosswords/archive",
       "https://www.theguardian.com/puzzles-and-games/logic-puzzles/archive",
       "https://www.theguardian.com/puzzles-and-games/word-games/archive",
+      "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive",
     )
-    (xml \ "url" \ "loc").map(_.text) should not contain
-      "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive"
     verifyNoInteractions(job)
   }
 
-  it should "list each puzzle's own archive page, and trivia only when hub v2 is enabled" in {
+  it should "list each puzzle's own archive regardless of v2 participation" in {
     def locs(participation: String): Seq[String] =
       (XML.loadString(contentAsString(controller.renderPuzzlesSiteMap()(request(participation)))) \ "url" \ "loc")
         .map(_.text)
@@ -99,13 +98,8 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     )
     val trivia = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/film-reveal/archive"
 
-    val triviaCategory = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/archive"
-
-    locs("") should contain allElementsOf crosswordPuzzles
-    locs("") should not contain triviaCategory
-    locs("puzzles-new-hub-v2:variant") should contain(triviaCategory)
-    locs("") should not contain trivia
-    locs("puzzles-new-hub-v2:variant") should contain(trivia)
+    locs("") should contain allElementsOf (crosswordPuzzles :+ trivia)
+    locs("puzzles-new-hub-v2:control") shouldBe locs("")
   }
 
   it should "support cache revalidation where the hub is available" in {

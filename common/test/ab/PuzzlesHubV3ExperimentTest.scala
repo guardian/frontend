@@ -14,19 +14,19 @@ import play.api.test.FakeRequest
 
   Seq(
     ("", "INT", false),
-    ("puzzles-new-hub-v3:variant", "INT", false),
+    ("puzzles-new-hub-v3:variant", "INT", true),
     ("puzzles-new-hub-v2:variant", "INT", false),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "UK", true),
-    ("puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant", "INT", false),
+    ("puzzles-new-hub-v3:variant", "UK", true),
+    ("puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant", "INT", true),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:control", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown", "INT", false),
     ("another-test:variant", "INT", false),
     ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "INT", true),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "EUR", true),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "AU", true),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "US", true),
+    ("puzzles-new-hub-v3:variant", "EUR", true),
+    ("puzzles-new-hub-v3:variant", "AU", true),
+    ("puzzles-new-hub-v3:variant", "US", true),
   ).foreach { case (participations, edition, expected) =>
-    "PuzzlesHubV3Experiment" should s"require a hub edition and the v2 and v3 variants outside development for '$participations' in $edition" in {
+    "PuzzlesHubV3Experiment" should s"require a hub edition and the v3 variant outside development for '$participations' in $edition" in {
       implicit val request: RequestHeader = requestWithParticipation(participations, edition)
       PuzzlesHubV3Experiment.isEnabled(isDevelopment = false) shouldBe expected
       PuzzlesHubV3Experiment.isEnabled shouldBe expected
