@@ -17,13 +17,13 @@ import scala.concurrent.{ExecutionContext, Future}
 object ArticleVariantRenderer {
   def supportsRequest(implicit request: RequestHeader): Boolean =
     !request.isApps && !request.forceDCROff && (request.getRequestFormat match {
-      case HtmlFormat | AmpFormat | JsonFormat => true
-      case _                                   => false
+      case HtmlFormat | JsonFormat => true
+      case _                       => false
     })
 }
 
 /** Renders an already-selected variant using its own content type but the original page's identity. No lookups,
-  * bucketing or pressed-page redirects take place here. None asks the caller to render A instead.
+  * bucketing or pressed-page redirects take place here. If no case is matched, we fall back to the render A instead.
   */
 class ArticleVariantRenderer(
     ws: WSClient,
@@ -85,8 +85,6 @@ class ArticleVariantRenderer(
       case JsonFormat =>
         val data = DotcomRenderingDataModel.forArticle(pageBlocks, request, pageType, newsletter, subnav)
         Future.successful(common.renderJson(DotcomRenderingDataModel.toJson(data), page).as("application/json"))
-      case AmpFormat if page.article.content.shouldAmplify =>
-        remoteRenderer.getAMPArticle(ws, pageBlocks, pageType, newsletter)
       case _ =>
         remoteRenderer.getArticle(ws, pageBlocks, pageType, newsletter, customSubnav = subnav)
     }
@@ -102,8 +100,6 @@ class ArticleVariantRenderer(
       case JsonFormat =>
         val data = DotcomRenderingDataModel.forInteractive(pageBlocks, request, pageType, subnav)
         Future.successful(common.renderJson(DotcomRenderingDataModel.toJson(data), page).as("application/json"))
-      case AmpFormat if page.interactive.content.shouldAmplify =>
-        remoteRenderer.getAMPInteractive(ws, pageBlocks, pageType)
       case _ =>
         remoteRenderer.getInteractive(ws, pageBlocks, pageType, subnav)
     }
