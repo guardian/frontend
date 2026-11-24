@@ -34,7 +34,7 @@ class MiniNavContentPressingTest extends AnyFlatSpec with Matchers {
     header = CustomSubnavHeader("Subnav", Some("/test-subnav"), "Subnav copy"),
     format = CustomSubnavFormat.Large,
     links = Nil,
-    pages = Nil,
+    pages = None,
     images = None,
     palette = None,
     lastUpdated = new DateTime(0L),
