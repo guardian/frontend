@@ -4,12 +4,15 @@ import commercial.campaigns.ShortCampaignCodes
 import common._
 import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
-import services.RedirectService
+import services.{RedirectService, S3Archive}
+
 import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
-
 import model.{CacheTime, Cached}
 import org.apache.http.HttpStatus
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import pagepresser.SimpleHtmlCleaner
 import play.api.libs.ws.WSClient
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
@@ -166,9 +169,19 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
     case PermanentRedirect(_, location) if !linksToItself(path, location) =>
       val locationWithCampaign = retainShortUrlCampaign(path, location)
       WithoutRevalidationResult(Redirect(LinkTo(locationWithCampaign), redirectHttpStatus))
-    case ArchiveRedirect(_, archivePath) =>
-      // http://wiki.nginx.org/X-accel
-      WithoutRevalidationResult(Ok.withHeaders("X-Accel-Redirect" -> s"/s3-archive/$archivePath"))
+    case ArchiveRedirect(_, archivePath) => {
+      val response = S3Archive.get(archivePath) match {
+        case Some(content) =>
+          val parsedDoc = Jsoup.parse(content)
+          val doc: Document = SimpleHtmlCleaner.clean(parsedDoc, convertToHttps = true)
+          logDebugWithRequestId(s"Archive $redirectHttpStatus, redirect to $archivePath")
+          Ok(doc.toString).as("text/html")
+        case None =>
+          logDebugWithRequestId(s"Archive 404, not found at $archivePath")
+          NotFound(views.html.notFound())
+      }
+      WithoutRevalidationResult(response)
+    }
   }
 
 }

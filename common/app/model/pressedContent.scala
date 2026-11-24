@@ -4,7 +4,7 @@ import com.gu.commercial.branding.Branding
 import com.gu.facia.api.utils.BoostLevel
 import com.gu.facia.api.{models => fapi}
 import common.Edition
-import model.content.MediaAtom
+import model.content.{MediaAtom, MultimediaSlideshowAtom}
 import model.{ContentFormat, Pillar}
 import play.api.libs.json.JsObject
 import services.eventgraphic.{EventGraphicSource, GraphicKind}
@@ -116,6 +116,7 @@ final case class CuratedContent(
     supportingContent: List[PressedContent],
     cardStyle: CardStyle,
     mediaAtom: Option[MediaAtom],
+    multimediaSlideshow: Option[MultimediaSlideshowAtom],
 ) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -164,6 +165,7 @@ object CuratedContent {
           case _ => None
         }
       },
+      multimediaSlideshow = content.multimediaSlideshow.map(MultimediaSlideshowAtom.fromFacia),
     )
   }
 }

@@ -31,6 +31,8 @@ case class PuzzlesArchivePuzzle(
     puzzleType: String,
     slug: Option[String],
     set: String,
+    /** Path of this puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
+    path: String,
 )
 
 object PuzzlesArchivePuzzle {
@@ -44,6 +46,8 @@ case class PuzzlesArchiveItem(
     setterName: Option[String],
     url: String,
     gameStatus: Option[String] = None,
+    isWithinFreeWindow: Option[Boolean] = None,
+    hasPremiumEntitlement: Option[Boolean] = None,
 )
 
 object PuzzlesArchiveItem {
@@ -86,7 +90,7 @@ object DotcomPuzzlesPageRenderingDataModel {
       webTitle = page.metadata.webTitle,
       description = page.metadata.description,
       config = DotcomRenderingConfig(page, request, isPreview = false),
-      nav = Nav(page, edition, request, customSubnav = None),
+      nav = Nav(page, edition, customSubnav = None),
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
       commercialProperties = pageCommercialProperties(page) ++ layout.commercialProperties,
       isAdFreeUser = views.support.Commercial.isAdFree(request),

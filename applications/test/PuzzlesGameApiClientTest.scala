@@ -52,6 +52,16 @@ class PuzzlesGameApiClientTest extends AnyFlatSpec with Matchers with MockitoSug
     Await.result(client.get("SUDOKU_EASY", date), 5.seconds) shouldBe None
   }
 
+  it should "forward the reader's Authorization header alongside the server API key" in {
+    val (client, request, _) = fixture()
+    Await.result(client.get("SUDOKU_EASY", date, Some("Bearer reader-token")), 5.seconds).get
+    verify(request).withHttpHeaders(
+      "X-Api-Key" -> Configuration.puzzlesApi.apiKey,
+      "Accept" -> "application/json",
+      "Authorization" -> "Bearer reader-token",
+    )
+  }
+
   it should "reject upstream errors and malformed or mismatched responses" in {
     val (unavailable, _, _) = fixture(502)
     intercept[RuntimeException](Await.result(unavailable.get("SUDOKU_EASY", date), 5.seconds))

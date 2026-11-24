@@ -115,6 +115,8 @@ case class DotcomRenderingDataModel(
     crossword: Option[CrosswordData],
     moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
     puzzlesSupporting: Option[PuzzleGameSupporting],
+    puzzleArchivePath: Option[String],
+    crosswordRequiresSubscription: Option[Boolean],
 )
 
 object DotcomRenderingDataModel {
@@ -197,6 +199,8 @@ object DotcomRenderingDataModel {
         "crossword" -> model.crossword,
         "moreFromPuzzlesAndGames" -> model.moreFromPuzzlesAndGames,
         "puzzlesSupporting" -> model.puzzlesSupporting,
+        "puzzleArchivePath" -> model.puzzleArchivePath,
+        "crosswordRequiresSubscription" -> model.crosswordRequiresSubscription,
       )
 
       ElementsEnhancer.enhanceDcrObject(obj)
@@ -358,6 +362,8 @@ object DotcomRenderingDataModel {
       customSubnav: Option[CustomSubnav],
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
       puzzlesSupporting: Option[PuzzleGameSupporting] = None,
+      puzzleArchivePath: Option[String] = None,
+      crosswordRequiresSubscription: Option[Boolean] = None,
   ): DotcomRenderingDataModel = {
     val linkedData = LinkedData.forArticle(
       article = crosswordPage.item,
@@ -376,6 +382,8 @@ object DotcomRenderingDataModel {
       customSubnav = customSubnav,
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
       puzzlesSupporting = puzzlesSupporting,
+      puzzleArchivePath = puzzleArchivePath,
+      crosswordRequiresSubscription = crosswordRequiresSubscription,
     )
   }
 
@@ -478,6 +486,8 @@ object DotcomRenderingDataModel {
       customSubnav: Option[CustomSubnav],
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]] = None,
       puzzlesSupporting: Option[PuzzleGameSupporting] = None,
+      puzzleArchivePath: Option[String] = None,
+      crosswordRequiresSubscription: Option[Boolean] = None,
   ): DotcomRenderingDataModel = {
 
     val edition = Edition.edition(request)
@@ -493,7 +503,7 @@ object DotcomRenderingDataModel {
 
     val shouldAddAffiliateLinks =
       DotcomRenderingUtils.shouldAddAffiliateLinks(content, bodyBlocks ++ mainBlock.toSeq ++ pinnedPost.toSeq)
-    val eligibleForLivePricing = AffiliateProductLivePricing.isEnabledForPage(request.uri)
+    val eligibleForLivePricing = AffiliateProductLivePricing.isEnabledForPage(content.fields.livePricingEnabled)
 
     val contentDateTimes: ArticleDateTimes = ArticleDateTimes(
       webPublicationDate = content.trail.webPublicationDate,
@@ -673,7 +683,7 @@ object DotcomRenderingDataModel {
       matchHeaderUrl = matchData.flatMap(_.matchHeaderUrl),
       matchStatsUrl = matchData.flatMap(_.matchStatsUrl),
       matchType = matchData.map(_.matchType),
-      nav = Nav(page, edition, request, customSubnav = customSubnav),
+      nav = Nav(page, edition, customSubnav = customSubnav),
       openGraphData = page.getOpenGraphProperties,
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(Edition(request))),
       pageId = content.metadata.id,
@@ -712,6 +722,8 @@ object DotcomRenderingDataModel {
       crossword = crossword,
       moreFromPuzzlesAndGames = moreFromPuzzlesAndGames,
       puzzlesSupporting = puzzlesSupporting,
+      puzzleArchivePath = puzzleArchivePath,
+      crosswordRequiresSubscription = crosswordRequiresSubscription,
     )
   }
 }

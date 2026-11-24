@@ -14,10 +14,8 @@ jobs:
     steps:
         - uses: actions/checkout@v7
 
-        - run: corepack enable
-        - uses: actions/setup-node@v7
+        - uses: pnpm/setup@v3
           with:
-            node-version-file: '.nvmrc'
-            cache: yarn
+            cache: true
 
         - run: make validate

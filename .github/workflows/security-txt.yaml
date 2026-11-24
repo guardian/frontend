@@ -16,6 +16,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v.7.0.1
 
+      - uses: pnpm/setup@v3
+        with:
+          cache: true
+
       - name: Update Expires field in security.txt
         run: node tools/security-txt.js
 

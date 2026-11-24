@@ -41,6 +41,8 @@ object FaciaContentConvert {
         .toMap,
       atomId = None,
       mediaAtom = None,
+      multimediaSlideshowAtomId = None,
+      multimediaSlideshow = None,
       tests = None,
     )
 

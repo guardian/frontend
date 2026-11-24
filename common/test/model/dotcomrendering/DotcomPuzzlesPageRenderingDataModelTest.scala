@@ -1,6 +1,7 @@
 package model.dotcomrendering
 
 import ab.ABTests
+import conf.Configuration
 import org.scalatest.DoNotDiscover
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -29,7 +30,8 @@ import staticpages.StaticPages
     implicit val request: RequestHeader = FakeRequest("GET", "/puzzles-and-games")
       .withHeaders(
         "Host" -> "www.theguardian.com",
-        "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v1:variant,another-test:control",
+        "X-Gu-Edition" -> "INT",
+        "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v2:variant,another-test:control",
       )
     ABTests.decorateRequest("X-GU-Server-AB-Tests")
   }
@@ -52,12 +54,12 @@ import staticpages.StaticPages
     (json \ "nav").toOption should not be empty
     (json \ "pageFooter").toOption should not be empty
     (json \ "commercialProperties").toOption should not be empty
-    (json \ "canonicalUrl").as[String] should endWith("/puzzles-and-games")
+    (json \ "canonicalUrl").as[String] should be(s"${Configuration.site.host}/puzzles-and-games")
     (json \ "layout").as[PuzzlesLayout] should be(layout)
     val puzzlesNav = (json \ "nav" \ "otherLinks").as[Seq[play.api.libs.json.JsObject]]
     puzzlesNav
       .find(link => (link \ "url").as[String] == "/puzzles-and-games")
-      .map(link => (link \ "title").as[String]) shouldBe None
+      .map(link => (link \ "title").as[String]) shouldBe Some("Puzzles & games")
     (json \ "nav" \ "subNavSections" \ "parent" \ "title").as[String] should be("Puzzles & games")
   }
 
@@ -72,7 +74,7 @@ import staticpages.StaticPages
       .as[Map[String, String]]
 
     participations should contain theSameElementsAs Map(
-      "puzzles-new-hub-v1" -> "variant",
+      "puzzles-new-hub-v2" -> "variant",
       "another-test" -> "control",
     )
   }
@@ -88,6 +90,30 @@ import staticpages.StaticPages
 
     page.metadata.webTitle should be("Crosswords archive - puzzles & games | The Guardian")
     page.metadata.description should contain(description)
+  }
+
+  it should "use single-slash canonical URLs for category archives, puzzle archives and dated game pages" in {
+    val archivePaths = Seq(
+      "/puzzles-and-games/logic-puzzles/archive",
+      "/puzzles-and-games/logic-puzzles/sudoku-easy/archive",
+    )
+    val host = Configuration.site.host
+
+    archivePaths.foreach { path =>
+      val page = StaticPages.dcrSimplePuzzlesArchivePage(path, "Sudoku", "Play Sudoku")
+      val model = DotcomPuzzlesPageRenderingDataModel(page, layout, FakeRequest("GET", path))
+      model.canonicalUrl should be(s"$host$path")
+    }
+
+    val gamePath = "/puzzles-and-games/logic-puzzles/sudoku-easy/2026-11-19"
+    val game = DotcomPuzzlePageRenderingDataModel(
+      StaticPages.dcrSimplePuzzlePage(gamePath, "Sudoku easy"),
+      "sudoku-easy",
+      "Sudoku easy",
+      PuzzlePageInstance("Sudoku easy"),
+      FakeRequest("GET", gamePath),
+    )
+    game.canonicalUrl should be(s"$host$gamePath")
   }
 
   it should "send hub sponsorship as commercial properties for sponsored editions only" in {
@@ -121,7 +147,14 @@ import staticpages.StaticPages
           category = "crosswords",
           title = "Crosswords",
           description = "",
-          selectedPuzzle = PuzzlesArchivePuzzle("quick", "Quick", "CROSSWORD_QUICK", None, "quick"),
+          selectedPuzzle = PuzzlesArchivePuzzle(
+            "quick",
+            "Quick",
+            "CROSSWORD_QUICK",
+            None,
+            "quick",
+            "/puzzles-and-games/crosswords/quick/archive",
+          ),
           puzzles = Seq.empty,
           year = 2026,
           month = 10,

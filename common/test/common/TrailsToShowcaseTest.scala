@@ -1351,6 +1351,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
           showMainVideo = false,
           imageSlideshowReplace = false,
           videoReplace = false,
+          multimediaSlideshowReplace = false,
         ),
       ),
       maybeContent = mayBeContent,
@@ -1410,13 +1411,14 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
     )
 
     val displaySettings = PressedDisplaySettings(
-      isBoosted = false,
       boostLevel = Some(BoostLevel.Default),
       isImmersive = Some(false),
       showBoostedHeadline = false,
       showQuotedHeadline = false,
       showLivePlayable = false,
       imageHide = false,
+      showMiniNav = false,
+      miniNavData = None,
     )
 
     CuratedContent(
@@ -1430,6 +1432,7 @@ class TrailsToShowcaseTest extends AnyFlatSpec with Matchers with EitherValues {
       supportingContent = supportingContent.toList,
       cardStyle = CardStyle.make(Editorial),
       mediaAtom = None,
+      multimediaSlideshow = None,
     )
   }
 }

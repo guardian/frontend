@@ -17,15 +17,26 @@ GET        /puzzles-and-games.json                                              
 GET        /puzzles-and-games                                                                                                              controllers.PuzzlesPageController.renderPuzzles()
 GET        /puzzles-and-games/progress                                                                                                     controllers.PuzzlesPageController.puzzlesProgress()
 OPTIONS    /puzzles-and-games/progress                                                                                                     controllers.PuzzlesPageController.puzzlesDataOptions()
+GET        /puzzles-and-games/game/:slug/$date<\d{4}-\d{2}-\d{2}>.json                                                                      controllers.PuzzlesPageController.puzzleGame(slug: String, date: String)
+OPTIONS    /puzzles-and-games/game/:slug/$date<\d{4}-\d{2}-\d{2}>.json                                                                      controllers.PuzzlesPageController.puzzleGameOptions(slug: String, date: String)
+GET        /puzzles-and-games/access/:puzzleId/:date                                                                                       controllers.PuzzlesAccessController.access(puzzleId: String, date: String)
+OPTIONS    /puzzles-and-games/access/:puzzleId/:date                                                                                       controllers.PuzzlesAccessController.options(puzzleId: String, date: String)
 GET        /puzzles-and-games/crosswords/archive                                                                                           controllers.PuzzlesPageController.renderCrosswordsArchive()
+GET        /puzzles-and-games/crosswords/:puzzle/archive                                                                                   controllers.PuzzlesPageController.renderArchiveForPuzzle(category = "crosswords", puzzle: String)
 GET        /puzzles-and-games/word-games/archive                                                                                           controllers.PuzzlesPageController.renderWordGamesArchive()
+GET        /puzzles-and-games/word-games/:puzzle/archive                                                                                   controllers.PuzzlesPageController.renderArchiveForPuzzle(category = "word-games", puzzle: String)
 GET        /puzzles-and-games/logic-puzzles/archive                                                                                        controllers.PuzzlesPageController.renderLogicPuzzlesArchive()
+GET        /puzzles-and-games/logic-puzzles/:puzzle/archive                                                                                controllers.PuzzlesPageController.renderArchiveForPuzzle(category = "logic-puzzles", puzzle: String)
+GET        /puzzles-and-games/trivia-and-quizzes/archive                                                                                   controllers.PuzzlesPageController.renderTriviaAndQuizzesArchive()
+GET        /puzzles-and-games/trivia-and-quizzes/:puzzle/archive                                                                           controllers.PuzzlesPageController.renderArchiveForPuzzle(category = "trivia-and-quizzes", puzzle: String)
 GET        /puzzles-and-games/crosswords/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataForMonth(category = "crosswords", puzzle: String, year: Int, month: Int)
 GET        /puzzles-and-games/word-games/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataForMonth(category = "word-games", puzzle: String, year: Int, month: Int)
 GET        /puzzles-and-games/logic-puzzles/archive-data/:puzzle/:year/:month                                                              controllers.PuzzlesPageController.archiveDataForMonth(category = "logic-puzzles", puzzle: String, year: Int, month: Int)
+GET        /puzzles-and-games/trivia-and-quizzes/archive-data/:puzzle/:year/:month                                                         controllers.PuzzlesPageController.archiveDataForMonth(category = "trivia-and-quizzes", puzzle: String, year: Int, month: Int)
 OPTIONS    /puzzles-and-games/crosswords/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
 OPTIONS    /puzzles-and-games/word-games/archive-data/:puzzle/:year/:month                                                                 controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
 OPTIONS    /puzzles-and-games/logic-puzzles/archive-data/:puzzle/:year/:month                                                              controllers.PuzzlesPageController.archiveDataOptions(puzzle: String, year: Int, month: Int)
+OPTIONS    /puzzles-and-games/trivia-and-quizzes/archive-data/:puzzle/:year/:month                                                         controllers.PuzzlesPageController.triviaArchiveDataOptions(puzzle: String, year: Int, month: Int)
 
 # Crosswords
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
@@ -55,6 +66,14 @@ GET        /puzzles-and-games/word-games/word-wheel                             
 GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>.json                                               controllers.PuzzlesPageController.renderWordiplyJson(date: String)
 GET        /puzzles-and-games/word-games/wordiply/$date<\d{4}-\d{2}-\d{2}>                                                    controllers.PuzzlesPageController.renderWordiply(date: String)
 GET        /puzzles-and-games/word-games/wordiply                                                                             controllers.PuzzlesPageController.redirectWordiplyArchive()
+
+GET        /puzzles-and-games/trivia-and-quizzes/film-reveal/$date<\d{4}-\d{2}-\d{2}>.json                                    controllers.PuzzlesPageController.renderFilmRevealJson(date: String)
+GET        /puzzles-and-games/trivia-and-quizzes/film-reveal/$date<\d{4}-\d{2}-\d{2}>                                         controllers.PuzzlesPageController.renderFilmReveal(date: String)
+GET        /puzzles-and-games/trivia-and-quizzes/film-reveal                                                                  controllers.PuzzlesPageController.redirectFilmRevealArchive()
+
+GET        /puzzles-and-games/trivia-and-quizzes/on-the-ball/$date<\d{4}-\d{2}-\d{2}>.json                                    controllers.PuzzlesPageController.renderOnTheBallJson(date: String)
+GET        /puzzles-and-games/trivia-and-quizzes/on-the-ball/$date<\d{4}-\d{2}-\d{2}>                                         controllers.PuzzlesPageController.renderOnTheBall(date: String)
+GET        /puzzles-and-games/trivia-and-quizzes/on-the-ball                                                                  controllers.PuzzlesPageController.redirectOnTheBallArchive()
 POST       /puzzles-and-games/progress/save                                                                                  controllers.PuzzlesProgressController.save()
 
 # Email paths
@@ -285,6 +304,7 @@ GET            /sitemaps/video.xml                                              
 GET            /sitemaps/thefilter.xml                                                                                           controllers.SiteMapController.renderFilterSiteMapIndex()
 GET            /sitemaps/thefilter-uk.xml                                                                                        controllers.SiteMapController.renderFilterSiteMap(region = "uk")
 GET            /sitemaps/thefilter-us.xml                                                                                        controllers.SiteMapController.renderFilterSiteMap(region = "us")
+GET            /sitemaps/puzzles-and-games.xml                                                                                   controllers.SiteMapController.renderPuzzlesSiteMap()
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()

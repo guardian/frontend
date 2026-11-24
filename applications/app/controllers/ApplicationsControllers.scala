@@ -7,7 +7,7 @@ import model.ApplicationContext
 import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.SubnavAgent
+import services.{ArticleABTestService, SubnavAgent}
 import services.eventgraphic.EventGraphicService
 import services.newsletters.NewsletterSignupAgent
 
@@ -20,6 +20,7 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   def environment: Environment
   def subnavAgent: SubnavAgent
+  def articleAbTestService: ArticleABTestService
   def newsletterSignupAgent: NewsletterSignupAgent
   def eventGraphicService: EventGraphicService
   implicit def appContext: ApplicationContext
@@ -33,6 +34,8 @@ trait ApplicationsControllers {
   lazy val puzzlesGameApi: PuzzlesGameApi = new PuzzlesGameApiClient(wsClient)
   lazy val puzzlesProgressApi: PuzzlesProgressApi = new PuzzlesProgressApiClient(wsClient)
   lazy val puzzlesProgressController = wire[PuzzlesProgressController]
+  lazy val puzzlesAccessApi: PuzzlesAccessApi = new PuzzlesAccessApiClient(wsClient)
+  lazy val puzzlesAccessController = wire[PuzzlesAccessController]
   lazy val siteMapController = wire[SiteMapController]
   lazy val dCARAssetsController = wire[DCARAssetsController]
   lazy val crosswordPageController = wire[CrosswordPageController]

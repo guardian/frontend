@@ -63,8 +63,13 @@ module.exports = {
             commercial: 'projects/commercial',
             journalism: 'projects/journalism',
 
-            // #wp-rjs weird old aliasing from requirejs
-            videojs: 'video.js',
+            /**
+             * Legacy Video.js plugins import the pre-package name `videojs`.
+             * videojs-embed
+             * videojs-persistvolume
+             * videojs-playlist
+             */
+            'videojs$': 'video.js',
 
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
@@ -75,7 +80,6 @@ module.exports = {
             "react-dom": "preact/compat",
         },
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
-        symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
         modules: [
@@ -131,7 +135,7 @@ module.exports = {
         // videojs plugins expect this object to be available globally,
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
-            videojs: 'videojs',
+            videojs: 'video.js',
         }),
         new CircularDependencyPlugin({
             // exclude detection of files based on a RegExp

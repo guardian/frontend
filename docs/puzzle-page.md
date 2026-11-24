@@ -2,8 +2,8 @@
 
 ## What is implemented
 
-Puzzle Page is a generic page template for iframe-based Guardian puzzle types (sudoku and word
-games), rendered by dotcom-rendering (DCR). This repo (`frontend`) assembles a small amount of
+Puzzle Page is a generic page template for iframe-based Guardian puzzle types (sudoku, word
+games, and trivia), rendered by dotcom-rendering (DCR). This repo (`frontend`) assembles a small amount of
 per-instance data (title, requested date, and the API-resolved `gameUrl`) and POSTs it to DCR's
 `/PuzzlePage` endpoint; DCR owns all layout, styling, and structural/rendering behaviour, including
 reader-specific additions to the third-party iframe URL.
@@ -15,7 +15,7 @@ etc.), untouched by any of this. This is a deliberate product decision.
 ### Public URL structure: nested under the hub, grouped, and dated
 
 Per confirmed team direction, individual puzzle-page URLs are nested under the `/puzzles-and-games`
-hub, grouped by DCR's `puzzleGroup` ("logic-puzzles" or "word-games"), and always carry a real
+hub, grouped by public section (`logic-puzzles`, `word-games`, or `trivia-and-quizzes`), and always carry a real
 `YYYY-MM-DD` date:
 
 -   Hub (unchanged): `https://www.theguardian.com/puzzles-and-games/`
@@ -23,37 +23,55 @@ hub, grouped by DCR's `puzzleGroup` ("logic-puzzles" or "word-games"), and alway
     (and `sudoku-medium`, `sudoku-hard`, `sudoku-killer`)
 -   Word wheel: `https://www.theguardian.com/puzzles-and-games/word-games/word-wheel/2024-01-15`
 -   Wordiply: `https://www.theguardian.com/puzzles-and-games/word-games/wordiply/2024-01-15`
+-   Film reveal: `https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/film-reveal/2024-01-15`
+-   On the ball: `https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/on-the-ball/2024-01-15`
 
 The **bare URL** for each game (no date segment, e.g.
 `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy`) is not itself a page -
 it **redirects** (temporarily - see "Archive redirects" below) to that group's archive page, filtered
 to this puzzle.
 
-Each game's group segment (`logic-puzzles`/`word-games`) is a **literal, hardcoded path segment** on
-that game's own dedicated route/action, matching its DCR `puzzleGroup` - not a generic `:group`
+Each game's section segment (`logic-puzzles`/`word-games`/`trivia-and-quizzes`) is a **literal, hardcoded path segment** on
+that game's own dedicated route/action - not a generic `:group`
 wildcard. This is a natural consequence of every game having its own explicit route/action (see
 "Code" below), and avoids ever routing a request for a group a given game doesn't actually belong
 to.
 
-### Current scope (V0): 6 puzzles
+### Current scope: 8 puzzles
 
-Matching DCR's own V0 registry:
+Matching DCR's puzzle registry (the trivia games use DCR's `trivia` group):
 
-| Public URL (dated)                                      | Controller action              | `slug` sent to DCR | Title sent to DCR |
-| ------------------------------------------------------- | ------------------------------ | ------------------ | ----------------- |
-| `/puzzles-and-games/logic-puzzles/sudoku-easy/{date}`   | `renderSudoku("easy", date)`   | `sudoku-easy`      | Sudoku (easy)     |
-| `/puzzles-and-games/logic-puzzles/sudoku-medium/{date}` | `renderSudoku("medium", date)` | `sudoku-medium`    | Sudoku (medium)   |
-| `/puzzles-and-games/logic-puzzles/sudoku-hard/{date}`   | `renderSudoku("hard", date)`   | `sudoku-hard`      | Sudoku (hard)     |
-| `/puzzles-and-games/logic-puzzles/sudoku-killer/{date}` | `renderSudoku("killer", date)` | `sudoku-killer`    | Killer sudoku     |
-| `/puzzles-and-games/word-games/word-wheel/{date}`       | `renderWordWheel(date)`        | `word-wheel`       | Word wheel        |
-| `/puzzles-and-games/word-games/wordiply/{date}`         | `renderWordiply(date)`         | `wordiply`         | Wordiply          |
+| Public URL (dated)                                         | Controller action              | `slug` sent to DCR | Title sent to DCR |
+| ---------------------------------------------------------- | ------------------------------ | ------------------ | ----------------- |
+| `/puzzles-and-games/logic-puzzles/sudoku-easy/{date}`      | `renderSudoku("easy", date)`   | `sudoku-easy`      | Sudoku (easy)     |
+| `/puzzles-and-games/logic-puzzles/sudoku-medium/{date}`    | `renderSudoku("medium", date)` | `sudoku-medium`    | Sudoku (medium)   |
+| `/puzzles-and-games/logic-puzzles/sudoku-hard/{date}`      | `renderSudoku("hard", date)`   | `sudoku-hard`      | Sudoku (hard)     |
+| `/puzzles-and-games/logic-puzzles/sudoku-killer/{date}`    | `renderSudoku("killer", date)` | `sudoku-killer`    | Killer sudoku     |
+| `/puzzles-and-games/word-games/word-wheel/{date}`          | `renderWordWheel(date)`        | `word-wheel`       | Word wheel        |
+| `/puzzles-and-games/word-games/wordiply/{date}`            | `renderWordiply(date)`         | `wordiply`         | Wordiply          |
+| `/puzzles-and-games/trivia-and-quizzes/film-reveal/{date}` | `renderFilmReveal(date)`       | `film-reveal`      | Film reveal       |
+| `/puzzles-and-games/trivia-and-quizzes/on-the-ball/{date}` | `renderOnTheBall(date)`        | `on-the-ball`      | On the ball       |
 
-For all six, frontend maps the slug to `puzzleType` and requests
+For all eight, frontend maps the slug to `puzzleType` and requests
 `GET /game?puzzleType=...&date=YYYY-MM-DD` using `Configuration.puzzlesApi.baseUrl`
 and the configured API key. The response is a single archive item (no envelope).
 Its `gameUrl` becomes `instance.gameUrl`; DCR preserves its path, puzzle ID and provider
 parameters, adding reader context after hydration. This server request is anonymous so
 cached HTML never contains another reader's provider identity.
+
+After hydration, signed-in readers request
+`GET /puzzles-and-games/game/{slug}/{date}.json` with their Identity access token
+in `Authorization: Bearer ...` via DCR's configured `ajaxUrl`. Frontend forwards that header and its server-side
+API key to `GET /game`. The browser receives the API's game data with
+`Cache-Control: no-store`; the endpoint also supports CORS preflights.
+DCR waits for this response before loading the iframe and preserves its `uid`.
+Signed-out readers use the anonymous URL already supplied in the page.
+
+The AJAX router in `platform/router/files/router.conf` must forward the game JSON
+path, including OPTIONS preflights, to applications before the generic JSON rules.
+API errors retain their CORS and cache headers. Deploy the router rule and the
+frontend endpoint before the DCR consumer. Responses
+use frontend's standard `NoCache` headers (`private, no-store, no-cache`).
 
 Missing games or absent game URLs return 404. Upstream failures and invalid responses
 return an uncached 502. The existing `puzzles.api.url` configuration must point to the
@@ -70,8 +88,10 @@ up CAPI to construct crossword destinations. Other puzzle card destinations are 
         actions, backed by `sudokuVariantTitles` (variant -> title map).
     -   `renderWordWheel(date)`/`renderWordWheelJson(date)` - dedicated word wheel actions, hardcoding
         `WordWheelSlug`/`WordWheelTitle` internally.
-    -   `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions, hardcoding
-        `WordiplySlug`/`WordiplyTitle` internally.
+    -   `renderWordiply(date)`/`renderWordiplyJson(date)` - dedicated wordiply actions.
+    -   `renderFilmReveal(date)`/`renderFilmRevealJson(date)` and
+        `renderOnTheBall(date)`/`renderOnTheBallJson(date)` - dedicated MovieGrid actions using
+        the same API-backed rendering path.
     -   `redirectSudokuArchive(variant)`, `redirectWordWheelArchive()`, `redirectWordiplyArchive()` - the
         bare (dateless) archive-redirect actions (see "Archive redirects" below).
     -   All actions are deliberately named distinctly from this controller's other, pre-existing
@@ -104,19 +124,21 @@ up CAPI to construct crossword destinations. Other puzzle card destinations are 
     GET /puzzles-and-games/word-games/wordiply             -> PuzzlesPageController.redirectWordiplyArchive
     ```
 
-### Access gate: reuses the existing Puzzles Hub AB test
+### Access gate: reuses the Puzzles Hub edition check
 
 All Puzzle Page actions (dated render actions and archive redirects alike) are gated behind
-`ab.PuzzlesHubV1Experiment` ("puzzles-new-hub-v1"), the same server-side AB test used by this
-controller's `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the
-request carries the `X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant` header (via this repo's normal server-side AB test
-framework, `common/app/ab/ABTests.scala`).
+`common.PuzzlesHubAccess.isAvailable`, the same edition check used by this controller's
+`renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the request's edition is one of
+`PuzzlesHubAccess.Editions` (currently all editions), or the app runs in local development.
+To change availability, keep `PuzzlesHubAccess.Editions` and `PUZZLES_HUB_EDITIONS` in sync with
+dotcom-rendering (`src/lib/puzzlesHubAccess.ts`), which applies the same rule again before rendering.
 
-**Note for future v2 work:** DCR uses a 2-tier, cumulative rollout gating structure for this
-feature (`puzzles-new-hub-v1`, `puzzles-new-hub-v2`, defined in `ab-testing/config/abTests.ts`,
-checked via `isPuzzlesHubV1Enabled`/`isPuzzlesHubV2Enabled` in
-`src/lib/puzzlesHubVersionExperiment.ts`). This repo only checks the v1 tier today; a v2-scoped
-frontend feature will need its own equivalent cumulative check.
+Premium access (v3) still requires the hub edition and explicit `puzzles-new-hub-v3:variant` outside local development.
+Keep v3 at 0% for this launch. The development bypass remains in place.
+
+All archive JSON endpoints and their CORS preflights remain ungated and uncached. DCR fetches these
+through `config.page.ajaxUrl` to avoid the page-host CDN cache when refreshing a reader's progress.
+Reader-specific progress is still resolved from the Authorization header.
 
 ### The date path segment
 
@@ -132,17 +154,9 @@ are looked up exactly as requested; publication availability is determined by `/
 
 ### Archive redirects
 
-The bare, dateless URL for each game (`redirectSudokuArchive`/`redirectWordWheelArchive`/
-`redirectWordiplyArchive`) returns a **temporary (302/`FOUND`) redirect** to
-`/puzzles-and-games/{group}/archive?puzzle={slug}` - e.g.
-`/puzzles-and-games/logic-puzzles/archive?puzzle=sudoku-easy`. Per explicit product direction
-("Redirect to the archive please. If it's possible for that to be filtered to that chip, even
-better"), filtering is done via the `?puzzle=` query param.
-
-**The archive page itself does not exist yet** (it's a V1 feature) - it's explicitly confirmed
-acceptable for this redirect target to 404 downstream for now, until the archive is built. A
-_temporary_, not permanent, redirect status is used deliberately, so browsers/CDNs don't cache a
-redirect target that isn't ready yet.
+Dateless game URLs return a temporary `302` redirect to
+`/puzzles-and-games/{group}/archive?puzzle={slug}`, including Film reveal and On the ball.
+Archives use the shared `PuzzlesArchiveBuilder` flow and do not inherit game sponsorship.
 
 ### How to configure/add a new puzzle type
 
@@ -173,6 +187,69 @@ public URL shape, not be flattened internally just because that's simpler.
 Also register each new slug in `PuzzlesPageController.PuzzleTypesBySlug` and ensure the
 Puzzles API supports that type in `/game`. The API owns provider URLs and puzzle IDs.
 
+### Sponsorship
+
+Configure web sponsorship in `applications/conf/puzzles-layout.json`, using edition IDs
+`UK`, `US`, `AU`, `INT` or `EUR`. Each location takes the same sponsor object:
+
+| Placement         | JSON location (AU example)                                            |
+| ----------------- | --------------------------------------------------------------------- |
+| Hub header        | `sponsorship.AU`                                                      |
+| Directory section | `containers[].sponsorship.AU` on the relevant container               |
+| Game category     | `gameSponsorship.word-games.AU` or `gameSponsorship.logic-puzzles.AU` |
+
+Containers must be top-level `featured` or `standard` sections (including an omitted variant).
+Nested, `ad` and `supporting` sponsorship is rejected; empty or disabled sections remain hidden.
+Game categories cover Word wheel/Wordiply and the four Sudoku variants respectively; other
+categories are rejected. Crosswords and archives are unchanged; apps sponsorship is configured
+separately.
+
+#### Sponsor format
+
+Insert an object with this shape at the chosen location. Example URLs are placeholders, not a campaign.
+
+```json
+{
+	"name": "Example sponsor",
+	"label": "Supported by",
+	"sponsorUri": "https://example.com",
+	"aboutUri": "https://example.com/about",
+	"logo": {
+		"src": "https://example.com/logo.png",
+		"darkSrc": "https://example.com/logo-dark.png",
+		"aspectRatio": 2
+	}
+}
+```
+
+`name` and `label` must be non-empty; all URLs must be HTTPS. `aboutUri` and `logo.darkSrc` are
+optional: omit unused values rather than supplying empty strings. `aspectRatio` is width/height
+and must be positive; frontend generates dimensions with height 100 and rounded width
+`aspectRatio * 100`. Branding is always sponsored. App-only layout fields are ignored.
+
+#### Resolution and rollout
+
+For each game category and edition:
+
+| Hub sponsor | Explicit game sponsor | Game result  |
+| ----------- | --------------------- | ------------ |
+| No          | No                    | Unsponsored  |
+| Yes         | No                    | Unsponsored  |
+| No          | Yes                   | Game sponsor |
+| Yes         | Yes                   | Hub sponsor  |
+
+There is no fallback across editions or categories. Container sponsorship is independent.
+The config-only provider resolves game branding without fetching hub cards or newsletters;
+HTML and JSON use the same resolved `commercialProperties`. Raw configuration is not sent to DCR.
+See [DCR's contract and rendering rules](https://github.com/guardian/dotcom-rendering/blob/main/dotcom-rendering/docs/puzzle-page.md#sponsorship)
+for About links, dark logos and ad-free behaviour.
+
+Merge and deploy the frontend/DCR sponsorship support before activating a campaign. Enable or
+remove the relevant edition entries and deploy frontend, allowing for normal page caches.
+There is no sponsorship-specific switch. Removing only the hub entry exposes any configured
+game fallback; remove the explicit game entry to disable game sponsorship. Check all three
+placements when removing a campaign. Never commit local demo sponsors.
+
 ### Local testing
 
 Both servers must be running to see real HTML: DCR locally on `http://localhost:3030` (`make dev` in
@@ -181,12 +258,9 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-**The AB-test header is required** (see "Access gate" above) - without
-`X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant`, every URL below 404s. Set it via a browser extension
-(e.g. ModHeader) or `curl -H "X-GU-Server-AB-Tests: puzzles-new-hub-v1:variant" ...`.
+No experiment header is needed to view trivia. Local development bypasses the hub edition check.
 
-The `.json` route variant returns the exact JSON payload this repo would send to DCR, without
-needing DCR itself to be reachable.
+The `.json` route variant returns the DCR rendering data without needing DCR itself to be reachable.
 
 | Puzzle          | Dated URL (example date `2024-01-15`)                                            | Bare (archive-redirect) URL                                           |
 | --------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
@@ -199,54 +273,72 @@ needing DCR itself to be reachable.
 
 The hub itself: `http://localhost:9000/puzzles-and-games`.
 
-The bare URLs will 302-redirect to a `.../archive?puzzle=...` URL that currently 404s (the archive
-page doesn't exist yet - see "Archive redirects" above); this is expected.
+Bare URLs return a temporary redirect to the relevant `.../archive?puzzle=...` page.
 
 ### The DCR endpoint contract
 
 This repo POSTs the following to DCR's `/PuzzlePage` endpoint:
 
-| Field          | Type   | Meaning                                                                                                                                                         |
-| -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`           | string | The page's canonical content id. Not Puzzle-Page-specific.                                                                                                      |
-| `slug`         | string | The puzzle type identifier DCR uses to look up its own `PuzzleConfig` entry (e.g. `"sudoku-easy"`, `"word-wheel"`). Always the flattened form, even for Sudoku. |
-| `webTitle`     | string | The page's `<title>`/web title.                                                                                                                                 |
-| `config`       | object | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific.                                                  |
-| `nav`          | object | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                     |
-| `pageFooter`   | object | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                   |
-| `canonicalUrl` | string | The canonical URL for this page (e.g. `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`).                                    |
-| `editionId`    | string | The edition (e.g. `UK`, `US`, `AU`) resolved from the request.                                                                                                  |
-| `instance`     | object | Per-instance data - see below.                                                                                                                                  |
+| Field                  | Type    | Meaning                                                                                                                                                                                         |
+| ---------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                   | string  | The page's canonical content id. Not Puzzle-Page-specific.                                                                                                                                      |
+| `slug`                 | string  | The puzzle type identifier DCR uses to look up its own `PuzzleConfig` entry (e.g. `"sudoku-easy"`, `"word-wheel"`). Always the flattened form, even for Sudoku.                                 |
+| `webTitle`             | string  | The page's `<title>`/web title.                                                                                                                                                                 |
+| `config`               | object  | The same shared config JSON object sent to every other DCR endpoint this repo calls. Not Puzzle-Page-specific.                                                                                  |
+| `nav`                  | object  | The same shared navigation structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                                                     |
+| `pageFooter`           | object  | The same shared footer links structure sent to other DCR endpoints. Not Puzzle-Page-specific.                                                                                                   |
+| `canonicalUrl`         | string  | The canonical URL for this page (e.g. `https://www.theguardian.com/puzzles-and-games/logic-puzzles/sudoku-easy/2024-01-15`).                                                                    |
+| `editionId`            | string  | The edition (e.g. `UK`, `US`, `AU`) resolved from the request.                                                                                                                                  |
+| `instance`             | object  | Per-instance data - see below.                                                                                                                                                                  |
+| `isAdFreeUser`         | boolean | Whether the reader has an ad-free subscription. This suppresses ads, not sponsorship.                                                                                                           |
+| `commercialProperties` | object  | Resolved sponsorship by edition ID, using the existing article branding shape. Empty when there is no explicit game sponsorship; DCR also accepts an omitted field for backwards compatibility. |
 
 `instance` fields (`PuzzlePageInstance`):
 
-| Field                     | Type             | Meaning                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title`                   | string           | Display title for the instance (e.g. `"Sudoku (easy)"`).                                                                                                                                                                                                                                                                                                                                                 |
-| `puzzleDate`              | string, optional | An ISO-8601 (`yyyy-MM-dd`) date string, sourced directly from the request URL's date path segment (see "The date path segment" above) - which day's puzzle this instance is for. Always populated in practice; modelled as optional for JSON forwards/backwards compatibility. DCR is being updated in parallel (see cross-repo note below) to actually display this value and forward it to the iframe. |
-| `moreFromPuzzlesAndGames` | array            | Best-effort "more like this" recommendations. Currently always an empty array - not populated anywhere yet.                                                                                                                                                                                                                                                                                              |
-
-The crossword-flavoured fields that previously existed on this type (`puzzleType`, `setterName`,
-`date`, `specialInstructions`, `discussionId`, `crosswordData`) have been removed entirely, as a
-coordinated contract change with DCR's equivalent removal - they were never populated once Puzzle
-Page's iframe-only scope was confirmed.
-
-**Cross-repo note:** DCR is being updated in parallel to actually display `instance.puzzleDate` next
-to the puzzle title, and to include it in the `guardian-puzzle-context` sent to the iframe (alongside
-the existing userId/darkMode). No contract/type changes were needed on this repo's side for that -
-`puzzleDate` already existed on `PuzzlePageInstance`; this repo just now sources a real, always-present
-value for it instead of a today-only default.
+| Field                     | Type              | Meaning                                                                                                                                                                                                                                              |
+| ------------------------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title`                   | string            | Display title for the instance (e.g. `"Sudoku (easy)"`).                                                                                                                                                                                             |
+| `puzzleDate`              | string, optional  | ISO date from the URL. DCR displays it and forwards it to the iframe context.                                                                                                                                                                        |
+| `gameUrl`                 | string, optional  | Dated provider URL from the Puzzles API; required by the current page builder.                                                                                                                                                                       |
+| `progressIdentity`        | object, optional  | API `puzzleId`, `puzzleType` and `publishDate`, used by DCR's MovieGrid progress adapter without deriving identity from the URL.                                                                                                                     |
+| `requiresSubscription`    | boolean, optional | `true` when the puzzle is older than the free window (the last 7 days counting today are free, Europe/London; see `PuzzlesAccessPolicy`). Absent means free. Depends only on the puzzle date, never on the reader, so it is safe in the cached HTML. |
+| `moreFromPuzzlesAndGames` | array             | Best-effort related puzzle cards; may be empty.                                                                                                                                                                                                      |
+| `puzzlesSupporting`       | object, optional  | Useful links and an optional live newsletter.                                                                                                                                                                                                        |
 
 ## Open questions / known limitations
 
 -   **Iframe-only by design.** Puzzle Page covers iframe-based puzzles only; crosswords are out of
     scope on product direction, not a gap to fill later.
--   **The archive pages don't exist yet.** The bare, dateless URL for each game redirects to a
-    `.../archive?puzzle=...` URL that 404s today - this is expected until the archive (a V1 feature)
-    is built.
--   **This URL structure is not yet formally confirmed by the business** in the sense of a final,
-    permanent public commitment - it was arrived at through iterative confirmed decisions during
-    development and may still evolve.
+-   **Public URLs belong to frontend.** Coordinate route changes to preserve existing links.
 -   **Deeper technical open items (AmuseLabs archive URLs, the user-id/postMessage mechanism, etc.)
     are tracked on the DCR side**, in that repo's own equivalent consolidated Puzzle Page doc, not
     duplicated here - check the `dotcom-rendering` repo for the current location of that document.
+
+## Premium puzzles access
+
+Puzzles outside the last 7 days, counting today (Europe/London), need a Supporter Plus or Digital Pack subscription.
+The Puzzles API owns that rule and is the authority. `PuzzlesAccessPolicy` repeats it only to give DCR a hint,
+`instance.requiresSubscription`, in the cached page HTML (it is the same for every reader, so it can say that a puzzle
+is premium, never who may play it). The hint lets free puzzles and signed out readers resolve with no request at all.
+It must match the Puzzles API's `PUZZLE_FREE_WINDOW_DAYS` (7 by default): `PuzzlesAccessPolicyTest` and the Puzzles API
+tests check the same boundary (6 days ago is free, 7 days ago is premium).
+
+Whether a reader may play is answered by `GET /puzzles-and-games/access/<id>/<YYYY-MM-DD>`
+(`PuzzlesAccessController`), uncached and CORS-enabled like the progress endpoints. The id and the date are path
+parameters, not a query string, because query parameters are stripped by the CDN in CODE and PROD. The browser sends
+the reader's own `Authorization` header. The controller:
+
+-   answers 401 if there is no `Authorization` header, and 400 if the id is not `^[\w-]{1,256}$` or the date is not a
+    calendar day as `YYYY-MM-DD`, without calling anything (the id goes into a URL path, so nothing else may reach it);
+-   otherwise forwards the header, with the API key, to the Puzzles API
+    (`GET /v1/game/{puzzleId}/access/{date}`, see `PuzzlesAccessApiClient`, 2 second timeout) and answers
+    `{ "hasAccess": boolean }`;
+-   answers 503 for **everything else**: a 401, 403 or 404 from the Puzzles API, a 5xx, a timeout, an invalid body. A
+    failure to find out is never reported as "denied".
+
+DCR treats any non-2xx answer as "could not find out" and falls back to what it knows about the reader. The date is
+only used by the Puzzles API to find the puzzle from its id, and the decision is made from the puzzle's own publish
+date, so a wrong date is a 404 (so a 503 here) and never a free puzzle.
+
+The response is never cached (`NoCache`), and the Puzzles API requires `Authorization` for this endpoint, so nothing
+here relies on any caching behaviour, including Fastly's, for correctness.

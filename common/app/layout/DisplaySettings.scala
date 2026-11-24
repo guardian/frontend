@@ -4,7 +4,6 @@ import com.gu.facia.api.utils.BoostLevel
 import model.pressed._
 
 case class DisplaySettings(
-    isBoosted: Boolean,
     boostLevel: Option[BoostLevel],
     isImmersive: Option[Boolean],
     showBoostedHeadline: Boolean,
@@ -16,7 +15,6 @@ case class DisplaySettings(
 object DisplaySettings {
   def fromTrail(faciaContent: PressedContent): DisplaySettings =
     DisplaySettings(
-      faciaContent.display.isBoosted,
       faciaContent.display.boostLevel,
       faciaContent.display.isImmersive,
       faciaContent.display.showBoostedHeadline,

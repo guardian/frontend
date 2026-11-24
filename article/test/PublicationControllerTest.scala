@@ -9,6 +9,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.test.Helpers._
 import services.{
+  ArticleABTestService,
   MockArticleAbTestAgent,
   MockSubnavAgent,
   NewsletterService,
@@ -35,16 +36,28 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
   lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
-  lazy val articleController =
+  lazy val articleController = {
+    val renderer = new DCRFake()
+    val newsletters = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient)))
+    val subnav = new MockSubnavAgent()
+    val articleAbTestService = new ArticleABTestService(
+      testContentApiClient,
+      new MockArticleAbTestAgent(),
+      wsClient,
+      renderer,
+      subnav,
+      newsletters,
+    )
     new ArticleController(
       contentApiClient = testContentApiClient,
       controllerComponents = controllerComponents,
       ws = wsClient,
-      remoteRenderer = new DCRFake(),
-      newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-      subnavAgent = new MockSubnavAgent(),
-      articleAbTestAgent = new MockArticleAbTestAgent(),
+      remoteRenderer = renderer,
+      newsletterService = newsletters,
+      subnavAgent = subnav,
+      articleAbTestService = articleAbTestService,
     )
+  }
   lazy val publicationController =
     new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
 

@@ -1,6 +1,6 @@
 package controllers
 
-import ab.PuzzlesHubV1Experiment
+import ab.PuzzlesHubV3Experiment
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -8,7 +8,7 @@ import com.gu.contentapi.client.model.v1.{
   Content => ApiContent,
   Section => ApiSection,
 }
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.{ContentApiError, SearchQuery}
 import crosswords.{
@@ -39,11 +39,13 @@ import services.{IndexPage, IndexPageItem}
 import scala.collection.immutable
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.control.NonFatal
 
 trait CrosswordController extends BaseController with GuLogging with ImplicitControllerExecutionContext {
 
   def contentApiClient: ContentApiClient
   def puzzlesNewsletters: PuzzlesNewsletters
+  def puzzlesLayoutProvider: PuzzlesLayoutProvider
 
   val remoteRenderer: DotcomRenderingService = DotcomRenderingService()
   val wsClient: WSClient
@@ -51,7 +53,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def noResults()(implicit request: RequestHeader): Result
 
   def puzzlesSupporting(implicit request: RequestHeader): Option[PuzzleGameSupporting] =
-    if (PuzzlesHubV1Experiment.isEnabled) puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
+    if (PuzzlesHubAccess.isAvailable) puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
     else None
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
@@ -60,13 +62,13 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
     )
   }
 
-  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests in the puzzles hub
-    * v1 experiment, otherwise `None` so the page renders exactly as before.
+  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests where the puzzles
+    * hub is available (see `PuzzlesHubAccess`), otherwise `None` so the page renders exactly as before.
     */
   def moreFromPuzzlesAndGames(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[Seq[PuzzleItem]]] =
-    if (PuzzlesHubV1Experiment.isEnabled)
+    if (PuzzlesHubAccess.isAvailable)
       PuzzleRecommendations
         .resolve(
           crossword.crosswordType,
@@ -76,6 +78,34 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
         )
         .map(Some(_))
     else Future.successful(None)
+
+  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up when the puzzles
+    * hub is available (see `PuzzlesHubAccess`), and `None` for crossword types that have no archive page.
+    */
+  def puzzleArchivePath(
+      crossword: CrosswordData,
+  )(implicit request: RequestHeader): Future[Option[String]] =
+    if (PuzzlesHubAccess.isAvailable)
+      puzzlesLayoutProvider
+        .getStaticLayout()
+        .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
+        .recover { case NonFatal(error) =>
+          log.warn(s"Could not look up the archive page of ${crossword.crosswordType}", error)
+          None
+        }
+    else Future.successful(None)
+
+  /** `Some(true)` when this crossword is older than the free window and the request is in the puzzles hub v3
+    * experiment, `None` otherwise, so every other crossword is sent exactly as before. The date is the UTC date of the
+    * crossword, the same one the progress identity uses. Only a hint for the cached page: the Puzzles API decides (see
+    * [[PuzzlesAccessPolicy]]).
+    */
+  def crosswordRequiresSubscription(
+      crossword: CrosswordData,
+  )(implicit request: RequestHeader): Option[Boolean] =
+    Option.when(
+      PuzzlesHubV3Experiment.isEnabled && PuzzlesAccessPolicy.requiresSubscriptionAt(crossword.date.getMillis),
+    )(true)
 
   def withCrossword(crosswordType: String, id: Int)(
       f: (Crossword, ApiContent) => Future[Result],
@@ -109,15 +139,19 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       )
 
       if (CrosswordsPicker.getTier(page) == RemoteRender)
-        moreFromPuzzlesAndGames(page.crossword).flatMap { recommendations =>
-          remoteRenderer.getCrossword(
+        for {
+          recommendations <- moreFromPuzzlesAndGames(page.crossword)
+          archivePath <- puzzleArchivePath(page.crossword)
+          result <- remoteRenderer.getCrossword(
             wsClient,
             page,
             PageType(page, request, context),
             recommendations,
             puzzlesSupporting,
+            archivePath,
+            crosswordRequiresSubscription(page.crossword),
           )
-        }
+        } yield result
       else
         Future.successful(
           Cached(CacheTime.Crosswords)(
@@ -135,6 +169,7 @@ class CrosswordPageController(
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
     val puzzlesNewsletters: PuzzlesNewsletters,
+    val puzzlesLayoutProvider: PuzzlesLayoutProvider,
 )(implicit
     context: ApplicationContext,
 ) extends CrosswordController {
@@ -154,11 +189,21 @@ class CrosswordPageController(
         val crosswordPage = new CrosswordPageWithContent(crosswordContent)
 
         val pageType = PageType(crosswordPage, request, context)
-        moreFromPuzzlesAndGames(crosswordPage.crossword).map { recommendations =>
-          common
-            .renderJson(getDCRJson(crosswordPage, pageType, recommendations), crosswordPage)
-            .as("application/json")
-        }
+        for {
+          recommendations <- moreFromPuzzlesAndGames(crosswordPage.crossword)
+          archivePath <- puzzleArchivePath(crosswordPage.crossword)
+        } yield common
+          .renderJson(
+            getDCRJson(
+              crosswordPage,
+              pageType,
+              recommendations,
+              archivePath,
+              crosswordRequiresSubscription(crosswordPage.crossword),
+            ),
+            crosswordPage,
+          )
+          .as("application/json")
       }
     }
   }
@@ -166,6 +211,8 @@ class CrosswordPageController(
       crosswordPage: CrosswordPageWithContent,
       pageType: PageType,
       moreFromPuzzlesAndGames: Option[Seq[PuzzleItem]],
+      puzzleArchivePath: Option[String],
+      requiresSubscription: Option[Boolean],
   )(implicit
       request: RequestHeader,
   ): JsValue =
@@ -177,6 +224,8 @@ class CrosswordPageController(
         None,
         moreFromPuzzlesAndGames,
         puzzlesSupporting,
+        puzzleArchivePath,
+        requiresSubscription,
       ),
     )
 
@@ -253,6 +302,7 @@ class CrosswordSearchController(
     val controllerComponents: ControllerComponents,
     val wsClient: WSClient,
     val puzzlesNewsletters: PuzzlesNewsletters,
+    val puzzlesLayoutProvider: PuzzlesLayoutProvider,
 )(implicit context: ApplicationContext)
     extends CrosswordController {
   val searchForm = Form(

@@ -51,6 +51,9 @@ trait ApplicationsServices {
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
 
+  lazy val newsletterService: NewsletterService = wire[NewsletterService]
+  lazy val articleAbTestService: ArticleABTestService = wire[ArticleABTestService]
+
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
   lazy val emailSignupController = wire[EmailSignupController]

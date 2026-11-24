@@ -1,6 +1,5 @@
 package navigation
 
-import ab.ABTests
 import common.Edition
 import common.editions._
 import NavLinks._
@@ -10,8 +9,6 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
-import play.api.mvc.RequestHeader
-import play.api.test.FakeRequest
 import staticpages.StaticPages
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
 
@@ -209,7 +206,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
         val page = TestPage(Content(apiContent))
-        val menu = NavMenu(page, edition, FakeRequest())
+        val menu = NavMenu(page, edition)
         val currentNavLink = menu.currentNavLink
         val pillar = menu.currentPillar
 
@@ -229,7 +226,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     whenReady(response) { item: ItemResponse =>
       item.content.map { apiContent =>
         val page = TestPage(Content(apiContent))
-        val menu = NavMenu(page, edition, FakeRequest())
+        val menu = NavMenu(page, edition)
         val currentNavLink = menu.currentNavLink
         val pillar = menu.currentPillar
 
@@ -239,21 +236,25 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-  private def requestWithParticipations(participations: String): RequestHeader = {
-    val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations)
-    ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
+  private val editionsWithPuzzlesHub = Seq(International, Europe, Au, Us, Uk)
+
+  "Puzzles navigation" should "list Puzzles & games after Crosswords, in place of Wordiply, in editions with the hub" in {
+    editionsWithPuzzlesHub.foreach { edition =>
+      val otherLinks = NavMenu(NavigationPage("culture"), edition).otherLinks
+
+      otherLinks should contain(puzzles)
+      otherLinks should contain(legacyCrosswords)
+      otherLinks should not contain legacyWordiply
+      otherLinks.indexOf(puzzles) shouldBe otherLinks.indexOf(legacyCrosswords) + 1
+    }
   }
 
-  "Puzzles navigation" should "use Puzzles & games as the variant subnav without adding it to the burger menu" in {
-    val request = requestWithParticipations("puzzles-new-hub-v1:variant")
+  it should "use Puzzles & games as the subnav on the hub in editions with the hub" in {
     puzzles.children should not be empty
 
-    Edition.allEditions.foreach { edition =>
-      val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"), edition, request)
+    editionsWithPuzzlesHub.foreach { edition =>
+      val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"), edition)
 
-      menu.otherLinks should not contain puzzles
-      menu.otherLinks should contain(legacyCrosswords)
-      menu.otherLinks should contain(legacyWordiply)
       menu.currentNavLink should contain(puzzles)
       menu.currentParent should contain(puzzles)
       menu.currentPillar shouldBe None
@@ -261,41 +262,14 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-  it should "keep the legacy Crosswords and Wordiply navigation in every edition for non-variant requests" in {
-    Seq(
-      "puzzles-new-hub-v1:control",
-      "",
-      "puzzles-new-hub-v1:unknown",
-      "puzzles-new-hub-v1:,puzzles-new-hub-v1:variant:extra",
-      "another-test:variant",
-    ).foreach { participations =>
-      val request = requestWithParticipations(participations)
+  it should "keep the legacy Crosswords subnav on crosswords pages in every edition" in {
+    Edition.allEditions.foreach { edition =>
+      val menu = NavMenu(NavigationPage("crosswords"), edition)
 
-      Edition.allEditions.foreach { edition =>
-        val menu = NavMenu(NavigationPage("crosswords"), edition, request)
-
-        menu.otherLinks should contain(legacyCrosswords)
-        menu.otherLinks should not contain puzzles
-        menu.otherLinks should contain(legacyWordiply)
-        menu.currentNavLink should contain(legacyCrosswords)
-        menu.currentParent should contain(legacyCrosswords)
-        menu.currentPillar shouldBe None
-        menu.subNavSections should contain(ParentSubnav(legacyCrosswords, legacyCrosswords.children))
-      }
+      menu.currentNavLink should contain(legacyCrosswords)
+      menu.currentParent should contain(legacyCrosswords)
+      menu.currentPillar shouldBe None
+      menu.subNavSections should contain(ParentSubnav(legacyCrosswords, legacyCrosswords.children))
     }
-  }
-
-  "DCR Nav" should "contain the request-selected puzzles navigation" in {
-    val variantRequest = requestWithParticipations("puzzles-new-hub-v1:variant")
-    val controlRequest = requestWithParticipations("puzzles-new-hub-v1:control")
-    val page = StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games")
-
-    Nav(page, Uk, variantRequest, None).otherLinks should not contain puzzles
-    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, variantRequest, None).otherLinks should contain(legacyWordiply)
-
-    Nav(page, Uk, controlRequest, None).otherLinks should not contain puzzles
-    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyCrosswords)
-    Nav(page, Uk, controlRequest, None).otherLinks should contain(legacyWordiply)
   }
 }

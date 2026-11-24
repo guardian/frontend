@@ -1,10 +1,17 @@
 package model.dotcomrendering
 
 import common.{CanonicalLink, Edition}
+import common.commercial.EditionCommercialProperties
 import model.Page
 import navigation.{FooterLinks, Nav}
 import play.api.libs.json.{JsObject, JsValue, Json, OWrites}
 import play.api.mvc.RequestHeader
+
+case class PuzzleProgressIdentity(puzzleId: String, puzzleType: String, publishDate: String)
+
+object PuzzleProgressIdentity {
+  implicit val writes: OWrites[PuzzleProgressIdentity] = Json.writes[PuzzleProgressIdentity]
+}
 
 /** Per-instance data for a single Puzzle Page. Puzzle Page is scoped to iframe-based puzzles only (see
   * PuzzlesPageController) - there is no crossword (or other component-rendered) case, so this type carries no
@@ -25,13 +32,20 @@ case class PuzzlePageInstance(
       * Games categories (excluding this instance's own game), populated by `PuzzlesPageController`. Reuses the same
       * `PuzzleItem` shape already used by the (unrelated) Puzzles Hub feature (see `PuzzlesLayout.scala`), rather than
       * a bespoke type, since DCR's rail consumes the same card fields (id/title/type/set/url/image/etc). DCR gates
-      * actually rendering this rail behind the `puzzles-new-hub-v1` tier (a v1-scoped feature, see
-      * docs/puzzle-page.md), so it's safe/expected for this to be populated ahead of that tier shipping.
+      * actually rendering this rail behind its own `isPuzzlesHubAvailable` check (see docs/puzzle-page.md), so it's
+      * safe/expected for this to be populated ahead of that check passing.
       */
     moreFromPuzzlesAndGames: Seq[PuzzleItem] = Nil,
     puzzlesSupporting: Option[PuzzleGameSupporting] = None,
     /** The dated provider URL returned by the Puzzles API. */
     gameUrl: Option[String] = None,
+    progressIdentity: Option[PuzzleProgressIdentity] = None,
+    /** `Some(true)` when the puzzle is older than the free window (see `PuzzlesAccessPolicy`) and so needs a Supporter
+      * Plus or Digital Pack subscription to play. Absent means free. It depends only on the puzzle date, never on the
+      * reader, so it is safe in the cached, shared page HTML; whether the reader has access is answered separately by
+      * the uncached `GET /puzzles-and-games/access` endpoint.
+      */
+    requiresSubscription: Option[Boolean] = None,
 )
 
 object PuzzlePageInstance {
@@ -59,6 +73,7 @@ case class DotcomPuzzlePageRenderingDataModel(
       * gap this field closes, coordinated with that DCR-side change.
       */
     isAdFreeUser: Boolean,
+    commercialProperties: Map[String, EditionCommercialProperties] = Map.empty,
 )
 
 object DotcomPuzzlePageRenderingDataModel {
@@ -78,7 +93,7 @@ object DotcomPuzzlePageRenderingDataModel {
       slug = slug,
       webTitle = webTitle,
       config = DotcomRenderingConfig(page, request, isPreview = false),
-      nav = Nav(page, edition, request, customSubnav = None),
+      nav = Nav(page, edition, customSubnav = None),
       pageFooter = PageFooter(FooterLinks.getFooterByEdition(edition)),
       canonicalUrl = CanonicalLink(request, page.metadata.webUrl),
       editionId = edition.id,

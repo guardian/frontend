@@ -25,6 +25,8 @@ object PuzzlesArchiveBuilder {
     ("sudoku", "hard") -> "SUDOKU_HARD",
     ("sudoku", "killer") -> "SUDOKU_KILLER",
     ("word-wheel", "all") -> "WORDWHEEL",
+    ("film-reveal", "all") -> "FILMREVEAL",
+    ("on-the-ball", "all") -> "ONTHEBALL",
   )
 
   def apiType(puzzleType: String, set: String): Option[String] = apiTypes.get((puzzleType, set))
@@ -45,20 +47,59 @@ object PuzzlesArchiveBuilder {
     if (container.id == "crosswords") container.content.archiveChoices.getOrElse(Nil)
     else items(container)
 
-  private def toPuzzle(item: PuzzleItem): Option[(PuzzlesArchivePuzzle, String)] =
+  private def toPuzzle(category: String, item: PuzzleItem): Option[(PuzzlesArchivePuzzle, String)] =
     apiTypes.get((item.`type`, item.set)).map { apiType =>
-      PuzzlesArchivePuzzle(item.id, item.title, apiType, item.slug, item.set) -> apiType
+      val segment = item.slug.flatMap(_.split('/').lastOption).getOrElse(item.set)
+      val path = s"/puzzles-and-games/$category/$segment/archive"
+      PuzzlesArchivePuzzle(item.id, item.title, apiType, item.slug, item.set, path) -> apiType
     }
+
+  private val archiveCategories = Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes")
+
+  private def matchesValue(id: String, set: String, slug: Option[String], value: String): Boolean =
+    id == value || set == value || slug.exists(_.split('/').lastOption.contains(value))
+
+  /** Whether `value`, from the query string or the path, identifies `puzzle`. */
+  def matches(puzzle: PuzzlesArchivePuzzle, value: String): Boolean =
+    matchesValue(puzzle.id, puzzle.set, puzzle.slug, value)
+
+  /** The path of the archive page that lists every puzzle in `category`. */
+  def categoryArchivePath(category: String): String = s"/puzzles-and-games/$category/archive"
+
+  /** Whether `value` identifies a puzzle listed in `category`, whether or not that puzzle has an archive. Puzzles
+    * without an archive have no entry in `apiTypes`, so they can be known to the layout yet never appear in an archive
+    * page's choices.
+    */
+  def isKnownPuzzle(layout: PuzzlesLayout, category: String, value: String): Boolean =
+    layout.containers
+      .find(_.id == category)
+      .toSeq
+      .flatMap(items)
+      .exists(item => matchesValue(item.id, item.set, item.slug, value))
+
+  /** The path of every puzzle's own archive page, e.g. `/puzzles-and-games/crosswords/quick/archive`. */
+  def archivePaths(layout: PuzzlesLayout): Seq[String] =
+    layout.containers
+      .filter(container => archiveCategories.contains(container.id))
+      .flatMap(container =>
+        archiveItems(container).flatMap(toPuzzle(container.id, _)).map { case (puzzle, _) => puzzle.path },
+      )
+      .distinct
+
+  /** The path of the archive page for the puzzle with this `set` in `category`, if it has one. */
+  def archivePathFor(layout: PuzzlesLayout, category: String, set: String): Option[String] =
+    layout.containers
+      .find(_.id == category)
+      .toSeq
+      .flatMap(archiveItems)
+      .flatMap(toPuzzle(category, _))
+      .collectFirst { case (puzzle, _) if puzzle.set == set => puzzle.path }
 
   def select(layout: PuzzlesLayout, category: String, selected: Option[String]): Option[Selection] = {
     val container = layout.containers.find(_.id == category)
-    val candidates = container.toSeq.flatMap(archiveItems).flatMap(toPuzzle)
+    val candidates = container.toSeq.flatMap(archiveItems).flatMap(toPuzzle(category, _))
     val chosen = selected
-      .flatMap(value =>
-        candidates.find { case (puzzle, _) =>
-          puzzle.id == value || puzzle.set == value || puzzle.slug.exists(_.split('/').lastOption.contains(value))
-        },
-      )
+      .flatMap(value => candidates.find { case (puzzle, _) => matches(puzzle, value) })
       .orElse(candidates.headOption)
 
     chosen.map { case (puzzle, apiType) =>
@@ -69,6 +110,8 @@ object PuzzlesArchiveBuilder {
           "Word games" -> "Play the full archive of word games from the Guardian. Track your progress of what you've played and started."
         case "logic-puzzles" =>
           "Logic puzzles" -> "Play the full archive of logic puzzles from the Guardian. Track your progress of what you've played and started."
+        case "trivia-and-quizzes" =>
+          "Trivia & quizzes" -> "Play the full archive of trivia and quizzes from the Guardian. Track your progress of what you've played and started."
         case _ => container.map(_.title).getOrElse("Puzzles") -> "Choose a puzzle from our archive."
       }
       Selection(category, title, description, puzzle, candidates.map(_._1), apiType)
@@ -103,6 +146,8 @@ object PuzzlesArchiveBuilder {
       item.setterName,
       destination(selection, item),
       item.gameStatus,
+      item.isWithinFreeWindow,
+      item.hasPremiumEntitlement,
     )
 
   def build(

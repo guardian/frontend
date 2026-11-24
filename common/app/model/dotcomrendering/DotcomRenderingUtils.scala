@@ -223,6 +223,7 @@ object DotcomRenderingUtils extends DCARUrlHelper {
           addAffiliateLinks = affiliateLinks,
           isLivePricingEnabled,
           pageUrl = request.uri,
+          pageId = article.metadata.id,
           atoms = atoms,
           isMainBlock,
           article.content.metadata.format.exists(_.display == ImmersiveDisplay),
