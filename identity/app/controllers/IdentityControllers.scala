@@ -1,7 +1,6 @@
 package controllers
 
 import com.softwaremill.macwire._
-import controllers.editprofile.EditProfileController
 import form.FormComponents
 import idapiclient.IdApiComponents
 import model.ApplicationContext
@@ -19,7 +18,6 @@ trait IdentityControllers extends IdApiComponents with IdentityServices with For
   def csrfAddToken: CSRFAddToken
 
   lazy val publicProfileController = wire[PublicProfileController]
-  lazy val editProfileController = wire[EditProfileController]
   lazy val emailVerificationController = wire[EmailVerificationController]
   lazy val formstackController = wire[FormstackController]
   lazy val emailSignupController = wire[EmailSignupController]
