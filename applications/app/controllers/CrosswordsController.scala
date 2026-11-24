@@ -110,6 +110,21 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def withCrossword(crosswordType: String, id: Int)(
       f: (Crossword, ApiContent) => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
+    if (crosswordType != "maxi") {
+      withPublishedCrossword(crosswordType, id)(f)
+    } else {
+      val result =
+        if (PuzzlesHubV3Experiment.isEnabled) withPublishedCrossword(crosswordType, id)(f)
+        else Future.successful(NotFound)
+
+      // A cached puzzle or 404 must not be shared across experiment groups.
+      result.map(response => NoCache(response).withHeaders("Surrogate-Control" -> "no-store"))
+    }
+  }
+
+  private def withPublishedCrossword(crosswordType: String, id: Int)(
+      f: (Crossword, ApiContent) => Future[Result],
+  )(implicit request: RequestHeader): Future[Result] = {
     getCrossword(crosswordType, id).flatMap { response =>
       val maybeCrossword = for {
         content <- response.content
