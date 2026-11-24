@@ -113,13 +113,11 @@ class InteractiveController(
 
   def modelAndRender(
       response: ItemResponse,
-      skipCanonicalRedirect: Boolean = false,
   )(render: BlocksOn[InteractivePage] => Future[Result])(implicit req: RequestHeader): Future[Result] = {
     val content = response.content
     ModelOrResult(
       content.map(Interactive.make).map(i => InteractivePage(i, StoryPackages(i.metadata.id, response))),
       response,
-      skipCanonicalRedirect = skipCanonicalRedirect,
     ).fold(Future.successful, page => render(BlocksOn(page, content.flatMap(_.blocks).getOrElse(Blocks()))))
   }
 

@@ -60,8 +60,7 @@ class ArticleController(
       interactiveModifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
   )(implicit req: RequestHeader): Future[Result] = {
     def renderOriginal(): Future[Result] =
-      mapModel(path, range, None, skipCanonicalRedirect = false, originalRequestPath = path) { pageBlocks =>
-        render(path, modifier(pageBlocks))
+      mapModel(path, range) { pageBlocks => render(path, modifier(pageBlocks))
       }
 
     val pathToRender = determineArticleABTestPath(path)
@@ -163,37 +162,15 @@ class ArticleController(
     }
   }
 
-  def maskPathIfVariant(path: String, originalRequestPath: String)(
-      pageBlocks: BlocksOn[ArticlePage],
-  ): BlocksOn[ArticlePage] = {
-    if (path == originalRequestPath) pageBlocks
-    else {
-      val maskedUrl = s"/$originalRequestPath"
-      val maskedMetadata = pageBlocks.page.article.content.metadata.copy(
-        id = originalRequestPath,
-        url = maskedUrl,
-        webUrl = s"${Configuration.site.host}$maskedUrl",
-        canonicalUrl = Some(s"${Configuration.site.host}$maskedUrl"),
-      )
-      val maskedContent = pageBlocks.page.article.content.copy(metadata = maskedMetadata)
-      val maskedArticle = pageBlocks.page.article.copy(content = maskedContent)
-      pageBlocks.copy(page = pageBlocks.page.copy(article = maskedArticle))
-    }
-  }
-
   private def mapModel(
       path: String,
       range: BlockRange,
-      channelId: Option[CAPIChannel],
-      skipCanonicalRedirect: Boolean,
-      originalRequestPath: String,
   )(
       render: BlocksOn[ArticlePage] => Future[Result],
   )(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range), channelId)
-      .map(responseToModelOrResult(_, skipCanonicalRedirect))
-      .map(_.map(maskPathIfVariant(path, originalRequestPath)))
+      .lookup(path, Some(range))
+      .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {
         case Right(pageBlocks) => render(pageBlocks)
@@ -203,12 +180,11 @@ class ArticleController(
 
   private def responseToModelOrResult(
       response: ItemResponse,
-      skipCanonicalRedirect: Boolean,
   )(implicit request: RequestHeader): Either[Result, BlocksOn[ArticlePage]] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
 
-    ModelOrResult(supportedContent, response, skipCanonicalRedirect = skipCanonicalRedirect) match {
+    ModelOrResult(supportedContent, response) match {
       case Right(article: Article) =>
         Right(BlocksOn(ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Left(r) => Left(r)
