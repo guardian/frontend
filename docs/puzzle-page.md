@@ -129,24 +129,16 @@ up CAPI to construct crossword destinations. Other puzzle card destinations are 
 All Puzzle Page actions (dated render actions and archive redirects alike) are gated behind
 `common.PuzzlesHubAccess.isAvailable`, the same edition check used by this controller's
 `renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the request's edition is one of
-`PuzzlesHubAccess.Editions` (currently the International edition only), or the app runs in local development.
-To roll the hub out to another edition, add it to `PuzzlesHubAccess.Editions` and to `PUZZLES_HUB_EDITIONS` in
+`PuzzlesHubAccess.Editions` (currently all editions), or the app runs in local development.
+To change availability, keep `PuzzlesHubAccess.Editions` and `PUZZLES_HUB_EDITIONS` in sync with
 dotcom-rendering (`src/lib/puzzlesHubAccess.ts`), which applies the same rule again before rendering.
 
-Film reveal, On the ball and the Trivia & quizzes hub container and archive additionally
-require the cumulative `ab.PuzzlesHubV2Experiment`: the request's edition must be one of
-`PuzzlesHubAccess.Editions` and it must carry `puzzles-new-hub-v2:variant`. This covers dated HTML/JSON,
-bare redirects and trivia archive HTML; denied page requests never call the game/archive
-backends. Filtering covers featured/nested cards and existing archive choices before
-archive selection. Recommendations omit these games without v2 participation.
+Premium access (v3) still requires the hub edition and explicit `puzzles-new-hub-v3:variant` outside local development.
+Keep v3 at 0% for this launch. The development bypass remains in place.
 
-All archive JSON endpoints and their CORS preflights remain ungated and uncached,
-including trivia. DCR fetches these through `config.page.ajaxUrl` to avoid the page-host
-CDN cache when refreshing a reader's progress; that host does not receive the page's
-experiment cookie. The trivia data builder therefore selects from the complete trivia
-layout, while existing categories keep their V2 filtering. Reader-specific progress is
-still resolved from the Authorization header, never from an experiment cookie.
-Both the edition check and the experiment helper preserve the local development bypass.
+All archive JSON endpoints and their CORS preflights remain ungated and uncached. DCR fetches these
+through `config.page.ajaxUrl` to avoid the page-host CDN cache when refreshing a reader's progress.
+Reader-specific progress is still resolved from the Authorization header.
 
 ### The date path segment
 
@@ -266,16 +258,9 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-**The International edition is required** (see "Access gate" above), except in local development where the gate is
-bypassed. Outside it, every URL below 404s. Set the `X-Gu-Edition: INT` header via a browser extension
-(e.g. ModHeader) or `curl -H "X-Gu-Edition: INT" ...`.
+No experiment header is needed to view trivia. Local development bypasses the hub edition check.
 
-Outside local development, trivia additionally needs `X-GU-Server-AB-Tests: puzzles-new-hub-v2:variant`.
-Scope browser header rules to localhost to avoid CORS failures on third-party resources; frontend and DCR apply
-their gates independently.
-
-The `.json` route variant returns the exact JSON payload this repo would send to DCR, without
-needing DCR itself to be reachable.
+The `.json` route variant returns the DCR rendering data without needing DCR itself to be reachable.
 
 | Puzzle          | Dated URL (example date `2024-01-15`)                                            | Bare (archive-redirect) URL                                           |
 | --------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------- |

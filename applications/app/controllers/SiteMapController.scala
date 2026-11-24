@@ -1,6 +1,5 @@
 package controllers
 
-import ab.PuzzlesHubV2Experiment
 import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import jobs.SiteMapJob
 import model.{Cached, NoCache}
@@ -23,8 +22,7 @@ class SiteMapController(
       if (!PuzzlesHubAccess.isAvailable) Future.successful(NoCache(NotFound))
       else
         puzzlesLayoutProvider.getLayout().map { layout =>
-          val includeTrivia = PuzzlesHubV2Experiment.isEnabled
-          val sitemap = PuzzlesSiteMap.xml(PuzzlesArchiveBuilder.archivePaths(layout, includeTrivia), includeTrivia)
+          val sitemap = PuzzlesSiteMap.xml(PuzzlesArchiveBuilder.archivePaths(layout))
           Cached(60) {
             RevalidatableResult(Ok(sitemap).as("text/xml; charset=utf-8"), sitemap)
           }
