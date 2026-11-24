@@ -1,11 +1,9 @@
 package controllers
 
-import ab.ABTests
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse}
 import common._
 import conf.Configuration.interactive.cdnPath
 import conf.switches.Switches
-import conf.switches.Switches.{EditorialABTests, EditorialArticleABTests}
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, AppsFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -22,7 +20,7 @@ import services.dotcomrendering.{DotcomRendering, InteractivePicker, PressedInte
 import services.{
   ArticleAbTestAgent,
   ArticleVariantRenderer,
-  CAPIChannel,
+  ArticleABTestService,
   CAPILookup,
   SubnavAgent,
   USElection2020AmpPages,
@@ -48,6 +46,7 @@ class InteractiveController(
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
   private val variantRenderer = new ArticleVariantRenderer(wsClient, remoteRenderer, subnavAgent, newsletterService)
+  private val articleAbTestService = new ArticleABTestService(capiLookup, articleAbTestAgent, variantRenderer)
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -83,20 +82,8 @@ class InteractiveController(
     s"$cdnPath/service-workers/$stage/$deployPath/$file"
   }
 
-  private def determineArticleABTestPath(path: String)(implicit request: RequestHeader): String = {
-    val isArticleABTestingEnabled = EditorialABTests.isSwitchedOn && EditorialArticleABTests.isSwitchedOn
-    val isWebUserInVariantBBucket =
-      isArticleABTestingEnabled && ArticleVariantRenderer.supportsRequest && ABTests.isUserInTestGroup(
-        "fronts-and-curation-editorial-test",
-        "b",
-      )
-    if (isWebUserInVariantBBucket) articleAbTestAgent.variantFor(path).getOrElse(path) else path
-  }
-
-  private def lookupItemResponse(path: String, channelId: Option[CAPIChannel] = None)(implicit
-      request: RequestHeader,
-  ): Future[ItemResponse] = {
-    capiLookup.lookup(path, range = Some(ArticleBlocks), channel = channelId)
+  private def lookupItemResponse(path: String)(implicit request: RequestHeader): Future[ItemResponse] = {
+    capiLookup.lookup(path, range = Some(ArticleBlocks))
   }
 
   def modelAndRenderHtml(response: ItemResponse)(
@@ -188,18 +175,10 @@ class InteractiveController(
     if (isUSElectionAMP) {
       renderUSElectionAMPPage(path)
     } else {
-      val pathToRender = determineArticleABTestPath(path)
-      val result =
-        if (pathToRender == path) renderOriginal()
-        else {
-          lookupItemResponse(pathToRender, Some(CAPIChannel.Variant))
-            .flatMap(response => variantRenderer.render(response, path)(articleModifier, modifier))
-            .flatMap {
-              case Some(rendered) => Future.successful(rendered)
-              case None           => renderOriginal()
-            }
-        }
-      result.recover(convertApiExceptionsWithoutEither)
+      articleAbTestService
+        .renderVariant(path, ArticleBlocks)(articleModifier, modifier)(renderOriginal())
+        .getOrElse(renderOriginal())
+        .recover(convertApiExceptionsWithoutEither)
     }
   }
 
