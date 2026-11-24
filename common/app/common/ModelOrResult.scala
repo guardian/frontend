@@ -14,12 +14,11 @@ object ModelOrResult extends Results with GuLogging {
       item: Option[T],
       response: ItemResponse,
       maybeSection: Option[ApiSection] = None,
-      skipCanonicalRedirect: Boolean = false,
   )(implicit
       request: RequestHeader,
   ): Either[Result, T] =
     item
-      .map(i => ItemOrRedirect(i, response, maybeSection, skipCanonicalRedirect))
+      .map(i => ItemOrRedirect(i, response, maybeSection))
       .orElse(InternalRedirect(response).map(Left(_)))
       .getOrElse(Left(NoCache(NotFound)))
 }
@@ -27,13 +26,12 @@ object ModelOrResult extends Results with GuLogging {
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
 private object ItemOrRedirect extends ItemResponses with GuLogging {
 
-  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection], skipCanonicalRedirect: Boolean)(
-      implicit request: RequestHeader,
+  def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit
+      request: RequestHeader,
   ): Either[Result, T] =
     maybeSection match {
-      case Some(section)                 => redirectSection(item, request, section)
-      case None if skipCanonicalRedirect => Right(item)
-      case None                          => redirectArticle(item, response, request)
+      case Some(section) => redirectSection(item, request, section)
+      case None          => redirectArticle(item, response, request)
     }
 
   private def redirectArticle[T](item: T, response: ItemResponse, request: RequestHeader): Either[Result, T] = {

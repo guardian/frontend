@@ -17,7 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{DotcomRendering, InteractivePicker, PressedInteractive}
-import services.{CAPILookup, SubnavAgent, USElection2020AmpPages}
+import services.{ArticleABTestService, CAPILookup, SubnavAgent, USElection2020AmpPages}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -28,6 +28,7 @@ class InteractiveController(
     val controllerComponents: ControllerComponents,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     subnavAgent: SubnavAgent,
+    articleAbTestService: ArticleABTestService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -135,7 +136,12 @@ class InteractiveController(
     remoteRenderer.getAppsInteractive(wsClient, pageBlocks, pageType)
   }
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapAndRender(path)()
+
+  def mapAndRender(path: String)(
+      modifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
+      articleModifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
+  )(implicit request: RequestHeader): Future[Result] = {
     val requestFormat = request.getRequestFormat
     val isUSElectionAMP = USElection2020AmpPages.pathIsSpecialHanding(path) && requestFormat == AmpFormat
 
@@ -152,15 +158,16 @@ class InteractiveController(
       }
     }
 
-    if (isUSElectionAMP) { // A special-cased AMP page for various US Election (2020) interactive pages.
+    def renderOriginal(): Future[Result] =
+      lookupItemResponse(path).flatMap(response => modelAndRender(response)(pageBlocks => render(modifier(pageBlocks))))
+
+    if (isUSElectionAMP) {
       renderUSElectionAMPPage(path)
     } else {
-      val res = for {
-        resp <- lookupItemResponse(path)
-        result <- modelAndRender(resp)(render)
-      } yield result
-
-      res.recover(convertApiExceptionsWithoutEither)
+      articleAbTestService
+        .renderVariant(path, ArticleBlocks)(articleModifier, modifier)(renderOriginal())
+        .getOrElse(renderOriginal())
+        .recover(convertApiExceptionsWithoutEither)
     }
   }
 
