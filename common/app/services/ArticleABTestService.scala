@@ -2,9 +2,12 @@ package services
 
 import ab.ABTests
 import conf.switches.Switches.{EditorialABTests, EditorialArticleABTests}
-import model.{ArticlePage, BlockRange, InteractivePage}
+import contentapi.ContentApiClient
+import model.{ApplicationContext, ArticlePage, BlockRange, InteractivePage}
 import model.meta.BlocksOn
+import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
+import renderers.DotcomRenderingService
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -12,10 +15,16 @@ import scala.concurrent.{ExecutionContext, Future}
   * caller.
   */
 class ArticleABTestService(
-    capiLookup: CAPILookup,
+    contentApiClient: ContentApiClient,
     articleAbTestAgent: ArticleAbTestAgent,
-    variantRenderer: ArticleVariantRenderer,
-)(implicit ec: ExecutionContext) {
+    ws: WSClient,
+    remoteRenderer: DotcomRenderingService,
+    subnavAgent: SubnavAgent,
+    newsletterService: NewsletterService,
+)(implicit context: ApplicationContext) {
+
+  private val capiLookup = new CAPILookup(contentApiClient)
+  private val variantRenderer = new ArticleVariantRenderer(ws, remoteRenderer, subnavAgent, newsletterService)
 
   /** None means no distinct variant was selected. The original is used only if a selected variant cannot be rendered.
     * Failed lookups or renders remain failures, rather than falling back to the original.
@@ -23,7 +32,10 @@ class ArticleABTestService(
   def renderVariant(path: String, range: BlockRange)(
       articleModifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
       interactiveModifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
-  )(renderOriginal: => Future[Result])(implicit request: RequestHeader): Option[Future[Result]] = {
+  )(renderOriginal: => Future[Result])(implicit
+      request: RequestHeader,
+      ec: ExecutionContext,
+  ): Option[Future[Result]] = {
     val isWebUserInVariantBBucket =
       EditorialABTests.isSwitchedOn && EditorialArticleABTests.isSwitchedOn &&
         ArticleVariantRenderer.supportsRequest && ABTests.isUserInTestGroup("fronts-and-curation-editorial-test", "b")

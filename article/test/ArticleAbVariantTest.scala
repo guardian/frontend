@@ -8,7 +8,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
 import play.api.test.Helpers.stubControllerComponents
 import renderers.DotcomRenderingService
-import services.{ArticleAbTestAgent, ArticleVariantControllerTest, MockSubnavAgent, NewsletterService}
+import services.{ArticleAbTestAgent, ArticleABTestService, ArticleVariantControllerTest, MockSubnavAgent, NewsletterService}
 
 import scala.concurrent.Future
 
@@ -24,14 +24,17 @@ class ArticleAbVariantTest extends ArticleVariantControllerTest {
       articleModifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage],
       interactiveModifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage],
   )(implicit request: RequestHeader): Future[Result] = {
+    val ws = mock[WSClient]
+    val subnav = new MockSubnavAgent()
+    val articleAbTestService = new ArticleABTestService(capi, agent, ws, renderer, subnav, newsletters)
     val controller = new ArticleController(
       contentApiClient = capi,
       controllerComponents = stubControllerComponents(),
-      ws = mock[WSClient],
+      ws = ws,
       remoteRenderer = renderer,
       newsletterService = newsletters,
-      subnavAgent = new MockSubnavAgent(),
-      articleAbTestAgent = agent,
+      subnavAgent = subnav,
+      articleAbTestService = articleAbTestService,
     )
     controller.mapAndRender(path, ArticleBlocks)(articleModifier, interactiveModifier)
   }

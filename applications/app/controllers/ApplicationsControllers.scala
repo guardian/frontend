@@ -7,7 +7,7 @@ import model.ApplicationContext
 import play.api.Environment
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
-import services.{ArticleAbTestAgent, SubnavAgent}
+import services.{ArticleABTestService, SubnavAgent}
 import services.eventgraphic.EventGraphicService
 import services.newsletters.NewsletterSignupAgent
 
@@ -20,7 +20,7 @@ trait ApplicationsControllers {
   def controllerComponents: ControllerComponents
   def environment: Environment
   def subnavAgent: SubnavAgent
-  def articleAbTestAgent: ArticleAbTestAgent
+  def articleAbTestService: ArticleABTestService
   def newsletterSignupAgent: NewsletterSignupAgent
   def eventGraphicService: EventGraphicService
   implicit def appContext: ApplicationContext
@@ -52,10 +52,7 @@ trait ApplicationsControllers {
   lazy val galleryController = wire[GalleryController]
   lazy val imageContentController = wire[ImageContentController]
   lazy val mediaController = wire[MediaController]
-  lazy val interactiveController = {
-    val newsletterService = wire[services.NewsletterService]
-    wire[InteractiveController]
-  }
+  lazy val interactiveController = wire[InteractiveController]
   lazy val shortUrlsController = wire[ShortUrlsController]
   lazy val indexController = wire[IndexController]
   lazy val siteVerificationController = wire[SiteVerificationController]

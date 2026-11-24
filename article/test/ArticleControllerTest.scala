@@ -8,7 +8,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover}
 import org.scalatest.matchers.should.Matchers
 import play.api.test.Helpers._
 import play.api.test._
-import services.{MockArticleAbTestAgent, MockSubnavAgent, NewsletterService}
+import services.{ArticleABTestService, MockArticleAbTestAgent, MockSubnavAgent, NewsletterService}
 import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
 
 @DoNotDiscover class ArticleControllerTest
@@ -25,15 +25,28 @@ import services.newsletters.{NewsletterApi, NewsletterSignupAgent}
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
 
-  lazy val articleController = new ArticleController(
-    contentApiClient = testContentApiClient,
-    controllerComponents = play.api.test.Helpers.stubControllerComponents(),
-    ws = wsClient,
-    remoteRenderer = new DCRFake(),
-    newsletterService = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient))),
-    subnavAgent = new MockSubnavAgent(),
-    articleAbTestAgent = new MockArticleAbTestAgent(),
-  )
+  lazy val articleController = {
+    val renderer = new DCRFake()
+    val newsletters = new NewsletterService(new NewsletterSignupAgent(new NewsletterApi(wsClient)))
+    val subnav = new MockSubnavAgent()
+    val articleAbTestService = new ArticleABTestService(
+      testContentApiClient,
+      new MockArticleAbTestAgent(),
+      wsClient,
+      renderer,
+      subnav,
+      newsletters,
+    )
+    new ArticleController(
+      contentApiClient = testContentApiClient,
+      controllerComponents = stubControllerComponents(),
+      ws = wsClient,
+      remoteRenderer = renderer,
+      newsletterService = newsletters,
+      subnavAgent = subnav,
+      articleAbTestService = articleAbTestService,
+    )
+  }
 
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))

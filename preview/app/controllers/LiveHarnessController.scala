@@ -5,10 +5,8 @@ import common.{GuLogging, ImplicitControllerExecutionContext}
 import contentapi.ContentApiClient
 import model.{ApplicationContext, ArticleBlocks, GenericFallback}
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
-import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, BaseController, ControllerComponents}
-import renderers.DotcomRenderingService
-import services.{ArticleAbTestAgent, CAPILookup, NewsletterService, SubnavAgent}
+import services.CAPILookup
 import utils.LiveHarness.inject
 import utils.LiveHarnessInteractiveAtom
 
@@ -17,40 +15,14 @@ import scala.concurrent.Future
 class LiveHarnessController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
-    ws: WSClient,
-    newsletterService: NewsletterService,
-    subnavAgent: SubnavAgent,
-    articleAbTestAgent: ArticleAbTestAgent,
+    articleController: ArticleController,
+    interactiveController: InteractiveController,
 )(implicit val context: ApplicationContext)
     extends BaseController
     with GuLogging
     with ImplicitControllerExecutionContext {
 
-  private val renderingService = DotcomRenderingService()
-
   private val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-
-  private val articleController =
-    new ArticleController(
-      contentApiClient = contentApiClient,
-      controllerComponents = controllerComponents,
-      ws = ws,
-      remoteRenderer = renderingService,
-      newsletterService = newsletterService,
-      subnavAgent = subnavAgent,
-      articleAbTestAgent = articleAbTestAgent,
-    )
-
-  private val interactiveController =
-    new InteractiveController(
-      contentApiClient = contentApiClient,
-      wsClient = ws,
-      controllerComponents = controllerComponents,
-      remoteRenderer = renderingService,
-      subnavAgent = subnavAgent,
-      articleAbTestAgent = articleAbTestAgent,
-      newsletterService = newsletterService,
-    )
 
   def renderLiveHarness(path: String): Action[JsValue] = Action.async(
     // We allow a larger payload here to accommodate server-side rendered atoms, which can be larger than

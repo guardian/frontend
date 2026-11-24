@@ -17,15 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{DotcomRendering, InteractivePicker, PressedInteractive}
-import services.{
-  ArticleAbTestAgent,
-  ArticleVariantRenderer,
-  ArticleABTestService,
-  CAPILookup,
-  SubnavAgent,
-  USElection2020AmpPages,
-  NewsletterService,
-}
+import services.{ArticleABTestService, CAPILookup, SubnavAgent, USElection2020AmpPages}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -36,8 +28,7 @@ class InteractiveController(
     val controllerComponents: ControllerComponents,
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     subnavAgent: SubnavAgent,
-    articleAbTestAgent: ArticleAbTestAgent,
-    newsletterService: NewsletterService,
+    articleAbTestService: ArticleABTestService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -45,8 +36,6 @@ class InteractiveController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  private val variantRenderer = new ArticleVariantRenderer(wsClient, remoteRenderer, subnavAgent, newsletterService)
-  private val articleAbTestService = new ArticleABTestService(capiLookup, articleAbTestAgent, variantRenderer)
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }

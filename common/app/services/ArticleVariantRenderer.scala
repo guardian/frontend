@@ -30,13 +30,13 @@ class ArticleVariantRenderer(
     remoteRenderer: DotcomRenderingService,
     subnavAgent: SubnavAgent,
     newsletterService: NewsletterService,
-)(implicit context: ApplicationContext, ec: ExecutionContext)
+)(implicit context: ApplicationContext)
     extends GuLogging {
 
   def render(response: ItemResponse, originalPath: String)(
       articleModifier: BlocksOn[ArticlePage] => BlocksOn[ArticlePage] = identity,
       interactiveModifier: BlocksOn[InteractivePage] => BlocksOn[InteractivePage] = identity,
-  )(implicit request: RequestHeader): Future[Option[Result]] = {
+  )(implicit request: RequestHeader, ec: ExecutionContext): Future[Option[Result]] = {
     if (!ArticleVariantRenderer.supportsRequest) Future.successful(None)
     else {
       val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())

@@ -17,14 +17,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import renderers.DotcomRenderingService
 import services.dotcomrendering.{ArticlePicker, PressedArticle, RemoteRender}
-import services.{
-  ArticleAbTestAgent,
-  ArticleVariantRenderer,
-  ArticleABTestService,
-  CAPILookup,
-  NewsletterService,
-  SubnavAgent,
-}
+import services.{ArticleABTestService, CAPILookup, NewsletterService, SubnavAgent}
 import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
@@ -36,7 +29,7 @@ class ArticleController(
     remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
     newsletterService: NewsletterService,
     subnavAgent: SubnavAgent,
-    articleAbTestAgent: ArticleAbTestAgent,
+    articleAbTestService: ArticleABTestService,
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -44,8 +37,6 @@ class ArticleController(
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
-  private val variantRenderer = new ArticleVariantRenderer(ws, remoteRenderer, subnavAgent, newsletterService)
-  private val articleAbTestService = new ArticleABTestService(capiLookup, articleAbTestAgent, variantRenderer)
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku || c.isHosted
 
