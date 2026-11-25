@@ -9,6 +9,7 @@ import renderers.DotcomRenderingService
 import services.newsletters.NewsletterSignupAgent
 import services.{
   ArticleAbTestAgent,
+  ArticleABTestService,
   NewsletterService,
   NewspaperBookSectionTagAgent,
   NewspaperBookTagAgent,
@@ -28,6 +29,7 @@ trait ArticleControllers {
   lazy val bookAgent: NewspaperBookTagAgent = wire[NewspaperBookTagAgent]
   lazy val bookSectionAgent: NewspaperBookSectionTagAgent = wire[NewspaperBookSectionTagAgent]
   lazy val publicationController = wire[PublicationController]
+  lazy val articleAbTestService = wire[ArticleABTestService]
   lazy val articleController = wire[ArticleController]
   lazy val liveBlogController = wire[LiveBlogController]
   lazy val newsletterService = wire[NewsletterService]

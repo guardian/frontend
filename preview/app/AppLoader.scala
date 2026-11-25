@@ -36,6 +36,7 @@ import services.{
   SubnavAgentLifecycle,
   AffiliateProductPriceCacheLifeCycle,
 }
+import services.articleabtest.ArticleAbTestLifecycle
 import utils.AWSv2
 
 trait PreviewLifecycleComponents
@@ -64,6 +65,7 @@ trait PreviewLifecycleComponents
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
       wire[NewsletterSignupLifecycle],
+      wire[ArticleAbTestLifecycle],
       wire[AffiliateProductPriceCacheLifeCycle],
     )
 

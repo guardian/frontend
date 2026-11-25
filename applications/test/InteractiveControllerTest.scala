@@ -12,7 +12,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, PrivateMethodTester}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result, Results}
 import play.api.test.Helpers._
-import services.MockSubnavAgent
+import services.{ArticleABTestService, MockArticleAbTestAgent, MockSubnavAgent}
 
 import scala.concurrent.Future
 
@@ -39,13 +39,29 @@ class DCRFake() extends renderers.DotcomRenderingService {
     with PrivateMethodTester {
 
   val url = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
-  lazy val interactiveController = new InteractiveController(
-    contentApiClient = testContentApiClient,
-    wsClient = wsClient,
-    controllerComponents = play.api.test.Helpers.stubControllerComponents(),
-    remoteRenderer = new DCRFake(),
-    subnavAgent = new MockSubnavAgent(),
-  )
+  lazy val interactiveController = {
+    val renderer = new DCRFake()
+    val subnav = new MockSubnavAgent()
+    val newsletters = new services.NewsletterService(
+      new services.newsletters.NewsletterSignupAgent(new services.newsletters.NewsletterApi(wsClient)),
+    )
+    val articleAbTestService = new ArticleABTestService(
+      testContentApiClient,
+      new MockArticleAbTestAgent(),
+      wsClient,
+      renderer,
+      subnav,
+      newsletters,
+    )
+    new InteractiveController(
+      contentApiClient = testContentApiClient,
+      wsClient = wsClient,
+      controllerComponents = stubControllerComponents(),
+      remoteRenderer = renderer,
+      subnavAgent = subnav,
+      articleAbTestService = articleAbTestService,
+    )
+  }
 
   val getWebWorkerPath = PrivateMethod[String](Symbol("getWebWorkerPath"))
 

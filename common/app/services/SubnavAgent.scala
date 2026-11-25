@@ -54,9 +54,9 @@ class SubnavAgent(appIdentity: ApplicationIdentity) extends GuLogging {
   def getSubnavForContent(content: Content, status: PublicationStatus = publicationStatus): Option[CustomSubnav] = {
     getSubnavConfig().flatMap { config =>
       def subnavMatchesSpecificArticle(subnav: CustomSubnav): Boolean =
-        subnav.pages.exists(p => p.path == content.metadata.id && p.`type` == Article)
+        subnav.pages.exists(_.exists(p => p.path == content.metadata.id && p.`type` == Article))
       def subnavMatchesTag(subnav: CustomSubnav, tagId: String): Boolean =
-        subnav.pages.exists(p => p.`type` == HasTag && p.path == tagId)
+        subnav.pages.exists(_.exists(p => p.`type` == HasTag && p.path == tagId))
 
       val draft = if (status == Draft) config.draft else Nil
       val all = config.live ++ draft
