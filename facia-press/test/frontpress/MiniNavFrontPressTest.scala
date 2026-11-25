@@ -32,7 +32,7 @@ class MiniNavFrontPressTest extends AsyncFlatSpec with Matchers with MockitoSuga
       header = CustomSubnavHeader("Header", Some(url), "Copy"),
       format = CustomSubnavFormat.Large,
       links = Nil,
-      pages = Nil,
+      pages = None,
       images = None,
       palette = None,
       lastUpdated = new DateTime(0L),

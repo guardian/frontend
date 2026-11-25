@@ -6,7 +6,7 @@ object Dependencies {
   val identityLibVersion = "10.0.0"
   val awsVersion = "2.57.5"
   val capiVersion = "52.0.1"
-  val faciaVersion = "47.2.3"
+  val faciaVersion = "47.2.5"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -20,7 +20,7 @@ object Dependencies {
   val awsDynamodb = "software.amazon.awssdk" % "dynamodb" % awsVersion
   val awsKinesis = "software.amazon.awssdk" % "kinesis" % awsVersion
   val awsS3 = "software.amazon.awssdk" % "s3" % awsVersion
-  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "18.0.0"
+  val eTagCachingS3 = "com.gu.etag-caching" %% "aws-s3-sdk-v2" % "19.0.2"
   val awsSes = "software.amazon.awssdk" % "ses" % awsVersion
   val awsSns = "software.amazon.awssdk" % "sns" % awsVersion
   val awsSts = "software.amazon.awssdk" % "sts" % awsVersion

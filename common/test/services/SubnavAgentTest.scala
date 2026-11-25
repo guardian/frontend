@@ -27,7 +27,7 @@ class SubnavAgentTest extends AnyFlatSpec with Matchers with GuiceOneAppPerSuite
       header = CustomSubnavHeader(headerText = "subnav 1", dotcomPath = url, copy = "copy"),
       format = CustomSubnavFormat.Large,
       links = Nil,
-      pages = pages,
+      pages = Some(pages),
       images = None,
       palette = None,
       lastUpdated = new DateTime(),
