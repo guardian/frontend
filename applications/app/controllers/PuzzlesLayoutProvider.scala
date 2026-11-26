@@ -225,19 +225,20 @@ object LocalJsonPuzzlesLayoutProvider {
   private def puzzleArtwork(filename: String): String =
     s"https://i.guim.co.uk/img/uploads/2026/09/15/$filename.png?width=440&dpr=2&s=none"
 
-  private def featuredCrossword(id: String, title: String, set: String): PuzzleItem = {
-    val artworkSet = if (set == "weekend") "GENERAL-KNOWLEDGE" else set.toUpperCase(java.util.Locale.ROOT)
+  private def featuredTrivia(id: String, title: String): PuzzleItem =
     PuzzleItem(
       id = s"featured-$id",
       title = title,
-      `type` = "crossword",
-      set = set,
+      `type` = id,
+      set = "all",
       cardVariant = "large",
-      image = Some(puzzleArtwork(s"crossword-$artworkSet")),
+      cadence = Some("Daily"),
+      image = Some(s"https://i.guim.co.uk/img/uploads/2026/10/28/$id-featured.png?width=440&dpr=2&s=none"),
       imageAlt = Some(s"$title illustration"),
-      backgroundColour = Some("#FCE1CE"),
+      slug = Some(s"trivia-and-quizzes/$id"),
+      variant = Some("iframe-page"),
+      backgroundColour = Some("#F3FBFB"),
     )
-  }
 
   private def featuredSudoku(id: String, title: String, set: String, amuseLabsSet: String): PuzzleItem =
     PuzzleItem(
@@ -287,30 +288,33 @@ object LocalJsonPuzzlesLayoutProvider {
   private[controllers] def featuredPuzzlesFor(day: DayOfWeek): Seq[PuzzleItem] = day match {
     case DayOfWeek.MONDAY =>
       Seq(
-        featuredCrossword("crossword-quick", "Quick crossword", "quick"),
         featuredSudoku("sudoku-easy", "Easy sudoku", "easy", "guardian-sudoku-easy"),
+        wordWheel,
       )
     case DayOfWeek.TUESDAY =>
-      Seq(featuredCrossword("crossword-mini", "Mini crossword", "mini"), wordWheel)
+      Seq(wordWheel, featuredTrivia("film-reveal", "Film reveal"))
     case DayOfWeek.WEDNESDAY =>
       Seq(
-        featuredCrossword("crossword-cryptic", "Cryptic crossword", "cryptic"),
+        featuredTrivia("on-the-ball", "On the ball"),
         featuredSudoku("sudoku-medium", "Medium sudoku", "medium", "guardian-sudoku-medium"),
       )
     case DayOfWeek.THURSDAY =>
-      Seq(featuredCrossword("crossword-quick", "Quick crossword", "quick"), wordiply)
-    case DayOfWeek.FRIDAY =>
       Seq(
-        featuredCrossword("crossword-mini", "Mini crossword", "mini"),
+        wordiply,
         featuredSudoku("sudoku-hard", "Hard sudoku", "hard", "guardian-sudoku-hard"),
       )
-    case DayOfWeek.SATURDAY =>
+    case DayOfWeek.FRIDAY =>
       Seq(
-        featuredCrossword("crossword-weekend", "General knowledge crossword", "weekend"),
+        featuredTrivia("film-reveal", "Film reveal"),
         featuredSudoku("sudoku-killer", "Killer sudoku", "killer", "guardian-killer-sudoku-medium"),
       )
+    case DayOfWeek.SATURDAY =>
+      Seq(featuredTrivia("on-the-ball", "On the ball"), wordWheel)
     case DayOfWeek.SUNDAY =>
-      Seq(featuredCrossword("crossword-quiptic", "Quiptic crossword", "quiptic"), wordWheel)
+      Seq(
+        featuredSudoku("sudoku-medium", "Medium sudoku", "medium", "guardian-sudoku-medium"),
+        featuredTrivia("film-reveal", "Film reveal"),
+      )
   }
 
   private[controllers] val CrosswordSeriesTags: Map[String, String] = Map(
