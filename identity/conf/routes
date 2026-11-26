@@ -3,9 +3,6 @@ GET         /assets/*path                          dev.DevAssetsController.at(pa
 
 GET         /_healthcheck                           controllers.HealthCheck.healthCheck()
 
-GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration
-POST        /complete-registration                  controllers.EmailVerificationController.resendValidationEmail
-
 ########################################################################################################################
 # Discussion
 ########################################################################################################################
