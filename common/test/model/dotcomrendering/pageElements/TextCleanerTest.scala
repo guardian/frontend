@@ -183,6 +183,31 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
     got shouldBe want
   }
 
+  "split" should "not add whitespace before a closing tag when a bold run starts with a line break" in {
+    val html =
+      """<p>plus extra for greasing<strong><br>1 tbsp whole milk<br>Cream</strong>, or ice cream to serve</p>"""
+
+    TextCleaner.split(html) shouldBe List(("p", html))
+  }
+
+  it should "return each top-level element unchanged" in {
+    val html = """<p>Line one<br>Line two</p><ul><li>One</li><li>Two</li></ul><h2>Heading</h2>"""
+
+    TextCleaner.split(html) shouldBe List(
+      ("p", "<p>Line one<br>Line two</p>"),
+      ("ul", "<ul><li>One</li><li>Two</li></ul>"),
+      ("h2", "<h2>Heading</h2>"),
+    )
+  }
+
+  "sanitiseLinks" should "not add whitespace when rewriting links in a bold run that starts with a line break" in {
+    val got = TextCleaner.sanitiseLinks(Uk)(
+      """<p><strong><br><a href="https://www.theguardian.com/help">Cream</a></strong>, to serve</p>""",
+    )
+
+    got shouldBe s"""<p><strong><br><a href="${host}/help">Cream</a></strong>, to serve</p>"""
+  }
+
   "sanitiseLinks" should "update internal links" in {
 
     val got = TextCleaner.sanitiseLinks(Uk)(
@@ -228,6 +253,23 @@ class TextCleanerTest extends AnyFlatSpec with Matchers {
       got should include(s"""href="$expectedHref"""")
       got should include("""rel="sponsored noreferrer noopener"""")
       got should include("Photograph: Someone")
+    } finally {
+      SkimLinksCache.setDomains(Set.empty)
+    }
+  }
+
+  it should "not add whitespace when rewriting links in a bold run that starts with a line break" in {
+    SkimLinksCache.setDomains(Set("amazon.co.uk"))
+    try {
+      val got = TextCleaner.rewriteAffiliateLinks(
+        """<p><strong><br><a href="https://www.amazon.co.uk/product/123">Cream</a></strong>, to serve</p>""",
+        "/money/2025/nov/19/test-article",
+        "123",
+        Map.empty,
+      )
+
+      got should include("""</a></strong>, to serve</p>""")
+      got should startWith("""<p><strong><br><a """)
     } finally {
       SkimLinksCache.setDomains(Set.empty)
     }

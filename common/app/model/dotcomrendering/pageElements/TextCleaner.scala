@@ -50,7 +50,9 @@ object TextCleaner {
     if (AffiliateLinksCleaner.getAffiliateableLinks(doc).isEmpty) {
       html
     } else {
-      AffiliateLinksCleaner.replaceLinksInHtml(doc, pageId, skimlinksId, abTests).body().html()
+      val cleaned = AffiliateLinksCleaner.replaceLinksInHtml(doc, pageId, skimlinksId, abTests)
+      cleaned.outputSettings().prettyPrint(false)
+      cleaned.body().html()
     }
   }
 
@@ -90,6 +92,7 @@ object TextCleaner {
     }
 
     if (links.asScala.nonEmpty) {
+      doc.outputSettings().prettyPrint(false)
       doc.body().html()
     } else {
       html
@@ -108,9 +111,12 @@ object TextCleaner {
     })
   }
 
+  // Pretty-printing is disabled so the HTML matches CAPI; otherwise jsoup can add whitespace that renders as visible
+  // spaces, e.g. before `</strong>` when the bold starts with a `<br>`.
   def split(html: String): List[(String, String)] = {
-    Jsoup
-      .parseBodyFragment(html)
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.outputSettings().prettyPrint(false)
+    doc
       .body()
       .children()
       .asScala
