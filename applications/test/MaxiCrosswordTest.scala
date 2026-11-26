@@ -70,9 +70,9 @@ class MaxiCrosswordTest extends AnyFlatSpec with Matchers with EitherValues with
       )
     }
 
-    def load(crosswordType: String, group: String): Future[Result] = {
+    def load(crosswordType: String, participation: String): Future[Result] = {
       implicit val request: RequestHeader = ABTests.decorateRequest("X-GU-Server-AB-Tests")(
-        FakeRequest().withHeaders("X-Gu-Edition" -> "UK", "X-GU-Server-AB-Tests" -> s"puzzles-new-hub-v3:$group"),
+        FakeRequest().withHeaders("X-Gu-Edition" -> "UK", "X-GU-Server-AB-Tests" -> participation),
       )
       withCrossword(crosswordType, 1)((_, content) => Future.successful(Cached.explicitlyCache(60)(Ok(content.id))))
     }
@@ -80,16 +80,22 @@ class MaxiCrosswordTest extends AnyFlatSpec with Matchers with EitherValues with
 
   "Maxi crossword routes" should "return an uncacheable 404 without fetching CAPI in the control group" in {
     val controller = new TestController
-    val result = controller.load("maxi", "control")
+    val result = controller.load("maxi", "puzzles-new-hub-v4:control")
     status(result) shouldBe NOT_FOUND
     header(CACHE_CONTROL, result).value should include("no-store")
     header("Surrogate-Control", result) shouldBe Some("no-store")
     controller.lookups shouldBe empty
   }
 
-  it should "serve Maxi in V3 without caching the response across groups" in {
+  it should "not serve Maxi to readers in V3 alone" in {
     val controller = new TestController
-    val result = controller.load("maxi", "variant")
+    status(controller.load("maxi", "puzzles-new-hub-v3:variant")) shouldBe NOT_FOUND
+    controller.lookups shouldBe empty
+  }
+
+  it should "serve Maxi in V4 without V3 or caching across groups" in {
+    val controller = new TestController
+    val result = controller.load("maxi", "puzzles-new-hub-v4:variant")
     status(result) shouldBe OK
     contentAsString(result) shouldBe "crosswords/maxi/1"
     header(CACHE_CONTROL, result).value should include("no-store")
@@ -98,7 +104,7 @@ class MaxiCrosswordTest extends AnyFlatSpec with Matchers with EitherValues with
 
   it should "keep other crossword types available and cacheable in the control group" in {
     val controller = new TestController
-    val result = controller.load("mini", "control")
+    val result = controller.load("mini", "puzzles-new-hub-v4:control")
     status(result) shouldBe OK
     contentAsString(result) shouldBe "crosswords/mini/1"
     header("Surrogate-Control", result).value should include("max-age=60")
