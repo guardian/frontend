@@ -14,6 +14,7 @@ object PuzzlesArchiveBuilder {
     ("crossword", "quick") -> "CROSSWORD_QUICK",
     ("crossword", "genius") -> "CROSSWORD_GENIUS",
     ("crossword", "mini") -> "CROSSWORD_MINI",
+    ("crossword", "maxi") -> "CROSSWORD_MAXI",
     ("crossword", "cryptic") -> "CROSSWORD_CRYPTIC",
     ("crossword", "weekend") -> "CROSSWORD_WEEKEND",
     ("crossword", "quick-cryptic") -> "CROSSWORD_QUICKCRYPTIC",

@@ -38,6 +38,15 @@
 							"backgroundColour": "#FCE1CE"
 						},
 						{
+							"id": "crossword-maxi",
+							"title": "Maxi",
+							"type": "crossword",
+							"set": "maxi",
+							"cardVariant": "primary",
+							"image": "https://uploads.guim.co.uk/2026/11/19/maxi-primary.svg",
+							"imageAlt": "Maxi crossword illustration"
+						},
+						{
 							"id": "crossword-cryptic",
 							"title": "Cryptic",
 							"type": "crossword",
@@ -128,6 +137,15 @@
 						"set": "mini",
 						"cardVariant": "archive",
 						"url": "/puzzles-and-games/crosswords/mini/archive",
+						"variant": "archive-page"
+					},
+					{
+						"id": "archive-maxi",
+						"title": "Maxi",
+						"type": "crossword",
+						"set": "maxi",
+						"cardVariant": "archive",
+						"url": "/puzzles-and-games/crosswords/maxi/archive",
 						"variant": "archive-page"
 					},
 					{

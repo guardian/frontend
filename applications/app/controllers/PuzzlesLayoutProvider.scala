@@ -9,12 +9,15 @@ import services.newsletters.NewsletterSignupAgent
 
 import java.time.{Clock, DayOfWeek, LocalDate, ZoneId}
 import scala.concurrent.{ExecutionContext, Future, blocking}
+import scala.util.Try
 import scala.util.control.NonFatal
 
 import LocalJsonPuzzlesLayoutProvider.CrosswordDynamicFields
 
 trait PuzzlesLayoutProvider {
   def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout]
+
+  def getLayoutForV4()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] = getLayout()
 
   def getGameCommercialProperties(group: String)(implicit
       executionContext: ExecutionContext,
@@ -45,14 +48,43 @@ class LocalJsonPuzzlesLayoutProvider(
     Future(blocking(loadLayout()))
 
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
-    Future(blocking(loadLayout())).flatMap { baseLayout =>
+    buildLayout(includeMaxi = false)
+
+  override def getLayoutForV4()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
+    buildLayout(includeMaxi = true)
+
+  private def buildLayout(includeMaxi: Boolean)(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
+    Future(blocking(loadLayout())).flatMap { layout =>
+      val baseLayout = if (includeMaxi) layout else filterMaxi(layout, includeMaxi = false)
       val scheduledLayout = resolveNewsletters(applyFeaturedSchedule(baseLayout))
       val datedLayout = applyIframeDateFallback(scheduledLayout)
-      enrichCrosswordItems(datedLayout).recover { case NonFatal(error) =>
-        log.warn("Failed to enrich crossword cards from the Puzzles API using the scheduled layout", error)
-        datedLayout
-      }
+      enrichCrosswordItems(datedLayout)
+        .recover { case NonFatal(error) =>
+          log.warn("Failed to enrich crossword cards from the Puzzles API using the scheduled layout", error)
+          datedLayout
+        }
+        .map { enriched =>
+          if (includeMaxi) filterMaxi(enriched, includeMaxi = true) else enriched
+        }
     }
+
+  private def isMaxi(item: PuzzleItem): Boolean = item.`type` == "crossword" && item.set == "maxi"
+
+  private def filterMaxi(layout: PuzzlesLayout, includeMaxi: Boolean): PuzzlesLayout = {
+    def filterContainer(container: PuzzleContainer): PuzzleContainer = {
+      val content = container.content
+      container.copy(content =
+        content.copy(
+          items =
+            content.items.map(_.filter(item => !isMaxi(item) || (includeMaxi && item.url.exists(_.trim.nonEmpty)))),
+          nestedContainers = content.nestedContainers.map(filterContainer),
+          archive = content.archive.filter(item => !isMaxi(item) || includeMaxi),
+          archiveChoices = content.archiveChoices.map(_.filter(item => !isMaxi(item) || includeMaxi)).filter(_.nonEmpty),
+        ),
+      )
+    }
+    layout.copy(containers = layout.containers.map(filterContainer))
+  }
 
   private def applyFeaturedSchedule(layout: PuzzlesLayout): PuzzlesLayout = {
     val day = LocalDate.now(clock.withZone(LocalJsonPuzzlesLayoutProvider.FeaturedScheduleZone)).getDayOfWeek
@@ -170,6 +202,8 @@ class LocalJsonPuzzlesLayoutProvider(
             image = item.image.orElse(dynamicFields.image),
             imageAlt = item.imageAlt.orElse(Some(s"${item.title} illustration")),
             setter = dynamicFields.setter.orElse(item.setter),
+            date = dynamicFields.publishDate.orElse(item.date),
+            cadence = dynamicFields.cadence.orElse(item.cadence),
           ),
         )
         .getOrElse(item)
@@ -196,12 +230,17 @@ class LocalJsonPuzzlesLayoutProvider(
               .reverse
               .flatMap { item =>
                 item.gameUrl.filter(_.trim.nonEmpty).map { url =>
+                  val publishDate = Option
+                    .when(set == "maxi")(item.publishDate.take(10))
+                    .flatMap(date => Try(LocalDate.parse(date)).toOption)
                   CrosswordDynamicFields(
                     url = url,
                     image =
                       if (set == "genius") None
                       else Some(s"https://api.nextgen.guardianapps.co.uk/crosswords/$set/${item.puzzleId}.svg"),
                     setter = item.setterName.map(_.trim).filter(_.nonEmpty),
+                    publishDate = publishDate.map(_.toString),
+                    cadence = publishDate.map(PuzzleRecommendations.cadenceFor(_, today)),
                   )
                 }
               }
@@ -329,5 +368,11 @@ object LocalJsonPuzzlesLayoutProvider {
     "azed" -> "crosswords/series/azed",
   )
 
-  private[controllers] case class CrosswordDynamicFields(url: String, image: Option[String], setter: Option[String])
+  private[controllers] case class CrosswordDynamicFields(
+      url: String,
+      image: Option[String],
+      setter: Option[String],
+      publishDate: Option[String],
+      cadence: Option[String],
+  )
 }

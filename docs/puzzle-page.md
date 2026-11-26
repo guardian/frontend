@@ -158,6 +158,11 @@ Dateless game URLs return a temporary `302` redirect to
 `/puzzles-and-games/{group}/archive?puzzle={slug}`, including Film reveal and On the ball.
 Archives use the shared `PuzzlesArchiveBuilder` flow and do not inherit game sponsorship.
 
+Maxi's hub card and crosswords archive require `puzzles-new-hub-v4:variant` outside local
+development, independently of V3 premium access. The hub card is
+shown once the Puzzles API returns a playable `CROSSWORD_MAXI` archive entry. The direct
+Maxi archive page and calendar data responses must not be shared across experiment groups.
+
 ### How to configure/add a new puzzle type
 
 All per-slug presentation configuration (render mode and which UI chrome is enabled) lives

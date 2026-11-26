@@ -40,6 +40,38 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     archives(layout) should not be empty
   }
 
+  it should "expose only the latest playable Maxi on the V4 hub and keep it out of the default layout" in {
+    val calls = ListBuffer.empty[String]
+    val api = archiveApi(
+      Seq(
+        PuzzlesApiItem("1", "CROSSWORD_MAXI", "2026-08-31", 0, None, Some("/crosswords/maxi/1")),
+        PuzzlesApiItem("2", "CROSSWORD_MAXI", "2026-09-07", 0, None, Some("/crosswords/maxi/2")),
+        PuzzlesApiItem("3", "CROSSWORD_MAXI", "2026-09-07", 0, None, None),
+      ),
+      calls,
+    )
+    val provider =
+      new LocalJsonPuzzlesLayoutProvider(Environment.simple(), api, emptyNewsletterAgent(), clock = mondayClock)
+
+    val default = Await.result(provider.getLayout(), 5.seconds)
+    allItems(default).map(_.id) should not contain "crossword-maxi"
+    archives(default).map(_.id) should not contain "archive-maxi"
+    calls should not contain "CROSSWORD_MAXI"
+
+    val layout = Await.result(provider.getLayoutForV4(), 5.seconds)
+    val maxi = allItems(layout).find(_.id == "crossword-maxi").get
+    maxi.url shouldBe Some("/crosswords/maxi/2")
+    maxi.date shouldBe Some("2026-09-07")
+    maxi.cadence shouldBe Some("Today")
+    archives(layout).map(_.id) should contain("archive-maxi")
+  }
+
+  it should "not show an unplayable Maxi card when there is no published puzzle" in {
+    val layout = Await.result(productionProvider().getLayoutForV4(), 5.seconds)
+
+    allItems(layout).map(_.id) should not contain "crossword-maxi"
+  }
+
   it should "load the target hierarchy and its explicit presentation metadata" in {
     val provider = productionProvider()
 

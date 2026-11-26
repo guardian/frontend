@@ -1,5 +1,7 @@
 package controllers
 
+import ab.PuzzlesHubV4Experiment
+
 import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import implicits.{HtmlFormat, JsonFormat}
 import implicits.Requests.RichRequestHeader
@@ -40,6 +42,16 @@ class PuzzlesPageController(
       Cached(CacheTime.NotFound)(Cached.WithoutRevalidationResult(NotFound)),
     )
 
+  private def layoutForRequest(implicit request: RequestHeader) =
+    if (PuzzlesHubV4Experiment.isEnabled) puzzlesLayoutProvider.getLayoutForV4()
+    else puzzlesLayoutProvider.getLayout()
+
+  private def isMaxiArchive(category: String, puzzle: String): Boolean =
+    category == "crosswords" && Set("maxi", "archive-maxi", "crossword-maxi").contains(puzzle)
+
+  private def noStoreMaxiArchive(result: Result): Result =
+    NoCache(result).withHeaders("Surrogate-Control" -> "no-store")
+
   /** Readers outside the editions the hub is available in (see `PuzzlesHubAccess`) get the existing
     * `/puzzles-and-games` tag page, as if the hub did not exist, rather than a 404.
     */
@@ -54,7 +66,7 @@ class PuzzlesPageController(
           case HtmlFormat =>
             val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
-            puzzlesLayoutProvider.getLayout().flatMap { layout =>
+            layoutForRequest.flatMap { layout =>
               val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
               remoteRenderer.getPuzzlesPage(
                 wsClient,
@@ -74,7 +86,7 @@ class PuzzlesPageController(
           case JsonFormat =>
             val page = StaticPages.dcrSimplePuzzlesPage(request.path)
 
-            puzzlesLayoutProvider.getLayout().map { layout =>
+            layoutForRequest.map { layout =>
               val renderingData = DotcomPuzzlesPageRenderingDataModel(page, layout, request)
               common
                 .renderJson(DotcomPuzzlesPageRenderingDataModel.toJson(renderingData), page)
@@ -147,51 +159,60 @@ class PuzzlesPageController(
 
   private def renderArchive(category: String, puzzle: Option[String] = None): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubAccess.isAvailable || request.getRequestFormat != HtmlFormat)
-        notFound
-      else
-        buildArchive(category, puzzle)
-          .flatMap { case (layout, archive) =>
-            val unmatched = puzzle.filterNot(value => PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))
-            // The path names a specific puzzle, so an unknown one is a 404 rather than the category's first puzzle.
-            // A puzzle the layout lists but that has no archive (yet) is sent to its category's archive instead.
-            if (unmatched.exists(value => PuzzlesArchiveBuilder.isKnownPuzzle(layout, category, value)))
-              Future.successful(Redirect(PuzzlesArchiveBuilder.categoryArchivePath(category), FOUND))
-            else if (unmatched.isDefined) notFound
-            else {
-              // A puzzle's own archive page is titled after that puzzle, not after its category.
-              val (title, description) =
-                if (puzzle.isDefined)
-                  archive.selectedPuzzle.title ->
-                    s"Play the full ${archive.selectedPuzzle.title} archive from the Guardian. Track your progress of what you've played and started."
-                else archive.title -> archive.description
-              val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, title, description)
-              val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
-              remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+      val maxi = puzzle.exists(isMaxiArchive(category, _))
+      val result =
+        if (maxi && !PuzzlesHubV4Experiment.isEnabled) Future.successful(NotFound)
+        else if (!PuzzlesHubAccess.isAvailable || request.getRequestFormat != HtmlFormat)
+          notFound
+        else
+          buildArchive(category, puzzle)
+            .flatMap { case (layout, archive) =>
+              val unmatched = puzzle.filterNot(value => PuzzlesArchiveBuilder.matches(archive.selectedPuzzle, value))
+              // The path names a specific puzzle, so an unknown one is a 404 rather than the category's first puzzle.
+              // A puzzle the layout lists but that has no archive (yet) is sent to its category's archive instead.
+              if (unmatched.exists(value => PuzzlesArchiveBuilder.isKnownPuzzle(layout, category, value)))
+                Future.successful(Redirect(PuzzlesArchiveBuilder.categoryArchivePath(category), FOUND))
+              else if (unmatched.isDefined) notFound
+              else {
+                // A puzzle's own archive page is titled after that puzzle, not after its category.
+                val (title, description) =
+                  if (puzzle.isDefined)
+                    archive.selectedPuzzle.title ->
+                      s"Play the full ${archive.selectedPuzzle.title} archive from the Guardian. Track your progress of what you've played and started."
+                  else archive.title -> archive.description
+                val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, title, description)
+                val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
+                remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+              }
             }
-          }
-          .recoverWith { case _: NoSuchElementException => notFound }
+            .recoverWith { case _: NoSuchElementException => notFound }
+
+      if (maxi) result.map(noStoreMaxiArchive) else result
     }
 
   // Fastly strips unrecognised query parameters. Calendar requests must carry
   // their selection in the path so that CODE/PROD receive the requested month.
   def archiveDataForMonth(category: String, puzzle: String, year: Int, month: Int): Action[AnyContent] =
     Action.async { implicit request =>
-      val result = Try(YearMonth.of(year, month)).toOption match {
-        case None                 => Future.successful(BadRequest)
-        case Some(requestedMonth) =>
-          buildArchive(
-            category,
-            Some(puzzle),
-            Some(requestedMonth),
-            request.headers.get("Authorization"),
-          )
-            .map { case (_, archive) =>
-              Ok(Json.toJson(archive))
-            }
-            .recoverWith { case _: NoSuchElementException => notFound }
-      }
-      result.map(response => Cors(NoCache(response)))
+      val maxi = isMaxiArchive(category, puzzle)
+      val result =
+        if (maxi && !PuzzlesHubV4Experiment.isEnabled) Future.successful(NotFound)
+        else
+          Try(YearMonth.of(year, month)).toOption match {
+            case None                 => Future.successful(BadRequest)
+            case Some(requestedMonth) =>
+              buildArchive(
+                category,
+                Some(puzzle),
+                Some(requestedMonth),
+                request.headers.get("Authorization"),
+              )
+                .map { case (_, archive) =>
+                  Ok(Json.toJson(archive))
+                }
+                .recoverWith { case _: NoSuchElementException => notFound }
+          }
+      result.map(response => Cors(if (maxi) noStoreMaxiArchive(response) else NoCache(response)))
     }
 
   private def selectedMonth(request: RequestHeader, today: LocalDate): YearMonth = {
@@ -221,8 +242,11 @@ class PuzzlesPageController(
     val startDate = if (isCurrentMonth) today.minusDays(31) else yearMonth.atDay(1)
     val endDate = if (isCurrentMonth) today else yearMonth.atEndOfMonth()
 
-    puzzlesLayoutProvider.getLayout().flatMap { layout =>
-      PuzzlesArchiveBuilder.select(layout, category, puzzle) match {
+    layoutForRequest.flatMap { layout =>
+      val selection = PuzzlesArchiveBuilder.select(layout, category, puzzle).filter { selected =>
+        !puzzle.exists(isMaxiArchive(category, _)) || selected.puzzle.set == "maxi"
+      }
+      selection match {
         case None =>
           Future.failed(
             new NoSuchElementException(
