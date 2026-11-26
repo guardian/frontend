@@ -1285,6 +1285,35 @@ import scala.concurrent.{ExecutionContext, Future}
     verify(api).get(eqTo("WORDWHEEL"), eqTo(date), eqTo(Some("Bearer reader-token")))(any[ExecutionContext])
   }
 
+  it should "return crossword completion without a game URL only in v3" in {
+    val api = mock[PuzzlesGameApi]
+    val date = LocalDate.of(2026, 9, 26)
+    val item = PuzzlesApiItem(
+      "guardian-crossword-quick-123",
+      "CROSSWORD_QUICK",
+      date.toString,
+      100,
+      None,
+      None,
+      Some("completed"),
+    )
+    val token = Some("Bearer reader-token")
+    when(api.get(eqTo(item.puzzleType), eqTo(date), eqTo(token))(any[ExecutionContext]))
+      .thenReturn(Future.successful(Some(item)))
+    val lookup = controller(successfulProvider, mock[DotcomRenderingService], gameApi = api)
+      .puzzleGame("crossword-quick", date.toString)
+    def reader(group: String) =
+      request(s"/puzzles-and-games/game/crossword-quick/$date.json", participations = s"puzzles-new-hub-v3:$group")
+        .withHeaders(Headers("Authorization" -> token.get))
+
+    status(lookup(reader("control"))) shouldBe NOT_FOUND
+    verifyNoInteractions(api)
+    val result = lookup(reader("variant"))
+    status(result) shouldBe OK
+    (contentAsJson(result) \ "gameStatus").as[String] shouldBe "completed"
+    header("Cache-Control", result) shouldBe Some("private, no-store, no-cache")
+  }
+
   it should "support anonymous lookups" in {
     val result = controller(successfulProvider, mock[DotcomRenderingService])
       .puzzleGame("word-wheel", "2026-09-26")(request("/puzzles-and-games/game/word-wheel/2026-09-26.json"))
