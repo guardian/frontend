@@ -64,7 +64,7 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
       httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(extra = xForwardedForHeader(trackingParameters)))
     response map extract(jsonField("result"))
   }
-  
+
   def put(
       apiPath: String,
       auth: Option[Auth] = None,
