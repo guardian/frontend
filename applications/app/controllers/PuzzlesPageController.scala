@@ -103,11 +103,16 @@ class PuzzlesPageController(
     TinyResponse.noContent(Some("GET, OPTIONS"))
   }
 
-  /** Resolve the iframe URL with the browser's token; personalised URLs must never be cached. */
+  /** Look up the selected game with the reader's token. Personalised results must never be cached. */
   def puzzleGame(slug: String, date: String): Action[AnyContent] =
     Action.async { implicit request =>
+      val crosswordType = slug.stripPrefix("crossword-") match {
+        case series if slug.startsWith("crossword-") && ab.PuzzlesHubV3Experiment.isEnabled =>
+          PuzzlesArchiveBuilder.apiType("crossword", series)
+        case _ => None
+      }
       val selection = for {
-        puzzleType <- PuzzlesPageController.PuzzleTypesBySlug.get(slug)
+        puzzleType <- crosswordType.orElse(PuzzlesPageController.PuzzleTypesBySlug.get(slug))
         parsedDate <- Try(LocalDate.parse(date)).toOption
       } yield puzzleType -> parsedDate
 
@@ -117,8 +122,9 @@ class PuzzlesPageController(
           puzzlesGameApi
             .get(puzzleType, parsedDate, request.headers.get(AUTHORIZATION))
             .map {
-              case Some(game) if game.gameUrl.exists(_.trim.nonEmpty) => Ok(Json.toJson(game))
-              case _                                                  => NotFound
+              case Some(game) if crosswordType.isDefined || game.gameUrl.exists(_.trim.nonEmpty) =>
+                Ok(Json.toJson(game))
+              case _ => NotFound
             }
             .recover {
               case PuzzlesGameApiError(status) if status == 401 || status == 403 =>
