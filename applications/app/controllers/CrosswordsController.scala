@@ -8,7 +8,7 @@ import com.gu.contentapi.client.model.v1.{
   Content => ApiContent,
   Section => ApiSection,
 }
-import common.{Edition, GuLogging, ImplicitControllerExecutionContext, PuzzlesHubAccess}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext}
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.{ContentApiError, SearchQuery}
 import crosswords.{
@@ -53,8 +53,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def noResults()(implicit request: RequestHeader): Result
 
   def puzzlesSupporting(implicit request: RequestHeader): Option[PuzzleGameSupporting] =
-    if (PuzzlesHubAccess.isAvailable) puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
-    else None
+    puzzlesNewsletters.forGame(PuzzlesNewsletters.GameLinks)
 
   def getCrossword(crosswordType: String, id: Int)(implicit request: RequestHeader): Future[ItemResponse] = {
     contentApiClient.getResponse(
@@ -62,38 +61,32 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
     )
   }
 
-  /** The "More from Puzzles & games" rail for a crossword page. Only looked up (CAPI) for requests where the puzzles
-    * hub is available (see `PuzzlesHubAccess`), otherwise `None` so the page renders exactly as before.
-    */
+  /** The "More from Puzzles & games" rail for a crossword page, looked up in CAPI. */
   def moreFromPuzzlesAndGames(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[Seq[PuzzleItem]]] =
-    if (PuzzlesHubAccess.isAvailable)
-      PuzzleRecommendations
-        .resolve(
-          crossword.crosswordType,
-          Some(crossword.id),
-          crossword.date.toString("yyyy-MM-dd"),
-          PuzzleRecommendations.capiLookup(contentApiClient),
-        )
-        .map(Some(_))
-    else Future.successful(None)
+    PuzzleRecommendations
+      .resolve(
+        crossword.crosswordType,
+        Some(crossword.id),
+        crossword.date.toString("yyyy-MM-dd"),
+        PuzzleRecommendations.capiLookup(contentApiClient),
+      )
+      .map(Some(_))
 
-  /** The path of this crossword type's own archive page, so the page can link to it. Only looked up when the puzzles
-    * hub is available (see `PuzzlesHubAccess`), and `None` for crossword types that have no archive page.
+  /** The path of this crossword type's own archive page, so the page can link to it. `None` for crossword types that
+    * have no archive page.
     */
   def puzzleArchivePath(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[String]] =
-    if (PuzzlesHubAccess.isAvailable)
-      puzzlesLayoutProvider
-        .getStaticLayout()
-        .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
-        .recover { case NonFatal(error) =>
-          log.warn(s"Could not look up the archive page of ${crossword.crosswordType}", error)
-          None
-        }
-    else Future.successful(None)
+    puzzlesLayoutProvider
+      .getStaticLayout()
+      .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
+      .recover { case NonFatal(error) =>
+        log.warn(s"Could not look up the archive page of ${crossword.crosswordType}", error)
+        None
+      }
 
   /** `Some(true)` when this crossword is older than the free window and the request is in the puzzles hub v3
     * experiment, `None` otherwise, so every other crossword is sent exactly as before. The date is the UTC date of the

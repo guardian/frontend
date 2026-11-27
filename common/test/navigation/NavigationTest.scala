@@ -236,23 +236,20 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     }
   }
 
-  private val editionsWithPuzzlesHub = Seq(International, Europe, Au, Us, Uk)
-
-  "Puzzles navigation" should "list Puzzles & games after Crosswords, in place of Wordiply, in editions with the hub" in {
-    editionsWithPuzzlesHub.foreach { edition =>
+  "Puzzles navigation" should "list Puzzles & games after Crosswords in every edition" in {
+    Edition.allEditions.foreach { edition =>
       val otherLinks = NavMenu(NavigationPage("culture"), edition).otherLinks
 
       otherLinks should contain(puzzles)
       otherLinks should contain(legacyCrosswords)
-      otherLinks should not contain legacyWordiply
       otherLinks.indexOf(puzzles) shouldBe otherLinks.indexOf(legacyCrosswords) + 1
     }
   }
 
-  it should "use Puzzles & games as the subnav on the hub in editions with the hub" in {
+  it should "use Puzzles & games as the subnav on the hub in every edition" in {
     puzzles.children should not be empty
 
-    editionsWithPuzzlesHub.foreach { edition =>
+    Edition.allEditions.foreach { edition =>
       val menu = NavMenu(StaticPages.dcrSimplePuzzlesPage("/puzzles-and-games"), edition)
 
       menu.currentNavLink should contain(puzzles)

@@ -7,37 +7,29 @@ import play.api.mvc.RequestHeader
 import play.api.test.FakeRequest
 
 @DoNotDiscover class PuzzlesHubV3ExperimentTest extends AnyFlatSpec with Matchers {
-  private def requestWithParticipation(participations: String, edition: String): RequestHeader = {
-    val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations, "X-Gu-Edition" -> edition)
+  private def requestWithParticipation(participations: String): RequestHeader = {
+    val request = FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> participations)
     ABTests.decorateRequest("X-GU-Server-AB-Tests")(request)
   }
 
   Seq(
-    ("", "INT", false),
-    ("puzzles-new-hub-v3:variant", "INT", true),
-    ("puzzles-new-hub-v2:variant", "INT", false),
-    ("puzzles-new-hub-v3:variant", "UK", true),
-    ("puzzles-new-hub-v2:control,puzzles-new-hub-v3:variant", "INT", true),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:control", "INT", false),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:unknown", "INT", false),
-    ("another-test:variant", "INT", false),
-    ("puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant", "INT", true),
-    ("puzzles-new-hub-v3:variant", "EUR", true),
-    ("puzzles-new-hub-v3:variant", "AU", true),
-    ("puzzles-new-hub-v3:variant", "US", true),
-  ).foreach { case (participations, edition, expected) =>
-    "PuzzlesHubV3Experiment" should s"require a hub edition and the v3 variant outside development for '$participations' in $edition" in {
-      implicit val request: RequestHeader = requestWithParticipation(participations, edition)
+    ("", false),
+    ("puzzles-new-hub-v3:variant", true),
+    ("puzzles-new-hub-v3:control", false),
+    ("puzzles-new-hub-v3:unknown", false),
+    ("puzzles-new-hub-v4:variant", false),
+    ("another-test:variant", false),
+  ).foreach { case (participations, expected) =>
+    "PuzzlesHubV3Experiment" should s"be $expected outside development for '$participations'" in {
+      implicit val request: RequestHeader = requestWithParticipation(participations)
       PuzzlesHubV3Experiment.isEnabled(isDevelopment = false) shouldBe expected
       PuzzlesHubV3Experiment.isEnabled shouldBe expected
     }
   }
 
   it should "not trust an undecorated header" in {
-    implicit val request: RequestHeader = FakeRequest().withHeaders(
-      "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v2:variant,puzzles-new-hub-v3:variant",
-      "X-Gu-Edition" -> "INT",
-    )
+    implicit val request: RequestHeader =
+      FakeRequest().withHeaders("X-GU-Server-AB-Tests" -> "puzzles-new-hub-v3:variant")
     PuzzlesHubV3Experiment.isEnabled(isDevelopment = false) shouldBe false
   }
 

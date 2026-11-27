@@ -68,7 +68,7 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     raw.withAttrs(ABTests.decorateRequest(abTestHeader)(raw).attrs)
   }
 
-  "Puzzles sitemap" should "serve the canonical hub and archive URLs in the editions the hub is available in" in {
+  "Puzzles sitemap" should "serve the canonical hub and archive URLs" in {
     val result = controller.renderPuzzlesSiteMap()(request())
 
     status(result) shouldBe OK
@@ -87,10 +87,9 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     verifyNoInteractions(job)
   }
 
-  it should "list each puzzle's own archive regardless of v2 participation" in {
-    def locs(participation: String): Seq[String] =
-      (XML.loadString(contentAsString(controller.renderPuzzlesSiteMap()(request(participation)))) \ "url" \ "loc")
-        .map(_.text)
+  it should "list each puzzle's own archive" in {
+    val locs =
+      (XML.loadString(contentAsString(controller.renderPuzzlesSiteMap()(request()))) \ "url" \ "loc").map(_.text)
 
     val crosswordPuzzles = Seq(
       "https://www.theguardian.com/puzzles-and-games/crosswords/quick/archive",
@@ -98,11 +97,10 @@ class PuzzlesSiteMapControllerTest extends AnyFlatSpec with Matchers with Mockit
     )
     val trivia = "https://www.theguardian.com/puzzles-and-games/trivia-and-quizzes/film-reveal/archive"
 
-    locs("") should contain allElementsOf (crosswordPuzzles :+ trivia)
-    locs("puzzles-new-hub-v2:control") shouldBe locs("")
+    locs should contain allElementsOf (crosswordPuzzles :+ trivia)
   }
 
-  it should "support cache revalidation where the hub is available" in {
+  it should "support cache revalidation" in {
     val enabled = request()
     val first = controller.renderPuzzlesSiteMap()(enabled)
     val etag = header(ETAG, first).get

@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
+import common.ImplicitControllerExecutionContext
 import jobs.SiteMapJob
 import model.{Cached, NoCache}
 import model.Cached.RevalidatableResult
@@ -19,14 +19,12 @@ class SiteMapController(
 
   def renderPuzzlesSiteMap(): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubAccess.isAvailable) Future.successful(NoCache(NotFound))
-      else
-        puzzlesLayoutProvider.getLayout().map { layout =>
-          val sitemap = PuzzlesSiteMap.xml(PuzzlesArchiveBuilder.archivePaths(layout))
-          Cached(60) {
-            RevalidatableResult(Ok(sitemap).as("text/xml; charset=utf-8"), sitemap)
-          }
+      puzzlesLayoutProvider.getLayout().map { layout =>
+        val sitemap = PuzzlesSiteMap.xml(PuzzlesArchiveBuilder.archivePaths(layout))
+        Cached(60) {
+          RevalidatableResult(Ok(sitemap).as("text/xml; charset=utf-8"), sitemap)
         }
+      }
     }
 
   def renderNewsSiteMap(): Action[AnyContent] =
