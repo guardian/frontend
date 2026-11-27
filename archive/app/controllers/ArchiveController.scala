@@ -173,7 +173,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
       val response = S3Archive.get(archivePath) match {
         case Some(content) =>
           val parsedDoc = Jsoup.parse(content)
-          val doc: Document = SimpleHtmlCleaner.clean(parsedDoc, convertToHttps = true)
+          val doc: Document = SimpleHtmlCleaner.cleanArchive(parsedDoc)
           logDebugWithRequestId(s"Archive $redirectHttpStatus, redirect to $archivePath")
           Ok(doc.toString).as("text/html")
         case None =>
