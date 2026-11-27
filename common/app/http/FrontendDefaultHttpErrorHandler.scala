@@ -7,6 +7,7 @@ import play.api.http.DefaultHttpErrorHandler
 import play.api.mvc.{RequestHeader, Result, Results}
 import play.api.routing.Router
 import play.core.SourceMapper
+import model.ApplicationContext
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Random
@@ -16,7 +17,7 @@ class FrontendDefaultHttpErrorHandler(
     configuration: PlayConfiguration,
     sourceMapper: Option[SourceMapper],
     router: => Router,
-)(implicit ec: ExecutionContext)
+)(implicit applicationContexct: ApplicationContext, ec: ExecutionContext)
     extends DefaultHttpErrorHandler(
       environment = environment,
       configuration = configuration,
@@ -31,6 +32,8 @@ class FrontendDefaultHttpErrorHandler(
   private val defaultVaryFields = varyFields.mkString(",")
 
   override def onServerError(request: RequestHeader, ex: Throwable): Future[Result] = {
+    val backendHeader = "X-Gu-Backend-App" -> applicationContexct.applicationIdentity.name
+
     // Overriding onError in Dev can hide helpful Exception messages.
     if (environment.mode == Mode.Dev) {
       super.onServerError(request, ex)
@@ -39,7 +42,7 @@ class FrontendDefaultHttpErrorHandler(
       val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
 
       Future.successful {
-        Cors(InternalServerError.withHeaders("Vary" -> vary))(request)
+        Cors(InternalServerError.withHeaders("Vary" -> vary, backendHeader))(request)
       }
     }
   }
