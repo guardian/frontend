@@ -139,6 +139,84 @@ import scala.concurrent.{ExecutionContext, Future}
     provider
   }
 
+  private val maxiArchive = "/puzzles-and-games/crosswords/maxi/archive"
+  private val maxiMonth = "/puzzles-and-games/crosswords/archive-data/archive-maxi/2020/9"
+
+  "Maxi archives" should "return uncacheable 404s outside the V4 variant without looking up puzzle data" in {
+    val provider = mock[PuzzlesLayoutProvider]
+    val api = mock[PuzzlesArchiveApi]
+    val renderer = mock[DotcomRenderingService]
+    val page = controller(provider, renderer, api)
+    Seq("", "puzzles-new-hub-v4:control", "puzzles-new-hub-v3:variant").foreach { participation =>
+      Seq(
+        page.renderArchiveForPuzzle("crosswords", "maxi")(request(maxiArchive, participations = participation)),
+        page.archiveDataForMonth("crosswords", "archive-maxi", 2020, 9)(
+          request(maxiMonth, participations = participation),
+        ),
+      ).foreach { result =>
+        status(result) shouldBe NOT_FOUND
+        header("Surrogate-Control", result) should contain("no-store")
+      }
+    }
+    verifyNoInteractions(provider, api, renderer)
+  }
+
+  it should "select the Maxi archive and return its published links in V4 without V3" in {
+    val provider = mock[PuzzlesLayoutProvider]
+    val maxiLayout = PuzzlesLayout(
+      Seq(
+        PuzzleContainer(
+          id = "crosswords",
+          title = "Crosswords",
+          content = PuzzleContent(
+            Nil,
+            Nil,
+            archiveChoices = Some(
+              Seq(
+                PuzzleItem("archive-quick", "Quick", "crossword", "quick", "archive"),
+                PuzzleItem("archive-maxi", "Maxi", "crossword", "maxi", "archive"),
+              ),
+            ),
+          ),
+        ),
+      ),
+    )
+    when(provider.getLayoutForV4()(any[ExecutionContext])).thenReturn(Future.successful(maxiLayout))
+    val api = mock[PuzzlesArchiveApi]
+    when(api.get(any[LocalDate], any[LocalDate], any[String], any[Option[String]])(any[ExecutionContext]))
+      .thenReturn(
+        Future.successful(
+          Seq(
+            PuzzlesApiItem("1", "CROSSWORD_MAXI", "2020-09-07", 0, None, Some("/crosswords/maxi/1")),
+          ),
+        ),
+      )
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+    val page = controller(provider, renderer, api)
+    val variant = "puzzles-new-hub-v4:variant"
+
+    val html = page.renderArchiveForPuzzle("crosswords", "maxi")(request(maxiArchive, participations = variant))
+    status(html) shouldBe OK
+    header("Surrogate-Control", html) should contain("no-store")
+    val payload = ArgumentCaptor.forClass(classOf[JsValue])
+    verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+    (payload.getValue \ "archive" \ "selectedPuzzle" \ "id").as[String] shouldBe "archive-maxi"
+
+    val month = page.archiveDataForMonth("crosswords", "archive-maxi", 2020, 9)(
+      request(maxiMonth, participations = variant),
+    )
+    status(month) shouldBe OK
+    (contentAsJson(month) \ "items" \ 0 \ "url").as[String] shouldBe "/crosswords/maxi/1"
+    verify(api).get(
+      eqTo(LocalDate.of(2020, 9, 1)),
+      eqTo(LocalDate.of(2020, 9, 30)),
+      eqTo("CROSSWORD_MAXI"),
+      eqTo(Option.empty[String]),
+    )(any[ExecutionContext])
+  }
+
   private def request(path: String, edition: String = "INT", participations: String = ""): Request[AnyContent] = {
     val rawRequest = TestRequest(path).withHeaders("X-GU-Server-AB-Tests" -> participations, "X-Gu-Edition" -> edition)
     rawRequest.withAttrs(ABTests.decorateRequest("X-GU-Server-AB-Tests")(rawRequest).attrs)

@@ -85,7 +85,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def puzzleArchivePath(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[String]] =
-    if (PuzzlesHubAccess.isAvailable)
+    if (PuzzlesHubAccess.isAvailable && (crossword.crosswordType != "maxi" || PuzzlesHubV4Experiment.isEnabled))
       puzzlesLayoutProvider
         .getStaticLayout()
         .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
