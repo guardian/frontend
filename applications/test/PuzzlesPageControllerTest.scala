@@ -142,12 +142,12 @@ import scala.concurrent.{ExecutionContext, Future}
   private val maxiArchive = "/puzzles-and-games/crosswords/maxi/archive"
   private val maxiMonth = "/puzzles-and-games/crosswords/archive-data/archive-maxi/2020/9"
 
-  "Maxi archives" should "return uncacheable 404s outside the V4 variant without looking up puzzle data" in {
+  "Maxi archives" should "return uncacheable 404s without Maxi opt-in and without looking up puzzle data" in {
     val provider = mock[PuzzlesLayoutProvider]
     val api = mock[PuzzlesArchiveApi]
     val renderer = mock[DotcomRenderingService]
     val page = controller(provider, renderer, api)
-    Seq("", "puzzles-new-hub-v4:control", "puzzles-new-hub-v3:variant").foreach { participation =>
+    Seq("", "puzzles-crosswords-maxi:control", "puzzles-new-hub-v3:variant").foreach { participation =>
       Seq(
         page.renderArchiveForPuzzle("crosswords", "maxi")(request(maxiArchive, participations = participation)),
         page.archiveDataForMonth("crosswords", "archive-maxi", 2020, 9)(
@@ -161,7 +161,7 @@ import scala.concurrent.{ExecutionContext, Future}
     verifyNoInteractions(provider, api, renderer)
   }
 
-  it should "select the Maxi archive and return its published links in V4 without V3" in {
+  it should "select the Maxi archive and return its published links with Maxi opt-in alone" in {
     val provider = mock[PuzzlesLayoutProvider]
     val maxiLayout = PuzzlesLayout(
       Seq(
@@ -181,7 +181,7 @@ import scala.concurrent.{ExecutionContext, Future}
         ),
       ),
     )
-    when(provider.getLayoutForV4()(any[ExecutionContext])).thenReturn(Future.successful(maxiLayout))
+    when(provider.getLayoutWithMaxi()(any[ExecutionContext])).thenReturn(Future.successful(maxiLayout))
     val api = mock[PuzzlesArchiveApi]
     when(api.get(any[LocalDate], any[LocalDate], any[String], any[Option[String]])(any[ExecutionContext]))
       .thenReturn(
@@ -195,7 +195,7 @@ import scala.concurrent.{ExecutionContext, Future}
     when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
       .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
     val page = controller(provider, renderer, api)
-    val variant = "puzzles-new-hub-v4:variant"
+    val variant = "puzzles-crosswords-maxi:variant"
 
     val html = page.renderArchiveForPuzzle("crosswords", "maxi")(request(maxiArchive, participations = variant))
     status(html) shouldBe OK

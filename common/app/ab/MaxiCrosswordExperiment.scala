@@ -5,8 +5,8 @@ import conf.Configuration
 import play.api.mvc.RequestHeader
 
 /** Maxi's rollout is independent of V3 premium access. */
-object PuzzlesHubV4Experiment {
-  val TestName = "puzzles-new-hub-v4"
+object MaxiCrosswordExperiment {
+  val TestName = "puzzles-crosswords-maxi"
   val VariantGroup = "variant"
 
   def isEnabled(implicit request: RequestHeader): Boolean =
