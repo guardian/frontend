@@ -66,8 +66,8 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       Some("inline2"),
     )
     featured.content.items.flatten.map(item => (item.title, item.cardVariant, item.cadence)) shouldBe Seq(
-      ("Quick crossword", "large", None),
       ("Easy sudoku", "large", None),
+      ("Word wheel", "large", None),
     )
     crosswords.content.items.map(_.map(item => item.title -> item.cardVariant)) shouldBe Seq(
       Seq("Quick", "Mini", "Cryptic", "Weekend").map(_ -> "primary"),
@@ -148,13 +148,13 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "select the configured featured puzzles for each London weekday" in {
     val expectedByDate = Seq(
-      "2026-09-07T12:00:00Z" -> Seq("Quick crossword", "Easy sudoku"),
-      "2026-09-08T12:00:00Z" -> Seq("Mini crossword", "Word wheel"),
-      "2026-09-09T12:00:00Z" -> Seq("Cryptic crossword", "Medium sudoku"),
-      "2026-09-10T12:00:00Z" -> Seq("Quick crossword", "Wordiply"),
-      "2026-09-11T12:00:00Z" -> Seq("Mini crossword", "Hard sudoku"),
-      "2026-09-12T12:00:00Z" -> Seq("General knowledge crossword", "Killer sudoku"),
-      "2026-09-13T12:00:00Z" -> Seq("Quiptic crossword", "Word wheel"),
+      "2026-09-07T12:00:00Z" -> Seq("Easy sudoku", "Word wheel"),
+      "2026-09-08T12:00:00Z" -> Seq("Word wheel", "Film reveal"),
+      "2026-09-09T12:00:00Z" -> Seq("On the ball", "Medium sudoku"),
+      "2026-09-10T12:00:00Z" -> Seq("Wordiply", "Hard sudoku"),
+      "2026-09-11T12:00:00Z" -> Seq("Film reveal", "Killer sudoku"),
+      "2026-09-12T12:00:00Z" -> Seq("On the ball", "Word wheel"),
+      "2026-09-13T12:00:00Z" -> Seq("Medium sudoku", "Film reveal"),
     )
 
     expectedByDate.foreach { case (instant, expectedTitles) =>
@@ -233,11 +233,6 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
 
   it should "use the matching artwork throughout the weekly featured schedule" in {
     val expectedArtwork = Map(
-      "Quick crossword" -> "crossword-QUICK",
-      "Mini crossword" -> "crossword-MINI",
-      "Cryptic crossword" -> "crossword-CRYPTIC",
-      "General knowledge crossword" -> "crossword-GENERAL-KNOWLEDGE",
-      "Quiptic crossword" -> "crossword-QUIPTIC",
       "Easy sudoku" -> "logic-puzzles-SUDOKU-EASY",
       "Medium sudoku" -> "logic-puzzles-SUDOKU-MEDIUM",
       "Hard sudoku" -> "logic-puzzles-SUDOKU-HARD",
@@ -262,7 +257,21 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
       item.slug shouldBe Some(s"word-games/${item.`type`}")
     }
     featured.filter(_.`type` == "word-wheel").foreach(_.url.exists(_.contains("idx=1")) shouldBe true)
-    expectedArtwork.keySet shouldBe featured.map(_.title).toSet
+    val triviaArtwork = Map(
+      "film-reveal" -> "Film reveal",
+      "on-the-ball" -> "On the ball",
+    )
+    featured.filter(item => triviaArtwork.contains(item.`type`)).foreach { item =>
+      item.image shouldBe Some(
+        s"https://i.guim.co.uk/img/uploads/2026/10/28/${item.`type`}-featured.png?width=440&dpr=2&s=none",
+      )
+      item.imageAlt shouldBe Some(s"${item.title} illustration")
+      item.slug shouldBe Some(s"trivia-and-quizzes/${item.`type`}")
+      item.variant shouldBe Some("iframe-page")
+      item.date should not be empty
+      item.cardVariant shouldBe "large"
+    }
+    (expectedArtwork.keySet ++ triviaArtwork.values) shouldBe featured.map(_.title).toSet
   }
 
   it should "configure the hub newsletter by identity name only" in {
@@ -473,8 +482,19 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     )
     calls.toSeq shouldBe Seq("CROSSWORD_QUICK")
     allItems(result).flatMap(_.url).distinct shouldBe Seq(apiItem.gameUrl.get)
+    val featuredCrossword = crossword("quick").copy(
+      cardVariant = "large",
+      image = Some(artwork("crossword-QUICK")),
+    )
     val featured =
-      Await.result(providerFor(featuredLayout(true), archiveApi(Seq(apiItem)), mondayClock).getLayout(), 5.seconds)
+      Await.result(
+        providerFor(
+          layoutWith(Seq(featuredCrossword)),
+          archiveApi(Seq(apiItem)),
+          mondayClock,
+        ).getLayout(),
+        5.seconds,
+      )
     firstItem(featured).url shouldBe apiItem.gameUrl
     firstItem(featured).image shouldBe Some(artwork("crossword-QUICK"))
   }
