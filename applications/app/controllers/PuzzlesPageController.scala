@@ -145,9 +145,16 @@ class PuzzlesPageController(
   def renderArchiveForPuzzle(category: String, puzzle: String): Action[AnyContent] =
     renderArchive(category, Some(puzzle))
 
+  // JSON versions of the archive pages, which the DCR dev server asks for (`<url>.json?dcr=true`).
+  def renderArchiveJson(category: String): Action[AnyContent] = renderArchive(category)
+
+  def renderArchiveForPuzzleJson(category: String, puzzle: String): Action[AnyContent] =
+    renderArchive(category, Some(puzzle))
+
   private def renderArchive(category: String, puzzle: Option[String] = None): Action[AnyContent] =
     Action.async { implicit request =>
-      if (!PuzzlesHubAccess.isAvailable || request.getRequestFormat != HtmlFormat)
+      val format = request.getRequestFormat
+      if (!PuzzlesHubAccess.isAvailable || (format != HtmlFormat && format != JsonFormat))
         notFound
       else
         buildArchive(category, puzzle)
@@ -167,7 +174,9 @@ class PuzzlesPageController(
                 else archive.title -> archive.description
               val page = StaticPages.dcrSimplePuzzlesArchivePage(request.path, title, description)
               val renderingData = DotcomPuzzlesPageRenderingDataModel.archive(page, layout, archive, request)
-              remoteRenderer.getPuzzlesPage(wsClient, DotcomPuzzlesPageRenderingDataModel.toJson(renderingData))
+              val json = DotcomPuzzlesPageRenderingDataModel.toJson(renderingData)
+              if (format == JsonFormat) Future.successful(common.renderJson(json, page).as("application/json"))
+              else remoteRenderer.getPuzzlesPage(wsClient, json)
             }
           }
           .recoverWith { case _: NoSuchElementException => notFound }

@@ -43,6 +43,19 @@ import org.scalatest.matchers.should.Matchers
     }
   }
 
+  it should "expose a JSON endpoint for every archive page, for the DCR dev server" in {
+    val routes = controllers.routes.PuzzlesPageController
+    Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes").foreach { category =>
+      val categoryArchive = routes.renderArchiveJson(category)
+      categoryArchive.method should be("GET")
+      categoryArchive.url should be(s"/puzzles-and-games/$category/archive.json")
+
+      val puzzleArchive = routes.renderArchiveForPuzzleJson(category, "test-puzzle")
+      puzzleArchive.method should be("GET")
+      puzzleArchive.url should be(s"/puzzles-and-games/$category/test-puzzle/archive.json")
+    }
+  }
+
   it should "keep archive data selections in the path when the CDN strips query parameters" in {
     Seq("crosswords", "word-games", "logic-puzzles", "trivia-and-quizzes").foreach { category =>
       controllers.routes.PuzzlesPageController.archiveDataForMonth(category, "test-puzzle", 2020, 8).url should be(
