@@ -44,11 +44,11 @@ OPTIONS    /puzzles-and-games/logic-puzzles/archive-data/:puzzle/:year/:month   
 OPTIONS    /puzzles-and-games/trivia-and-quizzes/archive-data/:puzzle/:year/:month        controllers.PuzzlesPageController.triviaArchiveDataOptions(puzzle: String, year: Int, month: Int)
 
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
-GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend|mini>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
-GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini|maxi>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini|maxi>/:id.json      controllers.CrosswordPageController.renderJson(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini|maxi>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)
+GET        /crosswords/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|special|genius|speedy|weekend|mini|maxi>/:id/print          controllers.CrosswordPageController.printableCrossword(crosswordType: String, id: Int)
+GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|quick-cryptic|sunday-quick|prize|everyman|azed|special|genius|speedy|weekend|mini|maxi>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
 GET        /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
