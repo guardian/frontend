@@ -20,11 +20,3 @@ GET         /user/id/:id/:activityType              controllers.PublicProfileCon
 GET         /form/complete                          controllers.FormstackController.complete
 GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String)
 GET         /form/embed/:formReference              controllers.FormstackController.formstackFormEmbed(formReference: String)
-
-########################################################################################################################
-# Old routes
-########################################################################################################################
-# Redirected to Manage
-GET         /privacy/edit                           controllers.editprofile.EditProfileController.redirectToManageEmailPrefs
-GET         /email-prefs                            controllers.editprofile.EditProfileController.redirectToManageEmailPrefs
-GET         /public/edit                            controllers.editprofile.EditProfileController.redirectToManagePublicSettings

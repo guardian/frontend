@@ -2,7 +2,6 @@ package test
 
 import java.io.File
 import conf.IdConfig
-import controllers.EditProfileControllerTest
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
 import play.api._
@@ -29,7 +28,6 @@ object Fake extends FakeApp
 
 class IdentityTestSuite
     extends Suites(
-      new EditProfileControllerTest,
       new StrictTransportSecurityHeaderFilterTest,
     )
     with SingleServerSuite {}
