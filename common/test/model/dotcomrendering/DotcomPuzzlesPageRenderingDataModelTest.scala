@@ -31,7 +31,7 @@ import staticpages.StaticPages
       .withHeaders(
         "Host" -> "www.theguardian.com",
         "X-Gu-Edition" -> "INT",
-        "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v2:variant,another-test:control",
+        "X-GU-Server-AB-Tests" -> "puzzles-new-hub-v3:variant,another-test:control",
       )
     ABTests.decorateRequest("X-GU-Server-AB-Tests")
   }
@@ -74,7 +74,7 @@ import staticpages.StaticPages
       .as[Map[String, String]]
 
     participations should contain theSameElementsAs Map(
-      "puzzles-new-hub-v2" -> "variant",
+      "puzzles-new-hub-v3" -> "variant",
       "another-test" -> "control",
     )
   }

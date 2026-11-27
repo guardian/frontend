@@ -124,17 +124,15 @@ up CAPI to construct crossword destinations. Other puzzle card destinations are 
     GET /puzzles-and-games/word-games/wordiply             -> PuzzlesPageController.redirectWordiplyArchive
     ```
 
-### Access gate: reuses the Puzzles Hub edition check
+### Access
 
-All Puzzle Page actions (dated render actions and archive redirects alike) are gated behind
-`common.PuzzlesHubAccess.isAvailable`, the same edition check used by this controller's
-`renderPuzzles`/`renderPuzzlesJson` hub actions. Requests return `404` unless the request's edition is one of
-`PuzzlesHubAccess.Editions` (currently all editions), or the app runs in local development.
-To change availability, keep `PuzzlesHubAccess.Editions` and `PUZZLES_HUB_EDITIONS` in sync with
-dotcom-rendering (`src/lib/puzzlesHubAccess.ts`), which applies the same rule again before rendering.
+All Puzzle Page actions (dated render actions and archive redirects alike), like the hub itself, are available to
+every reader.
 
-Premium access (v3) still requires the hub edition and explicit `puzzles-new-hub-v3:variant` outside local development.
-Keep v3 at 0% for this launch. The development bypass remains in place.
+Two server-side A/B tests remain, both always on in local development:
+
+- `puzzles-new-hub-v3` (`PuzzlesHubV3Experiment`): premium access. It depends on nothing else.
+- `puzzles-new-hub-v4` (`PuzzlesHubV4Experiment`): the Maxi crossword. It needs both the v3 and the v4 variants.
 
 All archive JSON endpoints and their CORS preflights remain ungated and uncached. DCR fetches these
 through `config.page.ajaxUrl` to avoid the page-host CDN cache when refreshing a reader's progress.
@@ -258,7 +256,7 @@ dev-build` -> `run`, with `article-rendering.baseURL` pointed at `http://localho
 `docs/03-dev-howtos/14-override-default-configuration.md` for the `devOverrides` mechanism, and
 `docs/01-start-here/01-installation-steps.md` for the `dev-build` local dev setup).
 
-No experiment header is needed to view trivia. Local development bypasses the hub edition check.
+No experiment header is needed to view trivia.
 
 The `.json` route variant returns the DCR rendering data without needing DCR itself to be reachable.
 

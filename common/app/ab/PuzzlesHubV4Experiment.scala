@@ -1,15 +1,17 @@
 package ab
 
-import common.{Edition, PuzzlesHubAccess}
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
-/** Maxi's rollout is independent of V3 premium access. */
+/** The v4 rollout (Maxi crossword) requires v3, plus explicit v4 variant participation outside local development. */
 object PuzzlesHubV4Experiment {
   val TestName = "puzzles-new-hub-v4"
   val VariantGroup = "variant"
 
   def isEnabled(implicit request: RequestHeader): Boolean =
-    Configuration.environment.isDev || (PuzzlesHubAccess.Editions.contains(Edition(request)) &&
-      ABTests.isUserInTestGroup(TestName, VariantGroup))
+    isEnabled(Configuration.environment.isDev)
+
+  private[ab] def isEnabled(isDevelopment: Boolean)(implicit request: RequestHeader): Boolean =
+    PuzzlesHubV3Experiment.isEnabled(isDevelopment) &&
+      (isDevelopment || ABTests.isUserInTestGroup(TestName, VariantGroup))
 }

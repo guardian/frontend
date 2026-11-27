@@ -2,7 +2,6 @@ package test
 
 import ab.ABTests
 import controllers.{
-  IndexController,
   PuzzlesApiItem,
   PuzzlesArchiveApi,
   PuzzlesGameApi,
@@ -68,7 +67,6 @@ import scala.concurrent.{ExecutionContext, Future}
       puzzlesProgressApi: PuzzlesProgressApi = mock[PuzzlesProgressApi],
       newsletterAgent: NewsletterSignupAgent = new NewsletterSignupAgent(mock[NewsletterApi]),
       gameApi: PuzzlesGameApi = successfulGameApi,
-      indexController: IndexController = mock[IndexController],
   ): PuzzlesPageController =
     new PuzzlesPageController(
       mock[WSClient],
@@ -78,7 +76,6 @@ import scala.concurrent.{ExecutionContext, Future}
       renderer,
       gameApi,
       new PuzzlesNewsletters(newsletterAgent),
-      indexController,
       stubControllerComponents(),
     )
 
@@ -426,74 +423,70 @@ import scala.concurrent.{ExecutionContext, Future}
     (json \ "layout").as[JsValue] should be(Json.toJson(layout))
   }
 
-  Seq("", "puzzles-new-hub-v2:control").foreach { participations =>
-    "Puzzles hub trivia visibility" should s"retain the full layout in HTML and JSON with participation '$participations'" in {
-      val trivia = PuzzleContainer(
-        id = "trivia-and-quizzes",
-        title = "Trivia & quizzes",
-        variant = Some("standard"),
-        content = PuzzleContent(
-          Seq(Seq(PuzzleItem("film-reveal", "Film reveal", "film-reveal", "all", "primary"))),
-          Seq.empty,
-        ),
-      )
-      val quick = layout.containers.head.content.items.head.head
-      val filmReveal = trivia.content.items.head.head
-      val onTheBall = filmReveal.copy(id = "on-the-ball", `type` = "on-the-ball", title = "On the ball")
-      val featuredQuick = quick.copy(id = "featured-quick")
-      val nestedQuick = quick.copy(id = "nested-quick")
-      val archiveQuick = quick.copy(id = "archive-quick", cardVariant = "archive")
-      val v1Nested = layout.containers.head.copy(
-        id = "nested-v1",
-        content = PuzzleContent(Seq(Seq(nestedQuick)), Nil),
-      )
-      val v1Featured = layout.containers.head.copy(
-        id = "featured-puzzles",
-        variant = Some("featured"),
-        content = PuzzleContent(
-          Seq(Seq(featuredQuick)),
-          Seq(v1Nested),
-          archiveChoices = Some(Seq(archiveQuick)),
-        ),
-      )
-      val featuredWithV2Games = v1Featured.copy(content =
-        v1Featured.content.copy(
-          items = Seq(Seq(featuredQuick, filmReveal.copy(id = "featured-film"), onTheBall.copy(id = "featured-ball"))),
-          nestedContainers = Seq(
-            v1Nested.copy(content =
-              v1Nested.content.copy(
-                items = Seq(Seq(nestedQuick, onTheBall.copy(id = "nested-ball"), filmReveal.copy(id = "nested-film"))),
-                archive = Some(filmReveal.copy(id = "nested-film-archive", cardVariant = "archive")),
-              ),
-            ),
-          ),
-          archiveChoices = Some(
-            Seq(
-              filmReveal.copy(id = "archive-film", cardVariant = "archive"),
-              archiveQuick,
-              onTheBall.copy(id = "archive-ball", cardVariant = "archive"),
+  "Puzzles hub trivia visibility" should "retain the full layout in HTML and JSON" in {
+    val trivia = PuzzleContainer(
+      id = "trivia-and-quizzes",
+      title = "Trivia & quizzes",
+      variant = Some("standard"),
+      content = PuzzleContent(
+        Seq(Seq(PuzzleItem("film-reveal", "Film reveal", "film-reveal", "all", "primary"))),
+        Seq.empty,
+      ),
+    )
+    val quick = layout.containers.head.content.items.head.head
+    val filmReveal = trivia.content.items.head.head
+    val onTheBall = filmReveal.copy(id = "on-the-ball", `type` = "on-the-ball", title = "On the ball")
+    val featuredQuick = quick.copy(id = "featured-quick")
+    val nestedQuick = quick.copy(id = "nested-quick")
+    val archiveQuick = quick.copy(id = "archive-quick", cardVariant = "archive")
+    val nestedPuzzles = layout.containers.head.copy(
+      id = "nested-v1",
+      content = PuzzleContent(Seq(Seq(nestedQuick)), Nil),
+    )
+    val featuredPuzzles = layout.containers.head.copy(
+      id = "featured-puzzles",
+      variant = Some("featured"),
+      content = PuzzleContent(
+        Seq(Seq(featuredQuick)),
+        Seq(nestedPuzzles),
+        archiveChoices = Some(Seq(archiveQuick)),
+      ),
+    )
+    val featuredWithTrivia = featuredPuzzles.copy(content =
+      featuredPuzzles.content.copy(
+        items = Seq(Seq(featuredQuick, filmReveal.copy(id = "featured-film"), onTheBall.copy(id = "featured-ball"))),
+        nestedContainers = Seq(
+          nestedPuzzles.copy(content =
+            nestedPuzzles.content.copy(
+              items = Seq(Seq(nestedQuick, onTheBall.copy(id = "nested-ball"), filmReveal.copy(id = "nested-film"))),
+              archive = Some(filmReveal.copy(id = "nested-film-archive", cardVariant = "archive")),
             ),
           ),
         ),
-      )
-      val fullLayout = layout.copy(containers = layout.containers ++ Seq(featuredWithV2Games, trivia))
-      val provider = mock[PuzzlesLayoutProvider]
-      when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(fullLayout))
-      val renderer = mock[DotcomRenderingService]
-      when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
-        .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
-      val c = controller(provider, renderer)
-      val html = c.renderPuzzles()(request("/puzzles-and-games", participations = participations))
-      status(html) shouldBe OK
-      val payload = ArgumentCaptor.forClass(classOf[JsValue])
-      verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
-      val json = c.renderPuzzlesJson()(request("/puzzles-and-games.json", participations = participations))
-      status(json) shouldBe OK
-      (contentAsJson(json) \ "config" \ "serverSideABTests" \ "puzzles-new-hub-v2").asOpt[String] shouldBe
-        Option.when(participations.nonEmpty)("control")
-      (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe fullLayout
-      (contentAsJson(json) \ "layout").as[PuzzlesLayout] shouldBe fullLayout
-    }
+        archiveChoices = Some(
+          Seq(
+            filmReveal.copy(id = "archive-film", cardVariant = "archive"),
+            archiveQuick,
+            onTheBall.copy(id = "archive-ball", cardVariant = "archive"),
+          ),
+        ),
+      ),
+    )
+    val fullLayout = layout.copy(containers = layout.containers ++ Seq(featuredWithTrivia, trivia))
+    val provider = mock[PuzzlesLayoutProvider]
+    when(provider.getLayout()(any[ExecutionContext])).thenReturn(Future.successful(fullLayout))
+    val renderer = mock[DotcomRenderingService]
+    when(renderer.getPuzzlesPage(any[WSClient], any[JsValue])(any[RequestHeader]))
+      .thenReturn(Future.successful(Results.Ok("rendered by DCR")))
+    val c = controller(provider, renderer)
+    val html = c.renderPuzzles()(request("/puzzles-and-games"))
+    status(html) shouldBe OK
+    val payload = ArgumentCaptor.forClass(classOf[JsValue])
+    verify(renderer).getPuzzlesPage(any[WSClient], payload.capture())(any[RequestHeader])
+    val json = c.renderPuzzlesJson()(request("/puzzles-and-games.json"))
+    status(json) shouldBe OK
+    (payload.getValue \ "layout").as[PuzzlesLayout] shouldBe fullLayout
+    (contentAsJson(json) \ "layout").as[PuzzlesLayout] shouldBe fullLayout
   }
 
   "Crossword archive rendering" should "keep the trivia category in the layout for navigation" in {
@@ -798,9 +791,9 @@ import scala.concurrent.{ExecutionContext, Future}
   }
 
   /** Puzzle Page: a generic page template for iframe-based puzzle types, nested under
-    * `/puzzles-and-games/{group}/{game}/{date}`, gated behind the same `PuzzlesHubAccess` edition check as the hub
-    * actions above - reusing the existing gate rather than a new one. Crosswords are explicitly out of scope for Puzzle
-    * Page and are not exercised by these tests.
+    * `/puzzles-and-games/{group}/{game}/{date}`, available to every reader, like the hub actions above - reusing the
+    * existing gate rather than a new one. Crosswords are explicitly out of scope for Puzzle Page and are not exercised
+    * by these tests.
     */
   private def stubbedPuzzlePageRenderer(): DotcomRenderingService = {
     val renderer = mock[DotcomRenderingService]

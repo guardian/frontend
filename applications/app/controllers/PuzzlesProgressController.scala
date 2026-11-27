@@ -1,6 +1,6 @@
 package controllers
 
-import common.{GuLogging, ImplicitControllerExecutionContext, PuzzlesHubAccess}
+import common.{GuLogging, ImplicitControllerExecutionContext}
 import play.api.libs.json.{JsArray, JsValue, Json}
 import play.api.mvc._
 
@@ -25,30 +25,28 @@ class PuzzlesProgressController(
 
   def save(): Action[JsValue] =
     Action.async(parse.json) { implicit request =>
-      if (!PuzzlesHubAccess.isAvailable) Future.successful(noStore(NotFound))
-      else
-        request.headers.get(AUTHORIZATION) match {
-          case None => Future.successful(noStore(Unauthorized(Json.obj("message" -> "Missing Authorization header"))))
-          case Some(authorization) =>
-            request.body match {
-              case updates: JsArray if updates.value.nonEmpty && updates.value.size <= MaxUpdates =>
-                progressApi.save(authorization, updates).map { upstream =>
-                  noStore(upstream.status match {
-                    case 202       => Accepted(upstream.body.getOrElse(Json.obj()))
-                    case 400       => BadRequest(upstream.body.getOrElse(Json.obj("message" -> "Invalid request body")))
-                    case 401 | 403 => Unauthorized(Json.obj("message" -> "Not authorised"))
-                    case other     =>
-                      logErrorWithRequestId(s"Puzzles progress upstream returned HTTP $other")
-                      BadGateway(Json.obj("message" -> "Failed to save progress"))
-                  })
-                } recover { case _ =>
-                  noStore(BadGateway(Json.obj("message" -> "Failed to save progress")))
-                }
-              case _ =>
-                Future.successful(
-                  noStore(BadRequest(Json.obj("message" -> s"Expected an array of 1 to $MaxUpdates progress updates"))),
-                )
-            }
-        }
+      request.headers.get(AUTHORIZATION) match {
+        case None => Future.successful(noStore(Unauthorized(Json.obj("message" -> "Missing Authorization header"))))
+        case Some(authorization) =>
+          request.body match {
+            case updates: JsArray if updates.value.nonEmpty && updates.value.size <= MaxUpdates =>
+              progressApi.save(authorization, updates).map { upstream =>
+                noStore(upstream.status match {
+                  case 202       => Accepted(upstream.body.getOrElse(Json.obj()))
+                  case 400       => BadRequest(upstream.body.getOrElse(Json.obj("message" -> "Invalid request body")))
+                  case 401 | 403 => Unauthorized(Json.obj("message" -> "Not authorised"))
+                  case other     =>
+                    logErrorWithRequestId(s"Puzzles progress upstream returned HTTP $other")
+                    BadGateway(Json.obj("message" -> "Failed to save progress"))
+                })
+              } recover { case _ =>
+                noStore(BadGateway(Json.obj("message" -> "Failed to save progress")))
+              }
+            case _ =>
+              Future.successful(
+                noStore(BadRequest(Json.obj("message" -> s"Expected an array of 1 to $MaxUpdates progress updates"))),
+              )
+          }
+      }
     }
 }

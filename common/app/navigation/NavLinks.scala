@@ -242,10 +242,6 @@ object NavLinks {
       NavLink("Logic puzzles", "/puzzles-and-games/logic-puzzles/archive"),
     ),
   )
-  val legacyWordiply = NavLink(
-    "Wordiply",
-    "https://www.wordiply.com",
-  )
   val corrections = NavLink("Corrections", "/theguardian/series/corrections-and-clarifications")
   val video = NavLink("Video", "/video")
   val podcasts = NavLink("Podcasts", "/podcasts")
