@@ -169,8 +169,8 @@ class GuardianConfiguration extends GuLogging {
     lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
   }
   object puzzlesApi {
-    private val codeUrl = "https://puzzles-api.code.dev-guardianapis.com"
-    private val prodUrl = "https://puzzles-api.guardianapis.com"
+    private val codeUrl = "https://5awvcpuexl.execute-api.eu-west-1.amazonaws.com/code"
+    private val prodUrl = "https://gno22cmky8.execute-api.eu-west-1.amazonaws.com/prod"
 
     lazy val baseUrl: String = configuration
       .getStringProperty("puzzles.api.url")
