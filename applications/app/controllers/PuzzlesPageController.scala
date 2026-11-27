@@ -1,6 +1,6 @@
 package controllers
 
-import ab.PuzzlesHubV4Experiment
+import ab.MaxiCrosswordExperiment
 
 import common.{ImplicitControllerExecutionContext, PuzzlesHubAccess}
 import implicits.{HtmlFormat, JsonFormat}
@@ -43,7 +43,7 @@ class PuzzlesPageController(
     )
 
   private def layoutForRequest(implicit request: RequestHeader) =
-    if (PuzzlesHubV4Experiment.isEnabled) puzzlesLayoutProvider.getLayoutForV4()
+    if (MaxiCrosswordExperiment.isEnabled) puzzlesLayoutProvider.getLayoutWithMaxi()
     else puzzlesLayoutProvider.getLayout()
 
   private def isMaxiArchive(category: String, puzzle: String): Boolean =
@@ -161,7 +161,7 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       val maxi = puzzle.exists(isMaxiArchive(category, _))
       val result =
-        if (maxi && !PuzzlesHubV4Experiment.isEnabled) Future.successful(NotFound)
+        if (maxi && !MaxiCrosswordExperiment.isEnabled) Future.successful(NotFound)
         else if (!PuzzlesHubAccess.isAvailable || request.getRequestFormat != HtmlFormat)
           notFound
         else
@@ -196,7 +196,7 @@ class PuzzlesPageController(
     Action.async { implicit request =>
       val maxi = isMaxiArchive(category, puzzle)
       val result =
-        if (maxi && !PuzzlesHubV4Experiment.isEnabled) Future.successful(NotFound)
+        if (maxi && !MaxiCrosswordExperiment.isEnabled) Future.successful(NotFound)
         else
           Try(YearMonth.of(year, month)).toOption match {
             case None                 => Future.successful(BadRequest)

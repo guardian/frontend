@@ -17,7 +17,7 @@ import LocalJsonPuzzlesLayoutProvider.CrosswordDynamicFields
 trait PuzzlesLayoutProvider {
   def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout]
 
-  def getLayoutForV4()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] = getLayout()
+  def getLayoutWithMaxi()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] = getLayout()
 
   def getGameCommercialProperties(group: String)(implicit
       executionContext: ExecutionContext,
@@ -50,7 +50,7 @@ class LocalJsonPuzzlesLayoutProvider(
   override def getLayout()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     buildLayout(includeMaxi = false)
 
-  override def getLayoutForV4()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
+  override def getLayoutWithMaxi()(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =
     buildLayout(includeMaxi = true)
 
   private def buildLayout(includeMaxi: Boolean)(implicit executionContext: ExecutionContext): Future[PuzzlesLayout] =

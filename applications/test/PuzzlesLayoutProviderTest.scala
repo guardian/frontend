@@ -40,7 +40,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     archives(layout) should not be empty
   }
 
-  it should "expose only the latest playable Maxi on the V4 hub and keep it out of the default layout" in {
+  it should "expose only the latest playable Maxi on the opted-in hub and keep it out of the default layout" in {
     val calls = ListBuffer.empty[String]
     val api = archiveApi(
       Seq(
@@ -58,7 +58,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
     archives(default).map(_.id) should not contain "archive-maxi"
     calls should not contain "CROSSWORD_MAXI"
 
-    val layout = Await.result(provider.getLayoutForV4(), 5.seconds)
+    val layout = Await.result(provider.getLayoutWithMaxi(), 5.seconds)
     val maxi = allItems(layout).find(_.id == "crossword-maxi").get
     maxi.url shouldBe Some("/crosswords/maxi/2")
     maxi.date shouldBe Some("2026-09-07")
@@ -67,7 +67,7 @@ class PuzzlesLayoutProviderTest extends AnyFlatSpec with Matchers with MockitoSu
   }
 
   it should "not show an unplayable Maxi card when there is no published puzzle" in {
-    val layout = Await.result(productionProvider().getLayoutForV4(), 5.seconds)
+    val layout = Await.result(productionProvider().getLayoutWithMaxi(), 5.seconds)
 
     allItems(layout).map(_.id) should not contain "crossword-maxi"
   }

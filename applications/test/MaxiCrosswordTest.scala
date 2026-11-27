@@ -80,7 +80,7 @@ class MaxiCrosswordTest extends AnyFlatSpec with Matchers with EitherValues with
 
   "Maxi crossword routes" should "return an uncacheable 404 without fetching CAPI in the control group" in {
     val controller = new TestController
-    val result = controller.load("maxi", "puzzles-new-hub-v4:control")
+    val result = controller.load("maxi", "puzzles-crosswords-maxi:control")
     status(result) shouldBe NOT_FOUND
     header(CACHE_CONTROL, result).value should include("no-store")
     header("Surrogate-Control", result) shouldBe Some("no-store")
@@ -93,9 +93,9 @@ class MaxiCrosswordTest extends AnyFlatSpec with Matchers with EitherValues with
     controller.lookups shouldBe empty
   }
 
-  it should "serve Maxi in V4 without V3 or caching across groups" in {
+  it should "serve Maxi to opted-in readers without V3 or caching across groups" in {
     val controller = new TestController
-    val result = controller.load("maxi", "puzzles-new-hub-v4:variant")
+    val result = controller.load("maxi", "puzzles-crosswords-maxi:variant")
     status(result) shouldBe OK
     contentAsString(result) shouldBe "crosswords/maxi/1"
     header(CACHE_CONTROL, result).value should include("no-store")
@@ -104,7 +104,7 @@ class MaxiCrosswordTest extends AnyFlatSpec with Matchers with EitherValues with
 
   it should "keep other crossword types available and cacheable in the control group" in {
     val controller = new TestController
-    val result = controller.load("mini", "puzzles-new-hub-v4:control")
+    val result = controller.load("mini", "puzzles-crosswords-maxi:control")
     status(result) shouldBe OK
     contentAsString(result) shouldBe "crosswords/mini/1"
     header("Surrogate-Control", result).value should include("max-age=60")

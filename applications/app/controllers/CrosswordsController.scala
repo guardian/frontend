@@ -1,6 +1,6 @@
 package controllers
 
-import ab.{PuzzlesHubV3Experiment, PuzzlesHubV4Experiment}
+import ab.{MaxiCrosswordExperiment, PuzzlesHubV3Experiment}
 import com.gu.contentapi.client.model.v1.{
   Crossword,
   ItemResponse,
@@ -85,7 +85,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
   def puzzleArchivePath(
       crossword: CrosswordData,
   )(implicit request: RequestHeader): Future[Option[String]] =
-    if (PuzzlesHubAccess.isAvailable && (crossword.crosswordType != "maxi" || PuzzlesHubV4Experiment.isEnabled))
+    if (PuzzlesHubAccess.isAvailable && (crossword.crosswordType != "maxi" || MaxiCrosswordExperiment.isEnabled))
       puzzlesLayoutProvider
         .getStaticLayout()
         .map(PuzzlesArchiveBuilder.archivePathFor(_, "crosswords", crossword.crosswordType))
@@ -114,7 +114,7 @@ trait CrosswordController extends BaseController with GuLogging with ImplicitCon
       withPublishedCrossword(crosswordType, id)(f)
     } else {
       val result =
-        if (PuzzlesHubV4Experiment.isEnabled) withPublishedCrossword(crosswordType, id)(f)
+        if (MaxiCrosswordExperiment.isEnabled) withPublishedCrossword(crosswordType, id)(f)
         else Future.successful(NotFound)
 
       // A cached puzzle or 404 must not be shared across experiment groups.
